@@ -13,15 +13,16 @@ namespace B_Commerce.Login.Common
             SYSTEM,
             FAILED,
             BANNED,
-
         }
 
-        public static Dictionary<int, string> ErrorCodes = new Dictionary<int, string>
-      {
+        public static Dictionary<int, string> ResponseCodes = new Dictionary<int, string>
+        {
           {0,"Başarılı" },
-          {1,"Kullanıcı adı veya şifre hatalı" },
-          {2,"Sistemsel bir hata oluştu" }
+          {1,"Kullanıcı Adı Veya Şifre Hatalı" },
+          {2,"Sistemsel Bir Hata Oluştu" },
+          {3,"Başarısız" },
+          {4,"Kullanıcı Banlanmıştır." }
+        };
 
-      };
     }
 }

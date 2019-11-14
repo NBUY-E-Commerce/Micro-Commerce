@@ -2,6 +2,7 @@
 using B_Commerce.Common.UnitOfWork.Abstract;
 using B_Commerce.Login.Common;
 using B_Commerce.Login.DomainClass;
+using B_Commerce.Login.Request;
 using B_Commerce.Login.Response;
 using B_Commerce.Login.Service.Abstract;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using static B_Commerce.Login.Common.Constants;
 
 namespace B_Commerce.Login.Service.Concrete
 {
@@ -17,141 +17,110 @@ namespace B_Commerce.Login.Service.Concrete
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<User> _userRepository;
-        //Login service'in constructor'ında log nesnenide olacak...
+        //Login service'in constructor'ında log nesneside olacak...
         public LoginService(IUnitOfWork unitOfWork, IRepository<User> userRepository)
         {
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
         }
 
+        public LoginResponse CheckToken(string token)
+        {
+            return null;
+        }
+
         public Token CreateToken()
         {
-            //şifreleme yapılacak
+            //Generate Token
             byte[] time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
             byte[] key = Guid.NewGuid().ToByteArray();
             string token = Convert.ToBase64String(time.Concat(key).ToArray());
             return new Token
             {
-                TokenText = token
+                TokenText = token,
+                EndDate = DateTime.Now.AddHours(2),
             };
         }
-        public LoginResponse Login(User user)
+        public LoginResponse Login(LoginRequest loginRequest)
         {
             LoginResponse loginResponse = new LoginResponse();
             try
             {
-                User _user;
-                if ((_user = UserNameControl(user)) != null)
-                {
-                    if (UserPasswordControl(user))
-                    {
-                        _user.Tokens.Add(CreateToken());
+                User _user = _userRepository.Get(t => t.Email == loginRequest.Email).FirstOrDefault();
 
-                        int result = _unitOfWork.Save();
-                        if (result == 0)
+                if (_user == null)
+                {
+                    loginResponse.Username = _user.Username;
+                    loginResponse.Code = (int)Constants.ResponseCode.INVALID_USERNAME_OR_PASSWORD;
+                    loginResponse.Message = Constants.ResponseCodes[loginResponse.Code];
+                    return loginResponse;
+                }
+
+                if (_user.IsLocked && _user.LockedTime > DateTime.Now)
+                {
+                    loginResponse.Username = _user.Username;
+                    loginResponse.Code = (int)Constants.ResponseCode.BANNED;
+                    loginResponse.Message = Constants.ResponseCodes[loginResponse.Code];
+                    return loginResponse;
+                }
+
+                if (_user.IsLocked) { _user.IsLocked = false; _user.WrongCount = 0; }
+
+                if (_user.Password != loginRequest.Password)
+                {
+                    _user.WrongCount++;
+                    if (_user.WrongCount > 5) _user.UserLocked(1);
+
+                    if (_unitOfWork.Save() > 0)
+                    {
+                        if (_user.IsLocked)
                         {
-                            loginResponse.Code = (int)ResponseCode.SYSTEM;
+                            loginResponse.Username = _user.Username;
+                            loginResponse.Code = (int)Constants.ResponseCode.BANNED;
+                            loginResponse.Message = Constants.ResponseCodes[loginResponse.Code];
+                            return loginResponse;
                         }
                         else
                         {
-                            loginResponse.Token = _user.Tokens.Last().TokenText;
                             loginResponse.Username = _user.Username;
+                            loginResponse.Code = (int)Constants.ResponseCode.INVALID_USERNAME_OR_PASSWORD;
+                            loginResponse.Message = Constants.ResponseCodes[loginResponse.Code];
+                            return loginResponse;
                         }
                     }
                     else
                     {
-                        //Banlanacak methodu çağır.
-                        _user.WrongCount++;
-                        if (_user.WrongCount >= 5) loginResponse.Code = (int)UserBan(_user);
-                        else
-                        {
-                            loginResponse.Code = (int)ResponseCode.INVALID_USERNAME_OR_PASSWORD;
-                        }
-                        _unitOfWork.Save();
+                        loginResponse.Code = (int)Constants.ResponseCode.SYSTEM;
+                        loginResponse.Message = Constants.ResponseCodes[loginResponse.Code];
+                        return loginResponse;
                     }
                 }
-                //İsim doğru ama banlı
-                else if (IsUserBanned(user))
+
+                Token token = CreateToken();
+                _user.WrongCount = 0;
+                _user.Tokens.Add(token);
+
+                if (_unitOfWork.Save() > 0)
                 {
-                    loginResponse.Code = (int)ResponseCode.BANNED;
-                }
-                else
-                {
-                    loginResponse.Code = (int)ResponseCode.INVALID_USERNAME_OR_PASSWORD;
+                    loginResponse.Username = _user.FullName();
+                    loginResponse.Token = token.TokenText;
+                    loginResponse.Code = (int)Constants.ResponseCode.SUCCESS;
+                    loginResponse.Message = Constants.ResponseCodes[loginResponse.Code];
+                    return loginResponse;
                 }
             }
             catch (Exception ex)
             {
-                //db olayı gelicek RabbitMQ
-                throw new Exception("Dbye Loglandı" + ex);
+                loginResponse.Code = (int)Constants.ResponseCode.SYSTEM;
+                loginResponse.Message = Constants.ResponseCodes[loginResponse.Code];
+                return loginResponse;
             }
 
             return loginResponse;
         }
-
-        public ResponseCode UserAdd(User user)
+        public LoginResponse UserRegistry(User user)
         {
-            //user şifresini veritabanına hashleyerek koy
-            if (UserControl(user) == true) throw new Exception("Böyle bir kullanıcı var");
-            _userRepository.Add(user);
-            int result = _unitOfWork.Save();
-            return result == 1 ? ResponseCode.SUCCESS : ResponseCode.FAILED;
-        }
-        public ResponseCode UserBan(User user)
-        {
-            User _user = user;
-            _user.BannedUntil = DateTime.Now.AddDays(1);
-            _user.WrongCount = 0;
-
-            return ResponseCode.BANNED;
-        }
-        public bool IsUserBanned(User user)
-        {
-            User _user = _userRepository.Get(t => (t.Username == user.Username || t.Phone == user.Phone) && t.BannedUntil > DateTime.Now).FirstOrDefault();
-            return _user == null ? false : true;
-        }
-        public bool UserControl(User user)
-        {
-            User _user = UserGet(user);
-            return _user == null ? false : true;
-        }
-        public bool UserPasswordControl(User user)
-        {
-            User _user = UserGet(user);
-            return _user == null ? false : true;
-        }
-        public User UserNameControl(User user)
-        {
-            User _user = _userRepository.Get(t => (t.Username == user.Username || t.Phone == user.Phone) && t.BannedUntil < DateTime.Now).FirstOrDefault();
-            return _user;
-        }
-
-        public ResponseCode UserDelete(User user)
-        {
-            int result = 0;
-            if (UserControl(user) == true)
-            {
-                _userRepository.Delete(user);
-                result = _unitOfWork.Save();
-            }
-            return result == 1 ? ResponseCode.SUCCESS : ResponseCode.FAILED;
-        }
-
-        public User UserGet(User user)
-        {
-            User _user = _userRepository.Get(t => (t.Username == user.Username || t.Phone == user.Phone) && t.Password == user.Password).FirstOrDefault();
-            return _user;
-        }
-
-        public ResponseCode UserUpdate(User user)
-        {
-            int result = 0;
-            if (UserControl(user) == true)
-            {
-                _userRepository.Update(user);
-                result = _unitOfWork.Save();
-            }
-            return result == 1 ? ResponseCode.SUCCESS : ResponseCode.FAILED;
+            throw new NotImplementedException();
         }
     }
 }

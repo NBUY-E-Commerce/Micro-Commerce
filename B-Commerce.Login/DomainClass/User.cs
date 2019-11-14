@@ -11,7 +11,6 @@ namespace B_Commerce.Login.DomainClass
         {
             Tokens = new List<Token>();
         }
-//face login için prop
         public string Username { get; set; }
         public string Password { get; set; }
         public string Name { get; set; }
@@ -20,10 +19,26 @@ namespace B_Commerce.Login.DomainClass
         public string Country { get; set; }
         public string City { get; set; }
         public string Adress { get; set; }
-        public int Phone { get; set; }
+        public string Phone { get; set; }
         public int WrongCount { get; set; }
-        public DateTime? BannedUntil { get; set; }
+        public bool IsLocked { get; set; }
+        public DateTime? LockedTime { get; set; }
 
         public virtual ICollection<Token> Tokens { get; set; }
+
+        public void UserLocked(double banTime)
+        {
+            this.IsLocked = true;
+            this.LockedTime = DateTime.Now.AddHours(banTime);
+        }
+        public void UserUnLocked()
+        {
+            this.IsLocked = false;
+            this.LockedTime = null;
+        }
+        public string FullName()
+        {
+            return $"{ this.Name} {this.Surname}";
+        }
     }
 }
