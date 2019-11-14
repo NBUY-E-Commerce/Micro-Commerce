@@ -1,7 +1,7 @@
-﻿using B_Commerce.Common.DomainClass;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using B_Commerce.Common.DomainClasses;
 
 namespace B_Commerce.Login.DomainClass
 {

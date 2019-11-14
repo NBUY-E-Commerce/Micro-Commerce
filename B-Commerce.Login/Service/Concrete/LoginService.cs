@@ -1,5 +1,4 @@
-﻿using B_Commerce.Common.Repository.Abstract;
-using B_Commerce.Common.UnitOfWork.Abstract;
+﻿using B_Commerce.Common.Repository;
 using B_Commerce.Login.Common;
 using B_Commerce.Login.DomainClass;
 using B_Commerce.Login.Request;
@@ -10,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using B_Commerce.Common.UOW;
 
 namespace B_Commerce.Login.Service.Concrete
 {
@@ -71,7 +71,7 @@ namespace B_Commerce.Login.Service.Concrete
                     _user.WrongCount++;
                     if (_user.WrongCount > 5) _user.UserLocked(1);
 
-                    if (_unitOfWork.Save() > 0)
+                    if (_unitOfWork.SaveChanges() > 0)
                     {
                         if (_user.IsLocked)
                         {
@@ -100,7 +100,7 @@ namespace B_Commerce.Login.Service.Concrete
                 _user.WrongCount = 0;
                 _user.Tokens.Add(token);
 
-                if (_unitOfWork.Save() > 0)
+                if (_unitOfWork.SaveChanges() > 0)
                 {
                     loginResponse.Username = _user.FullName();
                     loginResponse.Token = token.TokenText;

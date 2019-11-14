@@ -1,5 +1,5 @@
-﻿using B_Commerce.Common.Repository.Concrete;
-using B_Commerce.Common.UnitOfWork.Concrete;
+﻿using B_Commerce.Common.Repository;
+using B_Commerce.Common.UOW;
 using B_Commerce.Login.Common;
 using B_Commerce.Login.DatabaseContext;
 using B_Commerce.Login.DomainClass;
@@ -16,8 +16,8 @@ namespace Presentation
         {
             //IOC servisi yazılacak
             LoginDbContext loginDbContext = new LoginDbContext();
-            ECommerceUnitOfWork unitOfWork = new ECommerceUnitOfWork(loginDbContext);
-            LoginService loginService = new LoginService(unitOfWork, new EfRepository<User>(loginDbContext));
+            UnitOfWork unitOfWork = new UnitOfWork(loginDbContext);
+            LoginService loginService = new LoginService(unitOfWork, new Repository<User>(loginDbContext));
 
             Console.WriteLine("Email ve şifre gir");
             LoginRequest loginRequest = new LoginRequest
