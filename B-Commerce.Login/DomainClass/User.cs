@@ -23,6 +23,7 @@ namespace B_Commerce.Login.DomainClass
         public int WrongCount { get; set; }
         public bool IsLocked { get; set; }
         public DateTime? LockedTime { get; set; }
+        public bool IsVerified { get; set; }
 
         public virtual ICollection<Token> Tokens { get; set; }
 

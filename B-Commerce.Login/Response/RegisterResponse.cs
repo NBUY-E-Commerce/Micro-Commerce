@@ -4,9 +4,9 @@ using System.Text;
 
 namespace B_Commerce.Login.Response
 {
-    public class LoginResponse : BaseResponse
+    public class RegisterResponse : BaseResponse
     {
-        public string Token { get; set; }
         public string Username { get; set; }
+        public string Email { get; set; }
     }
 }

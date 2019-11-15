@@ -13,6 +13,8 @@ namespace B_Commerce.Login.Common
             SYSTEM,
             FAILED,
             BANNED,
+            NOT_VERIFIED,
+            VERIFICATION_FAILED
         }
 
         public static Dictionary<int, string> ResponseCodes = new Dictionary<int, string>
@@ -21,7 +23,8 @@ namespace B_Commerce.Login.Common
           {1,"Kullanıcı Adı Veya Şifre Hatalı" },
           {2,"Sistemsel Bir Hata Oluştu" },
           {3,"Başarısız" },
-          {4,"Kullanıcı Banlanmıştır." }
+          {4,"Kullanıcı Banlanmıştır." },
+          {5, "Kullanıcı Epostası Doğrulanmamış."}
         };
 
     }
