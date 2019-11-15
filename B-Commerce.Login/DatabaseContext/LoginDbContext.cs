@@ -17,10 +17,13 @@ namespace B_Commerce.Login.DatabaseContext
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
-            base.OnModelCreating(modelBuilder); 
+            base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<Token> Tokens { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<SocialInfo> SocialInfos { get; set; }
+        public virtual DbSet<SocialType> SocialTypes { get; set; }
+        public virtual DbSet<AccountVerification> AccountVerifications { get; set; }
 
     }
 }
