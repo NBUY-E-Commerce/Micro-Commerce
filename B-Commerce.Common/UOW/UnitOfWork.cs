@@ -27,7 +27,7 @@ namespace B_Commerce.Common.UOW
             {
                 _context.Dispose();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 //Hatalar Loglanabilir
@@ -44,7 +44,7 @@ namespace B_Commerce.Common.UOW
                 
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 _transaction.Rollback();
