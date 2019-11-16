@@ -10,8 +10,9 @@ namespace B_Commerce.Login.Service.Abstract
     public interface ILoginService
     {
         LoginResponse Login(LoginRequest loginRequest);
-        Token CreateToken();
-        LoginResponse CheckToken(string token);
-        LoginResponse UserRegistry(User user);
+        RegisterResponse UserRegistry(User user);
+        CheckTokenResponse CheckToken(string token);
+        LoginResponse FacebookLogin(LoginRequest loginRequest);
+        LoginResponse CheckVerificationCode(string token, string code);
     }
 }
