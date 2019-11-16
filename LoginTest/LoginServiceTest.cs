@@ -9,7 +9,7 @@ using B_Commerce.Login.Common;
 namespace LoginTest
 {
     [TestClass]
-    public class LoginResponseTest
+    public class LoginServiceTest
     {
         private IRepository<User> _fakerepo;
         private IUnitOfWork _fakeUOW;
@@ -26,9 +26,19 @@ namespace LoginTest
         [TestMethod]
         public void TestLogin()
         {
+            // Doðru Login
             var result = _logService.Login(new LoginRequest() { Email="asd@asd.com",Password="123123"});
 
             Assert.AreEqual((int)Constants.ResponseCode.SUCCESS, result.Code);
+
+            // Hatalý Login
+            var result2 = _logService.Login(new LoginRequest() { Email = "asd@asd.com", Password = "12323" });
+
+            Assert.AreEqual((int)Constants.ResponseCode.INVALID_USERNAME_OR_PASSWORD, result2.Code);
+
+        }
+        public void TestUserRegistry()
+        {
 
         }
 
