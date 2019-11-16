@@ -24,6 +24,7 @@ namespace B_Commerce.Login.DomainClass
         public bool IsLocked { get; set; } = false;
         public bool IsVerified { get; set; } = false;
         public DateTime? LockedTime { get; set; }
+        public bool IsVerified { get; set; }
 
         public virtual ICollection<AccountVerification> AccountVerifications { get; set; }
         public virtual ICollection<Token> Tokens { get; set; }

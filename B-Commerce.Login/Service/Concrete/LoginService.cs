@@ -18,11 +18,13 @@ namespace B_Commerce.Login.Service.Concrete
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<User> _userRepository;
+        private readonly IRepository<AccountVerification> _accountVerificationRepository;
         //Login service'in constructor'ında log nesneside olacak...
-        public LoginService(IUnitOfWork unitOfWork, IRepository<User> userRepository)
+        public LoginService(IUnitOfWork unitOfWork, IRepository<User> userRepository, IRepository<AccountVerification> accountVerificationRepository)
         {
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
+            _accountVerificationRepository = accountVerificationRepository;
         }
 
         public CheckTokenResponse CheckToken(string token)
@@ -44,7 +46,7 @@ namespace B_Commerce.Login.Service.Concrete
 
         }
 
-        private Token CreateToken()
+        private Token CreateToken(double expireDay = 1)
         {
             //Generate Token
             //byte[] time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
@@ -55,12 +57,12 @@ namespace B_Commerce.Login.Service.Concrete
             return new Token
             {
                 TokenText = token,
-                EndDate = DateTime.Now.AddHours(2),
+                EndDate = DateTime.Now.AddDays(expireDay),
             };
         }
         private AccountVerification CreateAccountVerificationCode()
         {
-            string verificationCode = RandomGenerator.Generate(15);
+            string verificationCode = RandomGenerator.Generate(6);
             return new AccountVerification
             {
                 VerificationCode = verificationCode,
@@ -76,16 +78,21 @@ namespace B_Commerce.Login.Service.Concrete
 
                 if (_user == null)
                 {
-                    loginResponse.Code = (int)Constants.ResponseCode.INVALID_USERNAME_OR_PASSWORD;
-                    loginResponse.Message = Constants.ResponseCodes[loginResponse.Code];
+                    loginResponse.SetError(Constants.ResponseCode.INVALID_USERNAME_OR_PASSWORD);
+                    return loginResponse;
+                }
+
+                loginResponse.Username = _user.Username;
+
+                if (_user.IsVerified == false)
+                {
+                    loginResponse.SetError(Constants.ResponseCode.NOT_VERIFIED);
                     return loginResponse;
                 }
 
                 if (_user.IsLocked && _user.LockedTime > DateTime.Now)
                 {
-                    loginResponse.Username = _user.Username;
-                    loginResponse.Code = (int)Constants.ResponseCode.BANNED;
-                    loginResponse.Message = Constants.ResponseCodes[loginResponse.Code];
+                    loginResponse.SetError(Constants.ResponseCode.BANNED);
                     return loginResponse;
                 }
 
@@ -100,23 +107,18 @@ namespace B_Commerce.Login.Service.Concrete
                     {
                         if (_user.IsLocked)
                         {
-                            loginResponse.Username = _user.Username;
-                            loginResponse.Code = (int)Constants.ResponseCode.BANNED;
-                            loginResponse.Message = Constants.ResponseCodes[loginResponse.Code];
+                            loginResponse.SetError(Constants.ResponseCode.BANNED);
                             return loginResponse;
                         }
                         else
                         {
-                            loginResponse.Username = _user.Username;
-                            loginResponse.Code = (int)Constants.ResponseCode.INVALID_USERNAME_OR_PASSWORD;
-                            loginResponse.Message = Constants.ResponseCodes[loginResponse.Code];
+                            loginResponse.SetError(Constants.ResponseCode.INVALID_USERNAME_OR_PASSWORD);
                             return loginResponse;
                         }
                     }
                     else
                     {
-                        loginResponse.Code = (int)Constants.ResponseCode.SYSTEM_ERROR;
-                        loginResponse.Message = Constants.ResponseCodes[loginResponse.Code];
+                        loginResponse.SetError(Constants.ResponseCode.SYSTEM);
                         return loginResponse;
                     }
                 }
@@ -131,15 +133,13 @@ namespace B_Commerce.Login.Service.Concrete
 
                     loginResponse.Username = _user.FullName();
                     loginResponse.Token = token.TokenText;
-                    loginResponse.Code = (int)Constants.ResponseCode.SUCCESS;
-                    loginResponse.Message = Constants.ResponseCodes[loginResponse.Code];
+                    loginResponse.SetError(Constants.ResponseCode.SUCCESS);
                     return loginResponse;
                 }
             }
             catch (Exception ex)
             {
-                loginResponse.Code = (int)Constants.ResponseCode.SYSTEM_ERROR;
-                loginResponse.Message = Constants.ResponseCodes[loginResponse.Code];
+                loginResponse.SetError(Constants.ResponseCode.SYSTEM);
                 return loginResponse;
             }
 
