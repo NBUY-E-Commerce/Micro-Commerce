@@ -138,7 +138,7 @@ namespace B_Commerce.Login.Service.Concrete
                     return loginResponse;
                 }
             }
-            catch (Exception ex)
+            catch ()
             {
                 loginResponse.SetError(Constants.ResponseCode.SYSTEM_ERROR);
                 return loginResponse;
@@ -170,10 +170,93 @@ namespace B_Commerce.Login.Service.Concrete
 
             return registerResponse;
         }
-
-        public LoginResponse FacebookLogin(LoginRequest loginRequest)
+        private RegisterResponse FacebookUserRegistry(User user)
         {
-            throw new Exception();
+            RegisterResponse registerResponse = new RegisterResponse();
+            User _user = user;
+            _userRepository.Add(_user);
+
+            if (_unitOfWork.SaveChanges() > 0)
+            {
+                registerResponse.SetError(Constants.ResponseCode.SUCCESS);
+                registerResponse.Username = _user.Username;
+            }
+            else
+            {
+                registerResponse.SetError(Constants.ResponseCode.SYSTEM_ERROR);
+            }
+
+            return registerResponse;
+        }
+
+        public LoginResponse FacebookLogin(string fbcode)
+        {
+            LoginResponse loginResponse = new LoginResponse();
+            try
+            {
+                Facebook.FacebookClient fb = new Facebook.FacebookClient();
+                dynamic result = fb.Post("oauth/access_token", new
+                {
+                    client_id = "3462488800442988",
+                    client_secret = "2f5eb5daf3ea0fea4c09e729b1b379d7",
+                    redirect_uri = "http://localhost:44318/FbLogin",//Test ederken localhost kısmını pcye göre değiştir.
+                    code = fbcode
+                });
+
+                var accessToken = result.access_token;
+                fb.AccessToken = accessToken;
+                dynamic userinfo = fb.Get("me?fields=first_name,middle_name,last_name,id,email");
+
+                string email = userinfo.email,
+                    firstName = userinfo.first_name,
+                    lastName = userinfo.last_name,
+                    socialId = userinfo.id;
+
+                User user = _userRepository.Get(t => t.Email == email).FirstOrDefault();
+
+                if (user != null)
+                {
+                    try
+                    {
+                        Token token = CreateToken();
+                        user.Tokens.Add(token);
+
+                        if (_unitOfWork.SaveChanges() > 0)
+                        {
+                            CacheManager.AddUserToCache(token.TokenText, user);
+
+                            loginResponse.Username = user.FullName();
+                            loginResponse.Token = token.TokenText;
+                            loginResponse.SetError(Constants.ResponseCode.SUCCESS);
+                            return loginResponse;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        loginResponse.SetError(Constants.ResponseCode.SYSTEM_ERROR);
+                        return loginResponse;
+                    }
+                    return loginResponse;
+                }
+
+                user.Email = email;
+                user.Name = firstName;
+                user.Surname = lastName;
+                user.SocialInfos.Add(new SocialInfo
+                {
+                    SocialID = socialId,
+                    SocialType = new SocialType { SocialName = "Facebook" },
+                    AccessToken = accessToken,
+                });
+
+                UserRegistry(user);
+                _userRepository.Add(user);
+            }
+            catch
+            {
+                loginResponse.SetError(Constants.ResponseCode.SYSTEM_ERROR);
+            }
+            return loginResponse;
         }
 
         public LoginResponse CheckVerificationCode(string token, string code)
