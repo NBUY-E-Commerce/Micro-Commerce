@@ -17,7 +17,7 @@ namespace Presentation
             //IOC servisi yazılacak
             LoginDbContext loginDbContext = new LoginDbContext();
             UnitOfWork unitOfWork = new UnitOfWork(loginDbContext);
-            LoginService loginService = new LoginService(unitOfWork, new Repository<User>(loginDbContext));
+            LoginService loginService = new LoginService(unitOfWork, new Repository<User>(loginDbContext), new Repository<AccountVerification>(loginDbContext));
 
             Console.WriteLine("Email ve şifre gir");
             LoginRequest loginRequest = new LoginRequest

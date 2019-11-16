@@ -12,6 +12,7 @@ using B_Commerce.Common.Repository;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Linq;
+using B_Commerce.Common.Security;
 
 namespace LoginTest
 {
@@ -21,7 +22,8 @@ namespace LoginTest
         public readonly IRepository<User> MockObject;
         public FakeRepo()
         {
-            List<User> userlist = new List<User> { new User { ID=1,Email="asd@asd.com",Username="user1",Password="123123",IsLocked=false},
+            string temp = Cryptor.sha512encrypt("123123");
+            List <User> userlist = new List<User> { new User { ID=1,Email="asd@asd.com",Username="user1",Password=temp,IsLocked=false,IsVerified=true},
             new User { ID=2,Username="user2",Password="pass2",IsLocked=false}};
 
 

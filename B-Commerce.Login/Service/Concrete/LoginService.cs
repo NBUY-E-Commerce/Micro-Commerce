@@ -60,11 +60,12 @@ namespace B_Commerce.Login.Service.Concrete
                 EndDate = DateTime.Now.AddDays(expireDay),
             };
         }
-        private AccountVerification CreateAccountVerificationCode()
+        private AccountVerification CreateAccountVerificationCode(int UserID)
         {
             string verificationCode = RandomGenerator.Generate(6);
             return new AccountVerification
             {
+                UserID=UserID,
                 VerificationCode = verificationCode,
                 ExpireTime = DateTime.Now.AddDays(7),
             };
@@ -86,7 +87,7 @@ namespace B_Commerce.Login.Service.Concrete
 
                 if (_user.IsVerified == false)
                 {
-                    loginResponse.SetError(Constants.ResponseCode.NOT_VERIFIED);
+                    loginResponse.SetError(Constants.ResponseCode.FAILED);
                     return loginResponse;
                 }
 
@@ -118,7 +119,7 @@ namespace B_Commerce.Login.Service.Concrete
                     }
                     else
                     {
-                        loginResponse.SetError(Constants.ResponseCode.SYSTEM);
+                        loginResponse.SetError(Constants.ResponseCode.SYSTEM_ERROR);
                         return loginResponse;
                     }
                 }
@@ -139,7 +140,7 @@ namespace B_Commerce.Login.Service.Concrete
             }
             catch (Exception ex)
             {
-                loginResponse.SetError(Constants.ResponseCode.SYSTEM);
+                loginResponse.SetError(Constants.ResponseCode.SYSTEM_ERROR);
                 return loginResponse;
             }
 
@@ -159,13 +160,12 @@ namespace B_Commerce.Login.Service.Concrete
             }
             _user = user;
             _user.Password = Cryptor.sha512encrypt(user.Password);//gelen userın pass'ini şifreleyip kayıt ettik.
-            _user.AccountVerifications.Add(CreateAccountVerificationCode());
+            _accountVerificationRepository.Add(CreateAccountVerificationCode(user.ID));
             _userRepository.Add(_user);
 
             if (_unitOfWork.SaveChanges() > 0)
             {
-                registerResponse.Code = (int)Constants.ResponseCode.SUCCESS;
-                registerResponse.Message = Constants.ResponseCodes[registerResponse.Code];
+                registerResponse.SetError(Constants.ResponseCode.SUCCESS);
                 registerResponse.Username = _user.Username;
             }
 
@@ -200,5 +200,6 @@ namespace B_Commerce.Login.Service.Concrete
 
             return loginResponse;
         }
+
     }
 }
