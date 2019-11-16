@@ -138,7 +138,7 @@ namespace B_Commerce.Login.Service.Concrete
                     return loginResponse;
                 }
             }
-            catch ()
+            catch (Exception)
             {
                 loginResponse.SetError(Constants.ResponseCode.SYSTEM_ERROR);
                 return loginResponse;
