@@ -10,6 +10,6 @@ namespace B_Commerce.Login.DomainClass
         public string VerificationCode { get; set; }
         public int UserID { get; set; }
         public DateTime ExpireTime { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }

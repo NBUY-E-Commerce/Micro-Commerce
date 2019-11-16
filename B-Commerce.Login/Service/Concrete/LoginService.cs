@@ -31,15 +31,14 @@ namespace B_Commerce.Login.Service.Concrete
         {
             User user = CacheManager.GetUser(token);
             CheckTokenResponse checkTokenResponse = new CheckTokenResponse();
+
             if (user == null)
             {
-
-                checkTokenResponse.Code = (int)Constants.ResponseCode.INVALID_TOKEN;
-                checkTokenResponse.Message = Constants.ResponseCodes[checkTokenResponse.Code];
+                checkTokenResponse.SetError(Constants.ResponseCode.INVALID_TOKEN);
                 return checkTokenResponse;
             }
-            checkTokenResponse.Code = (int)Constants.ResponseCode.SUCCESS;
-            checkTokenResponse.Message = Constants.ResponseCodes[checkTokenResponse.Code];
+
+            checkTokenResponse.SetError(Constants.ResponseCode.SUCCESS);
             checkTokenResponse.Username = user.Username;
 
             return checkTokenResponse;
@@ -63,9 +62,10 @@ namespace B_Commerce.Login.Service.Concrete
         private AccountVerification CreateAccountVerificationCode(int UserID)
         {
             string verificationCode = RandomGenerator.Generate(6);
+
             return new AccountVerification
             {
-                UserID=UserID,
+                UserID = UserID,
                 VerificationCode = verificationCode,
                 ExpireTime = DateTime.Now.AddDays(7),
             };
@@ -150,14 +150,13 @@ namespace B_Commerce.Login.Service.Concrete
         {
             User _user = _userRepository.Get(t => t.Email == user.Email).FirstOrDefault();
             RegisterResponse registerResponse = new RegisterResponse();
+
             if (_user != null)
             {
-
-                registerResponse.Code = (int)Constants.ResponseCode.EMAIL_IN_USE;
-                registerResponse.Message = Constants.ResponseCodes[registerResponse.Code];
+                registerResponse.SetError(Constants.ResponseCode.EMAIL_IN_USE);
                 return registerResponse;
-
             }
+
             _user = user;
             _user.Password = Cryptor.sha512encrypt(user.Password);//gelen userın pass'ini şifreleyip kayıt ettik.
             _accountVerificationRepository.Add(CreateAccountVerificationCode(user.ID));
@@ -174,7 +173,7 @@ namespace B_Commerce.Login.Service.Concrete
 
         public LoginResponse FacebookLogin(LoginRequest loginRequest)
         {
-            return null;
+            throw new Exception();
         }
 
         public LoginResponse CheckVerificationCode(string token, string code)
@@ -187,14 +186,12 @@ namespace B_Commerce.Login.Service.Concrete
             if (accountVerification == null)
             {
                 user.IsVerified = false;
-                loginResponse.Code = (int)Constants.ResponseCode.FAILED;
-                loginResponse.Message = Constants.ResponseCodes[loginResponse.Code];
+                loginResponse.SetError(Constants.ResponseCode.FAILED);
                 return loginResponse;
             }
             user.IsVerified = true;
 
-            loginResponse.Code = (int)Constants.ResponseCode.SUCCESS;
-            loginResponse.Message = Constants.ResponseCodes[loginResponse.Code];
+            loginResponse.SetError(Constants.ResponseCode.SUCCESS);
             loginResponse.Username = user.Username;
             loginResponse.Token = token;
 

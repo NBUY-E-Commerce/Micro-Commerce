@@ -11,7 +11,7 @@ namespace B_Commerce.Login.Service.Abstract
     {
         LoginResponse Login(LoginRequest loginRequest);
         LoginResponse CheckVerificationCode(string token, string code);
-
+        LoginResponse FacebookLogin(LoginRequest loginRequest);
         RegisterResponse UserRegistry(User user);
     }
 }

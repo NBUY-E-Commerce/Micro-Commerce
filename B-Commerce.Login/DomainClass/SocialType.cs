@@ -9,6 +9,6 @@ namespace B_Commerce.Login.DomainClass
     {
         public int ID { get; set; }
         public string SocialName { get; set; }
-        public ICollection<SocialInfo> SocialInfos { get; set; }
+        public virtual ICollection<SocialInfo> SocialInfos { get; set; }
     }
 }
