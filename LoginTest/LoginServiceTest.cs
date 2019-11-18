@@ -11,18 +11,18 @@ namespace LoginTest
     [TestClass]
     public class LoginServiceTest
     {
-        private IRepository<User> _fakerepo;
-        private IRepository<AccountVerification> _fakerepo2;
+        private IRepository<User> _FakeUserRepo;
+        private IRepository<AccountVerification> _FakeAccountVerificationRepo;
         private IUnitOfWork _fakeUOW;
         private ILoginService _logService;
         [TestInitialize()]
         public void AccountServiceTestIni()
         {
-            _fakerepo = new FakeRepo().MockObject;
-            _fakerepo2 = new FakeRepo2().MockObject;
+            _FakeUserRepo = new FakeUserRepo().MockObject;
+            _FakeAccountVerificationRepo = new FakeAccountVerificationRepo().MockObject;
             _fakeUOW = new FakeUOW().MockObject;
 
-            _logService = new LoginService(_fakeUOW, _fakerepo,_fakerepo2);
+            _logService = new LoginService(_fakeUOW, _FakeUserRepo,_FakeAccountVerificationRepo);
 
         }
         [TestMethod]
@@ -47,17 +47,6 @@ namespace LoginTest
 
             var result2 = _logService.UserRegistry(new User() { Email = "asd12@asd.com", Password = "1234567" });
             Assert.AreEqual((int)Constants.ResponseCode.SUCCESS, result2.Code);
-        }
-        [TestMethod]
-        public void TestCheckVerificationCode()
-        {
-
-        }
-        [TestMethod]
-        public void TestCheckToken()
-        { 
-
-
         }
 
 

@@ -27,7 +27,7 @@ namespace B_Commerce.Login.Service.Concrete
             _accountVerificationRepository = accountVerificationRepository;
         }
 
-        public CheckTokenResponse CheckToken(string token)
+        public CheckTokenResponse CheckToken(string token) // private olabilir
         {
             User user = CacheManager.GetUser(token);
             CheckTokenResponse checkTokenResponse = new CheckTokenResponse();
@@ -148,29 +148,26 @@ namespace B_Commerce.Login.Service.Concrete
         }
         public RegisterResponse UserRegistry(User user)
         {
-            User _user = _userRepository.Get(t => t.Email == user.Email).FirstOrDefault();
             RegisterResponse registerResponse = new RegisterResponse();
 
-            if (_user != null)
+            if (_userRepository.Get(t => t.Email == user.Email).FirstOrDefault() != null)
             {
                 registerResponse.SetError(Constants.ResponseCode.EMAIL_IN_USE);
                 return registerResponse;
             }
-
-            _user = user;
-            _user.Password = Cryptor.sha512encrypt(user.Password);//gelen userın pass'ini şifreleyip kayıt ettik.
+            user.Password = Cryptor.sha512encrypt(user.Password);//şifreleme
+            _userRepository.Add(user);
             _accountVerificationRepository.Add(CreateAccountVerificationCode(user.ID));
-            _userRepository.Add(_user);
 
             if (_unitOfWork.SaveChanges() > 0)
             {
                 registerResponse.SetError(Constants.ResponseCode.SUCCESS);
-                registerResponse.Username = _user.Username;
+                registerResponse.Username = user.Username;
             }
 
             return registerResponse;
         }
-        private RegisterResponse FacebookUserRegistry(User user)
+        private RegisterResponse FacebookUserRegistry(User user) // Silinmesi gerekebilir?
         {
             RegisterResponse registerResponse = new RegisterResponse();
             User _user = user;
@@ -259,7 +256,7 @@ namespace B_Commerce.Login.Service.Concrete
             return loginResponse;
         }
 
-        public LoginResponse CheckVerificationCode(string token, string code)
+        public LoginResponse CheckVerificationCode(string token, string code) // api olması gerekli mi?
         {
             //Test Edilecek
             User user = CacheManager.GetUser(token);

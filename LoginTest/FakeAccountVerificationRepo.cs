@@ -15,10 +15,10 @@ using System.Linq;
 
 namespace LoginTest
 {
-    class FakeRepo2
+    class FakeAccountVerificationRepo
     {
         public readonly IRepository<AccountVerification> MockObject;
-        public FakeRepo2()
+        public FakeAccountVerificationRepo()
         {
             List<AccountVerification> accounts = new List<AccountVerification> { new AccountVerification { ID=1, UserID=1, VerificationCode="123456", ExpireTime=DateTime.Now.AddDays(1)}};
 

@@ -17,10 +17,10 @@ using B_Commerce.Common.Security;
 namespace LoginTest
 {
     [TestClass]
-    class FakeRepo
+    class FakeUserRepo
     {
         public readonly IRepository<User> MockObject;
-        public FakeRepo()
+        public FakeUserRepo()
         {
             string temp = Cryptor.sha512encrypt("123123");
             List <User> userlist = new List<User> { new User { ID=1,Email="asd@asd.com",Username="user1",Password=temp,IsLocked=false,IsVerified=true},
