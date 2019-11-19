@@ -19,16 +19,20 @@ namespace B_Commerce.Login.Service.Concrete
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<AccountVerification> _accountVerificationRepository;
+        CacheManager CacheManager;
         //Login service'in constructor'ında log nesneside olacak...
-        public LoginService(IUnitOfWork unitOfWork, IRepository<User> userRepository, IRepository<AccountVerification> accountVerificationRepository)
+        public LoginService(IUnitOfWork unitOfWork, IRepository<User> userRepository, IRepository<AccountVerification> accountVerificationRepository,CacheManager cacheManager)
         {
+            
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
             _accountVerificationRepository = accountVerificationRepository;
+            CacheManager = cacheManager;
         }
 
-        public CheckTokenResponse CheckToken(string token) // private olabilir
+        public CheckTokenResponse CheckToken(string token)
         {
+
             User user = CacheManager.GetUser(token);
             CheckTokenResponse checkTokenResponse = new CheckTokenResponse();
 

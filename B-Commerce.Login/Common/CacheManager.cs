@@ -5,35 +5,37 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using B_Commerce.Common.Repository;
 
 namespace B_Commerce.Login.Common
 {
     public class CacheManager
     {
-        static CacheManager()
+
+        private IRepository<Token> _tokenRepo { get; set; }
+        public CacheManager(IRepository<Token> tokenRepo)
         {
+            _tokenRepo=tokenRepo;
             Users = new Dictionary<string, User>();
         }
         public static Dictionary<string, User> Users { get; set; }
 
-        public static void AddUserToCache(string token, User user)
+        public void AddUserToCache(string token, User user)
         {
             if (!Users.ContainsKey(token)) Users.Add(token, user);
         }
 
-        public static User GetUser(string token)
+        public User GetUser(string token)
         {
             if (Users.Count == 0)
             {
                 List<Token> tokens = new List<Token>();
-                using (LoginDbContext db = new LoginDbContext())
-                {
-                    tokens = db.Tokens.Where(t => t.EndDate > DateTime.Now).ToList();
+                    tokens = _tokenRepo.Get(t => t.EndDate > DateTime.Now).ToList();
                     foreach (var item in tokens)
                     {
                         AddUserToCache(item.TokenText, item.User);
                     }
-                }
+                
             }
             return Users[token];
         }

@@ -23,7 +23,9 @@ namespace LoginTest
         public FakeUserRepo()
         {
             string temp = Cryptor.sha512encrypt("123123");
-            List <User> userlist = new List<User> { new User { ID=1,Email="asd@asd.com",Username="user1",Password=temp,IsLocked=false,IsVerified=true},
+            List<Token> tokens = new List<Token>();
+            tokens.Add( new Token{ TokenText="12345",UserID=1,EndDate=DateTime.Now.AddDays(1)});
+            List <User> userlist = new List<User> { new User { ID=1,Email="asd@asd.com",Username="user1",Password=temp,IsLocked=false,IsVerified=true,Tokens=tokens},
             new User { ID=2,Username="user2",Password="pass2",IsLocked=false}};
 
 

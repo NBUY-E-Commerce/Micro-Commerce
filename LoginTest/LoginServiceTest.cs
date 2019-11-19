@@ -12,6 +12,7 @@ namespace LoginTest
     public class LoginServiceTest
     {
         private IRepository<User> _FakeUserRepo;
+        private IRepository<Token> _FakeTokenRepo;
         private IRepository<AccountVerification> _FakeAccountVerificationRepo;
         private IUnitOfWork _fakeUOW;
         private ILoginService _logService;
@@ -20,9 +21,11 @@ namespace LoginTest
         {
             _FakeUserRepo = new FakeUserRepo().MockObject;
             _FakeAccountVerificationRepo = new FakeAccountVerificationRepo().MockObject;
+            _FakeTokenRepo = new FakeTokenRepo().MockObject;
             _fakeUOW = new FakeUOW().MockObject;
+            CacheManager cache = new CacheManager(_FakeTokenRepo);
 
-            _logService = new LoginService(_fakeUOW, _FakeUserRepo,_FakeAccountVerificationRepo);
+            _logService = new LoginService(_fakeUOW, _FakeUserRepo,_FakeAccountVerificationRepo, cache);
 
         }
         [TestMethod]
@@ -49,8 +52,23 @@ namespace LoginTest
             Assert.AreEqual((int)Constants.ResponseCode.SUCCESS, result2.Code);
         }
 
+          [TestMethod]
+        public void TestCheckVerificationCode()
+        {
+            string tokenstring="12345", codestring="123456";
+            // Doðru Login
+            var result = _logService.CheckVerificationCode(tokenstring,codestring);
+            _logService.AddUserToCache(tokenstring);
+            Assert.AreEqual((int)Constants.ResponseCode.SUCCESS, result.Code);
+
+            //// Hatalý Login
+            //var result2 = _logService.Login(new LoginRequest() { Email = "asd@asd.com", Password = "12323" });
+
+            //Assert.AreEqual((int)Constants.ResponseCode.INVALID_USERNAME_OR_PASSWORD, result2.Code);
 
         }
+
+    }
 }
 
 
