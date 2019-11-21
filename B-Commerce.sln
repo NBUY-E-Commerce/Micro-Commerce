@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoginTest", "LoginTest\Logi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LoginPresentation", "LoginPresentation", "{5F3ABC15-F648-49AD-9E88-FCC36CBA72F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B-Commerce.Login.MVC", "B-Commerce.Login.MVC\B-Commerce.Login.MVC.csproj", "{54664B54-9C35-4967-A04F-F3BD6EB5E5E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "B-Commerce.Login.MVC", "B-Commerce.Login.MVC\B-Commerce.Login.MVC.csproj", "{54664B54-9C35-4967-A04F-F3BD6EB5E5E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B-Commerce.LoginApi", "B-Commerce.LoginApi\B-Commerce.LoginApi.csproj", "{FACEFCA0-BF9C-4D84-83ED-67A67C4B8676}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{54664B54-9C35-4967-A04F-F3BD6EB5E5E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54664B54-9C35-4967-A04F-F3BD6EB5E5E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54664B54-9C35-4967-A04F-F3BD6EB5E5E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FACEFCA0-BF9C-4D84-83ED-67A67C4B8676}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FACEFCA0-BF9C-4D84-83ED-67A67C4B8676}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FACEFCA0-BF9C-4D84-83ED-67A67C4B8676}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FACEFCA0-BF9C-4D84-83ED-67A67C4B8676}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
