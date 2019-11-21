@@ -25,18 +25,44 @@ namespace B_Commerce.LoginApi.Controllers
         CacheManager CacheManager;
 
         [HttpPost]
-        public LoginResponse Login(string email, string password)
+        public LoginResponse Login(LoginRequest loginRequest)
         {
 
             LoginService loginService = new LoginService(_unitOfWork, _userRepository, _accountVerificationRepository, CacheManager);
 
             LoginResponse loginResponse = new LoginResponse();
 
-            loginResponse = loginService.Login(new B_Commerce.Login.Request.LoginRequest { Email = email, Password = password });
+            loginResponse = loginService.Login(loginRequest);
 
             return loginResponse;
 
-
         }
+
+        [HttpPost]
+        public RegisterResponse UserRegistry(User user)
+        {
+            LoginService loginService = new LoginService(_unitOfWork, _userRepository, _accountVerificationRepository, CacheManager);
+            RegisterResponse registerResponse = new RegisterResponse();
+            registerResponse=loginService.UserRegistry(user);
+            return registerResponse;
+        }
+  
+        [HttpPost]
+        public LoginResponse FacebookLogin(string fbcode)
+        {
+            LoginService loginService = new LoginService(_unitOfWork, _userRepository, _accountVerificationRepository, CacheManager);
+            LoginResponse loginResponse = new LoginResponse();
+            loginResponse=loginService.FacebookLogin(fbcode);
+            return loginResponse;
+        }
+        [HttpPost]
+        public LoginResponse CheckVerificationCode(string token, string code)
+        {
+            LoginService loginService = new LoginService(_unitOfWork, _userRepository, _accountVerificationRepository, CacheManager);
+            LoginResponse loginResponse = new LoginResponse();
+            loginResponse=loginService.CheckVerificationCode(token,code);
+            return loginResponse;
+        }
+
     }
 }

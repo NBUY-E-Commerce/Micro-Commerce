@@ -79,7 +79,7 @@ namespace B_Commerce.Login.Service.Concrete
             LoginResponse loginResponse = new LoginResponse();
             try
             {
-                User _user = _userRepository.Get(t => (t.Email == loginRequest.Email || t.Phone == loginRequest.Email)).FirstOrDefault();
+                User _user = _userRepository.Get(t => (t.Email == loginRequest.Email || t.Phone == loginRequest.Phone)).FirstOrDefault();
 
                 if (_user == null)
                 {
@@ -172,7 +172,6 @@ namespace B_Commerce.Login.Service.Concrete
             return registerResponse;
         }
        
-
         public LoginResponse FacebookLogin(string fbcode)
         {
             LoginResponse loginResponse = new LoginResponse();
