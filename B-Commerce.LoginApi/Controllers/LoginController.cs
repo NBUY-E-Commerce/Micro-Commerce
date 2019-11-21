@@ -32,6 +32,7 @@ namespace B_Commerce.LoginApi.Controllers
             _accountVerificationRepository = new Repository<AccountVerification>(loginDbContext);
         }
         [HttpPost]
+        [Route("Login")]
         public LoginResponse Login(LoginRequest loginRequest)
         {
 
@@ -46,6 +47,7 @@ namespace B_Commerce.LoginApi.Controllers
         }
 
         [HttpPost]
+        [Route("UserRegistry")]
         public RegisterResponse UserRegistry(User user)
         {
             LoginService loginService = new LoginService(_unitOfWork, _userRepository, _accountVerificationRepository, CacheManager);
@@ -55,6 +57,7 @@ namespace B_Commerce.LoginApi.Controllers
         }
   
         [HttpPost]
+        [Route("FacebookLogin")]
         public LoginResponse FacebookLogin(string fbcode)
         {
             LoginService loginService = new LoginService(_unitOfWork, _userRepository, _accountVerificationRepository, CacheManager);
@@ -63,6 +66,7 @@ namespace B_Commerce.LoginApi.Controllers
             return loginResponse;
         }
         [HttpPost]
+        [Route("CheckVerificationCode")]
         public LoginResponse CheckVerificationCode(string token, string code)
         {
             LoginService loginService = new LoginService(_unitOfWork, _userRepository, _accountVerificationRepository, CacheManager);
