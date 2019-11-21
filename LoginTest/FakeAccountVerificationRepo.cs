@@ -20,13 +20,17 @@ namespace LoginTest
         public readonly IRepository<AccountVerification> MockObject;
         public FakeAccountVerificationRepo()
         {
-            List<AccountVerification> accounts = new List<AccountVerification> { new AccountVerification { ID=1, UserID=1, VerificationCode="123456", ExpireTime=DateTime.Now.AddDays(1)}};
+            List<AccountVerification> accounts = new List<AccountVerification> { 
+                new AccountVerification { ID=1, UserID=1, VerificationCode="123456", ExpireTime=DateTime.Now.AddDays(1)},
+                new AccountVerification { ID=2, UserID=1, VerificationCode="111111", ExpireTime=DateTime.Now.AddDays(-1)},
+                new AccountVerification { ID=3, UserID=2, VerificationCode="222222", ExpireTime=DateTime.Now.AddDays(-1)}
+            };
 
 
-            var mockuserrepo = new Mock<IRepository<AccountVerification>>();
-            mockuserrepo.Setup(t => t.Add(It.IsAny<AccountVerification>())).Callback((AccountVerification account) => accounts.Add(account));
-            mockuserrepo.Setup(t => t.Delete(It.IsAny<AccountVerification>())).Callback((AccountVerification account) => accounts.Remove(account));
-            mockuserrepo.Setup(t => t.Update(It.IsAny<AccountVerification>())).Callback(((AccountVerification account) =>
+            var mockAccountVerificationRepo = new Mock<IRepository<AccountVerification>>();
+            mockAccountVerificationRepo.Setup(t => t.Add(It.IsAny<AccountVerification>())).Callback((AccountVerification account) => accounts.Add(account));
+            mockAccountVerificationRepo.Setup(t => t.Delete(It.IsAny<AccountVerification>())).Callback((AccountVerification account) => accounts.Remove(account));
+            mockAccountVerificationRepo.Setup(t => t.Update(It.IsAny<AccountVerification>())).Callback(((AccountVerification account) =>
             {
                 var result = accounts.Where(t => t.ID == account.ID).FirstOrDefault();
                 if (result == null)
@@ -37,7 +41,7 @@ namespace LoginTest
 
             }));
 
-            mockuserrepo.Setup(t => t.Get(It.IsAny<Expression<Func<AccountVerification, bool>>>())).Returns(
+            mockAccountVerificationRepo.Setup(t => t.Get(It.IsAny<Expression<Func<AccountVerification, bool>>>())).Returns(
                 (Expression<Func<AccountVerification, bool>> filter) => {
                     if (filter == null)
                     {
@@ -47,7 +51,7 @@ namespace LoginTest
                 });
 
 
-            MockObject = mockuserrepo.Object;
+            MockObject = mockAccountVerificationRepo.Object;
         }
     }
 }

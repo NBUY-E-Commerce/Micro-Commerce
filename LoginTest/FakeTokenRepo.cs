@@ -20,13 +20,17 @@ namespace LoginTest
         public readonly IRepository<Token> MockObject;
         public FakeTokenRepo()
         {
-            List<Token> accounts = new List<Token> { new Token { ID = 1, UserID = 1, TokenText = "123456", EndDate = DateTime.Now.AddDays(1) } };
+            List<Token> accounts = new List<Token> { 
+                new Token { ID=1, UserID=1, TokenText="123456", EndDate=DateTime.Now.AddDays(1) },
+                new Token { ID=2, UserID=2, TokenText="222222", EndDate=DateTime.Now.AddDays(1) },
+                new Token { ID=3, UserID=1, TokenText="111111", EndDate=DateTime.Now.AddDays(-1) }
+            };
 
 
-            var mockuserrepo = new Mock<IRepository<Token>>();
-            mockuserrepo.Setup(t => t.Add(It.IsAny<Token>())).Callback((Token account) => accounts.Add(account));
-            mockuserrepo.Setup(t => t.Delete(It.IsAny<Token>())).Callback((Token account) => accounts.Remove(account));
-            mockuserrepo.Setup(t => t.Update(It.IsAny<Token>())).Callback(((Token account) =>
+            var mockTokenRepo = new Mock<IRepository<Token>>();
+            mockTokenRepo.Setup(t => t.Add(It.IsAny<Token>())).Callback((Token account) => accounts.Add(account));
+            mockTokenRepo.Setup(t => t.Delete(It.IsAny<Token>())).Callback((Token account) => accounts.Remove(account));
+            mockTokenRepo.Setup(t => t.Update(It.IsAny<Token>())).Callback(((Token account) =>
             {
                 var result = accounts.Where(t => t.ID == account.ID).FirstOrDefault();
                 if (result == null)
@@ -37,7 +41,7 @@ namespace LoginTest
 
             }));
 
-            mockuserrepo.Setup(t => t.Get(It.IsAny<Expression<Func<Token, bool>>>())).Returns(
+            mockTokenRepo.Setup(t => t.Get(It.IsAny<Expression<Func<Token, bool>>>())).Returns(
                 (Expression<Func<Token, bool>> filter) => {
                     if (filter == null)
                     {
@@ -47,7 +51,7 @@ namespace LoginTest
                 });
 
 
-            MockObject = mockuserrepo.Object;
+            MockObject = mockTokenRepo.Object;
         }
     }
 }

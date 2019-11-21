@@ -22,17 +22,41 @@ namespace LoginTest
         public readonly IRepository<User> MockObject;
         public FakeUserRepo()
         {
-            string temp = Cryptor.sha512encrypt("123123");
-            List<Token> tokens = new List<Token>();
-            tokens.Add( new Token{ TokenText="12345",UserID=1,EndDate=DateTime.Now.AddDays(1)});
-            List <User> userlist = new List<User> { new User { ID=1,Email="asd@asd.com",Username="user1",Password=temp,IsLocked=false,IsVerified=true,Tokens=tokens},
-            new User { ID=2,Username="user2",Password="pass2",IsLocked=false}};
+
+            List<Token> user1Tokens = new List<Token> {
+                new Token { ID=1, UserID=1, TokenText="123456", EndDate=DateTime.Now.AddDays(1) },
+                new Token { ID=3, UserID=1, TokenText="111111", EndDate=DateTime.Now.AddDays(-1) }
+            };
+
+            List<Token> user2Tokens = new List<Token> {
+                new Token { ID = 2, UserID = 2, TokenText = "222222", EndDate = DateTime.Now.AddDays(1) }
+            };
+
+            List<AccountVerification> user1AccountVerifications = new List<AccountVerification> {
+                new AccountVerification { ID = 1, UserID = 1, VerificationCode = "123456", ExpireTime = DateTime.Now.AddDays(1) },
+                new AccountVerification { ID = 2, UserID = 1, VerificationCode = "111111", ExpireTime = DateTime.Now.AddDays(-1) }
+            };
+
+            List<AccountVerification> user2AccountVerifications = new List<AccountVerification> {
+                new AccountVerification { ID = 3, UserID = 2, VerificationCode = "222222", ExpireTime = DateTime.Now.AddDays(-1) }
+            };
 
 
-            var mockuserrepo = new Mock<IRepository<User>>();
-            mockuserrepo.Setup(t => t.Add(It.IsAny<User>())).Callback((User user) => userlist.Add(user));
-            mockuserrepo.Setup(t => t.Delete(It.IsAny<User>())).Callback((User user) => userlist.Remove(user));
-            mockuserrepo.Setup(t => t.Update(It.IsAny<User>())).Callback(((User user) =>
+
+
+            string user1Pass = Cryptor.sha512encrypt("123123");
+            string user2Pass = Cryptor.sha512encrypt("pass2");
+
+            List<User> userlist = new List<User> {
+                new User { ID=1, Email="asd@asd.com", Username="user1", Password=user1Pass, IsLocked=false, IsVerified=true, Tokens=user1Tokens, AccountVerifications=user1AccountVerifications},
+                new User { ID=2, Email="qwe@qwe.com", Username="user2", Password=user2Pass, IsLocked=false, IsVerified=true, Tokens=user2Tokens, AccountVerifications=user2AccountVerifications}
+            };
+
+
+            var mockUserRepo = new Mock<IRepository<User>>();
+            mockUserRepo.Setup(t => t.Add(It.IsAny<User>())).Callback((User user) => userlist.Add(user));
+            mockUserRepo.Setup(t => t.Delete(It.IsAny<User>())).Callback((User user) => userlist.Remove(user));
+            mockUserRepo.Setup(t => t.Update(It.IsAny<User>())).Callback(((User user) =>
             {
                 var result = userlist.Where(t => t.ID == user.ID).FirstOrDefault();
                 if (result == null)
@@ -43,8 +67,9 @@ namespace LoginTest
 
             }));
 
-            mockuserrepo.Setup(t => t.Get(It.IsAny<Expression<Func<User, bool>>>())).Returns(
-                (Expression<Func<User, bool>> filter) => {
+            mockUserRepo.Setup(t => t.Get(It.IsAny<Expression<Func<User, bool>>>())).Returns(
+                (Expression<Func<User, bool>> filter) =>
+                {
                     if (filter == null)
                     {
                         return userlist.AsQueryable();
@@ -53,7 +78,7 @@ namespace LoginTest
                 });
 
 
-            MockObject = mockuserrepo.Object;
+            MockObject = mockUserRepo.Object;
         }
     }
 }

@@ -15,6 +15,7 @@ namespace B_Commerce.Login.Common
             BANNED,
             INVALID_TOKEN,
             EMAIL_IN_USE,
+            EXPIRED_CODE
         }
 
         public static Dictionary<int, string> ResponseCodes = new Dictionary<int, string>
@@ -26,6 +27,7 @@ namespace B_Commerce.Login.Common
           {4,"Kullanıcı Banlanmıştır !" },
           {5,"Geçersiz Token !" },
           {6,"Bu E-posta kullanılmaktadır.Lütfen başka bir E-posta ile deneyin." },
+          {7,"Süresi dolmuş bir kod girdiniz. Lütfen E-postanıza yeni bir kod gönderin." }
         };
 
     }

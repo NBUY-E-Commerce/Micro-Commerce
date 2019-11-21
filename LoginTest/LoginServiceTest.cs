@@ -25,7 +25,7 @@ namespace LoginTest
             _fakeUOW = new FakeUOW().MockObject;
             CacheManager cache = new CacheManager(_FakeTokenRepo);
 
-            _logService = new LoginService(_fakeUOW, _FakeUserRepo,_FakeAccountVerificationRepo, cache);
+            _logService = new LoginService(_fakeUOW, _FakeUserRepo, _FakeAccountVerificationRepo, cache);
 
         }
         [TestMethod]
@@ -46,25 +46,25 @@ namespace LoginTest
         public void TestUserRegistry()
         {
             var result = _logService.UserRegistry(new User() { Email = "asd@asd.com", Password = "1234567" });
-            Assert.AreEqual((int)Constants.ResponseCode.EMAIL_IN_USE, result.Code);  
+            Assert.AreEqual((int)Constants.ResponseCode.EMAIL_IN_USE, result.Code);
 
             var result2 = _logService.UserRegistry(new User() { Email = "asd12@asd.com", Password = "1234567" });
             Assert.AreEqual((int)Constants.ResponseCode.SUCCESS, result2.Code);
         }
 
-          [TestMethod]
+        [TestMethod]
         public void TestCheckVerificationCode()
         {
-            string tokenstring="12345", codestring="123456";
-            // Doðru Login
-            var result = _logService.CheckVerificationCode(tokenstring,codestring);
-            _logService.AddUserToCache(tokenstring);
+
+            // Suresi dolmamis verification code
+            var result = _logService.CheckVerificationCode(1, "123456");
+            
             Assert.AreEqual((int)Constants.ResponseCode.SUCCESS, result.Code);
 
-            //// Hatalý Login
-            //var result2 = _logService.Login(new LoginRequest() { Email = "asd@asd.com", Password = "12323" });
+            // Suresi dolmus verification code
+            var result2 = _logService.CheckVerificationCode(1, "111111");
 
-            //Assert.AreEqual((int)Constants.ResponseCode.INVALID_USERNAME_OR_PASSWORD, result2.Code);
+            Assert.AreEqual((int)Constants.ResponseCode.EXPIRED_CODE, result2.Code);
 
         }
 

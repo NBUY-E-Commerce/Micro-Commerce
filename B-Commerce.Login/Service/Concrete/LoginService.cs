@@ -51,11 +51,6 @@ namespace B_Commerce.Login.Service.Concrete
 
         private Token CreateToken(double expireDay = 1)
         {
-            //Generate Token
-            //byte[] time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
-            //byte[] key = Guid.NewGuid().ToByteArray();
-            //string token = Convert.ToBase64String(time.Concat(key).ToArray());
-
             string token = RandomGenerator.Generate(45);
             return new Token
             {
@@ -89,7 +84,7 @@ namespace B_Commerce.Login.Service.Concrete
 
                 loginResponse.Username = _user.Username;
 
-                if (_user.IsVerified == false)
+                if (_user.IsVerified == false)//farkili bir hata donmeli ki arayuzde  dogrulama sayfasina  atalim
                 {
                     loginResponse.SetError(Constants.ResponseCode.FAILED);
                     return loginResponse;
@@ -255,27 +250,32 @@ namespace B_Commerce.Login.Service.Concrete
             return loginResponse;
         }
 
-        public LoginResponse CheckVerificationCode(string token, string code) // api olması gerekli mi?
+        public VerificationResponse CheckVerificationCode(int userID, string code)//bool donebilir mi daha iyi olur sanki
         {
-            //Test Edilecek
-            //User ı tokenden çekmek yerine direk db den alsa daha iyi değil mi? Adam zaten login yapamıyor isVerified değilse?
-            User user = CacheManager.GetUser(token);
-            AccountVerification accountVerification = new AccountVerification();
-            accountVerification = user.AccountVerifications.LastOrDefault(t => t.VerificationCode == code);
-            LoginResponse loginResponse = new LoginResponse();
+            User user = _userRepository.Get(t => t.ID == userID).FirstOrDefault();
+            
+            AccountVerification accountVerification = user.AccountVerifications.FirstOrDefault(t => t.VerificationCode == code);
+            VerificationResponse verificationResponse = new VerificationResponse();
+
             if (accountVerification == null)
             {
                 user.IsVerified = false;
-                loginResponse.SetError(Constants.ResponseCode.FAILED);
-                return loginResponse;
+                verificationResponse.SetError(Constants.ResponseCode.FAILED);
+                return verificationResponse;
             }
-            user.IsVerified = true;//ExpireDate kontrol edilmesi gerekmiyor mu Verify code için?
 
-            loginResponse.SetError(Constants.ResponseCode.SUCCESS);
-            loginResponse.Username = user.Username;
-            loginResponse.Token = token;
+            if (accountVerification.ExpireTime < DateTime.Now)
+            {
+                user.IsVerified = false;
+                verificationResponse.SetError(Constants.ResponseCode.EXPIRED_CODE);
+                return verificationResponse;
+            }
+            user.IsVerified = true;
 
-            return loginResponse;
+            verificationResponse.SetError(Constants.ResponseCode.SUCCESS);
+            
+
+            return verificationResponse;
         }
 
     }
