@@ -7,6 +7,7 @@ using B_Commerce.Common.UOW;
 using B_Commerce.Login.Common;
 using B_Commerce.Login.DatabaseContext;
 using B_Commerce.Login.DomainClass;
+using B_Commerce.Login.Request;
 using B_Commerce.Login.Response;
 using B_Commerce.Login.Service.Concrete;
 using Microsoft.AspNetCore.Http;
@@ -18,14 +19,18 @@ namespace B_Commerce.LoginApi.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-
-
         LoginDbContext loginDbContext;
         IUnitOfWork _unitOfWork;
         IRepository<User> _userRepository;
         IRepository<AccountVerification> _accountVerificationRepository;
         CacheManager CacheManager;
-
+        public LoginController()
+        {
+            loginDbContext = new LoginDbContext();
+            _unitOfWork = new UnitOfWork(loginDbContext);
+            _userRepository = new Repository<User>(loginDbContext);
+            _accountVerificationRepository = new Repository<AccountVerification>(loginDbContext);
+        }
         [HttpPost]
         public LoginResponse Login(LoginRequest loginRequest)
         {
