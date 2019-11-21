@@ -171,24 +171,7 @@ namespace B_Commerce.Login.Service.Concrete
 
             return registerResponse;
         }
-        private RegisterResponse FacebookUserRegistry(User user) // Silinmesi gerekebilir?
-        {
-            RegisterResponse registerResponse = new RegisterResponse();
-            User _user = user;
-            _userRepository.Add(_user);
-
-            if (_unitOfWork.SaveChanges() > 0)
-            {
-                registerResponse.SetError(Constants.ResponseCode.SUCCESS);
-                registerResponse.Username = _user.Username;
-            }
-            else
-            {
-                registerResponse.SetError(Constants.ResponseCode.SYSTEM_ERROR);
-            }
-
-            return registerResponse;
-        }
+       
 
         public LoginResponse FacebookLogin(string fbcode)
         {
@@ -232,7 +215,7 @@ namespace B_Commerce.Login.Service.Concrete
                             return loginResponse;
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         loginResponse.SetError(Constants.ResponseCode.SYSTEM_ERROR);
                         return loginResponse;
@@ -250,8 +233,20 @@ namespace B_Commerce.Login.Service.Concrete
                     AccessToken = accessToken,
                 });
 
-                UserRegistry(user);
-                _userRepository.Add(user);
+                if (UserRegistry(user).Code==0) // Başarılı register
+                {
+                    Token token = CreateToken();
+                    user.Tokens.Add(token);
+                    CacheManager.AddUserToCache(token.TokenText, user);
+
+                    loginResponse.Username = user.FullName();
+                    loginResponse.Token = token.TokenText;
+                    loginResponse.SetError(Constants.ResponseCode.SUCCESS);
+                    return loginResponse;
+                }
+                loginResponse.SetError(Constants.ResponseCode.SYSTEM_ERROR);
+
+                //_userRepository.Add(user); //UserRegistry zaten db ye ekleme yapıyor!
             }
             catch
             {
@@ -263,6 +258,7 @@ namespace B_Commerce.Login.Service.Concrete
         public LoginResponse CheckVerificationCode(string token, string code) // api olması gerekli mi?
         {
             //Test Edilecek
+            //User ı tokenden çekmek yerine direk db den alsa daha iyi değil mi? Adam zaten login yapamıyor isVerified değilse?
             User user = CacheManager.GetUser(token);
             AccountVerification accountVerification = new AccountVerification();
             accountVerification = user.AccountVerifications.LastOrDefault(t => t.VerificationCode == code);
@@ -273,7 +269,7 @@ namespace B_Commerce.Login.Service.Concrete
                 loginResponse.SetError(Constants.ResponseCode.FAILED);
                 return loginResponse;
             }
-            user.IsVerified = true;
+            user.IsVerified = true;//ExpireDate kontrol edilmesi gerekmiyor mu Verify code için?
 
             loginResponse.SetError(Constants.ResponseCode.SUCCESS);
             loginResponse.Username = user.Username;
