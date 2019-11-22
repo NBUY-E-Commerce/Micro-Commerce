@@ -12,6 +12,7 @@ using B_Commerce.Login.Response;
 using B_Commerce.Login.Service.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace B_Commerce.LoginApi.Controllers
 {
@@ -19,24 +20,24 @@ namespace B_Commerce.LoginApi.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        LoginDbContext loginDbContext;
+        DbContext _loginDbContext;
         IUnitOfWork _unitOfWork;
         IRepository<User> _userRepository;
         IRepository<AccountVerification> _accountVerificationRepository;
-        CacheManager CacheManager;
-        public LoginController()
+        CacheManager _CacheManager;
+        public LoginController(IUnitOfWork unitOfWork, IRepository<User> userRepository, IRepository<AccountVerification> accountVerificationRepository,CacheManager CacheManager, LoginDbContext loginDbContext)
         {
-            loginDbContext = new LoginDbContext();
-            _unitOfWork = new UnitOfWork(loginDbContext);
-            _userRepository = new Repository<User>(loginDbContext);
-            _accountVerificationRepository = new Repository<AccountVerification>(loginDbContext);
+            _loginDbContext = loginDbContext;
+            _unitOfWork = unitOfWork;
+            _userRepository = userRepository;
+            _accountVerificationRepository = accountVerificationRepository;
         }
         [HttpPost]
         [Route("Login")]
         public LoginResponse Login(LoginRequest loginRequest)
         {
 
-            LoginService loginService = new LoginService(_unitOfWork, _userRepository, _accountVerificationRepository, CacheManager);
+            LoginService loginService = new LoginService(_unitOfWork, _userRepository, _accountVerificationRepository, _CacheManager);
 
             LoginResponse loginResponse = new LoginResponse();
 
@@ -50,7 +51,7 @@ namespace B_Commerce.LoginApi.Controllers
         [Route("UserRegistry")]
         public RegisterResponse UserRegistry(User user)
         {
-            LoginService loginService = new LoginService(_unitOfWork, _userRepository, _accountVerificationRepository, CacheManager);
+            LoginService loginService = new LoginService(_unitOfWork, _userRepository, _accountVerificationRepository, _CacheManager);
             RegisterResponse registerResponse = new RegisterResponse();
             registerResponse=loginService.UserRegistry(user);
             return registerResponse;
@@ -60,7 +61,7 @@ namespace B_Commerce.LoginApi.Controllers
         [Route("FacebookLogin")]
         public LoginResponse FacebookLogin(string fbcode)
         {
-            LoginService loginService = new LoginService(_unitOfWork, _userRepository, _accountVerificationRepository, CacheManager);
+            LoginService loginService = new LoginService(_unitOfWork, _userRepository, _accountVerificationRepository, _CacheManager);
             LoginResponse loginResponse = new LoginResponse();
             loginResponse=loginService.FacebookLogin(fbcode);
             return loginResponse;
@@ -69,7 +70,7 @@ namespace B_Commerce.LoginApi.Controllers
         [Route("CheckVerificationCode")]
         public LoginResponse CheckVerificationCode(string token, string code)
         {
-            LoginService loginService = new LoginService(_unitOfWork, _userRepository, _accountVerificationRepository, CacheManager);
+            LoginService loginService = new LoginService(_unitOfWork, _userRepository, _accountVerificationRepository, _CacheManager);
             LoginResponse loginResponse = new LoginResponse();
             loginResponse=loginService.CheckVerificationCode(token,code);
             return loginResponse;
