@@ -12,8 +12,8 @@ namespace B_Commerce.NotificationService.Common
 
         public const string MailServer = "smtp.gmail.com";
         public const string FromMail = "Bcommerce401@gmail.com";
-        public const string FromName = "B-Commerce";
-        public const string fromPassword = "assword1357";
+        public const string FromName = "B-Commerce Notification Service";
+        public const string fromPassword = "assword13579";
         public const int port = 587;
 
         #endregion
@@ -31,10 +31,13 @@ namespace B_Commerce.NotificationService.Common
 
         #region RabbitMqSettings
 
-        public const string RMQ_HostAdress = "Localhost";
-        public const string RMQ_QueueNameFor_Mail = "BCommerceNotifications";
+        public const string RMQ_HostAdress = "10.0.75.2";
+        public const string RMQ_QueueNameFor_Mail = "BCommerceMailQueue";
+        public const string RMQ_QueueNameFor_Sms = "BCommerceSmsQueue";
+        public const string RMQ_Username = "drncn";
+        public const string RMQ_Password = "black1987";
         public const bool RMQ_QueueDurable = true; // Queue nin RabbitMq tarafında nerede tutulacağı . true : Harddisk || false : Ram
-        public const double RMQ_ConsumerRefreshTime = 1000;
+        public const double RMQ_ConsumerRefreshTime = 10000;
 
         #endregion
 

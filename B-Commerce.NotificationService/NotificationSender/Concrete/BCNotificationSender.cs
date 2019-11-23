@@ -39,7 +39,7 @@ namespace B_Commerce.NotificationService.NotificationSender.Concrete
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }

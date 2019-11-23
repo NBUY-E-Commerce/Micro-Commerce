@@ -12,7 +12,7 @@ namespace B_Commerce.Common.UOW
         /// </summary>
         private DbContext _context;
         private IDbContextTransaction _transaction;
-            public UnitOfWork(DbContext context)
+        public UnitOfWork(DbContext context)
         {
             if (context == null)
             {
@@ -29,31 +29,25 @@ namespace B_Commerce.Common.UOW
             }
             catch (Exception ex)
             {
-
                 //Hatalar Loglanabilir
-            }             
+            }
         }
         public int SaveChanges()
         {
             int resultOfSaveChanges = 0;
             try
             {
-                
-                resultOfSaveChanges= _context.SaveChanges();
+                resultOfSaveChanges = _context.SaveChanges();
                 _transaction.Commit();
-                
-
             }
             catch (Exception ex)
             {
-
                 _transaction.Rollback();
                 resultOfSaveChanges = 0;
                 //Hatalar Loglanabilir
-
             }
-            finally {
-
+            finally
+            {
                 _transaction.Dispose();
                 _transaction = _context.Database.BeginTransaction();
             }

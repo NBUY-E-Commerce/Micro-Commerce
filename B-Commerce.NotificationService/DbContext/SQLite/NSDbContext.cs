@@ -11,10 +11,10 @@ namespace B_Commerce.NotificationService.DbContext.SQLite
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseSqlite(@"Data Source=Database\NotificationServices.db;");
+                .UseSqlite(@"Data Source=C:\Db\NotificationServices.db;");
         }
 
         public virtual DbSet<ProjectPermission> ProjectPermissions { get; set; }
-     
+
     }
 }

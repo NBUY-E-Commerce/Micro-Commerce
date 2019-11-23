@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace B_Commerce.NotificationService.Migrations
 {
     [DbContext(typeof(NSDbContext))]
-    [Migration("20191116103049_first")]
+    [Migration("20191123082640_first")]
     partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,6 +45,9 @@ namespace B_Commerce.NotificationService.Migrations
                     b.Property<string>("OwnerPhone")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ProjectCode")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ProjectName")
                         .HasColumnType("TEXT");
 
@@ -61,6 +64,9 @@ namespace B_Commerce.NotificationService.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("insertUserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("isBanned")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("isDeleted")

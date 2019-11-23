@@ -22,7 +22,8 @@ namespace B_Commerce.NotificationService.Tools.ProjectAuthManager.Concrete
 
         public bool ProjectCodeCheck(string projectCode)
         {
-            return _repo.Get(t => t.ProjectCode == projectCode).FirstOrDefault() == null ? false : true;
+            bool drn = _repo.Get(t => t.ProjectCode == projectCode).FirstOrDefault() == null ? false : true;
+            return drn;
         }
 
         public bool ProjectBannCheck(string projectCode)
@@ -59,13 +60,29 @@ namespace B_Commerce.NotificationService.Tools.ProjectAuthManager.Concrete
         public bool MailLimitControl(string projectCode)
         {
             ProjectPermission perm = _repo.Get(t => t.ProjectCode == projectCode).FirstOrDefault();
+            if (perm.MaxMailLimit == 0) return true;
             return (perm.DailyMailCount >= perm.MaxMailLimit) ? false : true;
         }
 
         public bool SmsLimitControl(string projectCode)
         {
             ProjectPermission perm = _repo.Get(t => t.ProjectCode == projectCode).FirstOrDefault();
+            if (perm.MaxSmsLimit == 0) return true;
             return (perm.DailySmsCount >= perm.MaxSmsLimit) ? false : true;
+        }
+
+        public void PlusMailCount(string projectCode)
+        {
+            var project = _repo.Get(t => t.ProjectCode == projectCode).SingleOrDefault();
+            project.DailyMailCount++;
+            _uow.SaveChanges();
+        }
+
+        public void PlusSmsCount(string projectCode)
+        {
+            var project = _repo.Get(t => t.ProjectCode == projectCode).SingleOrDefault();
+            project.DailyMailCount++;
+            _uow.SaveChanges();
         }
     }
 }
