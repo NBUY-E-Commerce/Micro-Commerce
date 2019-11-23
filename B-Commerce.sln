@@ -17,7 +17,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericRepoTest", "GenericR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionalUOWTest", "TransactionalUOWTest\TransactionalUOWTest.csproj", "{3BA46125-89CE-414E-8B0E-0E6C446B9BF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B-Commerce.NotificationService", "B-Commerce.NotificationService\B-Commerce.NotificationService.csproj", "{88CA9824-E6F3-4833-8773-63CA0656DB6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "B-Commerce.NotificationService", "B-Commerce.NotificationService\B-Commerce.NotificationService.csproj", "{88CA9824-E6F3-4833-8773-63CA0656DB6C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NotificationService", "NotificationService", "{0EC91004-D4DC-4314-B912-2378EE005C37}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "B-Commerce.NotificationService.Api", "B-Commerce.NotificationService.Api\B-Commerce.NotificationService.Api.csproj", "{DA1AE400-AA6C-4F80-A9EA-90BC6CF67546}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B-Commerce.NotificationService.Test", "B-Commerce.NotificationService.Test\B-Commerce.NotificationService.Test.csproj", "{A52240B8-BD47-43C3-B4A7-0C2A381FAA02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +59,14 @@ Global
 		{88CA9824-E6F3-4833-8773-63CA0656DB6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88CA9824-E6F3-4833-8773-63CA0656DB6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88CA9824-E6F3-4833-8773-63CA0656DB6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA1AE400-AA6C-4F80-A9EA-90BC6CF67546}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA1AE400-AA6C-4F80-A9EA-90BC6CF67546}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA1AE400-AA6C-4F80-A9EA-90BC6CF67546}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA1AE400-AA6C-4F80-A9EA-90BC6CF67546}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A52240B8-BD47-43C3-B4A7-0C2A381FAA02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A52240B8-BD47-43C3-B4A7-0C2A381FAA02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A52240B8-BD47-43C3-B4A7-0C2A381FAA02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A52240B8-BD47-43C3-B4A7-0C2A381FAA02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +75,9 @@ Global
 		{1613D3E9-D597-42F1-8248-F8531BEEB2FE} = {B52FE34C-1673-42BF-8FBA-96B184C237FD}
 		{38361CA5-B450-4DDB-8711-A4CE5A59599B} = {B52FE34C-1673-42BF-8FBA-96B184C237FD}
 		{3BA46125-89CE-414E-8B0E-0E6C446B9BF2} = {B52FE34C-1673-42BF-8FBA-96B184C237FD}
+		{88CA9824-E6F3-4833-8773-63CA0656DB6C} = {0EC91004-D4DC-4314-B912-2378EE005C37}
+		{DA1AE400-AA6C-4F80-A9EA-90BC6CF67546} = {0EC91004-D4DC-4314-B912-2378EE005C37}
+		{A52240B8-BD47-43C3-B4A7-0C2A381FAA02} = {0EC91004-D4DC-4314-B912-2378EE005C37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CBBEE5E6-87F0-4F49-BF1B-957A14A154A3}

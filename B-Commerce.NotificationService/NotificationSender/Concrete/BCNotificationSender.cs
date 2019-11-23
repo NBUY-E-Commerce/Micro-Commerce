@@ -7,6 +7,9 @@ using B_Commerce.NotificationService.Common;
 using B_Commerce.NotificationService.Request.Concrete;
 using B_Commerce.NotificationService.Response.Concrete;
 using B_Commerce.NotificationService.NotificationSender.Abstract;
+using Twilio.Clients;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
 
 namespace B_Commerce.NotificationService.NotificationSender.Concrete
 {
@@ -39,7 +42,7 @@ namespace B_Commerce.NotificationService.NotificationSender.Concrete
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }
@@ -48,28 +51,11 @@ namespace B_Commerce.NotificationService.NotificationSender.Concrete
         {
             try
             {
-                string number = request.PhoneNumber + Constants.serverattr_sms;
-                var fromAddress = new MailAddress(Constants.FromMail_sms, Constants.FromName_sms);
-                var toAddress = new MailAddress(number);
-
-                var smtp = new SmtpClient
-                {
-                    Host = Constants.MailServer,
-                    Port = Constants.port,
-                    EnableSsl = true,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(Constants.FromMail, Constants.fromPassword)
-                };
-
-                using (var message = new MailMessage(fromAddress, toAddress)
-                {
-                    Subject = request.Subject,
-                    Body = request.Text
-                })
-                {
-                    smtp.Send(message);
-                }
+                TwilioClient.Init(Constants.SmsAccoundID, Constants.SmsToken);
+                var message = MessageResource.Create(
+                 body: request.Text,
+                 from: new Twilio.Types.PhoneNumber(Constants.SmsNumber),
+                 to: new Twilio.Types.PhoneNumber(request.PhoneNumber));
                 return true;
             }
             catch (Exception)

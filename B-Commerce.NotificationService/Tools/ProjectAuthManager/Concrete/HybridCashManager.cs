@@ -70,5 +70,19 @@ namespace B_Commerce.NotificationService.Tools.ProjectAuthManager.Concrete
             ProjectPermission perm = projectPermissions.Where(t => t.ProjectCode == projectCode).FirstOrDefault();
             return (perm.DailySmsCount >= perm.MaxSmsLimit) ? false : true;
         }
+
+        public void PlusMailCount(string projectCode)
+        {
+            _sQliteAuth.PlusMailCount(projectCode);
+            ProjectPermission perm = projectPermissions.Where(t => t.ProjectCode == projectCode).FirstOrDefault();
+            perm.DailyMailCount++;
+        }
+
+        public void PlusSmsCount(string projectCode)
+        {
+            _sQliteAuth.PlusSmsCount(projectCode);
+            ProjectPermission perm = projectPermissions.Where(t => t.ProjectCode == projectCode).FirstOrDefault();
+            perm.DailySmsCount++;
+        }
     }
 }

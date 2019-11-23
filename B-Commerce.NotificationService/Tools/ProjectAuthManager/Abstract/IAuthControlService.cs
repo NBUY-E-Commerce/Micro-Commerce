@@ -5,7 +5,7 @@ using B_Commerce.NotificationService.DomainClass;
 
 namespace B_Commerce.NotificationService.Tools.ProjectAuthManager.Abstract
 {
-   public interface IAuthControlService
+    public interface IAuthControlService
     {
         bool ProjectCodeCheck(string projectCode);
         bool ProjectBannCheck(string projectCode);
@@ -15,5 +15,7 @@ namespace B_Commerce.NotificationService.Tools.ProjectAuthManager.Abstract
         bool SmsAuthControl(string projectCode);
         bool MailLimitControl(string projectCode);
         bool SmsLimitControl(string projectCode);
+        void PlusMailCount(string projectCode);
+        void PlusSmsCount(string projectCode);
     }
 }
