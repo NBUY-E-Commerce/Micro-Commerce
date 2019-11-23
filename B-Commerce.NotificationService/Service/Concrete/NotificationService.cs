@@ -72,7 +72,7 @@ namespace B_Commerce.NotificationService.Service.Concrete
         public NotificationResponse SendSms(SmsRequest request)
         {
             NotificationResponse response = new NotificationResponse();
-            if (_authControl.ProjectCodeCheck(request.ProjectCode))
+            if (!_authControl.ProjectCodeCheck(request.ProjectCode))
             {
                 response.SetError(Constants.ResponseCode.INVALİD_PROJECT_CODE);
                 return response;
@@ -84,12 +84,12 @@ namespace B_Commerce.NotificationService.Service.Concrete
                 return response;
             }
 
-            if (_authControl.SmsAuthControl(request.ProjectCode))
+            if (!_authControl.SmsAuthControl(request.ProjectCode))
             {
                 response.SetError(Constants.ResponseCode.MAİL_AUTHORİZATİON_ERROR);
                 return response;
             }
-            if (_authControl.SmsLimitControl(request.ProjectCode))
+            if (!_authControl.SmsLimitControl(request.ProjectCode))
             {
                 response.SetError(Constants.ResponseCode.MAİL_LİMİT_ERROR);
                 return response;

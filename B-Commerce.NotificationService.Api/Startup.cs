@@ -40,7 +40,7 @@ namespace B_Commerce.NotificationService.Api
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IAuthControlService, SQliteAuthManager>();
-            services.AddSingleton<IQueueService, B_Commerce.NotificationService.Tools.QueueManager.Concrete.RabbitMQ>();
+            services.AddSingleton<IQueueService, B_Commerce.NotificationService.Tools.QueueManager.Concrete.CacheMQ>();
             services.AddSingleton<INotificationSender, BCNotificationSender>();
             services.AddScoped<INotificationService, B_Commerce.NotificationService.Service.Concrete.NotificationService>();
             services.AddControllers();
