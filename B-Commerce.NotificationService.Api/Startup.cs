@@ -20,6 +20,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace B_Commerce.NotificationService.Api
 {
@@ -40,9 +41,13 @@ namespace B_Commerce.NotificationService.Api
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IAuthControlService, SQliteAuthManager>();
             services.AddSingleton<IQueueService, B_Commerce.NotificationService.Tools.QueueManager.Concrete.RabbitMQ>();
-            services.AddSingleton<INotificationSender,BCNotificationSender>();
+            services.AddSingleton<INotificationSender, BCNotificationSender>();
             services.AddScoped<INotificationService, B_Commerce.NotificationService.Service.Concrete.NotificationService>();
             services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "BCommerce Notification Service", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +57,13 @@ namespace B_Commerce.NotificationService.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BCommerce Notification Service V1");
+            });
 
             app.UseHttpsRedirection();
 
