@@ -24,10 +24,35 @@ namespace B_Commerce.Common.Repository
             _context.Entry(entity).State = EntityState.Added;
         }
 
-        public void Delete(T entity)
+         public void Delete(T entity)
         {
-            _context.Entry(entity).State = EntityState.Deleted;
-        }
+            if (entity.GetType().GetProperties("IsDelete")!=null)
+            {
+                
+                  T _entity = entity;
+
+                _entity.GetType().GetProperty("IsDelete").SetValue(_entity, true);
+
+                this.Update(_entity);
+            }
+              else
+              {
+              
+                DbEntityEntry dbEntityEntry = _dbContext.Entry(entity);
+
+                if (dbEntityEntry.State != EntityState.Deleted)
+                {
+                    dbEntityEntry.State = EntityState.Deleted;
+                }
+                else
+                {
+                    _dbSet.Attach(entity);
+                    _dbSet.Remove(entity);
+                }
+              }
+	   
+          //  _context.Entry(entity).State = EntityState.Deleted;
+         }
 
         public IQueryable<T> Get(Expression<Func<T, bool>> filter = null)
         {
