@@ -7,6 +7,8 @@ using B_Commerce.Common.UOW;
 using B_Commerce.Login.Common;
 using B_Commerce.Login.DatabaseContext;
 using B_Commerce.Login.DomainClass;
+using B_Commerce.Login.Service.Abstract;
+using B_Commerce.Login.Service.Concrete;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -37,9 +39,8 @@ namespace B_Commerce.LoginApi
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
-
-
             services.AddScoped<CacheManager, CacheManager>();
+            services.AddScoped<ILoginService, LoginService>();
             services.AddControllers();
         }
 

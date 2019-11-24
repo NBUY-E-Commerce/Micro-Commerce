@@ -19,7 +19,7 @@ namespace B_Commerce.Login.Service.Concrete
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<AccountVerification> _accountVerificationRepository;
-        CacheManager CacheManager;
+        CacheManager _cacheManager;
         //Login service'in constructor'ında log nesneside olacak...
         public LoginService(IUnitOfWork unitOfWork, IRepository<User> userRepository, IRepository<AccountVerification> accountVerificationRepository,CacheManager cacheManager)
         {
@@ -27,13 +27,13 @@ namespace B_Commerce.Login.Service.Concrete
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
             _accountVerificationRepository = accountVerificationRepository;
-            CacheManager = cacheManager;
+            _cacheManager = cacheManager;
         }
 
         public CheckTokenResponse CheckToken(string token)
         {
 
-            User user = CacheManager.GetUser(token);
+            User user = _cacheManager.GetUser(token);
             CheckTokenResponse checkTokenResponse = new CheckTokenResponse();
 
             if (user == null)
@@ -129,7 +129,7 @@ namespace B_Commerce.Login.Service.Concrete
 
                 if (_unitOfWork.SaveChanges() > 0)
                 {
-                    CacheManager.AddUserToCache(token.TokenText, _user);
+                    _cacheManager.AddUserToCache(token.TokenText, _user);
 
                     loginResponse.Username = _user.FullName();
                     loginResponse.Token = token.TokenText;
@@ -201,7 +201,7 @@ namespace B_Commerce.Login.Service.Concrete
 
                         if (_unitOfWork.SaveChanges() > 0)
                         {
-                            CacheManager.AddUserToCache(token.TokenText, user);
+                            _cacheManager.AddUserToCache(token.TokenText, user);
 
                             loginResponse.Username = user.FullName();
                             loginResponse.Token = token.TokenText;
@@ -231,7 +231,7 @@ namespace B_Commerce.Login.Service.Concrete
                 {
                     Token token = CreateToken();
                     user.Tokens.Add(token);
-                    CacheManager.AddUserToCache(token.TokenText, user);
+                    _cacheManager.AddUserToCache(token.TokenText, user);
 
                     loginResponse.Username = user.FullName();
                     loginResponse.Token = token.TokenText;
