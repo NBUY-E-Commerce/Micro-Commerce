@@ -1,25 +1,20 @@
-﻿using B_Commerce.Common.DomainClasses;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
+using B_Commerce.Common.DomainClasses;
+using B_Commerce.ProductService.Repository.Abstract;
+using Microsoft.EntityFrameworkCore;
 
-namespace B_Commerce.Common.Repository
+namespace B_Commerce.ProductService.Repository.Concrete
 {
-    public class Repository<T> : IRepository<T> where T : BaseEntity,new()
+    public class CRUDRepository<T> : ICRUDRepository<T> where T : BaseEntity
     {
         private DbContext _context;
         private DbSet<T> _dbSet;
-        public Repository(DbContext context) {
+        public CRUDRepository(DbContext context) {
             _context = context;
             _dbSet = _context.Set<T>();
         }
-
-   
         public void Add(T entity)
         {
             _context.Entry(entity).State = EntityState.Added;
@@ -27,14 +22,17 @@ namespace B_Commerce.Common.Repository
 
         public void Delete(T entity)
         {
-            _context.Entry(entity).State = EntityState.Deleted;
+            entity.isDeleted = true;
+            _context.Entry(entity).State = EntityState.Modified;
         }
 
         public IQueryable<T> Get(Expression<Func<T, bool>> filter = null)
         {
-            if (filter==null) { 
-                return _dbSet.AsQueryable(); 
+            if (filter == null)
+            {
+                return _dbSet.AsQueryable();
             }
+
             return _dbSet.Where(filter).AsQueryable();
         }
 
