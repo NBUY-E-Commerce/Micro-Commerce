@@ -13,7 +13,6 @@ namespace B_Commerce.Login.Response
         {
             this.Code = (int)code;
             this.Message = Constants.ResponseCodes[(int)code];
-
         }
     }
 }
