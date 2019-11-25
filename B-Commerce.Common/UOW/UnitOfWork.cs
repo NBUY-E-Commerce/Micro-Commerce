@@ -44,7 +44,8 @@ namespace B_Commerce.Common.UOW
             {
                 _transaction.Rollback();
                 resultOfSaveChanges = 0;
-                //Hatalar Loglanabilir
+               
+
             }
             finally
             {
