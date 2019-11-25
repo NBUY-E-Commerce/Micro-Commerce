@@ -35,33 +35,7 @@
         _________________________________________________________
         -->
         <div id="top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 offer mb-3 mb-lg-0"><a href="#" class="btn btn-success btn-sm">Offer of the day</a><a href="#" class="ml-1">Get flat 35% off on orders over $50!</a></div>
-                    <div class="col-lg-6 text-center text-lg-right">
-                        <ul class="menu list-inline mb-0">
-                            <li class="list-inline-item"><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
-                            <li class="list-inline-item"><a href="register.html">Register</a></li>
-                            <li class="list-inline-item"><a href="contact.html">Contact</a></li>
-                            <li class="list-inline-item"><a href="#">Recently viewed</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div id="login-modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true" class="modal fade">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Customer login</h5>
-                            <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
-                        </div>
-                        <div class="modal-body">
-                           </div>
-                    </div>
-                </div>
-            </div>
-            <!-- *** TOP BAR END ***-->
-
+            @Html.Action("TopBar","Login")
 
         </div>
         <nav class="navbar navbar-expand-lg">
@@ -270,7 +244,7 @@
                     <h4 class="mb-3">User section</h4>
                     <ul class="list-unstyled">
                         <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
-                        <li><a href="register.html">Regiter</a></li>
+                        <li><a href="/Login/Register">Register</a></li>
                     </ul>
                 </div>
                 <!-- /.col-lg-3-->
@@ -292,8 +266,9 @@
                 </div>
                 <!-- /.col-lg-3-->
                 <div class="col-lg-3 col-md-6">
+                    Caferağa, Mühürdar Cd. No:76, 34710 Kadıköy/İstanbul
                     <h4 class="mb-3">Where to find us</h4>
-                    <p><strong>Obaju Ltd.</strong><br>13/25 New Avenue<br>New Heaven<br>45Y 73J<br>England<br><strong>Great Britain</strong></p><a href="contact.html">Go to contact page</a>
+                    <p><strong>Obaju Ltd.</strong><br>Caferağa<br>Mühürdar Cd. No:76<br>No:76, 34710<br>Kadıköy/İstanbul<br></p><a href="#">Go to contact page</a>
                     <hr class="d-block d-md-none">
                 </div>
                 <!-- /.col-lg-3-->

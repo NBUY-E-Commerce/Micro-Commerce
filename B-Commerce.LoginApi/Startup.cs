@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,13 +35,17 @@ namespace B_Commerce.LoginApi
         {
             //dbcontent
             services.AddDbContext<DbContext, LoginDbContext>();
-
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
             services.AddScoped<CacheManager, CacheManager>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddControllers();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "My API", Version = "v1" });
+                c.EnableAnnotations();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,16 +56,20 @@ namespace B_Commerce.LoginApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
+            app.UseSwagger();
+            app.UseSwaggerUI(t =>
             {
-                endpoints.MapControllers();
+                t.SwaggerEndpoint("/swagger/v1/swagger.json", "MyAPI V1");
             });
+            app.UseHttpsRedirection();
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+             {
+                 endpoints.MapControllers();
+             });
+
+
         }
     }
 }

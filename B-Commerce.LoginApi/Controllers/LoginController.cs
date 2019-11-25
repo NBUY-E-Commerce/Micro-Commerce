@@ -14,6 +14,7 @@ using B_Commerce.Login.Service.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace B_Commerce.LoginApi.Controllers
 {
@@ -26,10 +27,14 @@ namespace B_Commerce.LoginApi.Controllers
         {
             _loginService = loginService;
         }
+
+      
         [HttpPost]
         [Route("Login")]
+        [SwaggerOperation(Summary = "login işlemi yapar", Description = "Gets two hardcoded values")]
         public LoginResponse Login(LoginRequest loginRequest)
         {
+
             return _loginService.Login(loginRequest);
         }
 

@@ -21,9 +21,9 @@ namespace B_Commerce.Login.Service.Concrete
         private readonly IRepository<AccountVerification> _accountVerificationRepository;
         CacheManager _cacheManager;
         //Login service'in constructor'ında log nesneside olacak...
-        public LoginService(IUnitOfWork unitOfWork, IRepository<User> userRepository, IRepository<AccountVerification> accountVerificationRepository,CacheManager cacheManager)
+        public LoginService(IUnitOfWork unitOfWork, IRepository<User> userRepository, IRepository<AccountVerification> accountVerificationRepository, CacheManager cacheManager)
         {
-            
+
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
             _accountVerificationRepository = accountVerificationRepository;
@@ -166,7 +166,7 @@ namespace B_Commerce.Login.Service.Concrete
 
             return registerResponse;
         }
-       
+
         public LoginResponse FacebookLogin(string fbcode)
         {
             LoginResponse loginResponse = new LoginResponse();
@@ -187,8 +187,8 @@ namespace B_Commerce.Login.Service.Concrete
 
                 string email = userinfo.email,
                     firstName = userinfo.first_name,
-                    lastName = userinfo.last_name,
-                    socialId = userinfo.id;
+                    lastName = userinfo.last_name;
+                int socialId = userinfo.id;
 
                 User user = _userRepository.Get(t => t.Email == email).FirstOrDefault();
 
@@ -227,7 +227,7 @@ namespace B_Commerce.Login.Service.Concrete
                     AccessToken = accessToken,
                 });
 
-                if (UserRegistry(user).Code==0) // Başarılı register
+                if (UserRegistry(user).Code == 0) // Başarılı register
                 {
                     Token token = CreateToken();
                     user.Tokens.Add(token);
@@ -252,7 +252,7 @@ namespace B_Commerce.Login.Service.Concrete
         public VerificationResponse CheckVerificationCode(int userID, string code)//bool donebilir mi daha iyi olur sanki
         {
             User user = _userRepository.Get(t => t.ID == userID).FirstOrDefault();
-            
+
             AccountVerification accountVerification = user.AccountVerifications.FirstOrDefault(t => t.VerificationCode == code);
             VerificationResponse verificationResponse = new VerificationResponse();
 
@@ -272,7 +272,7 @@ namespace B_Commerce.Login.Service.Concrete
             user.IsVerified = true;
 
             verificationResponse.SetError(Constants.ResponseCode.SUCCESS);
-            
+
 
             return verificationResponse;
         }
