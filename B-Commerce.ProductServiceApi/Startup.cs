@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace B_Commerce.ProductServiceApi
 {
@@ -33,6 +34,7 @@ namespace B_Commerce.ProductServiceApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            #region Dependency Injections
             services.AddScoped<DbContext, DataContext>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped(typeof(ICRUDRepository<>), typeof(CRUDRepository<>));
@@ -41,7 +43,14 @@ namespace B_Commerce.ProductServiceApi
             services.AddScoped<ISubCategoryService, SubCategoryService>();
             services.AddScoped<IProductService, ProductService.Services.Concrete.ProductService>();
             services.AddScoped<IProductImageService, ProductImageService>();
-           
+            #endregion
+            //Swagger
+            #region swagger
+            services.AddSwaggerGen(swagger =>
+            {
+                swagger.SwaggerDoc("v1", new OpenApiInfo { Title = "Product Service Swagger", Version = "v1" });
+            });
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,12 +66,19 @@ namespace B_Commerce.ProductServiceApi
             app.UseRouting();
 
             app.UseAuthorization();
-           
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
 
             });
+            #region UseSwagger
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Product Service Swagger v1");
+            });
+            #endregion
         }
     }
 }
