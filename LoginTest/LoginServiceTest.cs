@@ -46,7 +46,7 @@ namespace LoginTest
             var result = _logService.UserRegistry(new User() { Email = "asd@asd.com", Password = "1234567" });
             Assert.AreEqual((int)Constants.ResponseCode.EMAIL_IN_USE, result.Code);
 
-            var result2 = _logService.UserRegistry(new User() { Email = "asd12@asd.com", Password = "1234567"});
+            var result2 = _logService.UserRegistry(new User() { Email = "asd12@asd.com", Password = "1234567" });
             Assert.AreEqual((int)Constants.ResponseCode.SUCCESS, result2.Code);
         }
 
@@ -56,13 +56,15 @@ namespace LoginTest
 
             // Suresi dolmamis verification code
             var result = _logService.CheckVerificationCode(1, "123456");
-            
             Assert.AreEqual((int)Constants.ResponseCode.SUCCESS, result.Code);
 
             // Suresi dolmus verification code
             var result2 = _logService.CheckVerificationCode(1, "111111");
-
             Assert.AreEqual((int)Constants.ResponseCode.EXPIRED_CODE, result2.Code);
+
+            // Gecersiz verification code girisi
+            var result3 = _logService.CheckVerificationCode(1, "154698");
+            Assert.AreEqual((int)Constants.ResponseCode.FAILED, result3.Code);
 
         }
 

@@ -241,16 +241,17 @@ namespace B_Commerce.Login.Service.Concrete
                 {
                     Token token = CreateToken();
                     user.Tokens.Add(token);
-                    _cacheManager.AddUserToCache(token.TokenText, user);
+                    if (_unitOfWork.SaveChanges() > 0)
+                    {
+                        _cacheManager.AddUserToCache(token.TokenText, user);
+                        loginResponse.Username = user.FullName();
+                        loginResponse.Token = token.TokenText;
+                        loginResponse.SetStatus(Constants.ResponseCode.SUCCESS);
+                        return loginResponse;
+                    }
 
-                    loginResponse.Username = user.FullName();
-                    loginResponse.Token = token.TokenText;
-                    loginResponse.SetStatus(Constants.ResponseCode.SUCCESS);
-                    return loginResponse;
                 }
                 loginResponse.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
-
-                //_userRepository.Add(user); //UserRegistry zaten db ye ekleme yapıyor!
             }
             catch
             {
@@ -259,7 +260,7 @@ namespace B_Commerce.Login.Service.Concrete
             return loginResponse;
         }
 
-        public VerificationResponse CheckVerificationCode(int userID, string code)//bool donebilir mi daha iyi olur sanki
+        public VerificationResponse CheckVerificationCode(int userID, string code)
         {
             User user = _userRepository.Get(t => t.ID == userID).FirstOrDefault();
 
