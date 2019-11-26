@@ -13,14 +13,12 @@ namespace LoginTest
     {
         private IRepository<User> _FakeUserRepo;
         private IRepository<Token> _FakeTokenRepo;
-        private IRepository<AccountVerification> _FakeAccountVerificationRepo;
         private IUnitOfWork _fakeUOW;
         private ILoginService _logService;
         [TestInitialize()]
         public void AccountServiceTestIni()
         {
             _FakeUserRepo = new FakeUserRepo().MockObject;
-            _FakeAccountVerificationRepo = new FakeAccountVerificationRepo().MockObject;
             _FakeTokenRepo = new FakeTokenRepo().MockObject;
             _fakeUOW = new FakeUOW().MockObject;
             CacheManager cache = new CacheManager(_FakeTokenRepo);

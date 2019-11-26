@@ -27,7 +27,7 @@ namespace B_Commerce.Common.UOW
             {
                 _context.Dispose();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //Hatalar Loglanabilir
             }
