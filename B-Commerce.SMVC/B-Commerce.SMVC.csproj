@@ -295,6 +295,7 @@
     <Content Include="Content\vendor\jquery.cookie\component.json" />
     <Content Include="Content\vendor\jquery.cookie\cookie.jquery.json" />
     <Content Include="Content\vendor\popper.js\umd\poppper.js.flow" />
+    <Content Include="appsettings.json" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

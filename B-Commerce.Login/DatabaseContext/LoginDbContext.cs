@@ -1,5 +1,6 @@
 ﻿using B_Commerce.Login.DomainClass;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -9,9 +10,18 @@ namespace B_Commerce.Login.DatabaseContext
 {
     public class LoginDbContext : DbContext
     {
+        private string _connectionString;
+        public LoginDbContext()
+        {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+          .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+          .AddJsonFile("appsettings.json")
+          .Build();
+            _connectionString = configuration.GetConnectionString("LoginServiceDB");
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.;Database=LoginDatabase;User=sa;Password=123");
+            optionsBuilder.UseSqlServer(_connectionString);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
