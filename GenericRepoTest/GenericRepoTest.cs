@@ -30,10 +30,11 @@ namespace GenericRepoTest
         {
             var user1 = new User {Name = "Test", Surname = "Test"};
             var user2 = new User {Name = "Test1", Surname = "Test1"};
+          
             _repository.Add(user1);
             _repository.Add(user2);
-            _context.SaveChanges();
-            Assert.AreEqual(2, _repository.Get().Count());
+            int result = _context.SaveChanges();
+            Assert.AreEqual(2, result);
         }
 
         [TestMethod]
