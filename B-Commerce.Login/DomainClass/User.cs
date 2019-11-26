@@ -10,6 +10,8 @@ namespace B_Commerce.Login.DomainClass
         public User()
         {
             Tokens = new List<Token>();
+            AccountVerifications = new List<AccountVerification>();
+            SocialInfos = new List<SocialInfo>();
         }
         public string Username { get; set; }
         public string Password { get; set; }

@@ -11,7 +11,7 @@ namespace B_Commerce.Login.Mapping
     {
         public void Configure(EntityTypeBuilder<SocialType> builder)
         {
-            builder.HasMany(t => t.SocialInfos).WithOne(t => t.SocialType).HasForeignKey(t => t.SocialID);
+            builder.HasMany(t => t.SocialInfos).WithOne(t => t.SocialType).HasForeignKey(t => t.SocialTypeID);
         }
     }
 }

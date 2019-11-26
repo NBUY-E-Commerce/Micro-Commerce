@@ -18,15 +18,13 @@ namespace B_Commerce.Login.Service.Concrete
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<User> _userRepository;
-        private readonly IRepository<AccountVerification> _accountVerificationRepository;
         CacheManager _cacheManager;
         //Login service'in constructor'ında log nesneside olacak...
-        public LoginService(IUnitOfWork unitOfWork, IRepository<User> userRepository, IRepository<AccountVerification> accountVerificationRepository, CacheManager cacheManager)
+        public LoginService(IUnitOfWork unitOfWork, IRepository<User> userRepository, CacheManager cacheManager)
         {
 
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
-            _accountVerificationRepository = accountVerificationRepository;
             _cacheManager = cacheManager;
         }
 
@@ -38,11 +36,11 @@ namespace B_Commerce.Login.Service.Concrete
 
             if (user == null)
             {
-                checkTokenResponse.SetError(Constants.ResponseCode.INVALID_TOKEN);
+                checkTokenResponse.SetStatus(Constants.ResponseCode.INVALID_TOKEN);
                 return checkTokenResponse;
             }
 
-            checkTokenResponse.SetError(Constants.ResponseCode.SUCCESS);
+            checkTokenResponse.SetStatus(Constants.ResponseCode.SUCCESS);
             checkTokenResponse.Username = user.Username;
 
             return checkTokenResponse;
@@ -58,13 +56,12 @@ namespace B_Commerce.Login.Service.Concrete
                 EndDate = DateTime.Now.AddDays(expireDay),
             };
         }
-        private AccountVerification CreateAccountVerificationCode(int UserID)
+        private AccountVerification CreateAccountVerificationCode()
         {
             string verificationCode = RandomGenerator.Generate(6);
 
             return new AccountVerification
             {
-                UserID = UserID,
                 VerificationCode = verificationCode,
                 ExpireTime = DateTime.Now.AddDays(7),
             };
@@ -78,7 +75,7 @@ namespace B_Commerce.Login.Service.Concrete
 
                 if (_user == null)
                 {
-                    loginResponse.SetError(Constants.ResponseCode.INVALID_USERNAME_OR_PASSWORD);
+                    loginResponse.SetStatus(Constants.ResponseCode.INVALID_USERNAME_OR_PASSWORD);
                     return loginResponse;
                 }
 
@@ -86,13 +83,13 @@ namespace B_Commerce.Login.Service.Concrete
 
                 if (_user.IsVerified == false)//farkili bir hata donmeli ki arayuzde  dogrulama sayfasina  atalim
                 {
-                    loginResponse.SetError(Constants.ResponseCode.FAILED);
+                    loginResponse.SetStatus(Constants.ResponseCode.FAILED);
                     return loginResponse;
                 }
 
                 if (_user.IsLocked && _user.LockedTime > DateTime.Now)
                 {
-                    loginResponse.SetError(Constants.ResponseCode.BANNED);
+                    loginResponse.SetStatus(Constants.ResponseCode.BANNED);
                     return loginResponse;
                 }
 
@@ -107,18 +104,18 @@ namespace B_Commerce.Login.Service.Concrete
                     {
                         if (_user.IsLocked)
                         {
-                            loginResponse.SetError(Constants.ResponseCode.BANNED);
+                            loginResponse.SetStatus(Constants.ResponseCode.BANNED);
                             return loginResponse;
                         }
                         else
                         {
-                            loginResponse.SetError(Constants.ResponseCode.INVALID_USERNAME_OR_PASSWORD);
+                            loginResponse.SetStatus(Constants.ResponseCode.INVALID_USERNAME_OR_PASSWORD);
                             return loginResponse;
                         }
                     }
                     else
                     {
-                        loginResponse.SetError(Constants.ResponseCode.SYSTEM_ERROR);
+                        loginResponse.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
                         return loginResponse;
                     }
                 }
@@ -133,13 +130,13 @@ namespace B_Commerce.Login.Service.Concrete
 
                     loginResponse.Username = _user.FullName();
                     loginResponse.Token = token.TokenText;
-                    loginResponse.SetError(Constants.ResponseCode.SUCCESS);
+                    loginResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                     return loginResponse;
                 }
             }
             catch (Exception)
             {
-                loginResponse.SetError(Constants.ResponseCode.SYSTEM_ERROR);
+                loginResponse.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
                 return loginResponse;
             }
 
@@ -149,19 +146,32 @@ namespace B_Commerce.Login.Service.Concrete
         {
             RegisterResponse registerResponse = new RegisterResponse();
 
-            if (_userRepository.Get(t => t.Email == user.Email).FirstOrDefault() != null)
+            try
             {
-                registerResponse.SetError(Constants.ResponseCode.EMAIL_IN_USE);
-                return registerResponse;
-            }
-            user.Password = Cryptor.sha512encrypt(user.Password);//şifreleme
-            _userRepository.Add(user);
-            _accountVerificationRepository.Add(CreateAccountVerificationCode(user.ID));
+                if (_userRepository.Get(t => t.Email == user.Email).FirstOrDefault() != null)
+                {
+                    registerResponse.SetStatus(Constants.ResponseCode.EMAIL_IN_USE);
+                    return registerResponse;
+                }
+                user.Password = Cryptor.sha512encrypt(user.Password);//şifreleme
 
-            if (_unitOfWork.SaveChanges() > 0)
+                if (user.SocialInfos.Count == 0)
+                {
+                    user.AccountVerifications.Add(CreateAccountVerificationCode());
+                }
+
+                _userRepository.Add(user);
+
+                if (_unitOfWork.SaveChanges() > 0)
+                {
+                    registerResponse.SetStatus(Constants.ResponseCode.SUCCESS);
+                    registerResponse.Username = user.Username;
+                }
+            }
+            catch (Exception)
             {
-                registerResponse.SetError(Constants.ResponseCode.SUCCESS);
-                registerResponse.Username = user.Username;
+                //mongodb log at.
+                registerResponse.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
             }
 
             return registerResponse;
@@ -187,8 +197,8 @@ namespace B_Commerce.Login.Service.Concrete
 
                 string email = userinfo.email,
                     firstName = userinfo.first_name,
-                    lastName = userinfo.last_name;
-                int socialId = userinfo.id;
+                    lastName = userinfo.last_name,
+                    socialId = userinfo.id;
 
                 User user = _userRepository.Get(t => t.Email == email).FirstOrDefault();
 
@@ -205,13 +215,13 @@ namespace B_Commerce.Login.Service.Concrete
 
                             loginResponse.Username = user.FullName();
                             loginResponse.Token = token.TokenText;
-                            loginResponse.SetError(Constants.ResponseCode.SUCCESS);
+                            loginResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                             return loginResponse;
                         }
                     }
                     catch (Exception)
                     {
-                        loginResponse.SetError(Constants.ResponseCode.SYSTEM_ERROR);
+                        loginResponse.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
                         return loginResponse;
                     }
                     return loginResponse;
@@ -235,16 +245,16 @@ namespace B_Commerce.Login.Service.Concrete
 
                     loginResponse.Username = user.FullName();
                     loginResponse.Token = token.TokenText;
-                    loginResponse.SetError(Constants.ResponseCode.SUCCESS);
+                    loginResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                     return loginResponse;
                 }
-                loginResponse.SetError(Constants.ResponseCode.SYSTEM_ERROR);
+                loginResponse.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
 
                 //_userRepository.Add(user); //UserRegistry zaten db ye ekleme yapıyor!
             }
             catch
             {
-                loginResponse.SetError(Constants.ResponseCode.SYSTEM_ERROR);
+                loginResponse.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
             }
             return loginResponse;
         }
@@ -259,19 +269,19 @@ namespace B_Commerce.Login.Service.Concrete
             if (accountVerification == null)
             {
                 user.IsVerified = false;
-                verificationResponse.SetError(Constants.ResponseCode.FAILED);
+                verificationResponse.SetStatus(Constants.ResponseCode.FAILED);
                 return verificationResponse;
             }
 
             if (accountVerification.ExpireTime < DateTime.Now)
             {
                 user.IsVerified = false;
-                verificationResponse.SetError(Constants.ResponseCode.EXPIRED_CODE);
+                verificationResponse.SetStatus(Constants.ResponseCode.EXPIRED_CODE);
                 return verificationResponse;
             }
             user.IsVerified = true;
 
-            verificationResponse.SetError(Constants.ResponseCode.SUCCESS);
+            verificationResponse.SetStatus(Constants.ResponseCode.SUCCESS);
 
 
             return verificationResponse;

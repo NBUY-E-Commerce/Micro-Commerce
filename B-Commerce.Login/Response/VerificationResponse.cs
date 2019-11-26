@@ -7,5 +7,6 @@ namespace B_Commerce.Login.Response
 {
     public class VerificationResponse : BaseResponse
     {
+
     }
 }

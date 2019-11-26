@@ -25,7 +25,7 @@ namespace LoginTest
             _fakeUOW = new FakeUOW().MockObject;
             CacheManager cache = new CacheManager(_FakeTokenRepo);
 
-            _logService = new LoginService(_fakeUOW, _FakeUserRepo, _FakeAccountVerificationRepo, cache);
+            _logService = new LoginService(_fakeUOW, _FakeUserRepo, cache);
 
         }
         [TestMethod]
@@ -48,7 +48,7 @@ namespace LoginTest
             var result = _logService.UserRegistry(new User() { Email = "asd@asd.com", Password = "1234567" });
             Assert.AreEqual((int)Constants.ResponseCode.EMAIL_IN_USE, result.Code);
 
-            var result2 = _logService.UserRegistry(new User() { Email = "asd12@asd.com", Password = "1234567" });
+            var result2 = _logService.UserRegistry(new User() { Email = "asd12@asd.com", Password = "1234567"});
             Assert.AreEqual((int)Constants.ResponseCode.SUCCESS, result2.Code);
         }
 

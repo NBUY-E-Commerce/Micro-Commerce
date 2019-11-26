@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace B_Commerce.Login.Migrations
 {
     [DbContext(typeof(LoginDbContext))]
-    [Migration("20191125114444_ilk")]
-    partial class ilk
+    [Migration("20191126065014_v1")]
+    partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -70,8 +70,8 @@ namespace B_Commerce.Login.Migrations
                     b.Property<string>("AccessToken")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SocialID")
-                        .HasColumnType("int");
+                    b.Property<string>("SocialID")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SocialTypeID")
                         .HasColumnType("int");
@@ -81,7 +81,7 @@ namespace B_Commerce.Login.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("SocialID");
+                    b.HasIndex("SocialTypeID");
 
                     b.HasIndex("UserID");
 
@@ -231,7 +231,7 @@ namespace B_Commerce.Login.Migrations
                 {
                     b.HasOne("B_Commerce.Login.DomainClass.SocialType", "SocialType")
                         .WithMany("SocialInfos")
-                        .HasForeignKey("SocialID")
+                        .HasForeignKey("SocialTypeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -8,7 +8,7 @@ namespace B_Commerce.Login.DomainClass
     public class SocialInfo
     {
         public int ID { get; set; }
-        public int SocialID { get; set; }
+        public string SocialID { get; set; }
         public int UserID { get; set; }
         public int SocialTypeID { get; set; }
         public string AccessToken { get; set; }

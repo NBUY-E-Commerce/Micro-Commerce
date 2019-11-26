@@ -11,7 +11,7 @@ namespace B_Commerce.Login.DatabaseContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.;Database=LoginDatabase2;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=.;Database=LoginDatabase;User=sa;Password=123");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

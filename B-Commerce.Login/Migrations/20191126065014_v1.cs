@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace B_Commerce.Login.Migrations
 {
-    public partial class ilk : Migration
+    public partial class v1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -82,7 +82,7 @@ namespace B_Commerce.Login.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SocialID = table.Column<int>(nullable: false),
+                    SocialID = table.Column<string>(nullable: true),
                     UserID = table.Column<int>(nullable: false),
                     SocialTypeID = table.Column<int>(nullable: false),
                     AccessToken = table.Column<string>(nullable: true)
@@ -91,8 +91,8 @@ namespace B_Commerce.Login.Migrations
                 {
                     table.PrimaryKey("PK_SocialInfos", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_SocialInfos_SocialTypes_SocialID",
-                        column: x => x.SocialID,
+                        name: "FK_SocialInfos_SocialTypes_SocialTypeID",
+                        column: x => x.SocialTypeID,
                         principalTable: "SocialTypes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -136,9 +136,9 @@ namespace B_Commerce.Login.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SocialInfos_SocialID",
+                name: "IX_SocialInfos_SocialTypeID",
                 table: "SocialInfos",
-                column: "SocialID");
+                column: "SocialTypeID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SocialInfos_UserID",
