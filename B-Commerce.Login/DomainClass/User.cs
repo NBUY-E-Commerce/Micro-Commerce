@@ -30,6 +30,7 @@ namespace B_Commerce.Login.DomainClass
         public virtual ICollection<AccountVerification> AccountVerifications { get; set; }
         public virtual ICollection<Token> Tokens { get; set; }
         public virtual ICollection<SocialInfo> SocialInfos { get; set; }
+        public virtual PasswordChange PasswordChange { get; set; }
 
         public void UserLocked(double banTime)
         {

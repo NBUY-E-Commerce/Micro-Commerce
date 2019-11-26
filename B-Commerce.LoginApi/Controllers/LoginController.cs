@@ -58,5 +58,41 @@ namespace B_Commerce.LoginApi.Controllers
             return _loginService.CheckVerificationCode(UserID, code);
         }
 
+        [HttpPost]
+        [Route("SendPasswordChangeCode")]
+        [SwaggerOperation(Summary = "şifre değişikliği için kod gönderim işlemi yapar", Description = "Gets two hardcoded values")]
+        public PasswordChangeResponse SendPasswordChangeCode(string Email)
+        {
+
+            return _loginService.SendPasswordChangeCode(Email);
+        }
+
+        [HttpPost]
+        [Route("CheckPasswordChangeCode")]
+        public PasswordChangeResponse CheckPasswordChangeCode(string Email, string Code)
+        {
+            return _loginService.CheckPasswordChangeCode(Email, Code);
+        }
+
+        [HttpPost]
+        [Route("ChangePassword")]
+        public PasswordChangeResponse ChangePassword(string Email, string Code, string newPassword)
+        {
+            return _loginService.ChangePassword(Email, Code, newPassword);
+        }
+
+        [HttpPost]
+        [Route("ChangePassword2")]
+        public PasswordChangeResponse ChangePassword(int UserID, string oldPassword, string newPassword)
+        {
+            return _loginService.ChangePassword(UserID, oldPassword, newPassword);
+        }
+
+        [HttpPost]
+        [Route("SendAccountVerificationCode")]
+        public VerificationResponse SendAccountVerificationCode(string Email)
+        {
+            return _loginService.SendAccountVerificationCode(Email);
+        }
     }
 }
