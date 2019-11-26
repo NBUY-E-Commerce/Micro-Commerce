@@ -48,5 +48,40 @@ namespace LogService.Controllers
             }
             
         }
+
+
+
+        public ActionResult InsertLog(int ProjectCode, string ProjectPassword, JsonResult LogInfo)
+        {
+            projectsInfo.Add(1, "123");
+            try
+            {
+                foreach (var item in projectsInfo)
+                {
+                    if (item.Key == ProjectCode && item.Value == ProjectPassword)
+                    {
+                        _queueJson = LogInfo;
+                        Publisher publisher = new Publisher("LogInfo", _queue);
+
+                        break;
+                    }
+
+                    projectsInfo.Clear();
+
+                    throw new Exception("Proje kodu veya şifresi yanlış");
+                }
+
+
+                return null;
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
     }
 }
