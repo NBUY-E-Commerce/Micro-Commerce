@@ -1,0 +1,28 @@
+﻿@model LoginModel
+@using (Ajax.BeginForm("", new AjaxOptions
+{
+
+
+}))
+{
+    <div class="form-group">
+        @Html.TextBoxFor(t => t.UserName, new { placeholder = "Email", @class = "form-control", id = "email-modal" })
+        @Html.ValidationMessageFor(t => t.UserName)
+    </div>
+
+    <div class="form-group">
+
+        @Html.PasswordFor(t => t.Password, new { placeholder = "Password", @class = "form-control", id = "password-modal" })
+        @Html.ValidationMessageFor(t => t.UserName)
+    </div>
+
+
+    <p class="text-center">
+        <input type="submit" class="btn btn-primary" value="Login">
+    </p>
+
+}
+
+<p class="text-center text-muted">Not registered yet?</p>
+<a href="/Login/Register"><p class="text-center" style="font-weight:800">Register now</p></a>
+

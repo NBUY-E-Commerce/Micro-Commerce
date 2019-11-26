@@ -9,7 +9,7 @@ namespace B_Commerce.Login.Response
     {
         public int Code { get; set; }
         public string Message { get; set; }
-        public void SetError(Constants.ResponseCode code)
+        public void SetStatus(Constants.ResponseCode code)
         {
             this.Code = (int)code;
             this.Message = Constants.ResponseCodes[(int)code];

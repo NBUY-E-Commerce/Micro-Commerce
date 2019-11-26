@@ -27,7 +27,7 @@ namespace B_Commerce.Common.UOW
             {
                 _context.Dispose();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Hatalar Loglanabilir
             }
@@ -40,7 +40,7 @@ namespace B_Commerce.Common.UOW
                 resultOfSaveChanges = _context.SaveChanges();
                 _transaction.Commit();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 _transaction.Rollback();
                 resultOfSaveChanges = 0;

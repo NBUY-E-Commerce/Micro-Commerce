@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewData["Title"] = "VerifyMail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="container">
+        <div class="card card-login mx-auto mt-5">
+            <div class="card-header">Verify E-mail</div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <h4>Forgot your password?</h4>
+                    <p>Enter your email address and we will send you instructions on how to reset your password.</p>
+                </div>
+                <form>
+                    <div class="form-group">
+                        <div class="form-label-group">
+                            <input type="email" id="verificationCode" class="form-control" placeholder="Enter verification code" required="required" autofocus="autofocus">
+                            <label for="verificationCode">Enter verification code</label>
+                        </div>
+                    </div>
+                    <div class="btn-group btn-block" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary">Re-Send</button>
+                        <button type="button" class="btn btn-success">Verify</button>
+                    </div>
+                </form>
+                <div class="text-center">
+                    <a class="d-block small mt-3" href="/Register">Register an Account</a>
+                    <a class="d-block small" href="/Login">Login Page</a>
+                </div>
+            </div>
+        </div>
+    </div>
+

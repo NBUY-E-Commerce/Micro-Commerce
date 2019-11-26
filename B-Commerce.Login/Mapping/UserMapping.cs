@@ -16,11 +16,11 @@ namespace B_Commerce.Login.Mapping
             builder.Property(t => t.Username).IsRequired();
             builder.Property(t => t.Email).IsRequired();
             builder.Property(t => t.Phone).IsRequired();
-            builder.Property(t => t.Password).HasMaxLength(10);
-            builder.Property(t => t.Username).HasMaxLength(10);
+            builder.Property(t => t.Username).HasMaxLength(20);
             builder.Property(t => t.Adress).HasMaxLength(100);
             builder.Property(t => t.City).HasMaxLength(20);
-            builder.Property(t => t.Country).HasMaxLength(20);         
+            builder.Property(t => t.Country).HasMaxLength(20);
+            builder.Property(t => t.Password).HasMaxLength(200);
 
         }
     }

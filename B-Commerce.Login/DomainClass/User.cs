@@ -10,6 +10,8 @@ namespace B_Commerce.Login.DomainClass
         public User()
         {
             Tokens = new List<Token>();
+            AccountVerifications = new List<AccountVerification>();
+            SocialInfos = new List<SocialInfo>();
         }
         public string Username { get; set; }
         public string Password { get; set; }
@@ -20,11 +22,14 @@ namespace B_Commerce.Login.DomainClass
         public string City { get; set; }
         public string Adress { get; set; }
         public string Phone { get; set; }
-        public int WrongCount { get; set; }
-        public bool IsLocked { get; set; }
+        public int WrongCount { get; set; } = 0;
+        public bool IsLocked { get; set; } = false;
+        public bool IsVerified { get; set; } = false;
         public DateTime? LockedTime { get; set; }
 
+        public virtual ICollection<AccountVerification> AccountVerifications { get; set; }
         public virtual ICollection<Token> Tokens { get; set; }
+        public virtual ICollection<SocialInfo> SocialInfos { get; set; }
 
         public void UserLocked(double banTime)
         {

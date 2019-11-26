@@ -19,6 +19,88 @@ namespace B_Commerce.Login.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("B_Commerce.Login.DomainClass.AccountVerification", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("ExpireTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("VerificationCode")
+                        .HasColumnType("nvarchar(6)")
+                        .HasMaxLength(6);
+
+                    b.Property<DateTime?>("deleteDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("deleteUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("insertDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("insertUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("AccountVerifications");
+                });
+
+            modelBuilder.Entity("B_Commerce.Login.DomainClass.SocialInfo", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AccessToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SocialID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SocialTypeID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("SocialTypeID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("SocialInfos");
+                });
+
+            modelBuilder.Entity("B_Commerce.Login.DomainClass.SocialType", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("SocialName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("SocialTypes");
+                });
+
             modelBuilder.Entity("B_Commerce.Login.DomainClass.Token", b =>
                 {
                     b.Property<int>("ID")
@@ -34,6 +116,21 @@ namespace B_Commerce.Login.Migrations
 
                     b.Property<int>("UserID")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleteDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("deleteUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("insertDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("insertUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
 
                     b.HasKey("ID");
 
@@ -68,6 +165,9 @@ namespace B_Commerce.Login.Migrations
                     b.Property<bool>("IsLocked")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("LockedTime")
                         .HasColumnType("datetime2");
 
@@ -77,8 +177,8 @@ namespace B_Commerce.Login.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<string>("Phone")
                         .IsRequired()
@@ -90,15 +190,54 @@ namespace B_Commerce.Login.Migrations
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<int>("WrongCount")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("deleteDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("deleteUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("insertDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("insertUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("ID");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("B_Commerce.Login.DomainClass.AccountVerification", b =>
+                {
+                    b.HasOne("B_Commerce.Login.DomainClass.User", "User")
+                        .WithMany("AccountVerifications")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("B_Commerce.Login.DomainClass.SocialInfo", b =>
+                {
+                    b.HasOne("B_Commerce.Login.DomainClass.SocialType", "SocialType")
+                        .WithMany("SocialInfos")
+                        .HasForeignKey("SocialTypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("B_Commerce.Login.DomainClass.User", "User")
+                        .WithMany("SocialInfos")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("B_Commerce.Login.DomainClass.Token", b =>
