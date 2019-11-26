@@ -34,6 +34,7 @@ namespace B_Commerce.Login.DatabaseContext
         public virtual DbSet<SocialInfo> SocialInfos { get; set; }
         public virtual DbSet<SocialType> SocialTypes { get; set; }
         public virtual DbSet<AccountVerification> AccountVerifications { get; set; }
-
+        public virtual DbSet<PasswordChange> PasswordChanges { get; set; }
+        
     }
 }

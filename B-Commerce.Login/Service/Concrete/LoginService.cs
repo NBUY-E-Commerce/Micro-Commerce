@@ -11,6 +11,8 @@ using System.Linq;
 using System.Text;
 using B_Commerce.Common.UOW;
 using B_Commerce.Common.Security;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace B_Commerce.Login.Service.Concrete
 {
@@ -155,15 +157,38 @@ namespace B_Commerce.Login.Service.Concrete
                 }
                 user.Password = Cryptor.sha512encrypt(user.Password);//şifreleme
 
+                AccountVerification accountVerification = CreateAccountVerificationCode();
                 if (user.SocialInfos.Count == 0)
                 {
-                    user.AccountVerifications.Add(CreateAccountVerificationCode());
+                    user.AccountVerifications.Add(accountVerification);
                 }
 
                 _userRepository.Add(user);
 
                 if (_unitOfWork.SaveChanges() > 0)
                 {
+                    MailRequest mailRequest = new MailRequest
+                    {
+                        ToMail = user.Email,
+                        ToName = user.FullName(),
+                        Subject = "B-Commerce E-Mail Onayı",
+                        Body = $"Merhaba {user.FullName()}\n Email onaylama kodunuz: {accountVerification.VerificationCode}",
+                        ProjectCode = "123456"
+                    };
+
+
+                    HttpClient httpClient = new HttpClient();
+                    httpClient.BaseAddress = new Uri("http://localhost:57731/");
+
+                    Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
+
+                    if (!httpResponse.Result.IsSuccessStatusCode)
+                    {
+                        registerResponse.SetStatus(Constants.ResponseCode.FAILED);
+                        return registerResponse;
+                    }
+
+
                     registerResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                     registerResponse.Username = user.Username;
                 }
@@ -286,6 +311,207 @@ namespace B_Commerce.Login.Service.Concrete
 
 
             return verificationResponse;
+        }
+
+        public PasswordChangeResponse SendPasswordChangeCode(string Email)
+        {
+            PasswordChangeResponse response = new PasswordChangeResponse();
+            if (Email == null || Email == "")
+            {
+                response.SetStatus(Constants.ResponseCode.FAILED);
+                return response;
+            }
+            User user = _userRepository.Get(t => t.Email == Email).FirstOrDefault();
+
+            if (user == null)
+            {
+                response.SetStatus(Constants.ResponseCode.FAILED);
+                return response;
+            }
+
+            string PassChangeCode = RandomGenerator.Generate(6);
+
+            MailRequest mailRequest = new MailRequest
+            {
+                ToMail = user.Email,
+                ToName = user.FullName(),
+                Subject = "B-Commerce Şifre Yenileme",
+                Body = $"Şifre yenileme kodunuz: {PassChangeCode}",
+                ProjectCode = "123456"
+            };
+
+
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri("http://localhost:57731/");
+
+            Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
+
+            if (!httpResponse.Result.IsSuccessStatusCode)
+            {
+                response.SetStatus(Constants.ResponseCode.FAILED);
+                return response;
+            }
+
+
+            try
+            {
+                user.PasswordChange = new PasswordChange { ChangeCode = PassChangeCode, Email = user.Email };
+                _unitOfWork.SaveChanges();
+                response.Email = user.Email;
+                response.SetStatus(Constants.ResponseCode.SUCCESS);
+                return response;
+            }
+            catch (Exception)
+            {
+                response.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
+                return response;
+            }
+
+        }
+
+        public PasswordChangeResponse CheckPasswordChangeCode(string Email, string Code)
+        {
+            PasswordChangeResponse response = new PasswordChangeResponse();
+            if (Email == null || Email == "" || Code == null || Code == "")
+            {
+                response.SetStatus(Constants.ResponseCode.FAILED);
+                return response;
+            }
+            User user = _userRepository.Get(t => t.Email == Email).FirstOrDefault();
+            if (user == null)
+            {
+                response.SetStatus(Constants.ResponseCode.FAILED);
+                return response;
+            }
+            if (user.PasswordChange.ChangeCode != Code)
+            {
+                response.SetStatus(Constants.ResponseCode.FAILED);
+                return response;
+            }
+
+            if (user.PasswordChange.IsExpired())
+            {
+                response.SetStatus(Constants.ResponseCode.EXPIRED_CODE);
+                return response;
+            }
+
+            response.Email = user.Email;
+            response.PassChangeCode = user.PasswordChange.ChangeCode;
+            response.SetStatus(Constants.ResponseCode.SUCCESS);
+            return response;
+        }
+
+        public PasswordChangeResponse ChangePassword(string Email, string Code, string newPassword)
+        {
+            PasswordChangeResponse response = CheckPasswordChangeCode(Email, Code);
+
+            try
+            {
+                if (response.Code == (int)Constants.ResponseCode.SUCCESS)
+                {
+                    User user = _userRepository.Get(t => t.Email == Email).FirstOrDefault();
+                    user.Password = Cryptor.sha512encrypt(newPassword);
+
+                    _userRepository.Update(user);
+                    _unitOfWork.SaveChanges();
+                    response.SetStatus(Constants.ResponseCode.SUCCESS);
+                    return response;
+                }
+                else
+                {
+                    response.SetStatus(Constants.ResponseCode.FAILED);
+                    return response;
+                }
+                
+            }
+            catch (Exception)
+            {
+
+                response.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
+                return response;
+            }
+            
+        }
+
+        public PasswordChangeResponse ChangePassword(int UserID, string oldPassword, string newPassword)
+        {
+            PasswordChangeResponse response = new PasswordChangeResponse();
+            User user = _userRepository.Get(t => t.ID == UserID && t.Password == Cryptor.sha512encrypt(oldPassword)).FirstOrDefault();
+            if (user == null)
+            {
+                response.SetStatus(Constants.ResponseCode.INVALID_USERNAME_OR_PASSWORD);
+                return response;
+            }
+
+            try
+            {
+                user.Password = Cryptor.sha512encrypt(newPassword);
+                _userRepository.Update(user);
+                _unitOfWork.SaveChanges();
+                response.SetStatus(Constants.ResponseCode.SUCCESS);
+                return response;
+            }
+            catch (Exception)
+            {
+                response.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
+                return response;
+            }
+        }
+
+        public VerificationResponse SendAccountVerificationCode(string Email)
+        {
+            VerificationResponse response = new VerificationResponse();
+            if (Email == null || Email == "")
+            {
+                response.SetStatus(Constants.ResponseCode.FAILED);
+                return response;
+            }
+
+            User user = _userRepository.Get(t => t.Email == Email).FirstOrDefault();
+
+            if (user == null)
+            {
+                response.SetStatus(Constants.ResponseCode.FAILED);
+                return response;
+            }
+
+            AccountVerification accountVerification = CreateAccountVerificationCode();
+
+            MailRequest mailRequest = new MailRequest
+            {
+                ToMail = user.Email,
+                ToName = user.FullName(),
+                Subject = "B-Commerce E-Mail Onayı",
+                Body = $"Merhaba {user.FullName()}\n Email onaylama kodunuz: {accountVerification.VerificationCode}",
+                ProjectCode = "123456"
+            };
+
+
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri("http://localhost:57731/");
+
+            Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
+
+            if (!httpResponse.Result.IsSuccessStatusCode)
+            {
+                response.SetStatus(Constants.ResponseCode.FAILED);
+                return response;
+            }
+
+
+            try
+            {
+                user.AccountVerifications.Add(accountVerification);
+                _unitOfWork.SaveChanges();
+                response.SetStatus(Constants.ResponseCode.SUCCESS);
+                return response;
+            }
+            catch (Exception)
+            {
+                response.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
+                return response;
+            }
+
         }
 
     }
