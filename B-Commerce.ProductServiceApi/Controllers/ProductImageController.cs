@@ -25,7 +25,6 @@ namespace B_Commerce.ProductServiceApi.Controllers
             QueryableBaseResponse<ProductImage> result = null;
             try
             {
-
                 result = _productImageService.GetImagesByProductId(id);
                 if (result.code == ResponseCode.SUCCESS)
                 {

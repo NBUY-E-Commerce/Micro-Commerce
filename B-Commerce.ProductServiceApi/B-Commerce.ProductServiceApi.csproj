@@ -22,4 +22,5 @@
     <ProjectReference Include="..\B-Commerce.ProductService\B-Commerce.ProductService.csproj" />
   </ItemGroup>
 
+
 </Project>
