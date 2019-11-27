@@ -14,5 +14,7 @@ namespace B_Commerce.ProductService.Services.Abstracts
 
         QueryableBaseResponse<Product> GetProductsByCategoryId(int id);
 
+        QueryableBaseResponse<Product> GetDisplayProducts();
+
     }
 }
