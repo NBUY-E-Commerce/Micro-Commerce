@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Mvc;
-using MQService;
+using System.Threading.Tasks;
+using LogService.DomainClasses;
+using LogService.MQService;
+using LogService.MyDbContext;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LogService.Controllers
 {
-
-    public class MQServiceController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class MQServiceController : ControllerBase
     {
         internal string _queue;
 
+        internal JsonResult _queueJson;
+
         internal Dictionary<int, string> projectsInfo = new Dictionary<int, string>();
 
-        public ActionResult InsertLog(int ProjectCode, string ProjectPassword, string LogInfo)
+        public void InsertLog(int ProjectCode, string ProjectPassword, string LogInfo)
         {
             projectsInfo.Add(1, "123");
             try
@@ -36,9 +40,9 @@ namespace LogService.Controllers
                     throw new Exception("Proje kodu veya şifresi yanlış");
                 }
 
-                
-                return null;
-                 
+
+
+
 
             }
             catch (Exception)
@@ -46,12 +50,10 @@ namespace LogService.Controllers
 
                 throw;
             }
-            
+
         }
 
-
-
-        public ActionResult InsertLog(int ProjectCode, string ProjectPassword, JsonResult LogInfo)
+        public void InsertLog(int ProjectCode, string ProjectPassword, JsonResult LogInfo)
         {
             projectsInfo.Add(1, "123");
             try
@@ -72,7 +74,7 @@ namespace LogService.Controllers
                 }
 
 
-                return null;
+
 
 
             }
@@ -81,6 +83,37 @@ namespace LogService.Controllers
 
                 throw;
             }
+
+        }
+        public void Consume(int ConsumePass)
+        {
+            if (ConsumePass == 1)
+            {
+                for (; ; )
+                {
+
+                    Consumer _consumer = new Consumer("LogInfo");
+                    if (_consumer._queue != null)
+                    {
+                        List<LogInfo> logInfos = new List<LogInfo>();
+                        new LogInfo()
+                        {
+                            LogInfoMessage = _consumer._queue,
+                            LogID = 1
+
+
+                        };
+
+                        LogDbContext logDbContext = new LogDbContext();
+                        logDbContext.SaveChanges();
+
+                    }
+
+
+
+                }
+            }
+
 
         }
     }
