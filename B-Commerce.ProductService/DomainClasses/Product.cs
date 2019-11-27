@@ -28,7 +28,7 @@ namespace B_Commerce.ProductService.DomainClasses
         public float? SpecialOfferMinimumQuantity { get; set; }
         public float? SpecialOfferMaximumQuantity { get; set; }
         public int SubCategoryID { get; set; }
-        public  SubCategory SubCategory { get; set; }
-        public  ICollection<ProductImage> ProductImages { get; set; } 
+        public virtual SubCategory SubCategory { get; set; } = new SubCategory();
+        public virtual ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
     }
 }

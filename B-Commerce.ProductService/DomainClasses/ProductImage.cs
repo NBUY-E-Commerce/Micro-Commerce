@@ -20,7 +20,7 @@ namespace B_Commerce.ProductService.DomainClasses
         public bool isActive { get; set; } = true;
 
         public int ProductID { get; set; }
-        public  Product Product { get; set; }
+        public virtual Product Product { get; set; } = new Product();
 
     }
 }

@@ -19,6 +19,6 @@ namespace B_Commerce.ProductService.DomainClasses
         public string Description { get; set; } 
         public bool isActive { get; set; } = true;
 
-        public  ICollection<SubCategory> SubCategories { get; set; }
+        public virtual ICollection<SubCategory> SubCategories { get; set; } = new List<SubCategory>();
     }
 }
