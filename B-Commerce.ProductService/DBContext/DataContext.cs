@@ -12,8 +12,7 @@ namespace B_Commerce.ProductService.DBContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-A3R28NH\SQLEXPRESS;Database=ProductServiceDB;Trusted_Connection=True;");
-
+            optionsBuilder.UseSqlServer(@"Server=10.0.75.2;Database=ProductServiceDB;UID=Sa;PWD='6.rq=^DP;Jn;w%|FVEPZ'");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
