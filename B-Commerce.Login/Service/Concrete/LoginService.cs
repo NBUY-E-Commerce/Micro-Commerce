@@ -41,10 +41,16 @@ namespace B_Commerce.Login.Service.Concrete
                 checkTokenResponse.SetStatus(Constants.ResponseCode.INVALID_TOKEN);
                 return checkTokenResponse;
             }
+            checkTokenResponse.Username = user.Username;
+            checkTokenResponse.ExpireDate = user.Tokens.FirstOrDefault(t => t.TokenText == token).EndDate;
+            if (user.IsVerified != true)
+            {
+                checkTokenResponse.SetStatus(Constants.ResponseCode.ISNOTVERIFIED);
+                return checkTokenResponse;
+            }
+
 
             checkTokenResponse.SetStatus(Constants.ResponseCode.SUCCESS);
-            checkTokenResponse.Username = user.Username;
-
             return checkTokenResponse;
 
         }
@@ -83,11 +89,7 @@ namespace B_Commerce.Login.Service.Concrete
 
                 loginResponse.Username = _user.Username;
 
-                if (_user.IsVerified == false)//farkili bir hata donmeli ki arayuzde  dogrulama sayfasina  atalim
-                {
-                    loginResponse.SetStatus(Constants.ResponseCode.FAILED);
-                    return loginResponse;
-                }
+
 
                 if (_user.IsLocked && _user.LockedTime > DateTime.Now)
                 {
@@ -130,8 +132,10 @@ namespace B_Commerce.Login.Service.Concrete
                 {
                     _cacheManager.AddUserToCache(token.TokenText, _user);
 
+                    loginResponse.IsVerify = _user.IsVerified;
                     loginResponse.Username = _user.FullName();
                     loginResponse.Token = token.TokenText;
+                    loginResponse.ExpireDate = token.EndDate;
                     loginResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                     return loginResponse;
                 }
@@ -155,6 +159,8 @@ namespace B_Commerce.Login.Service.Concrete
                     registerResponse.SetStatus(Constants.ResponseCode.EMAIL_IN_USE);
                     return registerResponse;
                 }
+                string passwordNotHash = user.Password;
+
                 user.Password = Cryptor.sha512encrypt(user.Password);//şifreleme
 
                 AccountVerification accountVerification = CreateAccountVerificationCode();
@@ -167,6 +173,21 @@ namespace B_Commerce.Login.Service.Concrete
 
                 if (_unitOfWork.SaveChanges() > 0)
                 {
+
+                    LoginResponse loginResponse = Login(new LoginRequest
+                    {
+                        Email = user.Email,
+                        Password = passwordNotHash
+                    });
+
+                    if (loginResponse.Code != 0)
+                    {
+                        registerResponse.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
+                        return registerResponse;
+
+                    }
+
+
                     MailRequest mailRequest = new MailRequest
                     {
                         ToMail = user.Email,
@@ -178,7 +199,7 @@ namespace B_Commerce.Login.Service.Concrete
 
 
                     HttpClient httpClient = new HttpClient();
-                    httpClient.BaseAddress = new Uri("http://localhost:57731/");
+                    httpClient.BaseAddress = new Uri("http://localhost:60017");
 
                     Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
 
@@ -191,6 +212,9 @@ namespace B_Commerce.Login.Service.Concrete
 
                     registerResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                     registerResponse.Username = user.Username;
+                    registerResponse.Token = loginResponse.Token;
+                    registerResponse.ExpireDate = loginResponse.ExpireDate;
+                    registerResponse.Email = user.Email;
                 }
             }
             catch (Exception)
@@ -285,12 +309,12 @@ namespace B_Commerce.Login.Service.Concrete
             return loginResponse;
         }
 
-        public VerificationResponse CheckVerificationCode(int userID, string code)
+        public BaseResponse CheckVerificationCode(string email, string code)
         {
-            User user = _userRepository.Get(t => t.ID == userID).FirstOrDefault();
+            User user = _userRepository.Get(t => t.Email == email).FirstOrDefault();
 
             AccountVerification accountVerification = user.AccountVerifications.FirstOrDefault(t => t.VerificationCode == code);
-            VerificationResponse verificationResponse = new VerificationResponse();
+            BaseResponse verificationResponse = new BaseResponse();
 
             if (accountVerification == null)
             {
@@ -342,7 +366,7 @@ namespace B_Commerce.Login.Service.Concrete
 
 
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:57731/");
+            httpClient.BaseAddress = new Uri("http://localhost:60017");
 
             Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
 
@@ -422,7 +446,7 @@ namespace B_Commerce.Login.Service.Concrete
                     response.SetStatus(Constants.ResponseCode.FAILED);
                     return response;
                 }
-                
+
             }
             catch (Exception)
             {
@@ -430,7 +454,7 @@ namespace B_Commerce.Login.Service.Concrete
                 response.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
                 return response;
             }
-            
+
         }
 
         public PasswordChangeResponse ChangePassword(int UserID, string oldPassword, string newPassword)

@@ -55,15 +55,15 @@ namespace LoginTest
         {
 
             // Suresi dolmamis verification code
-            var result = _logService.CheckVerificationCode(1, "123456");
+            var result = _logService.CheckVerificationCode("1", "123456");
             Assert.AreEqual((int)Constants.ResponseCode.SUCCESS, result.Code);
 
             // Suresi dolmus verification code
-            var result2 = _logService.CheckVerificationCode(1, "111111");
+            var result2 = _logService.CheckVerificationCode("1", "111111");
             Assert.AreEqual((int)Constants.ResponseCode.EXPIRED_CODE, result2.Code);
 
             // Gecersiz verification code girisi
-            var result3 = _logService.CheckVerificationCode(1, "154698");
+            var result3 = _logService.CheckVerificationCode("1", "154698");
             Assert.AreEqual((int)Constants.ResponseCode.FAILED, result3.Code);
 
         }

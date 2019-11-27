@@ -40,7 +40,7 @@ namespace B_Commerce.Common.UOW
                 resultOfSaveChanges = _context.SaveChanges();
                 _transaction.Commit();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 _transaction.Rollback();
                 resultOfSaveChanges = 0;
