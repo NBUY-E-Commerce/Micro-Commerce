@@ -19,7 +19,14 @@ namespace B_Commerce.ProductService.Services.Concrete
         {
             _uow = uow;
             _crudRepo = crudRepo;
+            
         }
+
+        public QueryableBaseResponse<Product> GetDisplayProducts()
+        {
+            return this.Get(t=>t.isDisplayProduct==true);
+        }
+
         public QueryableBaseResponse<Product> GetProductById(int id)
         {
             return this.Get(t=>t.ID==id);

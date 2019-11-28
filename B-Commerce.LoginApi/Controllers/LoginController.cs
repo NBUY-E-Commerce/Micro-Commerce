@@ -23,12 +23,14 @@ namespace B_Commerce.LoginApi.Controllers
     public class LoginController : ControllerBase
     {
         ILoginService _loginService;
-        public LoginController(ILoginService loginService)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public LoginController(ILoginService loginService, IHttpContextAccessor httpContextAccessor)
         {
             _loginService = loginService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-      
+
         [HttpPost]
         [Route("Login")]
         [SwaggerOperation(Summary = "login işlemi yapar", Description = "Gets two hardcoded values")]
@@ -40,8 +42,19 @@ namespace B_Commerce.LoginApi.Controllers
 
         [HttpPost]
         [Route("UserRegistry")]
-        public RegisterResponse UserRegistry(User user)
+        public RegisterResponse UserRegistry(RegisterRequest request)
         {
+
+            var user = new User
+            {
+                Email = request.Email,
+                Name = request.Name,
+                Phone = request.Phone,
+                Surname = request.Surname,
+                Password = request.Password,
+                Username = request.Email
+            };
+
             return _loginService.UserRegistry(user);
         }
 
@@ -53,10 +66,46 @@ namespace B_Commerce.LoginApi.Controllers
         }
         [HttpPost]
         [Route("CheckVerificationCode")]
-        public VerificationResponse CheckVerificationCode(int UserID, string code)
+        public BaseResponse CheckVerificationCode([FromBody]string Email, string Code)
         {
-            return _loginService.CheckVerificationCode(UserID, code);
+            return _loginService.CheckVerificationCode(Email, Code);
         }
 
+        [HttpPost]
+        [Route("SendPasswordChangeCode")]
+        [SwaggerOperation(Summary = "şifre değişikliği için kod gönderim işlemi yapar", Description = "Gets two hardcoded values")]
+        public PasswordChangeResponse SendPasswordChangeCode(string Email)
+        {
+
+            return _loginService.SendPasswordChangeCode(Email);
+        }
+
+        [HttpPost]
+        [Route("CheckPasswordChangeCode")]
+        public PasswordChangeResponse CheckPasswordChangeCode(string Email, string Code)
+        {
+            return _loginService.CheckPasswordChangeCode(Email, Code);
+        }
+
+        [HttpPost]
+        [Route("ChangePassword")]
+        public PasswordChangeResponse ChangePassword(string Email, string Code, string newPassword)
+        {
+            return _loginService.ChangePassword(Email, Code, newPassword);
+        }
+
+        [HttpPost]
+        [Route("ChangePassword2")]
+        public PasswordChangeResponse ChangePassword(int UserID, string oldPassword, string newPassword)
+        {
+            return _loginService.ChangePassword(UserID, oldPassword, newPassword);
+        }
+
+        [HttpPost]
+        [Route("SendAccountVerificationCode")]
+        public VerificationResponse SendAccountVerificationCode(string Email)
+        {
+            return _loginService.SendAccountVerificationCode(Email);
+        }
     }
 }

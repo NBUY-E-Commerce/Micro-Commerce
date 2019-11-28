@@ -8,5 +8,10 @@ namespace B_Commerce.Login.Response
     {
         public string Username { get; set; }
         public string Email { get; set; }
+
+        public string Token { get; set; }
+
+        public DateTime ExpireDate { get; set; }
+
     }
 }

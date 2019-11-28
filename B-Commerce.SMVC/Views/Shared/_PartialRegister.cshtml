@@ -1,0 +1,54 @@
+﻿@model RegisterModel
+
+    <div class="box">
+        <h1>New account</h1>
+        <hr>
+        @*<p class="lead">Not our registered customer yet?</p>
+        <p>With registration with us new world of fashion, fantastic discounts and much more opens to you! The whole process will not take you more than a minute!</p>
+        <p class="text-muted">If you have any questions, please feel free to <a href="contact.html">contact us</a>, our customer service center is working for you 24/7.</p>
+        <hr>*@
+        @using (Html.BeginForm("DoRegister", "Login", FormMethod.Post))
+        {
+            <div class="form-group">
+                @Html.TextBoxFor(t => t.Name, new { placeholder = "Name", @class = "form-control", id = "email-modal" })
+                @Html.ValidationMessageFor(t => t.Name)
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(t => t.Surname, new { placeholder = "Surname", @class = "form-control", id = "email-modal" })
+                @Html.ValidationMessageFor(t => t.Surname)
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(t => t.Username, new { placeholder = "Username", @class = "form-control", id = "email-modal" })
+                @Html.ValidationMessageFor(t => t.Username)
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(t => t.Email, new { placeholder = "Email", @class = "form-control", id = "email-modal" })
+                @Html.ValidationMessageFor(t => t.Email)
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(t => t.Phone, new { placeholder = "Phone", @class = "form-control", id = "email-modal" })
+                @Html.ValidationMessageFor(t => t.Phone)
+            </div>
+            <div class="form-group">
+                @Html.PasswordFor(t => t.Password, new { placeholder = "Password", @class = "form-control", id = "email-modal" })
+                @Html.ValidationMessageFor(t => t.Password)
+            </div>
+            <div class="form-group">
+                @Html.PasswordFor(t => t.Password, new { placeholder = "Password Tekrar", @class = "form-control", id = "email-modal" })
+                @Html.ValidationMessageFor(t => t.Password)
+            </div>
+            if (ViewBag.registererror!=null)
+            {
+
+                <div>
+                    <span>@ViewBag.registererror</span>
+                </div>
+            }
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-user-md"></i> Register</button>
+            </div>
+
+        }
+
+
+    </div>

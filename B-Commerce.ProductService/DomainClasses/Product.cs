@@ -26,9 +26,10 @@ namespace B_Commerce.ProductService.DomainClasses
         public float? PercentageDiscount { get; set; }
         public decimal? SpecialOfferPrice { get; set; }
         public float? SpecialOfferMinimumQuantity { get; set; }
+        public bool isDisplayProduct { get; set; } = false;
         public float? SpecialOfferMaximumQuantity { get; set; }
         public int SubCategoryID { get; set; }
-        public  SubCategory SubCategory { get; set; }
-        public  ICollection<ProductImage> ProductImages { get; set; } 
+        public  SubCategory SubCategory { get; set; } 
+        public ICollection<ProductImage> ProductImages { get; set; }
     }
 }

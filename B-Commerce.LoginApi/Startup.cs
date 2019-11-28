@@ -34,6 +34,7 @@ namespace B_Commerce.LoginApi
         public void ConfigureServices(IServiceCollection services)
         {
             //dbcontent
+            services.AddHttpContextAccessor();
             services.AddDbContext<DbContext, LoginDbContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

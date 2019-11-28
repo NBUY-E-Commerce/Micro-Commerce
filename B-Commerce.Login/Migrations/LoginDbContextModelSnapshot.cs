@@ -58,6 +58,48 @@ namespace B_Commerce.Login.Migrations
                     b.ToTable("AccountVerifications");
                 });
 
+            modelBuilder.Entity("B_Commerce.Login.DomainClass.PasswordChange", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ChangeCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ExpireDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleteDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("deleteUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("insertDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("insertUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserID")
+                        .IsUnique();
+
+                    b.ToTable("PasswordChanges");
+                });
+
             modelBuilder.Entity("B_Commerce.Login.DomainClass.SocialInfo", b =>
                 {
                     b.Property<int>("ID")
@@ -190,8 +232,8 @@ namespace B_Commerce.Login.Migrations
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<int>("WrongCount")
                         .HasColumnType("int");
@@ -221,6 +263,15 @@ namespace B_Commerce.Login.Migrations
                     b.HasOne("B_Commerce.Login.DomainClass.User", "User")
                         .WithMany("AccountVerifications")
                         .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("B_Commerce.Login.DomainClass.PasswordChange", b =>
+                {
+                    b.HasOne("B_Commerce.Login.DomainClass.User", "User")
+                        .WithOne("PasswordChange")
+                        .HasForeignKey("B_Commerce.Login.DomainClass.PasswordChange", "UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
