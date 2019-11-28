@@ -13,6 +13,8 @@ using B_Commerce.Common.UOW;
 using B_Commerce.Common.Security;
 using System.Net.Http;
 using System.Threading.Tasks;
+using B_Commerce.Login.FluentValidation;
+using FluentValidation.Results;
 
 namespace B_Commerce.Login.Service.Concrete
 {
@@ -76,7 +78,15 @@ namespace B_Commerce.Login.Service.Concrete
         }
         public LoginResponse Login(LoginRequest loginRequest)
         {
-            LoginResponse loginResponse = new LoginResponse();
+            //LoginRequestValidator validator = new LoginRequestValidator();
+            //ValidationResult result = validator.Validate(loginRequest);
+
+            //if (result.IsValid == false)
+            //{ 
+            //    valid değilse yapılacaklar
+            //}
+
+                LoginResponse loginResponse = new LoginResponse();
             try
             {
                 User _user = _userRepository.Get(t => (t.Email == loginRequest.Email || t.Phone == loginRequest.Phone)).FirstOrDefault();
@@ -199,8 +209,8 @@ namespace B_Commerce.Login.Service.Concrete
 
 
                     HttpClient httpClient = new HttpClient();
-                    httpClient.BaseAddress = new Uri("http://localhost:60017");
-
+                    //httpClient.BaseAddress = new Uri("http://localhost:60017");
+                    httpClient.BaseAddress = new Uri("http://localhost:59692/");
                     Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
 
                     if (!httpResponse.Result.IsSuccessStatusCode)
@@ -366,7 +376,8 @@ namespace B_Commerce.Login.Service.Concrete
 
 
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:60017");
+            //httpClient.BaseAddress = new Uri("http://localhost:60017");
+            httpClient.BaseAddress = new Uri("http://localhost:59692/");
 
             Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
 

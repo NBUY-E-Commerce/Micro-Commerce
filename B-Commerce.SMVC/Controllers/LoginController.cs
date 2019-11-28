@@ -27,7 +27,9 @@ namespace B_Commerce.SMVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("");
+                var model = new RegisterViewModel();
+                model.registerModel = registerModel;
+                 return View("Register",model);
             }
 
             RegisterResponse registerResponse = WebApiOperation.SendPost<RegisterModel, RegisterResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_REGISTER_URI, registerModel);
@@ -71,7 +73,9 @@ namespace B_Commerce.SMVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("");
+                var model = new RegisterViewModel();
+                model.loginModel = loginModel;
+                return View("Register", model);
             }
 
             LoginResponse loginResponse = WebApiOperation.SendPost<LoginModel, LoginResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_LOGIN_URI, loginModel);
@@ -98,6 +102,13 @@ namespace B_Commerce.SMVC.Controllers
         {
 
             return View((object)email);
+        }
+
+
+        public ActionResult Logout()
+        {
+            SystemUser.CurrentUser = null;
+            return View("/Login/Register.cshtml");
         }
 
         public ActionResult DoVerify(string email, string code)

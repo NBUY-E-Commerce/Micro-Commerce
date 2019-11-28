@@ -48,6 +48,8 @@ namespace B_Commerce.ProductService.Mapping
            .HasColumnName("IsDeletedProduct")
            .IsRequired(true)
            .HasDefaultValue(false);
+
+           
         }
     }
 }

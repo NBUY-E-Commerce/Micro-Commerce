@@ -18,10 +18,13 @@ namespace B_Commerce.Login.DatabaseContext
           .AddJsonFile("appsettings.json")
           .Build();
             _connectionString = configuration.GetConnectionString("LoginServiceDB");
+
         }
+      
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(_connectionString);
+            //    optionsBuilder.UseSqlServer(@"Server = (localdb)\MSSQLLocalDB; Database = LoginServiceDB; Trusted_Connection = True ");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -41,12 +41,7 @@ namespace B_Commerce.ProductServiceApi
             services.AddScoped<ISubCategoryService, SubCategoryService>();
             services.AddScoped<IProductService, ProductService.Services.Concrete.ProductService>();
             services.AddScoped<IProductImageService, ProductImageService>();
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "ProductServiceSwagger", Version = "v1" });
-            });
-
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,11 +62,6 @@ namespace B_Commerce.ProductServiceApi
             {
                 endpoints.MapControllers();
 
-            });
-            app.UseSwagger();
-            app.UseSwaggerUI(t =>
-            {
-                t.SwaggerEndpoint("/swagger/v1/swagger.json", "ProductServiceSwagger V1");
             });
         }
     }

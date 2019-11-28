@@ -11,13 +11,17 @@
             {
                 <ul class="menu list-inline mb-0">
                     <li class="list-inline-item">
-                        <span>Hoşgeldin, @SystemUser.CurrentUser.Name</span>
-                        @if (SystemUser.CurrentUser.IsValid != true)
+                        <span>Hoşgeldin, @SystemUser.CurrentUser.Name </span>
+                        <a href="/Login/Logout">Çıkış Yap</a>
+                        @if (SystemUser.CurrentUser.IsValid == false)
                         {
-                            Html.ActionLink("aktif et", "VerifyAccount", "Login", new
-                            {
-                                email = SystemUser.CurrentUser.Email
-                            }, "");
+                            <a href="/Login/VerifyAccount?email=@SystemUser.CurrentUser.Email">Aktif Et</a>
+
+                            //Html.ActionLink("aktif et", "VerifyAccount", "Login", new
+                            //{
+                            //    email = SystemUser.CurrentUser.Email
+                            //}, null);
+
 
                         }
 
@@ -29,10 +33,10 @@
             else
             {
 
-            <ul class="menu list-inline mb-0">
-                <li class="list-inline-item"><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
-                <li class="list-inline-item"><a href="/Login/Register">Register</a></li>
-            </ul>
+                <ul class="menu list-inline mb-0">
+                    <li class="list-inline-item"><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                    <li class="list-inline-item"><a href="/Login/Register">Register</a></li>
+                </ul>
             }
         </div>
     </div>

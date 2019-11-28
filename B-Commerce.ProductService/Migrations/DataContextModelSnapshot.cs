@@ -138,9 +138,6 @@ namespace B_Commerce.ProductService.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<bool>("isDisplayProduct")
-                        .HasColumnType("bit");
-
                     b.HasKey("ID");
 
                     b.HasIndex("SubCategoryID");
