@@ -1,6 +1,5 @@
 ﻿@model LoginModel
-
-
+<link href="~/Content/css/fbstyle.css" rel="stylesheet" />
 <div class="box">
     <h1>Login</h1>
     @*<p class="lead">Already our customer?</p>
@@ -10,13 +9,13 @@
     {
         <div class="form-group" style="margin-top: 25px;">
             @Html.TextBoxFor(t => t.Email, new { placeholder = "email", @class = "form-control", id = "email-modal" })
-            @Html.ValidationMessageFor(t => t.Email,"", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(t => t.Email, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
 
             @Html.PasswordFor(t => t.Password, new { placeholder = "password", @class = "form-control", id = "password-modal" })
-            @Html.ValidationMessageFor(t => t.Password,"", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(t => t.Password, "", new { @class = "text-danger" })
         </div>
 
         if (ViewBag.error != null)
@@ -27,7 +26,10 @@
         }
         <p class="text-center">
             <input type="submit" class="btn btn-primary" value="Login">
+            <a href="/Login/FbLogin" title="Facebook" class="btn btn-facebook btn-primary"><i class="fa fa-facebook fa-fw"></i> Facebook</a>
         </p>
+
+
 
     }
 

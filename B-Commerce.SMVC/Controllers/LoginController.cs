@@ -3,6 +3,7 @@ using B_Commerce.SMVC.Models;
 using B_Commerce.SMVC.WebApiReqRes;
 using B_Commerce.SMVC.WebApiReqRes.Autentication.Login;
 using B_Commerce.SMVC.WebHelpers;
+using DotNetOpenAuth.AspNet.Clients;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace B_Commerce.SMVC.Controllers
             {
                 var model = new RegisterViewModel();
                 model.registerModel = registerModel;
-                 return View("Register",model);
+                return View("Register", model);
             }
 
             RegisterResponse registerResponse = WebApiOperation.SendPost<RegisterModel, RegisterResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_REGISTER_URI, registerModel);
@@ -83,7 +84,7 @@ namespace B_Commerce.SMVC.Controllers
             if (loginResponse.Code == Constants.LOGIN_RESPONSE_SUCCESS)
             {
                 //işlem basarılı
-           
+
                 SystemUser.CurrentUser = new SystemUser
                 {
                     Name = loginResponse.Username,
@@ -152,6 +153,38 @@ namespace B_Commerce.SMVC.Controllers
             ViewBag.error = response.Message;
             return View("/Views/Login/VerifyAccount.cshtml", (object)email);
 
+        }
+        public void FbLogin()
+        {
+            var fb = new FacebookClient("3462488800442988", "2f5eb5daf3ea0fea4c09e729b1b379d7", "email");
+
+            fb.RequestAuthentication(this.HttpContext, new Uri("https://localhost:44314/Login/FacebookLogin"));
+
+        }
+        public ActionResult FacebookLogin()
+        {
+            Facebook.FacebookClient fb = new Facebook.FacebookClient();
+            LoginResponse loginResponse = new LoginResponse();
+            if (Request.QueryString["code"] != null)
+            {
+                string fbcode = Request.QueryString["code"];
+                loginResponse = WebApiOperation.SendPost<string, LoginResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_FACEBOOK_URI, fbcode);
+
+                if (loginResponse.Code == Constants.LOGIN_RESPONSE_SUCCESS)
+                {
+                    //işlem basarılı
+
+                    SystemUser.CurrentUser = new SystemUser
+                    {
+                        Name = loginResponse.Username,
+                        ExpireDate = loginResponse.ExpireDate,
+                        IsValid = loginResponse.IsVerify,
+                        Token = loginResponse.Token,
+                        Email = loginResponse.Email,
+                    };
+                }
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -238,8 +238,8 @@ namespace B_Commerce.Login.Migrations
                         .HasMaxLength(200);
 
                     b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(12)")
+                        .HasMaxLength(12);
 
                     b.Property<string>("Surname")
                         .IsRequired()

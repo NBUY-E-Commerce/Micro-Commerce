@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace B_Commerce.Login.Migrations
+namespace LogService.Migrations
 {
-    public partial class df : Migration
+    public partial class initial3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

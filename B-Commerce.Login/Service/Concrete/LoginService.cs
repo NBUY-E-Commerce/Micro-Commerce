@@ -164,8 +164,6 @@ namespace B_Commerce.Login.Service.Concrete
         }
         public RegisterResponse UserRegistry(User user)
         {
-
-
             RegisterResponse registerResponse = new RegisterResponse();
 
             try
@@ -177,17 +175,19 @@ namespace B_Commerce.Login.Service.Concrete
                 }
 
                 string passwordNotHash = user.Password;
-                user.Password = Cryptor.sha512encrypt(user.Password);//şifreleme
-                                                                     //*** dikkat user repoya eklenmeden bağlı tablolarına veri eklenirse bu tabloların takibi sağlamaz
-                                                                     //kullanıcıyı olusturtur depoya ekle sonra bağlı tablolarını ekle
+                user.Password = Cryptor.sha512encrypt(user.Password);
+                //şifreleme
+                //*** dikkat user repoya eklenmeden bağlı tablolarına veri eklenirse bu tabloların takibi sağlamaz
+                //kullanıcıyı olusturtur depoya ekle sonra bağlı tablolarını ekle
                 _userRepository.Add(user);
+                user.SocialInfos.Add(user.SocialInfos.FirstOrDefault());
 
-                AccountVerification accountVerification = CreateAccountVerificationCode();
+                AccountVerification accountVerification = new AccountVerification();
                 if (user.SocialInfos.Count == 0)
                 {
+                    accountVerification = CreateAccountVerificationCode();
                     user.AccountVerifications.Add(accountVerification);
                 }
-
 
 
                 if (_unitOfWork.SaveChanges() > 0)
@@ -205,28 +205,28 @@ namespace B_Commerce.Login.Service.Concrete
                         return registerResponse;
 
                     }
-
-
-                    MailRequest mailRequest = new MailRequest
+                    if (!user.IsVerified)
                     {
-                        ToMail = user.Email,
-                        ToName = user.FullName(),
-                        Subject = "B-Commerce E-Mail Onayı",
-                        Body = $"Merhaba {user.FullName()}\n Email onaylama kodunuz: {accountVerification.VerificationCode}",
-                        ProjectCode = "123456"
-                    };
+                        MailRequest mailRequest = new MailRequest
+                        {
+                            ToMail = user.Email,
+                            ToName = user.FullName(),
+                            Subject = "B-Commerce E-Mail Onayı",
+                            Body = $"Merhaba {user.FullName()}\n Email onaylama kodunuz: {accountVerification.VerificationCode}",
+                            ProjectCode = "123456"
+                        };
 
 
                     HttpClient httpClient = new HttpClient();
-                    httpClient.BaseAddress = new Uri("http://localhost:52132/");
+                    httpClient.BaseAddress = new Uri("http://localhost:60017");
                     Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
 
-                    if (!httpResponse.Result.IsSuccessStatusCode)
-                    {
-                        registerResponse.SetStatus(Constants.ResponseCode.FAILED);
-                        return registerResponse;
+                        if (!httpResponse.Result.IsSuccessStatusCode)
+                        {
+                            registerResponse.SetStatus(Constants.ResponseCode.FAILED);
+                            return registerResponse;
+                        }
                     }
-
 
                     registerResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                     registerResponse.Username = user.Username;
@@ -235,7 +235,7 @@ namespace B_Commerce.Login.Service.Concrete
                     registerResponse.Email = user.Email;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //mongodb log at.
                 registerResponse.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
@@ -254,7 +254,8 @@ namespace B_Commerce.Login.Service.Concrete
                 {
                     client_id = "3462488800442988",
                     client_secret = "2f5eb5daf3ea0fea4c09e729b1b379d7",
-                    redirect_uri = "http://localhost:44318/FbLogin",//Test ederken localhost kısmını pcye göre değiştir.
+                    redirect_uri = "https://localhost:44314/Login/FacebookLogin",
+                    //Test ederken kendi mvc projenin localhost kısmını yaz.
                     code = fbcode
                 });
 
@@ -282,6 +283,9 @@ namespace B_Commerce.Login.Service.Concrete
 
                             loginResponse.Username = user.FullName();
                             loginResponse.Token = token.TokenText;
+                            loginResponse.ExpireDate = token.EndDate;
+                            loginResponse.IsVerify = true;
+                            loginResponse.Email = user.Email;
                             loginResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                             return loginResponse;
                         }
@@ -293,10 +297,14 @@ namespace B_Commerce.Login.Service.Concrete
                     }
                     return loginResponse;
                 }
-
+                user = new User();//newlemezsek patlıyor.
                 user.Email = email;
                 user.Name = firstName;
                 user.Surname = lastName;
+                user.Password = firstName;
+                user.Username = firstName + lastName;
+                user.IsVerified = true;
+
                 user.SocialInfos.Add(new SocialInfo
                 {
                     SocialID = socialId,
@@ -320,7 +328,7 @@ namespace B_Commerce.Login.Service.Concrete
                 }
                 loginResponse.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
             }
-            catch
+            catch (Exception ex)
             {
                 loginResponse.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
             }
