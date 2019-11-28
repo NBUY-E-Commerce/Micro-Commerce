@@ -141,5 +141,7 @@ namespace B_Commerce.ProductService.Service.Concrete
             productResponse.SetStatus(ResponseCode.SUCCESS);
             return productResponse;
         }
+
+     
     }
 }

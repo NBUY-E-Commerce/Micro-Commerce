@@ -13,7 +13,7 @@ namespace B_Commerce.ProductService.Service.Abstract
         BaseResponse Delete(Product product);
 
         ProductResponse GetProducts(int? page,int range);
-        ProductResponse GetSpecialProducts(int spacialID);
+        ProductResponse GetSpecialProducts(int spacialID, int? page, int range);
         ProductResponse GetProductsByCategoryID(int categoryID);
     }
 }
