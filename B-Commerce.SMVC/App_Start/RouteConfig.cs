@@ -13,11 +13,15 @@ namespace B_Commerce.SMVC
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //area eklendiği içim bu roueting rullarına namespace eklemek zorundayız
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                 new[] { "B_Commerce.SMVC.Controllers" }
             );
+
+
         }
     }
 }

@@ -21,8 +21,8 @@ namespace B_Commerce.ProductService.DomainClasses
         public bool isActive { get; set; } = true;
 
         public int MasterCatID { get; set; }
-        public  MasterCategory MasterCategory { get; set; }
+        public MasterCategory MasterCategory { get; set; }
 
-        public  ICollection<Product> Products { get; set; }
+       public  ICollection<Product> Products { get; set; }
     }
 }

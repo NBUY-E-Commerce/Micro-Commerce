@@ -16,7 +16,8 @@ namespace B_Commerce.SMVC.WebHelpers
 
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseurl);
-
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+           // httpClient.DefaultRequestHeaders.Add("Content-Type", "application/json");
 
             Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync(endpoint, request);
 
@@ -25,7 +26,7 @@ namespace B_Commerce.SMVC.WebHelpers
             {
                 return httpResponse.Result.Content.ReadAsAsync<TResponse>().Result;
             }
-           
+
             try
             {
                 response = httpResponse.Result.Content.ReadAsAsync<TResponse>().Result;
@@ -34,7 +35,7 @@ namespace B_Commerce.SMVC.WebHelpers
             {
 
                 ((CommonResponse)response).SetHttpError();
-              
+
             }
 
             return response;

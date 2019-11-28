@@ -92,27 +92,5 @@ namespace B_Commerce.ProductServiceApi.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("/[controller]/Products/DisplayProducts")]
-        public ActionResult GetDisplayProducts() {
-            QueryableBaseResponse<Product> result = null;
-            try
-            {
-                result = _productService.GetDisplayProducts();
-                if (result.code == ResponseCode.SUCCESS)
-                {
-                    return Ok(result.queryableResponse);
-                }
-                else
-                {
-                    return BadRequest();
-                }
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
-
     }
 }

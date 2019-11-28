@@ -7,8 +7,6 @@ namespace B_Commerce.ProductService.Common
 {
     public static class Constants
     {
-
-        public const string IMAGE_SERVER_ADRESS = "http://localhost:90/";
         public enum ResponseCode
         {
             SUCCESS,

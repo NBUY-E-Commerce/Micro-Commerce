@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using B_Commerce.Common.Repository;
 using B_Commerce.Common.UOW;
+using B_Commerce.Login.Request;
 using B_Commerce.NotificationService.DbContext.SQLite;
 using B_Commerce.NotificationService.NotificationSender.Abstract;
 using B_Commerce.NotificationService.NotificationSender.Concrete;
@@ -75,6 +77,8 @@ namespace B_Commerce.NotificationService.Api
             {
                 endpoints.MapControllers();
             });
+
+           
         }
     }
 }

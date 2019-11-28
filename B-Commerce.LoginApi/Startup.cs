@@ -9,6 +9,7 @@ using B_Commerce.Login.DatabaseContext;
 using B_Commerce.Login.DomainClass;
 using B_Commerce.Login.Service.Abstract;
 using B_Commerce.Login.Service.Concrete;
+using B_Commerce.LoginApi.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -57,11 +58,34 @@ namespace B_Commerce.LoginApi
                 app.UseDeveloperExceptionPage();
             }
 
+
+            app.UseMiddleware<LogMiddleware>();
+
+
             app.UseSwagger();
             app.UseSwaggerUI(t =>
             {
                 t.SwaggerEndpoint("/swagger/v1/swagger.json", "MyAPI V1");
             });
+
+
+            //app.Use(async (context, next) =>
+            //{
+
+            //    if (context.Request.Headers["x"].Count == 0)
+            //    {
+            //        return;
+            //    }
+
+            //    await next.Invoke();  //yola devam et
+            //                          //response geldiğinde buradan kod devam eder
+
+
+
+            //});
+
+
+         
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();

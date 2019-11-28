@@ -8,6 +8,7 @@ namespace B_Commerce.Login.Response
     {
         public string Token { get; set; }
         public string Username { get; set; }
+        public string Email { get; set; }
 
         public bool IsVerify { get; set; }
 

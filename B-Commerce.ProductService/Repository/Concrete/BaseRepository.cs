@@ -34,7 +34,7 @@ namespace B_Commerce.ProductService.Repository.Concrete
                 _uow.SaveChanges();
                 return new BaseResponse();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 return new BaseResponse

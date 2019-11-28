@@ -27,7 +27,9 @@ namespace B_Commerce.SMVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("");
+                var model = new RegisterViewModel();
+                model.registerModel = registerModel;
+                 return View("Register",model);
             }
 
             RegisterResponse registerResponse = WebApiOperation.SendPost<RegisterModel, RegisterResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_REGISTER_URI, registerModel);
@@ -71,7 +73,9 @@ namespace B_Commerce.SMVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("");
+                var model = new RegisterViewModel();
+                model.loginModel = loginModel;
+                return View("Register", model);
             }
 
             LoginResponse loginResponse = WebApiOperation.SendPost<LoginModel, LoginResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_LOGIN_URI, loginModel);
@@ -79,7 +83,25 @@ namespace B_Commerce.SMVC.Controllers
             if (loginResponse.Code == Constants.LOGIN_RESPONSE_SUCCESS)
             {
                 //işlem basarılı
+           
+                SystemUser.CurrentUser = new SystemUser
+                {
+                    Name = loginResponse.Username,
+                    ExpireDate = loginResponse.ExpireDate,
+                    IsValid = loginResponse.IsVerify,
+                    Token = loginResponse.Token,
+                    Email = loginResponse.Email,
+                };
 
+                if (!loginResponse.IsVerify)
+                {
+                    return RedirectToAction("VerifyAccount", "Login", new
+                    {
+                        email = loginResponse.Email
+                    });
+                }
+
+                return RedirectToAction("Index", "Home");
             }
 
             var viewModel = new RegisterViewModel
@@ -100,6 +122,13 @@ namespace B_Commerce.SMVC.Controllers
             return View((object)email);
         }
 
+
+        public ActionResult Logout()
+        {
+            SystemUser.CurrentUser = null;
+            return View("/Login/Register.cshtml");
+        }
+
         public ActionResult DoVerify(string email, string code)
         {
 
@@ -114,12 +143,14 @@ namespace B_Commerce.SMVC.Controllers
             {
 
                 SystemUser.CurrentUser.IsValid = true;
+
+                TempData["reason"] = "activateuser";
                 return RedirectToAction("Index", "Home");
 
             }
 
             ViewBag.error = response.Message;
-            return View("/Views/VerifyAccount.cshtml", (object)email);
+            return View("/Views/Login/VerifyAccount.cshtml", (object)email);
 
         }
     }

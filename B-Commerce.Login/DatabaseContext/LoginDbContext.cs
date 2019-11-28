@@ -18,10 +18,14 @@ namespace B_Commerce.Login.DatabaseContext
           .AddJsonFile("appsettings.json")
           .Build();
             _connectionString = configuration.GetConnectionString("LoginServiceDB");
+
         }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(_connectionString);
+            optionsBuilder.UseLazyLoadingProxies();
+            //    optionsBuilder.UseSqlServer(@"Server = (localdb)\MSSQLLocalDB; Database = LoginServiceDB; Trusted_Connection = True ");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,6 +39,6 @@ namespace B_Commerce.Login.DatabaseContext
         public virtual DbSet<SocialType> SocialTypes { get; set; }
         public virtual DbSet<AccountVerification> AccountVerifications { get; set; }
         public virtual DbSet<PasswordChange> PasswordChanges { get; set; }
-        
+
     }
 }
