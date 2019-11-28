@@ -31,7 +31,7 @@ namespace B_Commerce.Login.Migrations
                     deleteDateTime = table.Column<DateTime>(nullable: true),
                     insertUserId = table.Column<int>(nullable: true),
                     deleteUserId = table.Column<int>(nullable: true),
-                    Username = table.Column<string>(maxLength: 20, nullable: false),
+                    Username = table.Column<string>(maxLength: 50, nullable: false),
                     Password = table.Column<string>(maxLength: 200, nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Surname = table.Column<string>(nullable: false),
@@ -39,7 +39,7 @@ namespace B_Commerce.Login.Migrations
                     Country = table.Column<string>(maxLength: 20, nullable: true),
                     City = table.Column<string>(maxLength: 20, nullable: true),
                     Adress = table.Column<string>(maxLength: 100, nullable: true),
-                    Phone = table.Column<string>(nullable: false),
+                    Phone = table.Column<string>(maxLength: 12, nullable: true),
                     WrongCount = table.Column<int>(nullable: false),
                     IsLocked = table.Column<bool>(nullable: false),
                     IsVerified = table.Column<bool>(nullable: false),
@@ -70,6 +70,33 @@ namespace B_Commerce.Login.Migrations
                     table.PrimaryKey("PK_AccountVerifications", x => x.ID);
                     table.ForeignKey(
                         name: "FK_AccountVerifications_Users_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PasswordChanges",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    isDeleted = table.Column<bool>(nullable: false),
+                    insertDateTime = table.Column<DateTime>(nullable: false),
+                    deleteDateTime = table.Column<DateTime>(nullable: true),
+                    insertUserId = table.Column<int>(nullable: true),
+                    deleteUserId = table.Column<int>(nullable: true),
+                    UserID = table.Column<int>(nullable: false),
+                    ChangeCode = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    ExpireDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PasswordChanges", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_PasswordChanges_Users_UserID",
                         column: x => x.UserID,
                         principalTable: "Users",
                         principalColumn: "ID",
@@ -136,6 +163,12 @@ namespace B_Commerce.Login.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PasswordChanges_UserID",
+                table: "PasswordChanges",
+                column: "UserID",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SocialInfos_SocialTypeID",
                 table: "SocialInfos",
                 column: "SocialTypeID");
@@ -155,6 +188,9 @@ namespace B_Commerce.Login.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AccountVerifications");
+
+            migrationBuilder.DropTable(
+                name: "PasswordChanges");
 
             migrationBuilder.DropTable(
                 name: "SocialInfos");

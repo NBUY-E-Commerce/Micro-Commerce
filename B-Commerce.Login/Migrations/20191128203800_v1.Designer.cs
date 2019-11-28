@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace B_Commerce.Login.Migrations
 {
     [DbContext(typeof(LoginDbContext))]
-    [Migration("20191127104221_loginv2")]
-    partial class loginv2
+    [Migration("20191128203800_v1")]
+    partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -225,8 +225,8 @@ namespace B_Commerce.Login.Migrations
                         .HasMaxLength(200);
 
                     b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(12)")
+                        .HasMaxLength(12);
 
                     b.Property<string>("Surname")
                         .IsRequired()
