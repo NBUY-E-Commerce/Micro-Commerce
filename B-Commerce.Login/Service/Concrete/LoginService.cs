@@ -78,15 +78,17 @@ namespace B_Commerce.Login.Service.Concrete
         }
         public LoginResponse Login(LoginRequest loginRequest)
         {
-            //LoginRequestValidator validator = new LoginRequestValidator();
-            //ValidationResult result = validator.Validate(loginRequest);
+            LoginResponse loginResponse = new LoginResponse();
 
-            //if (result.IsValid == false)
-            //{ 
-            //    valid değilse yapılacaklar
-            //}
+            LoginRequestValidator validator = new LoginRequestValidator();
+            ValidationResult result = validator.Validate(loginRequest);
 
-                LoginResponse loginResponse = new LoginResponse();
+            if (result.IsValid == false)
+            {
+                loginResponse.setValidator(result);
+                return loginResponse;
+            }
+
             try
             {
                 User _user = _userRepository.Get(t => (t.Email == loginRequest.Email || t.Phone == loginRequest.Phone)).FirstOrDefault();
@@ -146,6 +148,7 @@ namespace B_Commerce.Login.Service.Concrete
                     loginResponse.Username = _user.FullName();
                     loginResponse.Token = token.TokenText;
                     loginResponse.ExpireDate = token.EndDate;
+                    loginResponse.Email = _user.Email;
                     loginResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                     return loginResponse;
                 }
@@ -160,6 +163,8 @@ namespace B_Commerce.Login.Service.Concrete
         }
         public RegisterResponse UserRegistry(User user)
         {
+
+
             RegisterResponse registerResponse = new RegisterResponse();
 
             try
@@ -172,17 +177,17 @@ namespace B_Commerce.Login.Service.Concrete
 
                 string passwordNotHash = user.Password;
                 user.Password = Cryptor.sha512encrypt(user.Password);//şifreleme
-               //*** dikkat user repoya eklenmeden bağlı tablolarına veri eklenirse bu tabloların takibi sağlamaz
-               //kullanıcıyı olusturtur depoya ekle sonra bağlı tablolarını ekle
+                                                                     //*** dikkat user repoya eklenmeden bağlı tablolarına veri eklenirse bu tabloların takibi sağlamaz
+                                                                     //kullanıcıyı olusturtur depoya ekle sonra bağlı tablolarını ekle
                 _userRepository.Add(user);
 
                 AccountVerification accountVerification = CreateAccountVerificationCode();
                 if (user.SocialInfos.Count == 0)
                 {
-                   user.AccountVerifications.Add(accountVerification);
+                    user.AccountVerifications.Add(accountVerification);
                 }
 
-               
+
 
                 if (_unitOfWork.SaveChanges() > 0)
                 {
@@ -342,9 +347,22 @@ namespace B_Commerce.Login.Service.Concrete
                 return verificationResponse;
             }
             user.IsVerified = true;
-
-            verificationResponse.SetStatus(Constants.ResponseCode.SUCCESS);
-
+            try
+            {
+                if (_unitOfWork.SaveChanges() > 0)
+                {
+                    verificationResponse.SetStatus(Constants.ResponseCode.SUCCESS);
+                }
+                else
+                {
+                    verificationResponse.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
+                }
+            }
+            catch (Exception ex)
+            {
+                //mongodb log at.
+                verificationResponse.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
+            }
 
             return verificationResponse;
         }
@@ -379,7 +397,7 @@ namespace B_Commerce.Login.Service.Concrete
 
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri("http://localhost:60017");
-          
+
             Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
 
             if (!httpResponse.Result.IsSuccessStatusCode)

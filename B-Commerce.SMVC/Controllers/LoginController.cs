@@ -83,7 +83,25 @@ namespace B_Commerce.SMVC.Controllers
             if (loginResponse.Code == Constants.LOGIN_RESPONSE_SUCCESS)
             {
                 //işlem basarılı
+           
+                SystemUser.CurrentUser = new SystemUser
+                {
+                    Name = loginResponse.Username,
+                    ExpireDate = loginResponse.ExpireDate,
+                    IsValid = loginResponse.IsVerify,
+                    Token = loginResponse.Token,
+                    Email = loginResponse.Email,
+                };
 
+                if (!loginResponse.IsVerify)
+                {
+                    return RedirectToAction("VerifyAccount", "Login", new
+                    {
+                        email = loginResponse.Email
+                    });
+                }
+
+                return RedirectToAction("Index", "Home");
             }
 
             var viewModel = new RegisterViewModel
@@ -125,6 +143,8 @@ namespace B_Commerce.SMVC.Controllers
             {
 
                 SystemUser.CurrentUser.IsValid = true;
+
+                TempData["reason"] = "activateuser";
                 return RedirectToAction("Index", "Home");
 
             }

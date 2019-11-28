@@ -7,7 +7,11 @@ namespace B_Commerce.SMVC.WebApiReqRes.Autentication.Login
 {
     public class LoginResponse : CommonResponse
     {
-        public string token { get; set; }
-        public string username { get; set; }
+        public string Token { get; set; }
+        public string Username { get; set; }
+
+        public string Email { get; set; }
+        public bool IsVerify { get; set; }
+        public DateTime ExpireDate { get; set; }
     }
 }

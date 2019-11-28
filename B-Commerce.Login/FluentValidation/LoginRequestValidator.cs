@@ -10,9 +10,9 @@ namespace B_Commerce.Login.FluentValidation
     {
         public LoginRequestValidator()
         {
-           
-           
-            RuleFor(x => x.Email).EmailAddress().WithMessage("Geçerli bir eposta adresi giriniz.").When(x => !string.IsNullOrEmpty(x.Email));
+
+
+            RuleFor(x => x.Email).NotEmpty().WithMessage("Email boş olamaz").EmailAddress().WithMessage("Geçerli bir eposta adresi giriniz.");
             RuleFor(x => x.Password).MinimumLength(6).NotEmpty().WithMessage("Şifre boş olamaz.");
             
         }
