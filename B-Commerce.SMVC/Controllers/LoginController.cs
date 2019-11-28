@@ -130,7 +130,7 @@ namespace B_Commerce.SMVC.Controllers
             }
 
             ViewBag.error = response.Message;
-            return View("/Views/VerifyAccount.cshtml", (object)email);
+            return View("/Views/Login/VerifyAccount.cshtml", (object)email);
 
         }
     }

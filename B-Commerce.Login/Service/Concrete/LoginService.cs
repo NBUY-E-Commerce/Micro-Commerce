@@ -169,17 +169,20 @@ namespace B_Commerce.Login.Service.Concrete
                     registerResponse.SetStatus(Constants.ResponseCode.EMAIL_IN_USE);
                     return registerResponse;
                 }
-                string passwordNotHash = user.Password;
 
+                string passwordNotHash = user.Password;
                 user.Password = Cryptor.sha512encrypt(user.Password);//şifreleme
+               //*** dikkat user repoya eklenmeden bağlı tablolarına veri eklenirse bu tabloların takibi sağlamaz
+               //kullanıcıyı olusturtur depoya ekle sonra bağlı tablolarını ekle
+                _userRepository.Add(user);
 
                 AccountVerification accountVerification = CreateAccountVerificationCode();
                 if (user.SocialInfos.Count == 0)
                 {
-                    user.AccountVerifications.Add(accountVerification);
+                   user.AccountVerifications.Add(accountVerification);
                 }
 
-                _userRepository.Add(user);
+               
 
                 if (_unitOfWork.SaveChanges() > 0)
                 {

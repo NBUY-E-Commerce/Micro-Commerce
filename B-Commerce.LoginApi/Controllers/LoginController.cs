@@ -66,9 +66,9 @@ namespace B_Commerce.LoginApi.Controllers
         }
         [HttpPost]
         [Route("CheckVerificationCode")]
-        public BaseResponse CheckVerificationCode([FromBody]string Email, string Code)
+        public BaseResponse CheckVerificationCode(VerificationRequest request)
         {
-            return _loginService.CheckVerificationCode(Email, Code);
+            return _loginService.CheckVerificationCode(request.Email, request.Code);
         }
 
         [HttpPost]

@@ -7,6 +7,7 @@
             <a href="#" class="ml-1"></a>
         </div>
         <div class="col-lg-6 text-center text-lg-right">
+
             @if (SystemUser.CurrentUser != null)
             {
                 <ul class="menu list-inline mb-0">
@@ -15,15 +16,17 @@
                         <a href="/Login/Logout">Çıkış Yap</a>
                         @if (SystemUser.CurrentUser.IsValid == false)
                         {
-                            <a href="/Login/VerifyAccount?email=@SystemUser.CurrentUser.Email">Aktif Et</a>
 
-                            //Html.ActionLink("aktif et", "VerifyAccount", "Login", new
-                            //{
-                            //    email = SystemUser.CurrentUser.Email
-                            //}, null);
+                            @Html.ActionLink("aktif et", "VerifyAccount", "Login", new
+                             {
+                                 email = SystemUser.CurrentUser.Email
+                             }, null);
+
+
 
 
                         }
+
 
                     </li>
 
