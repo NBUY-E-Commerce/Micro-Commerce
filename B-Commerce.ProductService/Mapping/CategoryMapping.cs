@@ -7,29 +7,34 @@ using System.Text;
 
 namespace B_Commerce.ProductService.Mapping
 {
-    public class ProductMapping : IEntityTypeConfiguration<Product>
+    public class CategoryMapping:IEntityTypeConfiguration<Category>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.ToTable("Products");
-            builder.HasKey(p=>p.ID);
+            builder.ToTable("Categories")
+                .HasKey(t => t.ID);
 
-            builder.HasOne(p=>p.Category)
-                .WithMany(p=>p.Products)
-                .HasForeignKey(p=>p.CategoryID);
+            builder.HasMany(t=>t.Products)
+                .WithOne(t=>t.Category)
+                .HasForeignKey(t=>t.CategoryID);
+            //-----------------------------------------
+            builder.HasMany(t=>t.SubCategories)
+                .WithOne(t=>t.MasterCategory).HasForeignKey(t=>t.MasterCategoryID);
 
+            //-------------------------------------------
             builder.Property(t => t.ID)
-               .HasColumnName("ProductID")
-               .IsRequired(true);
+                .HasColumnName("CategoryID")
+                .IsRequired(true);
 
-            builder.Property(t => t.ProductName)
-               .HasMaxLength(250)
-               .IsRequired(true);
+
+            builder.Property(t => t.CategoryName)
+                .HasMaxLength(100)
+                .IsRequired(true);
 
             builder.Property(t => t.Description)
                 .HasMaxLength(250)
                 .IsRequired(false)
-                .HasColumnName("ProductDesc");
+                .HasColumnName("CategoryDesc");
 
             builder.Property(t => t.deleteDateTime)
                 .HasColumnName("D_DateTime")
@@ -40,16 +45,16 @@ namespace B_Commerce.ProductService.Mapping
              .IsRequired(true);
 
             builder.Property(t => t.isActive)
-             .HasColumnName("IsActiveProduct")
+             .HasColumnName("IsActiveCategory")
              .IsRequired(true)
              .HasDefaultValue(true);
 
             builder.Property(t => t.isDeleted)
-           .HasColumnName("IsDeletedProduct")
+           .HasColumnName("DeletedCategory")
            .IsRequired(true)
            .HasDefaultValue(false);
-
-           
         }
     }
+
+
 }
