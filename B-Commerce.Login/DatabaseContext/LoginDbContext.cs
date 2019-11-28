@@ -13,19 +13,19 @@ namespace B_Commerce.Login.DatabaseContext
         private string _connectionString;
         public LoginDbContext()
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-          .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-          .AddJsonFile("appsettings.json")
-          .Build();
-            _connectionString = configuration.GetConnectionString("LoginServiceDB");
+          //  IConfigurationRoot configuration = new ConfigurationBuilder()
+          //.SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+          //.AddJsonFile("appsettings.json")
+          //.Build();
+          //  _connectionString = configuration.GetConnectionString("LoginServiceDB");
 
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(_connectionString);
+            //optionsBuilder.UseSqlServer(_connectionString);
             optionsBuilder.UseLazyLoadingProxies();
-            //    optionsBuilder.UseSqlServer(@"Server = (localdb)\MSSQLLocalDB; Database = LoginServiceDB; Trusted_Connection = True ");
+            optionsBuilder.UseSqlServer(@"Server =LAPTOP-H6M87CA4\SQLEXPRESS; initial catalog = LoginServiceDB; Trusted_Connection = True");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,8 @@ namespace B_Commerce.Login.DatabaseContext
         public virtual DbSet<SocialType> SocialTypes { get; set; }
         public virtual DbSet<AccountVerification> AccountVerifications { get; set; }
         public virtual DbSet<PasswordChange> PasswordChanges { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
 
     }
 }

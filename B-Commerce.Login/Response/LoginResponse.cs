@@ -1,4 +1,5 @@
-﻿using System;
+﻿using B_Commerce.Login.DomainClass;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,6 +13,7 @@ namespace B_Commerce.Login.Response
 
         public bool IsVerify { get; set; }
 
+        public List<UserRole> UserRole { get; set; }
         public DateTime ExpireDate { get; set; }
     }
 }

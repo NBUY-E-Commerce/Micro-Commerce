@@ -18,7 +18,7 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
             return View();
         }
 
-        [AuterizationFilter("Admin", "Fulladmin")]
+        [AuterizationFilter("Admin", "User")]
         public ActionResult Add()
         {
             return View();

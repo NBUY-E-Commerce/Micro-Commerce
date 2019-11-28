@@ -1,4 +1,4 @@
-﻿
+﻿@model B_Commerce.SMVC.Models.LoginModel
 @{
     Layout = null;
 }
@@ -7,12 +7,67 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Login</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin - Login</title>
+
+
+    <link href="~/Areas/Admin/Template/bootstrap/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+
+
+    <link href="~/Areas/Admin/Template/bootstrap/css/sb-admin.css" rel="stylesheet" />
+
 </head>
-<body>
-    <div> 
-        Login ol
+
+<body class="bg-dark">
+
+    <div class="container">
+        <div class="card card-login mx-auto mt-5">
+            <div class="card-header">Login</div>
+            <div class="card-body">
+                @using (Html.BeginForm("Login", "Account"))
+                {
+                    <div class="form-group" style="margin-top: 25px;">
+                        @Html.TextBoxFor(t => t.Email, new { placeholder = "email", @class = "form-control", id = "email-modal" })
+                        @Html.ValidationMessageFor(t => t.Email, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+
+                        @Html.PasswordFor(t => t.Password, new { placeholder = "password", @class = "form-control", id = "password-modal" })
+                        @Html.ValidationMessageFor(t => t.Password, "", new { @class = "text-danger" })
+                    </div>
+
+                    if (ViewBag.error != null)
+                    {
+                        <div>
+                            <span>@ViewBag.error</span>
+                        </div>
+                    }
+                    <p class="text-center">
+                        <input type="submit" class="btn btn-primary" value="Login">
+                    </p>
+
+                }
+
+                <div class="text-center">
+                    <a class="d-block small" href="#">Forgot Password?</a>
+                </div>
+            </div>
+        </div>
     </div>
+
+
+
+  
+    <script src="~/Areas/Admin/Template/Bootstrap/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Areas/Admin/Template/Bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Areas/Admin/Template/Bootstrap/vendor/jquery-easing/jquery.easing.min.js"></script>
+
 </body>
 </html>

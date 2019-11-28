@@ -9,7 +9,6 @@ namespace B_Commerce.SMVC.Areas.Admin.ActionFilters
 {
     public class AuterizationFilter : ActionFilterAttribute
     {
-
         private List<string> _roles;
         public AuterizationFilter(params string[] roles)
         {
@@ -18,18 +17,11 @@ namespace B_Commerce.SMVC.Areas.Admin.ActionFilters
             {
                 _roles.Add(item);
             }
-
-
-
         }
-
-
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             //daha methoda gitmeden calısır-->burada işilemi durdurabilirim
             //giden requestı değiştirebilirim
-
-
 
             if (filterContext.RequestContext.HttpContext.Session["userroles"] == null)
             {
@@ -51,7 +43,6 @@ namespace B_Commerce.SMVC.Areas.Admin.ActionFilters
 
                 if (!unautherize)
                     filterContext.Result = new RedirectResult("/Admin/Account/Login");
-
 
                 base.OnActionExecuting(filterContext);
             }

@@ -37,7 +37,7 @@ namespace B_Commerce.SMVC.WebHelpers
                 ((CommonResponse)response).SetHttpError();
 
             }
-
+            
             return response;
         }
     }

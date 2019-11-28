@@ -188,6 +188,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\SystemUser.cs" />
+    <Compile Include="Common\UserAdmin.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">

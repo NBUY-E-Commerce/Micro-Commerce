@@ -54,7 +54,7 @@ namespace B_Commerce.LoginApi.Controllers
                 Password = request.Password,
                 Username = request.Email
             };
-
+            
             return _loginService.UserRegistry(user);
         }
 

@@ -149,6 +149,7 @@ namespace B_Commerce.Login.Service.Concrete
                     loginResponse.Token = token.TokenText;
                     loginResponse.ExpireDate = token.EndDate;
                     loginResponse.Email = _user.Email;
+                    loginResponse.UserRole = _user.UserRoles.ToList();
                     loginResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                     return loginResponse;
                 }
@@ -217,7 +218,7 @@ namespace B_Commerce.Login.Service.Concrete
 
 
                     HttpClient httpClient = new HttpClient();
-                    httpClient.BaseAddress = new Uri("http://localhost:60017");
+                    httpClient.BaseAddress = new Uri("http://localhost:52132/");
                     Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
 
                     if (!httpResponse.Result.IsSuccessStatusCode)
@@ -396,7 +397,7 @@ namespace B_Commerce.Login.Service.Concrete
 
 
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:60017");
+            httpClient.BaseAddress = new Uri("http://localhost:52132/");
 
             Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
 
@@ -542,7 +543,7 @@ namespace B_Commerce.Login.Service.Concrete
 
 
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:60017");
+            httpClient.BaseAddress = new Uri("http://localhost:52132/");
 
             Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
 
