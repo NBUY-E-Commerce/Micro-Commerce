@@ -12,6 +12,7 @@ namespace B_Commerce.ProductService.Mapping
         public void Configure(EntityTypeBuilder<ProductSpacialAreaTable> builder)
         {
             builder.HasKey(t=>new { t.ProductID,t.SpacialAreaID});
+            builder.Property(t=>t.ID).IsRequired(false);
         }
     }
 }
