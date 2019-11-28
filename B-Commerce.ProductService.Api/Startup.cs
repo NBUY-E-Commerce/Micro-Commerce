@@ -2,6 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using B_Commerce.Common.Repository;
+using B_Commerce.Common.UOW;
+using B_Commerce.ProductService.DBContext;
+using B_Commerce.ProductService.Service.Abstract;
+using B_Commerce.ProductService.Service.Concrete;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace B_Commerce.ProductService.Api
 {
@@ -25,7 +31,17 @@ namespace B_Commerce.ProductService.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddDbContext<Microsoft.EntityFrameworkCore.DbContext, DataContext>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<ICategoryService, CategoryService>();
+
             services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "BCommerce Product Service", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +52,12 @@ namespace B_Commerce.ProductService.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BCommerce Product Service V1");
+            });
             app.UseHttpsRedirection();
 
             app.UseRouting();

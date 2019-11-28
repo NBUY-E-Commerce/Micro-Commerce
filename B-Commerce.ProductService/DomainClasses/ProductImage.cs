@@ -1,6 +1,8 @@
 ﻿using B_Commerce.Common.DomainClasses;
+using B_Commerce.ProductService.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace B_Commerce.ProductService.DomainClasses
@@ -21,6 +23,15 @@ namespace B_Commerce.ProductService.DomainClasses
 
         public int ProductID { get; set; }
         public  Product Product { get; set; }
+
+        [NotMapped]
+        public string URLFromAway
+        {
+            get
+            {
+                return URL.Contains("http") ? URL : $"{Constants.IMAGE_SERVER_ADRESS}{URL}";
+            }
+        }
 
     }
 }
