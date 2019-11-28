@@ -29,13 +29,13 @@ namespace B_Commerce.LoginApi.Middlewares
                 HttpClient httpClient = new HttpClient();
                 httpClient.BaseAddress = new Uri("http://localhost:60017");
 
-                Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/MQService/InsertLog", mailRequest);
+                //Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/MQService/InsertLog", mailRequest);
 
-                if (!httpResponse.Result.IsSuccessStatusCode)
-                {
-                    response.SetStatus(Constants.ResponseCode.FAILED);
-                    return response;
-                }
+                //if (!httpResponse.Result.IsSuccessStatusCode)
+                //{
+                //    response.SetStatus(Constants.ResponseCode.FAILED);
+                //    return response;
+                //}
 
 
             }
