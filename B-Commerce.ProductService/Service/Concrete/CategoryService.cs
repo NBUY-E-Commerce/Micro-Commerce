@@ -73,7 +73,6 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return baseResponse;
             }
         }
-
         public CategoryResponse GetCategories()
         {
             CategoryResponse categoryResponse = new CategoryResponse();
@@ -106,7 +105,6 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return categoryResponse;
             }
         }
-
         public CategoryResponse GetSubCategoriesByCategoryID(int id)
         {
             CategoryResponse categoryResponse = new CategoryResponse();
@@ -123,7 +121,5 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return categoryResponse;
             }
         }
-
-       
     }
 }
