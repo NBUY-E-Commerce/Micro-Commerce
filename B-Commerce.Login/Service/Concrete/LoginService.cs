@@ -209,8 +209,7 @@ namespace B_Commerce.Login.Service.Concrete
 
 
                     HttpClient httpClient = new HttpClient();
-                    //httpClient.BaseAddress = new Uri("http://localhost:60017");
-                    httpClient.BaseAddress = new Uri("http://localhost:59692/");
+                    httpClient.BaseAddress = new Uri("http://localhost:60017");
                     Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
 
                     if (!httpResponse.Result.IsSuccessStatusCode)
@@ -376,9 +375,8 @@ namespace B_Commerce.Login.Service.Concrete
 
 
             HttpClient httpClient = new HttpClient();
-            //httpClient.BaseAddress = new Uri("http://localhost:60017");
-            httpClient.BaseAddress = new Uri("http://localhost:59692/");
-
+            httpClient.BaseAddress = new Uri("http://localhost:60017");
+          
             Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
 
             if (!httpResponse.Result.IsSuccessStatusCode)
@@ -523,7 +521,7 @@ namespace B_Commerce.Login.Service.Concrete
 
 
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:57731/");
+            httpClient.BaseAddress = new Uri("http://localhost:60017");
 
             Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
 
