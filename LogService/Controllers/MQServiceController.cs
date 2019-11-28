@@ -95,17 +95,22 @@ namespace LogService.Controllers
                     Consumer _consumer = new Consumer("LogInfo");
                     if (_consumer._queue != null)
                     {
-                        List<LogInfo> logInfos = new List<LogInfo>();
-                        new LogInfo()
+                        LogInfo logInfos = new LogInfo
                         {
                             LogInfoMessage = _consumer._queue,
-                            LogID = 1
+
 
 
                         };
 
-                        LogDbContext logDbContext = new LogDbContext();
-                        logDbContext.SaveChanges();
+                        using (LogDbContext db = new LogDbContext())
+                        {
+                            db.Add(logInfos);
+
+                            db.SaveChanges();
+
+                        }
+
 
                     }
 

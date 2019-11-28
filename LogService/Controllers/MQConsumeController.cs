@@ -15,6 +15,7 @@ namespace LogService.Controllers
     [ApiController]
     public class MQConsumeController : ControllerBase
     {
+
         public void Consume(int ConsumePass)
         {
             if (ConsumePass == 1)
@@ -23,22 +24,29 @@ namespace LogService.Controllers
                 {
 
                     Consumer _consumer = new Consumer("LogInfo");
-                    if (_consumer._queue!=null)
+                    if (_consumer._queue != null)
                     {
-                        List<LogInfo> logInfos = new List<LogInfo>();
-                        new LogInfo()
+                        LogInfo logInfos = new LogInfo
                         {
-                            LogInfoMessage = _consumer._queue
+                            LogInfoMessage = _consumer._queue,
+
+
 
                         };
 
-                        LogDbContext logDbContext = new LogDbContext()
-                        logDbContext.SaveChanges();
-                        
+                        using (LogDbContext db = new LogDbContext())
+                        {
+                            db.Add(logInfos);
+
+                            db.SaveChanges();
+
+                        }
+
+
                     }
 
 
-                    
+
                 }
             }
 

@@ -10,16 +10,33 @@ using System.Threading.Tasks;
 
 namespace LogService.MyDbContext
 {
-    internal class LogDbContext: DbContext 
-    {
-        
-        public LogDbContext(DbContextOptions<LogDbContext> options): base(options)
-        {
-           
 
+
+    internal class LogDbContext : DbContext
+    {
+        private string _connectionString;
+        public LogDbContext()
+        {
+
+
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+         .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+         .AddJsonFile("appsettings.json")
+         .Build();
+            _connectionString = configuration.GetConnectionString("LogServiceDB");
+        }
+
+
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(_connectionString);
         }
         public virtual DbSet<LogInfo> LogInfos { get; set; }
 
-        
+
     }
+
+
 }
+
