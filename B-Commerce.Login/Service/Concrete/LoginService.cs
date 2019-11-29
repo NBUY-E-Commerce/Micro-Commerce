@@ -80,7 +80,6 @@ namespace B_Commerce.Login.Service.Concrete
         public LoginResponse Login(LoginRequest loginRequest)
         {
             LoginResponse loginResponse = new LoginResponse();
-
             LoginRequestValidator validator = new LoginRequestValidator();
             ValidationResult result = validator.Validate(loginRequest);
 
@@ -101,7 +100,6 @@ namespace B_Commerce.Login.Service.Concrete
                 }
 
                 loginResponse.Username = _user.Username;
-
 
 
                 if (_user.IsLocked && _user.LockedTime > DateTime.Now)
@@ -150,12 +148,12 @@ namespace B_Commerce.Login.Service.Concrete
                     loginResponse.Token = token.TokenText;
                     loginResponse.ExpireDate = token.EndDate;
                     loginResponse.Email = _user.Email;
-                    loginResponse.UserRole = _user.UserRoles.Select(t => t.Role.RoleName).ToList();
+                    //loginResponse.UserRole = _user.UserRoles.Select(t => t.Role.RoleName).ToList();
                     loginResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                     return loginResponse;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 loginResponse.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
                 return loginResponse;
@@ -181,12 +179,16 @@ namespace B_Commerce.Login.Service.Concrete
                 //*** dikkat user repoya eklenmeden bağlı tablolarına veri eklenirse bu tabloların takibi sağlamaz
                 //kullanıcıyı olusturtur depoya ekle sonra bağlı tablolarını ekle
                 _userRepository.Add(user);
-                user.SocialInfos.Add(user.SocialInfos.FirstOrDefault());
 
-                //default olarak herkullanıcı 1 enduser rolune sahip olmalı
+                if (user.SocialInfos.Count != 0)
+                {
+                    user.SocialInfos.Add(user.SocialInfos.FirstOrDefault());
+                }
+
+                //default olarak her kullanıcı 1 enduser rolune sahip olmalı
                 user.UserRoles.Add(new UserRole
                 {
-                    RoleID = (int)Common.Constants.ENDUSERROLE//
+                    RoleID = (int)Common.Constants.ENDUSERROLE,
                 });
 
 
@@ -226,7 +228,7 @@ namespace B_Commerce.Login.Service.Concrete
 
 
                         HttpClient httpClient = new HttpClient();
-                        httpClient.BaseAddress = new Uri("http://localhost:56913/");
+                        httpClient.BaseAddress = new Uri("http://localhost:62383/");
                         Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
 
                         if (!httpResponse.Result.IsSuccessStatusCode)
@@ -262,7 +264,7 @@ namespace B_Commerce.Login.Service.Concrete
                 {
                     client_id = "3462488800442988",
                     client_secret = "2f5eb5daf3ea0fea4c09e729b1b379d7",
-                    redirect_uri = "https://localhost:44314/Login/FacebookLogin",
+                    redirect_uri = "https://localhost:62384/Login/FacebookLogin",
                     //Test ederken kendi mvc projenin localhost kısmını yaz.
                     code = fbcode
                 });
@@ -414,7 +416,7 @@ namespace B_Commerce.Login.Service.Concrete
 
 
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:56913/");
+            httpClient.BaseAddress = new Uri("http://localhost:62383/");
 
             Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
 

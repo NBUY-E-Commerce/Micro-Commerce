@@ -13,19 +13,18 @@ namespace B_Commerce.Login.DatabaseContext
         private string _connectionString;
         public LoginDbContext()
         {
-          //  IConfigurationRoot configuration = new ConfigurationBuilder()
-          //.SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-          //.AddJsonFile("appsettings.json")
-          //.Build();
-          //  _connectionString = configuration.GetConnectionString("LoginServiceDB");
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+          .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+          .AddJsonFile("appsettings.json")
+          .Build();
+            _connectionString = configuration.GetConnectionString("LoginServiceDB");
 
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(_connectionString);
             optionsBuilder.UseLazyLoadingProxies();
-            optionsBuilder.UseSqlServer(@"Server =.; initial catalog = LoginServiceDB; Trusted_Connection = True");
+            optionsBuilder.UseSqlServer(_connectionString);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

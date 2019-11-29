@@ -158,7 +158,7 @@ namespace B_Commerce.SMVC.Controllers
         {
             var fb = new FacebookClient("3462488800442988", "2f5eb5daf3ea0fea4c09e729b1b379d7", "email");
 
-            fb.RequestAuthentication(this.HttpContext, new Uri("https://localhost:44314/Login/FacebookLogin"));
+            fb.RequestAuthentication(this.HttpContext, new Uri("https://localhost:62384/Login/FacebookLogin"));
 
         }
         public ActionResult FacebookLogin()

@@ -33,7 +33,7 @@ namespace B_Commerce.LoginApi.Middlewares
                 LogException exception = ExceptionHelper.LogException.ShowDebugInfo(ex);
 
                 HttpClient httpClient = new HttpClient();
-                httpClient.BaseAddress = new Uri("http://localhost:56912");
+                httpClient.BaseAddress = new Uri("http://localhost:62388");
 
                 Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/MQService/InsertLog", new LogRequest
                 {
