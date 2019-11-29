@@ -36,6 +36,7 @@ namespace B_Commerce.ProductService.Api
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductService, B_Commerce.ProductService.Service.Concrete.ProductService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

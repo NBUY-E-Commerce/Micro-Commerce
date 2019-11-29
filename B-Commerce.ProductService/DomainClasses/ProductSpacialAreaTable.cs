@@ -5,7 +5,7 @@ using System.Text;
 
 namespace B_Commerce.ProductService.DomainClasses
 {
-    public class ProductSpacialAreaTable:BaseEntity
+    public class ProductSpacialAreaTable : BaseEntity
     {
         /*  public virtual int ID { get; set; } 
             public bool isDeleted { get; set; } = false;
