@@ -116,30 +116,42 @@ namespace B_Commerce.ProductService.Service.Concrete
 
         public ProductResponse GetSpecialProducts(int spacialID, int? index, int count)
         {
-            int pageNumber = (index ?? 1);
-            ProductResponse productResponse = new ProductResponse();  
-            SpacialArea spacialArea = _repositorySpacial.Get(t=>t.ID==spacialID).FirstOrDefault();
+            ProductResponse productResponse = new ProductResponse();
+            try
+            {
+                int pageNumber = (index ?? 1);
+                SpacialArea spacialArea = _repositorySpacial.Get(t => t.ID == spacialID).FirstOrDefault();
 
-            if (spacialArea==null) {
-                productResponse.Products = null;
-                productResponse.SetStatus(ResponseCode.NOT_FOUND_ENTITY);
+                if (spacialArea == null)
+                {
+                    productResponse.Products = null;
+                    productResponse.SetStatus(ResponseCode.NOT_FOUND_ENTITY);
+                    return productResponse;
+                }
+
+                List<ProductSpacialAreaTable> spacialAreaProducts = _repositorySpacialTable.Get(t => t.SpacialAreaID == spacialArea.ID).ToList().GetRange(pageNumber, count);
+
+                if (spacialAreaProducts == null)
+                {
+                    productResponse.Products = null;
+                    productResponse.SetStatus(ResponseCode.NOT_FOUND_ENTITY);
+                    return productResponse;
+                }
+                List<Product> productList = new List<Product>();
+                foreach (ProductSpacialAreaTable item in spacialAreaProducts)
+                {
+                    productList.Add(item.Product);
+                }
+                productResponse.Products = productList;
+                productResponse.SetStatus(ResponseCode.SUCCESS);
                 return productResponse;
             }
-
-            List<ProductSpacialAreaTable> spacialAreaProducts = _repositorySpacialTable.Get(t=>t.SpacialAreaID==spacialArea.ID).ToList().GetRange(pageNumber, count);
-
-            if (spacialAreaProducts == null) {
+            catch (Exception ex)
+            {
                 productResponse.Products = null;
-                productResponse.SetStatus(ResponseCode.NOT_FOUND_ENTITY);
+                productResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return productResponse;
             }
-            List<Product> productList = new List<Product>();
-            foreach (ProductSpacialAreaTable item in spacialAreaProducts) {
-                productList.Add(item.Product);
-            }
-            productResponse.Products = productList;
-            productResponse.SetStatus(ResponseCode.SUCCESS);
-            return productResponse;
         }
 
      
