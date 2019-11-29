@@ -15,9 +15,9 @@ namespace B_Commerce.ProductService.DomainClasses
             public int? deleteUserId { get; set; }
          */
         public int ProductID { get; set; }
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
 
         public int SpacialAreaID { get; set; }
-        public SpacialArea SpacialArea { get; set; }
+        public virtual SpacialArea SpacialArea { get; set; }
     }
 }

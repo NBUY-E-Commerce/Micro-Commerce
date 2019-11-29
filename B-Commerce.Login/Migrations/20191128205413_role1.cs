@@ -64,6 +64,9 @@ namespace B_Commerce.Login.Migrations
 
             migrationBuilder.DropTable(
                 name: "Roles");
+
+
+
         }
     }
 }

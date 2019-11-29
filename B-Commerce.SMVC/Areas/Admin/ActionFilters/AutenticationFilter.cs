@@ -1,4 +1,5 @@
-﻿using System;
+﻿using B_Commerce.SMVC.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,7 +17,7 @@ namespace B_Commerce.SMVC.Areas.Admin.ActionFilters
             //daha methoda gitmeden calısır-->burada işilemi durdurabilirim
             //giden requestı değiştirebilirim
 
-            if (filterContext.RequestContext.HttpContext.Session["useradmin"] == null)
+            if (UserAdmin.CurrentUserAdmin == null)
             {
                 filterContext.Result = new RedirectResult("/Admin/Account/Login");
             }

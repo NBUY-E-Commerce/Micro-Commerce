@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace B_Commerce.Login.Request
+namespace LogService.DTO
 {
-   public  class LogRequest
+    public class InsertLogRequest
     {
         public int ProjectCode { get; set; }
 
@@ -12,6 +13,7 @@ namespace B_Commerce.Login.Request
 
         public string LogInfo { get; set; }
 
+  
 
     }
 }

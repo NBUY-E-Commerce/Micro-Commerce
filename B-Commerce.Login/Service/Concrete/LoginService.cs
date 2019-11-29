@@ -15,6 +15,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using B_Commerce.Login.FluentValidation;
 using FluentValidation.Results;
+using B_Commerce.Login.DatabaseContext;
 
 namespace B_Commerce.Login.Service.Concrete
 {
@@ -91,7 +92,7 @@ namespace B_Commerce.Login.Service.Concrete
 
             try
             {
-                User _user = _userRepository.Get(t => (t.Email == loginRequest.Email || t.Phone == loginRequest.Phone)).FirstOrDefault();
+                User _user = _userRepository.Get(t => ((t.Email != null && t.Email == loginRequest.Email) || (t.Phone != null && t.Phone == loginRequest.Phone))).FirstOrDefault();
 
                 if (_user == null)
                 {
@@ -149,7 +150,7 @@ namespace B_Commerce.Login.Service.Concrete
                     loginResponse.Token = token.TokenText;
                     loginResponse.ExpireDate = token.EndDate;
                     loginResponse.Email = _user.Email;
-                    loginResponse.UserRole = _user.UserRoles.ToList();
+                    loginResponse.UserRole = _user.UserRoles.Select(t => t.Role.RoleName).ToList();
                     loginResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                     return loginResponse;
                 }
@@ -181,6 +182,13 @@ namespace B_Commerce.Login.Service.Concrete
                 //kullanıcıyı olusturtur depoya ekle sonra bağlı tablolarını ekle
                 _userRepository.Add(user);
                 user.SocialInfos.Add(user.SocialInfos.FirstOrDefault());
+
+                //default olarak herkullanıcı 1 enduser rolune sahip olmalı
+                user.UserRoles.Add(new UserRole
+                {
+                    RoleID = (int)Common.Constants.ENDUSERROLE//
+                });
+
 
                 AccountVerification accountVerification = new AccountVerification();
                 if (user.SocialInfos.Count == 0)
@@ -217,9 +225,9 @@ namespace B_Commerce.Login.Service.Concrete
                         };
 
 
-                    HttpClient httpClient = new HttpClient();
-                    httpClient.BaseAddress = new Uri("http://localhost:60017");
-                    Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
+                        HttpClient httpClient = new HttpClient();
+                        httpClient.BaseAddress = new Uri("http://localhost:56913/");
+                        Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
 
                         if (!httpResponse.Result.IsSuccessStatusCode)
                         {
@@ -321,6 +329,7 @@ namespace B_Commerce.Login.Service.Concrete
                         _cacheManager.AddUserToCache(token.TokenText, user);
                         loginResponse.Username = user.FullName();
                         loginResponse.Token = token.TokenText;
+                        loginResponse.IsVerify = true;
                         loginResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                         return loginResponse;
                     }
@@ -405,7 +414,7 @@ namespace B_Commerce.Login.Service.Concrete
 
 
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:52132/");
+            httpClient.BaseAddress = new Uri("http://localhost:56913/");
 
             Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
 
@@ -551,7 +560,7 @@ namespace B_Commerce.Login.Service.Concrete
 
 
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:52132/");
+            httpClient.BaseAddress = new Uri("http://localhost:56913/");
 
             Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
 

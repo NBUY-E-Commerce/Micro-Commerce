@@ -207,6 +207,7 @@
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\SystemUser.cs" />
     <Compile Include="Common\UserAdmin.cs" />
@@ -1943,7 +1944,7 @@
     <Content Include="appsettings.json" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\Index2.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Template\bootstrap\.travis.yml" />
     <Content Include="Areas\Admin\Template\bootstrap\LICENSE" />
     <Content Include="Areas\Admin\Template\bootstrap\package-lock.json" />
@@ -2105,6 +2106,7 @@
     <Content Include="Areas\Admin\Views\Category\Get.cshtml" />
     <Content Include="Areas\Admin\Views\Account\Login.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

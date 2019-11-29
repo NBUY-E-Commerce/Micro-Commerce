@@ -12,7 +12,8 @@ namespace B_Commerce.ProductService.DBContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=10.0.75.2;Database=ProductServiceDB;UID=Sa;PWD='6.rq=^DP;Jn;w%|FVEPZ'");
+            optionsBuilder.UseLazyLoadingProxies();
+            optionsBuilder.UseSqlServer(@"Server=.;Database=ProductServiceDB;UID=sa;PWD=123");
         
         }
 

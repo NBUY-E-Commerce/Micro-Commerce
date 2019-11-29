@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using B_Commerce.Common.Helper;
+using B_Commerce.Login.Request;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using static B_Commerce.Common.Helper.ExceptionHelper;
 
 namespace B_Commerce.LoginApi.Middlewares
 {
@@ -26,17 +30,25 @@ namespace B_Commerce.LoginApi.Middlewares
             catch (Exception ex)
             {
 
+                LogException exception = ExceptionHelper.LogException.ShowDebugInfo(ex);
+
                 HttpClient httpClient = new HttpClient();
-                httpClient.BaseAddress = new Uri("http://localhost:60017");
+                httpClient.BaseAddress = new Uri("http://localhost:56912");
 
-                //Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/MQService/InsertLog", mailRequest);
+                Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/MQService/InsertLog", new LogRequest
+                {
+                    ProjectCode = 1,
+                    ProjectPassword = "123456",
+                    LogInfo = exception.ToString()
 
-                //if (!httpResponse.Result.IsSuccessStatusCode)
-                //{
-                //    response.SetStatus(Constants.ResponseCode.FAILED);
-                //    return response;
-                //}
+                });
 
+                if (!httpResponse.Result.IsSuccessStatusCode)
+                {
+                  
+                }
+
+                httpContext.Response.StatusCode = 500;
 
             }
 

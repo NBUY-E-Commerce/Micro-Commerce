@@ -13,5 +13,7 @@ namespace B_Commerce.SMVC.WebApiReqRes.Autentication.Login
         public string Email { get; set; }
         public bool IsVerify { get; set; }
         public DateTime ExpireDate { get; set; }
+
+        public List<string> UserRole { get; set; }
     }
 }

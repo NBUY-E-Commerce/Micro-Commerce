@@ -6,6 +6,8 @@ namespace B_Commerce.Login.Common
 {
     public class Constants
     {
+
+        public const int ENDUSERROLE = 2;
         public enum ResponseCode
         {
             SUCCESS,

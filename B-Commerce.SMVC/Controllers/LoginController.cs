@@ -180,7 +180,7 @@ namespace B_Commerce.SMVC.Controllers
                         ExpireDate = loginResponse.ExpireDate,
                         IsValid = loginResponse.IsVerify,
                         Token = loginResponse.Token,
-                        Email = loginResponse.Email,
+                        Email = loginResponse.Email
                     };
                 }
             }

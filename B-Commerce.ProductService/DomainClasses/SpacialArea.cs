@@ -16,6 +16,6 @@ namespace B_Commerce.ProductService.DomainClasses
           */
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<ProductSpacialAreaTable> productSpacialAreas { get; set; } = new List<ProductSpacialAreaTable>();
+        public virtual ICollection<ProductSpacialAreaTable> productSpacialAreas { get; set; } = new List<ProductSpacialAreaTable>();
     }
 }

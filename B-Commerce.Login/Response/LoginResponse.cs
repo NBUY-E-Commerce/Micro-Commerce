@@ -13,7 +13,7 @@ namespace B_Commerce.Login.Response
 
         public bool IsVerify { get; set; }
 
-        public List<UserRole> UserRole { get; set; }
+        public List<string> UserRole { get; set; }
         public DateTime ExpireDate { get; set; }
     }
 }

@@ -16,6 +16,9 @@ namespace B_Commerce.SMVC.Common
 
         public bool IsValid { get; set; }
 
+        public List<string> Roles { get; set; }
+
+
         public static UserAdmin CurrentUserAdmin
         {
             get

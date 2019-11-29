@@ -11,11 +11,18 @@ using System.Web.Mvc;
 
 namespace B_Commerce.SMVC.Areas.Admin.Controllers
 {
-    [AutenticationFilter]
+
     public class AccountController : Controller
     {
         // GET: Admin/Account
-        
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
         public ActionResult Login(LoginModel loginModel)
         {
             if (!ModelState.IsValid)
@@ -29,6 +36,13 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
             {
                 //işlem basarılı
 
+                if (!loginResponse.UserRole.Contains("Admin"))
+                {
+                    ViewBag.error = "Yetkisiz kullanıcı";
+                    return View("Login", loginModel);
+
+                }
+
                 UserAdmin.CurrentUserAdmin = new UserAdmin
                 {
                     Name = loginResponse.Username,
@@ -36,6 +50,7 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
                     IsValid = loginResponse.IsVerify,
                     Token = loginResponse.Token,
                     Email = loginResponse.Email,
+                    Roles = loginResponse.UserRole
                 };
 
 

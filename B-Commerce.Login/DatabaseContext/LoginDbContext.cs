@@ -25,7 +25,7 @@ namespace B_Commerce.Login.DatabaseContext
         {
             //optionsBuilder.UseSqlServer(_connectionString);
             optionsBuilder.UseLazyLoadingProxies();
-            optionsBuilder.UseSqlServer(@"Server =LAPTOP-H6M87CA4\SQLEXPRESS; initial catalog = LoginServiceDB; Trusted_Connection = True");
+            optionsBuilder.UseSqlServer(@"Server =.; initial catalog = LoginServiceDB; Trusted_Connection = True");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

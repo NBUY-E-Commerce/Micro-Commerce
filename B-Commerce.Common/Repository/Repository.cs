@@ -16,20 +16,27 @@ namespace B_Commerce.Common.Repository
         private DbSet<T> _dbSet;
         public Repository(DbContext context)
         {
+
             _context = context;
+       
             _dbSet = _context.Set<T>();
         }
 
-   
+
         public void Add(T entity)
         {
             _context.Entry(entity).State = EntityState.Added;
-        }
+            //_context.ChangeTracker.TrackGraph(entity, t => {
 
-         public void Delete(T entity)
-         {
+            //    _context.Entry(t).State = EntityState.Added;
+            //});
+           
+       }
+
+        public void Delete(T entity)
+        {
             _context.Entry(entity).State = EntityState.Deleted;
-         }
+        }
 
         public IQueryable<T> Get(Expression<Func<T, bool>> filter = null)
         {

@@ -104,7 +104,12 @@
                     <span>Kategori İşlemleri</span>
                 </a>
             </li>
-
+            <li class="nav-item active">
+                <a class="nav-link" href="@Url.Action("Index","Product")">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Ürün İşlemleri</span>
+                </a>
+            </li>
         </ul>
 
         <div id="content-wrapper">
@@ -155,7 +160,7 @@
     <!-- Custom scripts for all pages-->
     <script src="/Areas/Admin/Template/Bootstrap/js/sb-admin.min.js"></script>
 
-
+    @RenderSection("scripts",false)
 
 </body>
 
