@@ -127,7 +127,9 @@ namespace B_Commerce.SMVC.Controllers
         public ActionResult Logout()
         {
             SystemUser.CurrentUser = null;
-            return View("/Login/Register.cshtml");
+            TempData["reason"] = "activateuser";
+            TempData["popupmessage"] = "Çıkış İşlemi Başarılı. Tekrar Bekleriz...";
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult DoVerify(string email, string code)
@@ -146,6 +148,7 @@ namespace B_Commerce.SMVC.Controllers
                 SystemUser.CurrentUser.IsValid = true;
 
                 TempData["reason"] = "activateuser";
+                TempData["popupmessage"] = "Aktivasyon işleminiz başarılı.Keyifli alışverişler.";
                 return RedirectToAction("Index", "Home");
 
             }

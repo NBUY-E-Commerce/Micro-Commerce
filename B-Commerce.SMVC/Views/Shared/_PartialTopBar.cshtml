@@ -13,11 +13,12 @@
                 <ul class="menu list-inline mb-0">
                     <li class="list-inline-item">
                         <span>Hoşgeldin, @SystemUser.CurrentUser.Name </span>
-                        <a href="/Login/Logout">Çıkış Yap</a>
+                        
+                        @Html.ActionLink("Çıkış Yap","Logout","Login")
                         @if (SystemUser.CurrentUser.IsValid == false)
                         {
 
-                            @Html.ActionLink("aktif et", "VerifyAccount", "Login", new
+                            @Html.ActionLink("Aktif Et", "VerifyAccount", "Login", new
                              {
                                  email = SystemUser.CurrentUser.Email
                              }, null);
