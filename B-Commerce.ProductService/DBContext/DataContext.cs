@@ -12,24 +12,26 @@ namespace B_Commerce.ProductService.DBContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.;Database=ProductServiceDB;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=10.0.75.2;Database=ProductServiceDB;UID=Sa;PWD='6.rq=^DP;Jn;w%|FVEPZ'");
         
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new MasterCategoryMapping());
-            modelBuilder.ApplyConfiguration(new SubCategoryMapping());
+   
+            modelBuilder.ApplyConfiguration(new CategoryMapping());
             modelBuilder.ApplyConfiguration(new ProductMapping());
             modelBuilder.ApplyConfiguration(new ProductImagesMapping());
-
+            modelBuilder.ApplyConfiguration(new ProductSpacialAreaMapping());
             base.OnModelCreating(modelBuilder);
         }
 
-        public virtual DbSet<SubCategory> Categories { get; set;}
-        public virtual DbSet<Product> MasterCategories { get; set; }
+        public virtual DbSet<Category> Categories { get; set;}
+    
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductImage> ProductImages { get; set; }
        
+        public virtual DbSet<SpacialArea> SpacialAreas { get; set; }
+        public virtual DbSet<ProductSpacialAreaTable> ProductSpacialAreas { get; set; }
     }
 }

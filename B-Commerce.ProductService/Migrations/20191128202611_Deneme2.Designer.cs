@@ -4,14 +4,16 @@ using B_Commerce.ProductService.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace B_Commerce.ProductService.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20191128202611_Deneme2")]
+    partial class Deneme2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -205,54 +207,6 @@ namespace B_Commerce.ProductService.Migrations
                     b.ToTable("ProductImages");
                 });
 
-            modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.ProductSpacialAreaTable", b =>
-                {
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpacialAreaID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductID", "SpacialAreaID");
-
-                    b.HasIndex("SpacialAreaID");
-
-                    b.ToTable("ProductSpacialAreas");
-                });
-
-            modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.SpacialArea", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("deleteDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("deleteUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("insertDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("insertUserId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("SpacialAreas");
-                });
-
             modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.Category", b =>
                 {
                     b.HasOne("B_Commerce.ProductService.DomainClasses.Category", "MasterCategory")
@@ -274,21 +228,6 @@ namespace B_Commerce.ProductService.Migrations
                     b.HasOne("B_Commerce.ProductService.DomainClasses.Product", "Product")
                         .WithMany("ProductImages")
                         .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.ProductSpacialAreaTable", b =>
-                {
-                    b.HasOne("B_Commerce.ProductService.DomainClasses.Product", "Product")
-                        .WithMany("productSpacialAreas")
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("B_Commerce.ProductService.DomainClasses.SpacialArea", "SpacialArea")
-                        .WithMany("productSpacialAreas")
-                        .HasForeignKey("SpacialAreaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
