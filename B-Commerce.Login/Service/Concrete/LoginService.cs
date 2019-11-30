@@ -199,7 +199,6 @@ namespace B_Commerce.Login.Service.Concrete
                     user.AccountVerifications.Add(accountVerification);
                 }
 
-
                 if (_unitOfWork.SaveChanges() > 0)
                 {
 
@@ -226,10 +225,9 @@ namespace B_Commerce.Login.Service.Concrete
                             ProjectCode = "123456"
                         };
 
-
                         HttpClient httpClient = new HttpClient();
-                        httpClient.BaseAddress = new Uri("http://localhost:62383/");
-                        Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
+                        httpClient.BaseAddress = new Uri(Constants.NOTIFICATION_API_BASE_URI);
+                        Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync(Constants.NOTIFICATION_API_MAIL_URI, mailRequest);
 
                         if (!httpResponse.Result.IsSuccessStatusCode)
                         {
@@ -247,7 +245,6 @@ namespace B_Commerce.Login.Service.Concrete
             }
             catch (Exception ex)
             {
-                //mongodb log at.
                 registerResponse.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
             }
 
