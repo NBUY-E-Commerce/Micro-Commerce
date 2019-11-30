@@ -15,6 +15,8 @@ namespace LogService.Controllers
     [ApiController]
     public class MQConsumeController : ControllerBase
     {
+        [HttpGet]
+        [Route("Consume")]
         public void Consume()
         {
 
