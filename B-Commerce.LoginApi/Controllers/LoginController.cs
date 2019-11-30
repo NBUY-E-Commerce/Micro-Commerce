@@ -60,9 +60,9 @@ namespace B_Commerce.LoginApi.Controllers
 
         [HttpPost]
         [Route("FacebookLogin")]
-        public LoginResponse FacebookLogin([FromBody]string fbcode)
+        public LoginResponse FacebookLogin(FacebookRequest facebookRequest)
         {
-            return _loginService.FacebookLogin(fbcode);
+            return _loginService.FacebookLogin(facebookRequest);
         }
         [HttpPost]
         [Route("CheckVerificationCode")]

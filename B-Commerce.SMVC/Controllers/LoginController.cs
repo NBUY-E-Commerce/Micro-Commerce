@@ -19,8 +19,6 @@ namespace B_Commerce.SMVC.Controllers
         // GET: Login
         public ActionResult Register()
         {
-
-
             return View(new RegisterViewModel());
         }
 
@@ -34,6 +32,7 @@ namespace B_Commerce.SMVC.Controllers
             }
 
             RegisterResponse registerResponse = WebApiOperation.SendPost<RegisterModel, RegisterResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_REGISTER_URI, registerModel);
+
             if (registerResponse.Code == Constants.LOGIN_RESPONSE_SUCCESS)
             {
                 //işlem basarılı
@@ -65,10 +64,9 @@ namespace B_Commerce.SMVC.Controllers
 
         public PartialViewResult TopBar()
         {
-
             return PartialView("_PartialTopBar");
-
         }
+
         [HttpPost]
         public ActionResult Login(LoginModel loginModel)
         {
@@ -76,6 +74,7 @@ namespace B_Commerce.SMVC.Controllers
             {
                 var model = new RegisterViewModel();
                 model.loginModel = loginModel;
+
                 return View("Register", model);
             }
 
@@ -83,8 +82,6 @@ namespace B_Commerce.SMVC.Controllers
 
             if (loginResponse.Code == Constants.LOGIN_RESPONSE_SUCCESS)
             {
-                //işlem basarılı
-
                 SystemUser.CurrentUser = new SystemUser
                 {
                     Name = loginResponse.Username,
@@ -110,47 +107,41 @@ namespace B_Commerce.SMVC.Controllers
                 loginModel = loginModel
 
             };
+
             ViewBag.error = loginResponse.Message;
             return View("/Views/Login/Register.cshtml", viewModel);
-
-
         }
-
 
         public ActionResult VerifyAccount(string email)
         {
-
             return View((object)email);
         }
-
 
         public ActionResult Logout()
         {
             SystemUser.CurrentUser = null;
             TempData["reason"] = "activateuser";
             TempData["popupmessage"] = "Çıkış İşlemi Başarılı. Tekrar Bekleriz...";
+
             return RedirectToAction("Index", "Home");
         }
 
         public ActionResult DoVerify(string email, string code)
         {
-
             CommonResponse response = WebApiOperation.SendPost<VerificationRequest, CommonResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_CHECK_VERIFICATION_URI, new VerificationRequest
             {
                 Email = email,
                 Code = code
-
             });
 
             if (response.Code == Constants.LOGIN_RESPONSE_SUCCESS)
             {
 
                 SystemUser.CurrentUser.IsValid = true;
-
                 TempData["reason"] = "activateuser";
                 TempData["popupmessage"] = "Aktivasyon işleminiz başarılı.Keyifli alışverişler.";
-                return RedirectToAction("Index", "Home");
 
+                return RedirectToAction("Index", "Home");
             }
 
             ViewBag.error = response.Message;
@@ -159,24 +150,24 @@ namespace B_Commerce.SMVC.Controllers
         }
         public void FbLogin()
         {
-            var fb = new FacebookClient("3462488800442988", "2f5eb5daf3ea0fea4c09e729b1b379d7", "email");
+            var fb = new FacebookClient(Constants.FACEBOOK_APPID, Constants.FACEBOOK_APPSECRET, "email");
 
-            fb.RequestAuthentication(this.HttpContext, new Uri("https://localhost:62384/Login/FacebookLogin"));
-
+            fb.RequestAuthentication(this.HttpContext, new Uri(Constants.MVC_FACEBOOK_URI));
         }
+
         public ActionResult FacebookLogin()
         {
             Facebook.FacebookClient fb = new Facebook.FacebookClient();
             LoginResponse loginResponse = new LoginResponse();
+            FacebookModel facebookModel = new FacebookModel();
+
             if (Request.QueryString["code"] != null)
             {
-                string fbcode = Request.QueryString["code"];
-                loginResponse = WebApiOperation.SendPost<string, LoginResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_FACEBOOK_URI, fbcode);
+                facebookModel.FacebookCode = Request.QueryString["code"];
+                loginResponse = WebApiOperation.SendPost<FacebookModel, LoginResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_FACEBOOK_URI, facebookModel);
 
                 if (loginResponse.Code == Constants.LOGIN_RESPONSE_SUCCESS)
                 {
-                    //işlem basarılı
-
                     SystemUser.CurrentUser = new SystemUser
                     {
                         Name = loginResponse.Username,
@@ -187,6 +178,7 @@ namespace B_Commerce.SMVC.Controllers
                     };
                 }
             }
+
             return RedirectToAction("Index", "Home");
         }
     }

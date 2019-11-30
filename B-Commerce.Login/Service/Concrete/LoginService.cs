@@ -188,7 +188,7 @@ namespace B_Commerce.Login.Service.Concrete
                 //default olarak her kullanıcı 1 enduser rolune sahip olmalı
                 user.UserRoles.Add(new UserRole
                 {
-                    RoleID = (int)Common.Constants.ENDUSERROLE,
+                    RoleID = (int)Constants.UserRole.EndUserRole
                 });
 
 
@@ -254,7 +254,7 @@ namespace B_Commerce.Login.Service.Concrete
             return registerResponse;
         }
 
-        public LoginResponse FacebookLogin(string fbcode)
+        public LoginResponse FacebookLogin(FacebookRequest facebookRequest)
         {
             LoginResponse loginResponse = new LoginResponse();
             try
@@ -262,11 +262,11 @@ namespace B_Commerce.Login.Service.Concrete
                 Facebook.FacebookClient fb = new Facebook.FacebookClient();
                 dynamic result = fb.Post("oauth/access_token", new
                 {
-                    client_id = "3462488800442988",
-                    client_secret = "2f5eb5daf3ea0fea4c09e729b1b379d7",
-                    redirect_uri = "https://localhost:62384/Login/FacebookLogin",
+                    client_id = facebookRequest.AppID,
+                    client_secret = facebookRequest.AppSecret,
+                    redirect_uri = facebookRequest.FacebookUri,
                     //Test ederken kendi mvc projenin localhost kısmını yaz.
-                    code = fbcode
+                    code = facebookRequest.FacebookCode
                 });
 
                 var accessToken = result.access_token;
@@ -318,8 +318,8 @@ namespace B_Commerce.Login.Service.Concrete
                 user.SocialInfos.Add(new SocialInfo
                 {
                     SocialID = socialId,
-                    SocialType = new SocialType { SocialName = "Facebook" },
                     AccessToken = accessToken,
+                    SocialTypeID = (int)Constants.SocialType.Facebook
                 });
 
                 if (UserRegistry(user).Code == 0) // Başarılı register
@@ -414,18 +414,16 @@ namespace B_Commerce.Login.Service.Concrete
                 ProjectCode = "123456"
             };
 
-
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:62383/");
+            httpClient.BaseAddress = new Uri(Constants.NOTIFICATION_API_BASE_URI);
 
-            Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
+            Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync(Constants.NOTIFICATION_API_MAIL_URI, mailRequest);
 
             if (!httpResponse.Result.IsSuccessStatusCode)
             {
                 response.SetStatus(Constants.ResponseCode.FAILED);
                 return response;
             }
-
 
             try
             {
@@ -560,18 +558,16 @@ namespace B_Commerce.Login.Service.Concrete
                 ProjectCode = "123456"
             };
 
-
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("http://localhost:56913/");
+            httpClient.BaseAddress = new Uri(Constants.NOTIFICATION_API_BASE_URI);
 
-            Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync("/api/Notification/Mail", mailRequest);
+            Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync(Constants.NOTIFICATION_API_MAIL_URI, mailRequest);
 
             if (!httpResponse.Result.IsSuccessStatusCode)
             {
                 response.SetStatus(Constants.ResponseCode.FAILED);
                 return response;
             }
-
 
             try
             {
