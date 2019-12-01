@@ -10,9 +10,7 @@ namespace B_Commerce.Login.Mapping
     {
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Role> builder)
         {
-            //Mapping yaparken bütün propertyleri ver.Eksik olursa patlar.
             builder.HasMany(t => t.UserRoles).WithOne(t => t.Role).HasForeignKey(t => t.RoleID);
-
         }
     }
 }

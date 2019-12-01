@@ -6,8 +6,24 @@ namespace B_Commerce.Login.Common
 {
     public class Constants
     {
-
-        public const int ENDUSERROLE = 2;
+        #region NotificationSettings
+        public const string NOTIFICATION_API_BASE_URI = "https://localhost:44332/";
+        public const string NOTIFICATION_API_MAIL_URI = "https://localhost:44332/api/Notification/Mail";
+        #endregion
+        public enum UserRole
+        {
+            Admin=1,
+            EndUserRole,
+            TestUser
+        }
+        public enum SocialType
+        {
+            Facebook = 1,
+            Twitter,
+            Instagram,
+            LinkedIn,
+            Google
+        }
         public enum ResponseCode
         {
             SUCCESS,

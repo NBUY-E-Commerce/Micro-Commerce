@@ -157,6 +157,16 @@ namespace B_Commerce.Login.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                        table: "SocialTypes",
+                        columns: new[] { "SocialName" },
+                        values: new object[] { "Facebook" });
+
+            migrationBuilder.InsertData(
+                        table: "SocialTypes",
+                        columns: new[] { "SocialName" },
+                        values: new object[] { "Twitter" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AccountVerifications_UserID",
                 table: "AccountVerifications",
