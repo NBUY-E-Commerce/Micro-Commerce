@@ -1,25 +1,61 @@
 ﻿@model LoginModel
-@using (Ajax.BeginForm("", new AjaxOptions
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+    var btn_spinner = (function () {
+        function processSubmitLoader() {
+            $('button[data-spinning-button]').click(function () {
+                var $this = $(this);
+                let formId = $this.data('spinning-button');
+                let $form = formId ? $('#' + formId) : $this.parents('form');
+                if ($form.length) {
+                    if ($form.valid()) {
+                        $this.html("<i class='fa fa-circle-o-notch fa-spin'></i>").attr("disabled", "")
+                        $form.submit();
+                    }
+                }
+            })
+        }
+        return {
+            initSpinnerButton: processSubmitLoader
+        }
+    })();
+
+    $(document).ready(function () {
+        btn_spinner.initSpinnerButton();
+    });
+</script>
+
+
+@using (Ajax.BeginForm("Login", "Login", new AjaxOptions
 {
 
 
 }))
 {
     <div class="form-group">
-        @Html.TextBoxFor(t => t.UserName, new { placeholder = "Email", @class = "form-control", id = "email-modal" })
-        @Html.ValidationMessageFor(t => t.UserName)
+        @Html.TextBoxFor(t => t.Email, new { placeholder = "Email", @class = "form-control", id = "email-modal" })
+        @Html.ValidationMessageFor(t => t.Email, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
 
         @Html.PasswordFor(t => t.Password, new { placeholder = "Password", @class = "form-control", id = "password-modal" })
-        @Html.ValidationMessageFor(t => t.UserName)
+        @Html.ValidationMessageFor(t => t.Password, "", new { @class = "text-danger" })
     </div>
 
-
-    <p class="text-center">
-        <input type="submit" class="btn btn-primary" value="Login">
+    <div class="text-center " id="spinner" hidden>
+        <div class="spinner-border text-info" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    
+    <p class="text-center" >
+        <button data-spinning-button type="submit" class="btn btn-primary">Login</button>
     </p>
+
 
 }
 
