@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using B_Commerce.NotificationService.Api.DTO;
 using B_Commerce.NotificationService.Common;
 using B_Commerce.NotificationService.DomainClass;
 using B_Commerce.NotificationService.Request.Concrete;
@@ -73,8 +74,14 @@ namespace B_Commerce.NotificationService.Api.Controllers
 
         [HttpPost]
         [Route("RegisterProject")]
-        public ActionResult RegisterProject(ProjectPermission permission)
+        public ActionResult RegisterProject(Register register)
         {
+            ProjectPermission permission = new ProjectPermission
+            {
+                ProjectName = register.ProjectName,
+                OwnerMail =register.OwnerMail,
+                OwnerPhone = register.OwnerPhone
+            };
             try
             {
                 _authControlService.RegisterProject(permission);

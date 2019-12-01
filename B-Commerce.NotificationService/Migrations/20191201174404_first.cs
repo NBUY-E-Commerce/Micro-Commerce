@@ -12,7 +12,7 @@ namespace B_Commerce.NotificationService.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     isDeleted = table.Column<bool>(nullable: false),
                     insertDateTime = table.Column<DateTime>(nullable: false),
                     deleteDateTime = table.Column<DateTime>(nullable: true),

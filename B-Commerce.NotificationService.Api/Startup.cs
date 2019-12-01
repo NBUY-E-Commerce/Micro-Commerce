@@ -6,7 +6,7 @@ using AutoMapper;
 using B_Commerce.Common.Repository;
 using B_Commerce.Common.UOW;
 using B_Commerce.Login.Request;
-using B_Commerce.NotificationService.DbContext.SQLite;
+using B_Commerce.NotificationService.DbContext.SQLServer;
 using B_Commerce.NotificationService.NotificationSender.Abstract;
 using B_Commerce.NotificationService.NotificationSender.Concrete;
 using B_Commerce.NotificationService.Service.Abstract;
@@ -38,7 +38,7 @@ namespace B_Commerce.NotificationService.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<Microsoft.EntityFrameworkCore.DbContext, NSDbContext>();
+            services.AddDbContext<Microsoft.EntityFrameworkCore.DbContext, NSDbContextSQL>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IAuthControlService, SQliteAuthManager>();
