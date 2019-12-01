@@ -5,62 +5,85 @@
 }
 @section scripts
 {
-    <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/froala-editor@3.0.6/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@3.0.6/js/froala_editor.pkgd.min.js"></script>
 
     <script>
-        $(function () {
-
-
-
-              CKEDITOR.replace('editor1');
-
-        });
+        var editor = new FroalaEditor('#editor')
     </script>
 }
 <form>
     <div class="form-group">
-        <label for="exampleFormControlInput1">Ürün Adı :</label>
-        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+        @Html.Label("LabelProductName", "Product Name", new { @class = "badge badge-pill badge-primary" })
+        @Html.TextBox("ProductName", "", new { @class = "form-control", id = "#productName", placeholder = "Ürün Adı" })
     </div>
     <div class="form-group">
+        @Html.Label("LabelProductPrice", "Product Detail", new { @class = "badge badge-pill badge-primary" })
+        @Html.TextBox("ProductPrice", "", new { @class = "form-control", id = "#productPrice", placeholder = "Ürün Fiyatı" })
+    </div>
+    <div class="form-group">
+        @Html.TextBox("ProductSize", "", new { @class = "form-control", id = "#productSize", placeholder = "Ürün Boyutu" })
+    </div>
+    <div class="form-group">
+        @Html.TextBox("ProductColor", "", new { @class = "form-control", id = "#productColor", placeholder = "Ürün Rengi" })
 
+    </div>
+    <div class="form-group">
+        @Html.TextBox("ProductAvailableCount", "", new { @class = "form-control", id = "#productAvailableCount", placeholder = "Mevcut Ürün Fiyatı" })
+    </div>
+    <div class="form-check form-check-inline">
+        @Html.CheckBox("IsValid", true, new { @class = "form-check-input", id = "#isvalid" })
+        @Html.Label("LabelIsValid", "Is Valid", new { @class = "form-check-label", id = "isvalid" })
+    </div>
+    <div class="form-group">
+        @Html.TextBox("ProductPercentageDiscount", "", new { @class = "form-control", id = "#productPercentageDiscount", placeholder = "Yüzde İndirim" })
+    </div>
+    <div class="form-group">
+        @Html.TextBox("ProductSpecialOfferPrice", "", new { @class = "form-control", id = "#productSpecialOfferPrice", placeholder = "Özel Teklif Fiyat" })
+    </div>
+
+    <div class="form-group">
+        <div>
+            @Html.Label("LabelProductDesc", "Product Description", new { @class = "badge badge-pill badge-primary" })
+        </div>
         <div id="editor">
-            <textarea name="editor1"></textarea>
-          
-        </div>
-
-
-    </div>
-
-
-    <div class="form-group">
-     
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-            <label class="form-check-label" for="inlineCheckbox1">Üst Slider</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-            <label class="form-check-label" for="inlineCheckbox1">Anasayfa Ürünler</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-            <label class="form-check-label" for="inlineCheckbox1">Vitrin Ürünler</label>
+            @Html.TextArea("editor")
         </div>
     </div>
     <div class="form-group">
-        <label for="exampleFormControlSelect2">Example multiple select</label>
+        <div>
+            @Html.Label("LabelProductVisible", "Product Visible", new { @class = "badge badge-pill badge-primary" })
+        </div>
+
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="checkbox1" value="true">
+            @Html.Label("LabelCheckBox1", "Üst Slider", new { @class = "form-check-label", id = "checkbox1" })
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="true">
+            @Html.Label("LabelCheckBox2", "Anasayfa Ürünler", new { @class = "form-check-label", id = "checkbox2" })
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+            @Html.Label("LabelCheckBox3", "Vitrin Ürünler", new { @class = "form-check-label", id = "checkbox3" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("LabelProductCategory", "Product Category", new { @class = "badge badge-pill badge-primary" })
         <select multiple class="form-control" id="exampleFormControlSelect2">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+            <option>Category1</option>
+            <option>Category2</option>
+            <option>Category3</option>
+            <option>Category4</option>
+            <option>Category5</option>
         </select>
     </div>
     <div class="form-group">
-        <label for="exampleFormControlTextarea1">Example textarea</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <div>
+            @Html.Label("LabelProductImage", "Product Image", new { @class = "badge badge-pill badge-primary" })
+        </div>
+        <input type="file" class="fa-file-image-o" />
     </div>
 </form>
 
