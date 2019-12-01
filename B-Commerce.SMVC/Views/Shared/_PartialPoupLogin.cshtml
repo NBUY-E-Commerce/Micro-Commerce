@@ -3,19 +3,26 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+
 <script>
+
+
+
+
     var btn_spinner = (function () {
         function processSubmitLoader() {
             $('button[data-spinning-button]').click(function () {
                 var $this = $(this);
                 let formId = $this.data('spinning-button');
                 let $form = formId ? $('#' + formId) : $this.parents('form');
+                var response = grecaptcha.getResponse();
                 if ($form.length) {
                     if ($form.valid()) {
                         $this.html("<i class='fa fa-circle-o-notch fa-spin'></i>").attr("disabled", "")
                         $form.submit();
                     }
                 }
+
             })
         }
         return {
@@ -25,8 +32,9 @@
 
     $(document).ready(function () {
         btn_spinner.initSpinnerButton();
-    });
-</script>
+    });</script>
+
+
 
 
 @using (Ajax.BeginForm("Login", "Login", new AjaxOptions
@@ -52,13 +60,23 @@
         </div>
     </div>
 
+
+
+    <div class="g-recaptcha" data-sitekey="6LecfMUUAAAAAEWupCgvJLFh2mRJ7LONNC6PedV0" data-callback="recaptcha_callback"></div>
     <p class="text-center">
-        <button data-spinning-button type="submit" class="btn btn-primary">Login</button>
+        <button data-spinning-button id="btn_login" type="submit" disabled class="btn btn-primary">Login</button>
     </p>
 
-    <a href="/Login/ForgotPassword"><p class="text-center" style="font-weight:800">Forgot Password?</p></a>
 }
 
-<a href="/Login/Register"><p class="text-center" style="font-weight:800">Register Now</p></a>
+<script>
 
+    function recaptcha_callback() {
+        var btn = document.querySelector('#btn_login');
+        btn.removeAttribute('disabled');
+    }
+</script>
+
+<p class="text-center text-muted">Not registered yet?</p>
+<a href="/Login/Register"><p class="text-center" style="font-weight:800">Register now</p></a>
 

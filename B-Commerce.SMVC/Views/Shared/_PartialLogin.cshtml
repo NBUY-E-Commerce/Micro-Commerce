@@ -1,4 +1,40 @@
 ﻿@model LoginModel
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<script>
+
+
+
+
+    var btn_spinner = (function () {
+        function processSubmitLoader() {
+            $('button[data-spinning-button]').click(function () {
+                var $this = $(this);
+                let formId = $this.data('spinning-button');
+                let $form = formId ? $('#' + formId) : $this.parents('form');
+                var response = grecaptcha.getResponse();
+                if ($form.length) {
+                    if ($form.valid()) {
+                        $this.html("<i class='fa fa-circle-o-notch fa-spin'></i>").attr("disabled", "")
+                        $form.submit();
+                    }
+                }
+
+            })
+        }
+        return {
+            initSpinnerButton: processSubmitLoader
+        }
+    })();
+
+    $(document).ready(function () {
+        btn_spinner.initSpinnerButton();
+    });</script>
+
+
+
 <link href="~/Content/css/fbstyle.css" rel="stylesheet" />
 <div class="box">
     <h1>Login</h1>
@@ -24,11 +60,31 @@
                 <span>@ViewBag.error</span>
             </div>
         }
+        <div class="text-center " id="spinner" hidden>
+            <div class="spinner-border text-info" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+
         <p class="text-center">
-            <input type="submit" class="btn btn-primary" value="Login">
+            <div class="g-recaptcha" data-sitekey="6LecfMUUAAAAAEWupCgvJLFh2mRJ7LONNC6PedV0" data-callback="recaptcha_callback"></div>
+        </p>
+        <p class="text-center">
+            <button data-spinning-button id="btn_login1" type="submit" disabled class="btn btn-primary">Login</button>
             <a href="/Login/FbLogin" title="Facebook" class="btn btn-facebook btn-primary"><i class="fa fa-facebook fa-fw"></i> Facebook</a>
         </p>
+
+
         <a href="/Login/ForgotPassword"><p class="text-center" style="font-weight:800">Forgot password?</p></a>
     }
+    <script>
+
+        function recaptcha_callback() {
+            var btn = document.querySelector('#btn_login1');
+            btn.removeAttribute('disabled');
+        }
+    </script>
 
 </div>
+
