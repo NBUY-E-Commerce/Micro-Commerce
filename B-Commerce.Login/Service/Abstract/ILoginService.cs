@@ -16,7 +16,7 @@ namespace B_Commerce.Login.Service.Abstract
 
         PasswordChangeResponse SendPasswordChangeCode(string Email);
         PasswordChangeResponse CheckPasswordChangeCode(string Email, string Code);
-        PasswordChangeResponse ChangePassword(string Email, string Code, string newPassword);
+        PasswordChangeResponse ChangePassword(string Email,string Code, string newPassword);
         PasswordChangeResponse ChangePassword(int UserID, string oldPassword, string newPassword);
         VerificationResponse SendAccountVerificationCode(string Email);
     }

@@ -21,6 +21,53 @@ namespace B_Commerce.SMVC.Controllers
         {
             return View(new RegisterViewModel());
         }
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ForgotPassword(PasswordChangeRequest passwordChangeRequest)
+        {
+            PasswordChangeResponse passwordChangeResponse = WebApiOperation.SendPost<PasswordChangeRequest, PasswordChangeResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_SEND_PASSWORD_CHANGE_CODE_URI, passwordChangeRequest);
+
+            return RedirectToAction("PasswordVerify", "Login", new { Email = passwordChangeResponse.Email });
+        }
+        public ActionResult PasswordVerify(string Email)
+        {
+            return View((object)Email);
+        }
+        [HttpPost]
+        public ActionResult PasswordVerify(PasswordChangeRequest passwordChangeRequest)
+        {
+            PasswordChangeResponse passwordChangeResponse = WebApiOperation.SendPost<PasswordChangeRequest, PasswordChangeResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_CHECK_PASSWORD_CHANGE_CODE_URI, passwordChangeRequest);
+
+            if (passwordChangeResponse.Code == Constants.LOGIN_RESPONSE_SUCCESS)//başarılı ise
+            {
+                return RedirectToAction("ChangePassword", "Login", passwordChangeResponse);
+            }
+
+            ViewBag.error = passwordChangeResponse.Message;
+            return View("/Views/Login/PasswordVerify.cshtml", new { Email = passwordChangeResponse.Email, PassChangeCode = passwordChangeRequest.PassChangeCode });
+        }
+        public ActionResult ChangePassword(string Email, string PassChangeCode)
+        {
+            return View((object)new { Email = Email, PassChangeCode = PassChangeCode });
+        }
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordRequest changePasswordRequest)
+        {
+            PasswordChangeResponse passwordChangeResponse = WebApiOperation.SendPost<ChangePasswordRequest, PasswordChangeResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_CHANGE_PASSWORD_URI, changePasswordRequest);
+
+            if (passwordChangeResponse.Code == Constants.LOGIN_RESPONSE_SUCCESS)//başarılı ise
+            {
+                TempData["reason"] = "PasswordChanged";
+                TempData["popupmessage"] = "Şifreniz başarılı şekilde değiştirilmiştir.Yeni şifreniz ile giriş yapabilirsiniz.";
+                return RedirectToAction("Register", "Login");
+            }
+
+            ViewBag.error = passwordChangeResponse.Message;
+            return View("/Views/Login/PasswordVerify.cshtml", new { Email = passwordChangeResponse.Email });
+        }
 
         public ActionResult DoRegister(RegisterModel registerModel)
         {
@@ -120,7 +167,7 @@ namespace B_Commerce.SMVC.Controllers
         public ActionResult Logout()
         {
             SystemUser.CurrentUser = null;
-            TempData["reason"] = "activateuser";
+            TempData["reason"] = "ActivateUser";
             TempData["popupmessage"] = "Çıkış İşlemi Başarılı. Tekrar Bekleriz...";
 
             return RedirectToAction("Index", "Home");
@@ -138,7 +185,7 @@ namespace B_Commerce.SMVC.Controllers
             {
 
                 SystemUser.CurrentUser.IsValid = true;
-                TempData["reason"] = "activateuser";
+                TempData["reason"] = "ActivateUser";
                 TempData["popupmessage"] = "Aktivasyon işleminiz başarılı.Keyifli alışverişler.";
 
                 return RedirectToAction("Index", "Home");

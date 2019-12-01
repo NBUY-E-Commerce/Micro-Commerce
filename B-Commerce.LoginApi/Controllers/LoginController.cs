@@ -54,7 +54,7 @@ namespace B_Commerce.LoginApi.Controllers
                 Password = request.Password,
                 Username = request.Email
             };
-            
+
             return _loginService.UserRegistry(user);
         }
 
@@ -74,24 +74,23 @@ namespace B_Commerce.LoginApi.Controllers
         [HttpPost]
         [Route("SendPasswordChangeCode")]
         [SwaggerOperation(Summary = "şifre değişikliği için kod gönderim işlemi yapar", Description = "Gets two hardcoded values")]
-        public PasswordChangeResponse SendPasswordChangeCode(string Email)
+        public PasswordChangeResponse SendPasswordChangeCode(PasswordChangeRequest passwordChangeRequest)
         {
-
-            return _loginService.SendPasswordChangeCode(Email);
+            return _loginService.SendPasswordChangeCode(passwordChangeRequest.Email);
         }
 
         [HttpPost]
         [Route("CheckPasswordChangeCode")]
-        public PasswordChangeResponse CheckPasswordChangeCode(string Email, string Code)
+        public PasswordChangeResponse CheckPasswordChangeCode(PasswordChangeRequest passwordChangeRequest)
         {
-            return _loginService.CheckPasswordChangeCode(Email, Code);
+            return _loginService.CheckPasswordChangeCode(passwordChangeRequest.Email, passwordChangeRequest.PassChangeCode);
         }
 
         [HttpPost]
         [Route("ChangePassword")]
-        public PasswordChangeResponse ChangePassword(string Email, string Code, string newPassword)
+        public PasswordChangeResponse ChangePassword(ChangePasswordRequest changePasswordRequest)
         {
-            return _loginService.ChangePassword(Email, Code, newPassword);
+            return _loginService.ChangePassword(changePasswordRequest.Email,changePasswordRequest.PassChangeCode, changePasswordRequest.Password);
         }
 
         [HttpPost]

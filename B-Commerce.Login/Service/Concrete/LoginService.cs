@@ -421,10 +421,13 @@ namespace B_Commerce.Login.Service.Concrete
                 response.SetStatus(Constants.ResponseCode.FAILED);
                 return response;
             }
-
             try
             {
-                user.PasswordChange = new PasswordChange { ChangeCode = PassChangeCode, Email = user.Email };
+                user.PasswordChanges.Add(new PasswordChange
+                {
+                    ChangeCode = PassChangeCode,
+                    Email = user.Email
+                });
                 _unitOfWork.SaveChanges();
                 response.Email = user.Email;
                 response.SetStatus(Constants.ResponseCode.SUCCESS);
@@ -452,20 +455,20 @@ namespace B_Commerce.Login.Service.Concrete
                 response.SetStatus(Constants.ResponseCode.FAILED);
                 return response;
             }
-            if (user.PasswordChange.ChangeCode != Code)
+            if (user.PasswordChanges.LastOrDefault().ChangeCode != Code)
             {
                 response.SetStatus(Constants.ResponseCode.FAILED);
                 return response;
             }
 
-            if (user.PasswordChange.IsExpired())
+            if (user.PasswordChanges.FirstOrDefault(t=>t.ChangeCode==Code).IsExpired())
             {
                 response.SetStatus(Constants.ResponseCode.EXPIRED_CODE);
                 return response;
             }
 
             response.Email = user.Email;
-            response.PassChangeCode = user.PasswordChange.ChangeCode;
+            response.PassChangeCode = user.PasswordChanges.FirstOrDefault(t => t.ChangeCode == Code).ChangeCode;
             response.SetStatus(Constants.ResponseCode.SUCCESS);
             return response;
         }

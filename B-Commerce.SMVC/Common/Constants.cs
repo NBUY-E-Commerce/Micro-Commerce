@@ -18,7 +18,9 @@ namespace B_Commerce.SMVC.Common
         public const string LOGIN_API_REGISTER_URI = "/api/Login/UserRegistry";
         public const string LOGIN_API_CHECK_VERIFICATION_URI = "/api/Login/CheckVerificationCode";
         public const string LOGIN_API_FACEBOOK_URI = "/api/Login/FacebookLogin";
-
+        public const string LOGIN_API_SEND_PASSWORD_CHANGE_CODE_URI = "/api/Login/SendPasswordChangeCode";
+        public const string LOGIN_API_CHECK_PASSWORD_CHANGE_CODE_URI = "/api/Login/CheckPasswordChangeCode";
+        public const string LOGIN_API_CHANGE_PASSWORD_URI = "/api/Login/ChangePassword";
         public const int LOGIN_RESPONSE_SUCCESS = 0;
 
 

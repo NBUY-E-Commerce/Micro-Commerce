@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Web;
 
-namespace B_Commerce.Login.Response
+namespace B_Commerce.SMVC.WebApiReqRes.Autentication.Login
 {
-    public class PasswordChangeResponse : BaseResponse
+    public class PasswordChangeRequest
     {
         public string Email { get; set; }
         public string PassChangeCode { get; set; }
-        public string Password { get; set; }
     }
 }

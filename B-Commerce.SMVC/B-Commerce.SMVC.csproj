@@ -218,11 +218,14 @@
     </Compile>
     <Compile Include="Models\FacebookModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="WebApiReqRes\Autentication\Login\ChangePasswordRequest.cs" />
+    <Compile Include="WebApiReqRes\Autentication\Login\PasswordChangeResponse.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebApiReqRes\Autentication\Login\LoginRequest.cs" />
     <Compile Include="WebApiReqRes\Autentication\Login\LoginResponse.cs" />
+    <Compile Include="WebApiReqRes\Autentication\Login\PasswordChangeRequest.cs" />
     <Compile Include="WebApiReqRes\Autentication\Login\RegisterResponse.cs" />
     <Compile Include="WebApiReqRes\Autentication\Login\VerificationRequest.cs" />
     <Compile Include="WebApiReqRes\CommonResponse.cs" />
@@ -2264,6 +2267,9 @@
     <Content Include="Views\Shared\_PartialRegister.cshtml" />
     <Content Include="Views\Shared\_PartialLogin.cshtml" />
     <Content Include="Views\Login\VerifyAccount.cshtml" />
+    <Content Include="Views\Login\ForgotPassword.cshtml" />
+    <Content Include="Views\Login\PasswordVerify.cshtml" />
+    <Content Include="Views\Login\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

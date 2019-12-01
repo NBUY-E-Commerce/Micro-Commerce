@@ -13,6 +13,7 @@ namespace B_Commerce.Login.DomainClass
             AccountVerifications = new List<AccountVerification>();
             SocialInfos = new List<SocialInfo>();
             UserRoles = new List<UserRole>();
+            PasswordChanges = new List<PasswordChange>();
         }
         public string Username { get; set; }
         public string Password { get; set; }
@@ -31,7 +32,7 @@ namespace B_Commerce.Login.DomainClass
         public virtual ICollection<AccountVerification> AccountVerifications { get; set; }
         public virtual ICollection<Token> Tokens { get; set; }
         public virtual ICollection<SocialInfo> SocialInfos { get; set; }
-        public virtual PasswordChange PasswordChange { get; set; }
+        public virtual ICollection<PasswordChange> PasswordChanges { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
 
         public void UserLocked(double banTime)

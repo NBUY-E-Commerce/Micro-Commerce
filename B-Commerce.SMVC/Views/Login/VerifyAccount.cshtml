@@ -11,7 +11,7 @@
                     <p>Lütfen emailinize gelen kodu giriniz</p>
                     @using (Html.BeginForm("DoVerify", "Login", FormMethod.Post))
                     {
-                        @Html.Hidden("email", Model.ToString())
+                        @Html.Hidden("email",Model.ToString())
                         <div class="form-group">
 
                             @Html.TextBox("code", "", new { placeholder = "Kod", @class = "form-control" })
@@ -26,9 +26,6 @@
                         <p class="text-center">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in"></i> Gönder</button>
                         </p>
-
-
-
                     }
 
                 </div>
