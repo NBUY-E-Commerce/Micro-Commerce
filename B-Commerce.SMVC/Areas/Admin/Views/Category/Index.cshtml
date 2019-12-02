@@ -1,0 +1,287 @@
+﻿
+@{
+    ViewBag.Title = "Category Operations";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="~/Content/css/CategoryAdmin.css" rel="stylesheet" />
+}
+
+@section scripts{
+
+    <script src="~/Scripts/js/CategoryAdmin.js"></script>
+}
+
+
+<div class="container">
+    <div class="accordion" id="CategoryArea">
+        <div class="card">
+            <div class="card-header bg-secondary" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Master Category #1</button>
+                </h2>
+
+                <div class="btn-group float-right" role="group">
+                    <button type="button" class="btn btn-link btn-edit" data-toggle="modal" data-target="#editCategory"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-link btn-del"><i class="fas fa-minus" data-toggle="modal" data-target="#deleteModal"></i> </button>
+                </div>
+
+            </div>
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#CategoryArea">
+                <div class="card-body">
+                    <ul id="subcategories">
+
+                        <li>
+                            <div class="cat-li-element">
+                                <span class="caret">Sub Category 1</span>
+
+                                <div class="btn-group-sm d-none" role="group">
+                                    <button type="button" class="btn btn-link btn-edit" data-toggle="modal" data-target="#editCategory"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-link btn-del" data-toggle="modal" data-target="#deleteModal">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <ul class="nested">
+                                <li>
+                                    <div class="cat-li-element">
+                                        <span class="">Sub Category 2-1</span>
+
+                                        <div class="btn-group-sm d-none" role="group">
+                                            <button type="button" class="btn btn-link btn-edit" data-toggle="modal" data-target="#editCategory"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-link btn-del" data-toggle="modal" data-target="#deleteModal">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="cat-li-element">
+                                        <span class="">Sub Category 2-2</span>
+
+                                        <div class="btn-group-sm d-none" role="group">
+                                            <button type="button" class="btn btn-link btn-edit" data-toggle="modal" data-target="#editCategory"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-link btn-del" data-toggle="modal" data-target="#deleteModal">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="cat-li-element">
+                                        <span class="caret">Sub Category 2-3</span>
+
+                                        <div class="btn-group-sm d-none" role="group">
+                                            <button type="button" class="btn btn-link btn-edit" data-toggle="modal" data-target="#editCategory"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-link btn-del" data-toggle="modal" data-target="#deleteModal">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <ul class="nested">
+                                        <li>
+                                            <div class="cat-li-element">
+                                                <span class="">Sub Category 3-1</span>
+
+                                                <div class="btn-group-sm d-none" role="group">
+                                                    <button type="button" class="btn btn-link btn-edit" data-toggle="modal" data-target="#editCategory"><i class="fas fa-edit"></i></button>
+                                                    <button class="btn btn-link btn-del" data-toggle="modal" data-target="#deleteModal">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="cat-li-element">
+                                                <span class="">Sub Category 3-2</span>
+
+                                                <div class="btn-group-sm d-none" role="group">
+                                                    <button type="button" class="btn btn-link btn-edit" data-toggle="modal" data-target="#editCategory"><i class="fas fa-edit"></i></button>
+                                                    <button class="btn btn-link btn-del" data-toggle="modal" data-target="#deleteModal">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="cat-li-element">
+                                                <span class="caret">Sub Category 3-3</span>
+
+                                                <div class="btn-group-sm d-none" role="group">
+                                                    <button type="button" class="btn btn-link btn-edit" data-toggle="modal" data-target="#editCategory"><i class="fas fa-edit"></i></button>
+                                                    <button class="btn btn-link btn-del" data-toggle="modal" data-target="#deleteModal">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <ul class="nested">
+                                                <li>
+                                                    <div class="cat-li-element">
+                                                        <span class="">Sub Category 4-1</span>
+
+                                                        <div class="btn-group-sm d-none" role="group">
+                                                            <button type="button" class="btn btn-link btn-edit" data-toggle="modal" data-target="#editCategory"><i class="fas fa-edit"></i></button>
+                                                            <button class="btn btn-link btn-del" data-toggle="modal" data-target="#deleteModal">
+                                                                <i class="fas fa-minus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="cat-li-element">
+                                                        <span class="">Sub Category 4-2</span>
+
+                                                        <div class="btn-group-sm d-none" role="group">
+                                                            <button type="button" class="btn btn-link btn-edit" data-toggle="modal" data-target="#editCategory"><i class="fas fa-edit"></i></button>
+                                                            <button class="btn btn-link btn-del" data-toggle="modal" data-target="#deleteModal">
+                                                                <i class="fas fa-minus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="cat-li-element">
+                                                        <span class="">Sub Category 2-1</span>
+
+                                                        <div class="btn-group-sm d-none" role="group">
+                                                            <button type="button" class="btn btn-link btn-edit" data-toggle="modal" data-target="#editCategory"><i class="fas fa-edit"></i></button>
+                                                            <button class="btn btn-link btn-del" data-toggle="modal" data-target="#deleteModal">
+                                                                <i class="fas fa-minus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header bg-secondary" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-secondary collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Collapsible Group Item #2
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#CategoryArea">
+                <div class="card-body">
+
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header bg-secondary" id="headingThree">
+                <h2 class="mb-0">
+                    <button class="btn btn-secondary collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">
+                        Collapsible Group Item #2
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#CategoryArea">
+                <div class="card-body">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Add Category -->
+    <div class="mt-2 p-2 border rounded">
+        <button class="btn btn-success btn-plus"><i class="fas fa-plus"></i></button>
+        <div class="add-category m-2 p-2">
+            <form action="">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="Category Name">
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" name="" id="" rows="5" placeholder="Description"></textarea>
+                </div>
+                <div class="form-group">
+                    <select class="custom-select">
+                        <option selected>Select Master Category</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <button class="btn btn-outline-secondary btn-add-c" type="submit">Add</button>
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="Category Name">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="" id="" rows="5" placeholder="Description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="selectMasterCat">Master Category</label>
+                            <select class="custom-select" id="selectMasterCat">
+                                <option selected>Select Master Category</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                <label class="form-check-label" for="gridCheck">Is Active?</label>
+                            </div>
+                        </div>
+                        <div class="form-group float-right">
+                            <button class="btn btn-outline-primary" type="submit">Save changes</button>
+                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger">Delete</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1852,6 +1852,7 @@
     <Content Include="Areas\Admin\Template\bootstrap\vendor\jquery\jquery.min.js" />
     <Content Include="Areas\Admin\Template\bootstrap\vendor\jquery\jquery.slim.js" />
     <Content Include="Areas\Admin\Template\bootstrap\vendor\jquery\jquery.slim.min.js" />
+    <Content Include="Content\css\CategoryAdmin.css" />
     <Content Include="Content\css\custom.css" />
     <Content Include="Content\css\fbstyle.css" />
     <Content Include="Content\css\style.blue.css" />
@@ -2122,6 +2123,7 @@
     <Content Include="Areas\Admin\Views\Account\Login.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -2132,6 +2134,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\CategoryAdmin.js" />
     <Content Include="Scripts\js\front.js" />
     <Content Include="Scripts\js\map.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
