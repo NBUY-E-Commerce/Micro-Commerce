@@ -1,14 +1,12 @@
 ﻿using B_Commerce.Common.DomainClasses;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace LogService.DomainClasses
 {
-    public class LogInfo:BaseEntity
+    public class ProjectInfo:BaseEntity
     {
         /*
         public virtual int ID { get; set; }
@@ -18,10 +16,13 @@ namespace LogService.DomainClasses
         public int? insertUserId { get; set; }
         public int? deleteUserId { get; set; }
          */
-        public string LogInfoMessage { get; set; }
+        public string ProjectCode { get; set; }
+        public string Password { get; set; }
+        public string qeueName { get;set;}
+        public virtual ICollection<LogInfo> LogInfos { get; set; } 
 
-        public int ProjectID { get; set; }
-        public virtual ProjectInfo ProjectInfo { get; set; } 
-
+        
+        public virtual ICollection<ProjectOwner> ProjectOwners { get; set; } 
+        
     }
 }

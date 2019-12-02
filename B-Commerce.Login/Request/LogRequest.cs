@@ -13,5 +13,7 @@ namespace B_Commerce.Login.Request
         public string LogInfo { get; set; }
 
 
+
+
     }
 }

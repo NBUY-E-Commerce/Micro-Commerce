@@ -4,14 +4,16 @@ using LogService.MyDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LogService.Migrations
 {
     [DbContext(typeof(LogDbContext))]
-    partial class LogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191201175432_LogService_V.2 Migration.1")]
+    partial class LogService_V2Migration1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,6 +28,10 @@ namespace LogService.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("LogDate")
+                        .HasColumnName("LogInsertDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("LogInfoMessage")
                         .IsRequired()
                         .HasColumnName("LogInfo")
@@ -33,22 +39,6 @@ namespace LogService.Migrations
 
                     b.Property<int>("ProjectID")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("deleteDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("deleteUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("insertDateTime")
-                        .HasColumnName("LogInsertDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("insertUserId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
 
                     b.HasKey("ID");
 
@@ -72,21 +62,6 @@ namespace LogService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("deleteDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("deleteUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("insertDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("insertUserId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("qeueName")
                         .HasColumnType("nvarchar(max)");
 
@@ -100,8 +75,6 @@ namespace LogService.Migrations
                             ID = 1,
                             Password = "admin",
                             ProjectCode = "code",
-                            insertDateTime = new DateTime(2019, 12, 1, 21, 56, 40, 347, DateTimeKind.Local).AddTicks(9891),
-                            isDeleted = false,
                             qeueName = "queue"
                         });
                 });
@@ -123,21 +96,6 @@ namespace LogService.Migrations
                     b.Property<int>("ProjectID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("deleteDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("deleteUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("insertDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("insertUserId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
                     b.HasKey("ID")
                         .HasName("OwnerID");
 
@@ -151,9 +109,7 @@ namespace LogService.Migrations
                             ID = 1,
                             Email = "hacimu@gmail.com",
                             IsRequestEmail = true,
-                            ProjectID = 1,
-                            insertDateTime = new DateTime(2019, 12, 1, 21, 56, 40, 358, DateTimeKind.Local).AddTicks(810),
-                            isDeleted = false
+                            ProjectID = 1
                         });
                 });
 

@@ -26,13 +26,12 @@ namespace LogService.MQService
                 {
                     channel.QueueDeclare(queueName, false, false, false, null);
                     var consumer = new EventingBasicConsumer(channel);
-                    BasicGetResult result = channel.BasicGet(queueName, true);
-                    if (result != null)
+                    consumer.Received += (ch, ea) =>
                     {
-                        string data =
-                        Encoding.UTF8.GetString(result.Body);
-                        _queue = data;                    
-                    }
+                        var body = ea.Body;
+                        channel.BasicAck(ea.DeliveryTag, false);
+                    };
+                    String consumerTag = channel.BasicConsume(queueName, false, consumer);
                 }
             }
         }

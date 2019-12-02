@@ -16,7 +16,7 @@ namespace MQService
             {
                 HostName = _hostName
             };
-
+            connectionFactory.AutomaticRecoveryEnabled = true;
             return connectionFactory.CreateConnection();
         }
     }
