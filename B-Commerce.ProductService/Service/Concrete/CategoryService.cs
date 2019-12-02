@@ -11,12 +11,13 @@ using static B_Commerce.ProductService.Common.Constants;
 
 namespace B_Commerce.ProductService.Service.Concrete
 {
-    public class CategoryService:ICategoryService
+    public class CategoryService : ICategoryService
     {
 
         private IRepository<Category> _repository;
         private IUnitOfWork _unitOfWork;
-        public CategoryService(IRepository<Category> repository,IUnitOfWork unitOfWork) {
+        public CategoryService(IRepository<Category> repository, IUnitOfWork unitOfWork)
+        {
             _repository = repository;
             _unitOfWork = unitOfWork;
         }
@@ -34,10 +35,10 @@ namespace B_Commerce.ProductService.Service.Concrete
             catch (Exception ex)
             {
 
-                baseResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS,ex.Message);
+                baseResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return baseResponse;
             }
-            
+
         }
         public BaseResponse Delete(Category category)
         {
@@ -85,7 +86,7 @@ namespace B_Commerce.ProductService.Service.Concrete
             catch (Exception ex)
             {
                 categoryResponse.categories = null;
-                categoryResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS,ex.Message);
+                categoryResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return categoryResponse;
             }
         }
@@ -94,7 +95,7 @@ namespace B_Commerce.ProductService.Service.Concrete
             CategoryResponse categoryResponse = new CategoryResponse();
             try
             {
-                categoryResponse.categories = _repository.Get(t=>t.MasterCategoryID==null).ToList();
+                categoryResponse.categories = _repository.Get(t => t.MasterCategoryID == null).ToList();
                 categoryResponse.SetStatus(ResponseCode.SUCCESS);
                 return categoryResponse;
             }
@@ -105,18 +106,22 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return categoryResponse;
             }
         }
-        public CategoryResponse GetSubCategoriesByCategoryID(int id)
+        public CategoryModelResponse GetSubCategoriesByCategoryID(int? id)
         {
-            CategoryResponse categoryResponse = new CategoryResponse();
+            if (id == 0) id = null;
+            CategoryModelResponse categoryResponse = new CategoryModelResponse();
             try
             {
-                categoryResponse.categories = _repository.Get(t=>t.MasterCategoryID==id).ToList();
+                List<Category> categories = _repository.Get(t =>t.MasterCategoryID == id).ToList();
+
+
+                categoryResponse.Categories = CategoryModel.GetCategoryModelFromData(categories);
                 categoryResponse.SetStatus(ResponseCode.SUCCESS);
                 return categoryResponse;
             }
             catch (Exception ex)
             {
-                categoryResponse.categories = null;
+              
                 categoryResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return categoryResponse;
             }

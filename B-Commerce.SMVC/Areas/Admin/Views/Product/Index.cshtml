@@ -16,48 +16,30 @@
     </script>
 }
 
-
-
 @using (Html.BeginForm())
 {
-
     <div class="form-group">
-
         @Html.LabelFor(t => t.ProductName, new { @class = "badge badge-pill badge-primary" })
 
         @Html.TextBoxFor(t => t.ProductName, new { @class = "form-control", id = "#productName", placeholder = "Ürün Adı" })
-
     </div>
     <div class="form-group">
         @Html.LabelFor(t => t.Price, new { @class = "badge badge-pill badge-primary" })
-
         @Html.TextBoxFor(t => t.Price, new { @class = "form-control", id = "#productName", placeholder = "Fiyat" })
-
-
     </div>
 
     <div class="form-group">
-
         @Html.TextBoxFor(t => t.AvailableCount, new { @class = "form-control", placeholder = "Adet" })
-
-
     </div>
-
-
-
-
     <div class="form-group">
         <div>
-
             @Html.LabelFor(t => t.Description, new { @class = "badge badge-pill badge-primary" })
-
         </div>
         <div id="editor">
             @Html.TextAreaFor(t => t.Description, new { id = "editor" })
         </div>
     </div>
-    
-
+   
     <div class="form-group">
         @Html.Label("LabelProductCategory", "Product Category", new { @class = "badge badge-pill badge-primary" })
         <select multiple class="form-control" id="exampleFormControlSelect2">
@@ -75,9 +57,7 @@
         <input type="file" class="fa-file-image-o" />
     </div>
     <div class="form-group">
-
         <input type="submit" class="btn btn-secondary" value="@Resource.General_Add" />
-
     </div>
 }
 
