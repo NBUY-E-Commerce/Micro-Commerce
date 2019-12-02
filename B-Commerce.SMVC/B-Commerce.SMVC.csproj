@@ -208,6 +208,7 @@
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Admin\Models\ProductModel.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\SystemUser.cs" />
     <Compile Include="Common\UserAdmin.cs" />
@@ -218,6 +219,16 @@
     </Compile>
     <Compile Include="Models\FacebookModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="MyResource\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="MyResource\Resource.en.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.en.resx</DependentUpon>
+    </Compile>
     <Compile Include="WebApiReqRes\Autentication\Login\ChangePasswordRequest.cs" />
     <Compile Include="WebApiReqRes\Autentication\Login\PasswordChangeResponse.cs" />
     <Compile Include="Models\RegisterModel.cs" />
@@ -2273,7 +2284,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Content\vendor\font-awesome\less\" />
     <Folder Include="Content\vendor\font-awesome\scss\" />
     <Folder Include="Template\distribution\vendor\font-awesome\less\" />
@@ -2287,6 +2297,16 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MyResource\Resource.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyResource\Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

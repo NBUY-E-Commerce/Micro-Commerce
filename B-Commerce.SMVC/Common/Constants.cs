@@ -13,7 +13,7 @@ namespace B_Commerce.SMVC.Common
         public const string MVC_FACEBOOK_URI = "https://localhost:44314/Login/FacebookLogin";//MVC FB URL
 
         //LoginAPI
-        public const string LOGIN_API_BASE_URI = "https://localhost:44311/";//LoginApideki SSL Aktifleştirildi
+        public const string LOGIN_API_BASE_URI = "http://localhost:52195/";//LoginApideki SSL Aktifleştirildi
         public const string LOGIN_API_LOGIN_URI = "/api/Login/Login";
         public const string LOGIN_API_REGISTER_URI = "/api/Login/UserRegistry";
         public const string LOGIN_API_CHECK_VERIFICATION_URI = "/api/Login/CheckVerificationCode";

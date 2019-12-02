@@ -1,4 +1,7 @@
-﻿
+﻿@model B_Commerce.SMVC.Areas.Admin.Models.ProductModel
+
+
+@using B_Commerce.SMVC.MyResource;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -12,62 +15,48 @@
         var editor = new FroalaEditor('#editor')
     </script>
 }
-<form>
+
+
+
+@using (Html.BeginForm())
+{
+
     <div class="form-group">
-        @Html.Label("LabelProductName", "Product Name", new { @class = "badge badge-pill badge-primary" })
-        @Html.TextBox("ProductName", "", new { @class = "form-control", id = "#productName", placeholder = "Ürün Adı" })
-    </div>
-    <div class="form-group">
-        @Html.Label("LabelProductPrice", "Product Detail", new { @class = "badge badge-pill badge-primary" })
-        @Html.TextBox("ProductPrice", "", new { @class = "form-control", id = "#productPrice", placeholder = "Ürün Fiyatı" })
-    </div>
-    <div class="form-group">
-        @Html.TextBox("ProductSize", "", new { @class = "form-control", id = "#productSize", placeholder = "Ürün Boyutu" })
-    </div>
-    <div class="form-group">
-        @Html.TextBox("ProductColor", "", new { @class = "form-control", id = "#productColor", placeholder = "Ürün Rengi" })
+
+        @Html.LabelFor(t => t.ProductName, new { @class = "badge badge-pill badge-primary" })
+
+        @Html.TextBoxFor(t => t.ProductName, new { @class = "form-control", id = "#productName", placeholder = "Ürün Adı" })
 
     </div>
     <div class="form-group">
-        @Html.TextBox("ProductAvailableCount", "", new { @class = "form-control", id = "#productAvailableCount", placeholder = "Mevcut Ürün Fiyatı" })
+        @Html.LabelFor(t => t.Price, new { @class = "badge badge-pill badge-primary" })
+
+        @Html.TextBoxFor(t => t.Price, new { @class = "form-control", id = "#productName", placeholder = "Fiyat" })
+
+
     </div>
-    <div class="form-check form-check-inline">
-        @Html.CheckBox("IsValid", true, new { @class = "form-check-input", id = "#isvalid" })
-        @Html.Label("LabelIsValid", "Is Valid", new { @class = "form-check-label", id = "isvalid" })
-    </div>
+
     <div class="form-group">
-        @Html.TextBox("ProductPercentageDiscount", "", new { @class = "form-control", id = "#productPercentageDiscount", placeholder = "Yüzde İndirim" })
+
+        @Html.TextBoxFor(t => t.AvailableCount, new { @class = "form-control", placeholder = "Adet" })
+
+
     </div>
-    <div class="form-group">
-        @Html.TextBox("ProductSpecialOfferPrice", "", new { @class = "form-control", id = "#productSpecialOfferPrice", placeholder = "Özel Teklif Fiyat" })
-    </div>
+
+
+
 
     <div class="form-group">
         <div>
-            @Html.Label("LabelProductDesc", "Product Description", new { @class = "badge badge-pill badge-primary" })
+
+            @Html.LabelFor(t => t.Description, new { @class = "badge badge-pill badge-primary" })
+
         </div>
         <div id="editor">
-            @Html.TextArea("editor")
+            @Html.TextAreaFor(t => t.Description, new { id = "editor" })
         </div>
     </div>
-    <div class="form-group">
-        <div>
-            @Html.Label("LabelProductVisible", "Product Visible", new { @class = "badge badge-pill badge-primary" })
-        </div>
-
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="checkbox1" value="true">
-            @Html.Label("LabelCheckBox1", "Üst Slider", new { @class = "form-check-label", id = "checkbox1" })
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="true">
-            @Html.Label("LabelCheckBox2", "Anasayfa Ürünler", new { @class = "form-check-label", id = "checkbox2" })
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
-            @Html.Label("LabelCheckBox3", "Vitrin Ürünler", new { @class = "form-check-label", id = "checkbox3" })
-        </div>
-    </div>
+    
 
     <div class="form-group">
         @Html.Label("LabelProductCategory", "Product Category", new { @class = "badge badge-pill badge-primary" })
@@ -85,5 +74,10 @@
         </div>
         <input type="file" class="fa-file-image-o" />
     </div>
-</form>
+    <div class="form-group">
+
+        <input type="submit" class="btn btn-secondary" value="@Resource.General_Add" />
+
+    </div>
+}
 

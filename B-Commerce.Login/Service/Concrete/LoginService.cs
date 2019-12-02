@@ -148,7 +148,7 @@ namespace B_Commerce.Login.Service.Concrete
                     loginResponse.Token = token.TokenText;
                     loginResponse.ExpireDate = token.EndDate;
                     loginResponse.Email = _user.Email;
-                    //loginResponse.UserRole = _user.UserRoles.Select(t => t.Role.RoleName).ToList();
+                    loginResponse.UserRole = _user.UserRoles.Select(t => t.Role.RoleName).ToList();
                     loginResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                     return loginResponse;
                 }

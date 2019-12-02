@@ -54,12 +54,16 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
                 };
 
 
-                return View("~/Areas/Admin/Views/Home/Index2.cshtml", loginModel);
+                return RedirectToAction("Index", "Home");
+               
             }
 
 
             ViewBag.error = loginResponse.Message;
-            return View("~/Areas/Admin/Views/Account/Login.cshtml", loginModel);
+
+            return View(loginModel);
+
+            //return View("~/Areas/Admin/Views/Account/Login.cshtml", loginModel);
         }
     }
 }
