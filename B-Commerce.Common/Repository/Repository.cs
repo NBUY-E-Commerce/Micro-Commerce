@@ -16,26 +16,18 @@ namespace B_Commerce.Common.Repository
         private DbSet<T> _dbSet;
         public Repository(DbContext context)
         {
-
             _context = context;
-       
             _dbSet = _context.Set<T>();
         }
 
-
         public void Add(T entity)
         {
-            _context.Entry(entity).State = EntityState.Added;
-            //_context.ChangeTracker.TrackGraph(entity, t => {
-
-            //    _context.Entry(t).State = EntityState.Added;
-            //});
-           
-       }
+            _dbSet.Add(entity);
+        }
 
         public void Delete(T entity)
         {
-            _context.Entry(entity).State = EntityState.Deleted;
+            _dbSet.Remove(entity);
         }
 
         public IQueryable<T> Get(Expression<Func<T, bool>> filter = null)
@@ -49,7 +41,7 @@ namespace B_Commerce.Common.Repository
 
         public void Update(T entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
+            _dbSet.Update(entity);
         }
     }
 }
