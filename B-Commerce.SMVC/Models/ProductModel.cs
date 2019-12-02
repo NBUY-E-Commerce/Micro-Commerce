@@ -20,7 +20,7 @@ namespace B_Commerce.SMVC.Models
         public int CategoryID { get; set; }
         public bool IsInSlider { get; set; }
         public bool IsInNew { get; set; }
-        public bool IsInHot { get; set; }
+        public bool IsInSale { get; set; }
         public bool IsInGift { get; set; }
     }
 }
