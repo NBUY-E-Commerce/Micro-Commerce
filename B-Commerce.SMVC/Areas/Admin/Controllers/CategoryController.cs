@@ -11,6 +11,12 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
     [AutenticationFilter]
     public class CategoryController : Controller
     {
+
+        [AuterizationFilter("Admin")]
+        public ActionResult Index()
+        {
+            return View();
+        }
         // GET: Admin/Category
         [AuterizationFilter("Admin")]
         public ActionResult Get()

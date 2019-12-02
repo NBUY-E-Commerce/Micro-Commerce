@@ -1,0 +1,85 @@
+﻿.icon::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
+
+ul,
+#subcategories {
+    list-style-type: none;
+}
+/* Remove margins and padding from the parent ul */
+
+#subcategories {
+    margin: 0;
+    padding: 5px;
+}
+
+    #subcategories ul,
+    #subcategories li {
+        margin: 5px 0px;
+    }
+
+.caret {
+    cursor: pointer;
+}
+    /* Create the caret/arrow with a unicode, and style it */
+
+    .caret::before {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f054";
+        display: inline-block;
+        margin-right: 6px;
+        transition: all .25s ease-in;
+    }
+
+.caret-down::before {
+    transform: rotate(90deg);
+}
+
+.nested {
+    display: none;
+}
+
+.card-header .btn-edit:hover,
+.card-body .btn-edit:hover {
+    color: #007bff;
+}
+
+.card-header .btn-del:hover,
+.card-body .btn-del:hover {
+    color: #dc3545;
+}
+
+h2.mb-0 {
+    display: inline-block;
+}
+
+.card-header .btn-edit,
+.card-header .btn-del {
+    color: white;
+}
+
+.card-body .btn-edit,
+.card-body .btn-del {
+    color: black;
+}
+
+.add-category {
+    display: none;
+}
+
+i.fas {
+    transition: transform .5s ease-in;
+}
+
+.rotate135 {
+    transform: rotate(135deg);
+}
+
+.btn-group-sm {
+    display: inline-block;
+}
