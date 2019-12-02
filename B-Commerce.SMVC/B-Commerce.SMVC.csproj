@@ -212,11 +212,14 @@
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\SystemUser.cs" />
     <Compile Include="Common\UserAdmin.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CategoryModel.cs" />
+    <Compile Include="Models\CategoryModelResponse.cs" />
     <Compile Include="Models\FacebookModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="MyResource\Resource.Designer.cs">
@@ -2284,6 +2287,7 @@
     <Content Include="Views\Login\ForgotPassword.cshtml" />
     <Content Include="Views\Login\PasswordVerify.cshtml" />
     <Content Include="Views\Login\ChangePassword.cshtml" />
+    <Content Include="Views\Shared\_PartialTopBarMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2291,6 +2295,7 @@
     <Folder Include="Content\vendor\font-awesome\scss\" />
     <Folder Include="Template\distribution\vendor\font-awesome\less\" />
     <Folder Include="Template\distribution\vendor\font-awesome\scss\" />
+    <Folder Include="Views\Category\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

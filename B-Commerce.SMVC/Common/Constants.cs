@@ -23,6 +23,8 @@ namespace B_Commerce.SMVC.Common
         public const string LOGIN_API_CHANGE_PASSWORD_URI = "/api/Login/ChangePassword";
         public const int LOGIN_RESPONSE_SUCCESS = 0;
 
-
+        //ProductApi
+        public const string PRODUCT_API_BASE_URI = "http://localhost:64835/";
+        public const string PRODUCT_API_INDEX_URI = "/api/Category/GetSubCategoriesByCategoryID";
     }
 }
