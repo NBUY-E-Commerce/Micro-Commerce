@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace B_Commerce.ProductService.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CategoryController : Controller
     {
         ICategoryService _service;
@@ -68,7 +68,7 @@ namespace B_Commerce.ProductService.Api.Controllers
         [Route("GetCategories")]
         public IActionResult GetCategories()
         {
-            BaseResponse response = _service.GetCategories();
+            CategoryResponse response = _service.GetCategories();
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 
@@ -76,7 +76,7 @@ namespace B_Commerce.ProductService.Api.Controllers
         [Route("GetMasterCategories")]
         public IActionResult GetMasterCategories()
         {
-            BaseResponse response = _service.GetMasterCategories();
+            CategoryResponse response = _service.GetMasterCategories();
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 
@@ -84,7 +84,7 @@ namespace B_Commerce.ProductService.Api.Controllers
         [Route("GetSubCategoriesByCategoryID")]
         public IActionResult GetSubCategoriesByCategoryID(int id)
         {
-            BaseResponse response = _service.GetSubCategoriesByCategoryID(id);
+            CategoryModelResponse response = _service.GetSubCategoriesByCategoryID(id);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
     }
