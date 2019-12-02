@@ -46,7 +46,6 @@ namespace B_Commerce.ProductService.Response
             }
 
             return categoryModels;
-
         }
 
 

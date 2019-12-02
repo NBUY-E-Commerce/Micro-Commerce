@@ -74,38 +74,7 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return baseResponse;
             }
         }
-        public CategoryResponse GetCategories()
-        {
-            CategoryResponse categoryResponse = new CategoryResponse();
-            try
-            {
-                categoryResponse.categories = _repository.Get().ToList();
-                categoryResponse.SetStatus(ResponseCode.SUCCESS);
-                return categoryResponse;
-            }
-            catch (Exception ex)
-            {
-                categoryResponse.categories = null;
-                categoryResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
-                return categoryResponse;
-            }
-        }
-        public CategoryResponse GetMasterCategories()
-        {
-            CategoryResponse categoryResponse = new CategoryResponse();
-            try
-            {
-                categoryResponse.categories = _repository.Get(t => t.MasterCategoryID == null).ToList();
-                categoryResponse.SetStatus(ResponseCode.SUCCESS);
-                return categoryResponse;
-            }
-            catch (Exception ex)
-            {
-                categoryResponse.categories = null;
-                categoryResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
-                return categoryResponse;
-            }
-        }
+
         public CategoryModelResponse GetSubCategoriesByCategoryID(int? id)
         {
             if (id == 0) id = null;

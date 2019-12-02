@@ -15,7 +15,7 @@ namespace B_Commerce.ProductService.Api.DTO
         public string Color { get; set; }
         public int AvailableCount { get; set; }
         public bool isActive { get; set; } = true;
-
         public int CategoryID { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

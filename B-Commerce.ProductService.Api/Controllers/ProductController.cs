@@ -20,7 +20,7 @@ namespace B_Commerce.ProductService.Api.Controllers
         {
             _service = service;
         }
-        [HttpGet]
+        [HttpPost]
         [Route("Add")]
         public IActionResult Add(ProductDTO product)
         {
@@ -39,7 +39,7 @@ namespace B_Commerce.ProductService.Api.Controllers
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(201, response);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Update")]
         public IActionResult Update(ProductDTO product)
         {
@@ -59,7 +59,7 @@ namespace B_Commerce.ProductService.Api.Controllers
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Delete")]
         public IActionResult Delete(int id)
         {
@@ -71,7 +71,7 @@ namespace B_Commerce.ProductService.Api.Controllers
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetProducts")]
         public IActionResult GetProducts(int? page, int range)
         {
@@ -79,7 +79,7 @@ namespace B_Commerce.ProductService.Api.Controllers
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetSpecialProducts")]
         public IActionResult GetSpecialProducts(int spacialID, int? page, int range)
         {
@@ -87,7 +87,7 @@ namespace B_Commerce.ProductService.Api.Controllers
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetProductsByCategoryID")]
         public IActionResult GetProductsByCategoryID(int categoryID)
         {

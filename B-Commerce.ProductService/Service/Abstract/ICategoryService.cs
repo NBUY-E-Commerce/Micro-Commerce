@@ -11,8 +11,6 @@ namespace B_Commerce.ProductService.Service.Abstract
         BaseResponse Add(Category category);
         BaseResponse Delete(Category category);
         BaseResponse Update(Category category);
-        CategoryResponse GetCategories();
-        CategoryResponse GetMasterCategories();
         CategoryModelResponse GetSubCategoriesByCategoryID(int? id);
     }
 }

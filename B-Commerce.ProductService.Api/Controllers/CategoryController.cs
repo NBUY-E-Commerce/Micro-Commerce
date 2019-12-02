@@ -21,10 +21,11 @@ namespace B_Commerce.ProductService.Api.Controllers
             _service = service;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Add")]
         public IActionResult Add(CategoryDTO category)
         {
+            if (category.MasterCategoryID == 0) category.MasterCategoryID = null;
             Category newcategory = new Category
             {
                 CategoryName = category.CategoryName,
@@ -36,7 +37,7 @@ namespace B_Commerce.ProductService.Api.Controllers
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(201, response);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Delete")]
         public IActionResult Delete(int id)
         {
@@ -48,7 +49,7 @@ namespace B_Commerce.ProductService.Api.Controllers
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Update")]
         public IActionResult Update(Category category)
         {
@@ -61,22 +62,6 @@ namespace B_Commerce.ProductService.Api.Controllers
                 MasterCategoryID = category.MasterCategoryID
             };
             BaseResponse response = _service.Update(updatecategory);
-            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
-        }
-
-        [HttpGet]
-        [Route("GetCategories")]
-        public IActionResult GetCategories()
-        {
-            CategoryResponse response = _service.GetCategories();
-            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
-        }
-
-        [HttpGet]
-        [Route("GetMasterCategories")]
-        public IActionResult GetMasterCategories()
-        {
-            CategoryResponse response = _service.GetMasterCategories();
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 

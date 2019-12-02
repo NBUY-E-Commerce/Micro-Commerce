@@ -27,6 +27,7 @@ namespace B_Commerce.ProductService.Service.Concrete
         }
         public BaseResponse Add(Product product)
         {
+           
             BaseResponse baseResponse = new BaseResponse();
             try
             {
@@ -90,7 +91,6 @@ namespace B_Commerce.ProductService.Service.Concrete
             }
             catch (Exception ex)
             {
-
                 productResponse.Products = null;
                 productResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return productResponse;

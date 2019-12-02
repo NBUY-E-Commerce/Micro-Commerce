@@ -7,19 +7,18 @@ using System.Text;
 
 namespace B_Commerce.ProductService.DBContext
 {
-    public class DataContext:DbContext
+    public class DataContext : DbContext
     {
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-6JDHFRJ;Database=ProductServiceDB;Trusted_Connection=True");
-        
+            optionsBuilder.UseSqlServer(@"Server=10.0.75.2;Database=ProductServiceDB;UID=Sa;PWD='6.rq=^DP;Jn;w%|FVEPZ'");
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-   
             modelBuilder.ApplyConfiguration(new CategoryMapping());
             modelBuilder.ApplyConfiguration(new ProductMapping());
             modelBuilder.ApplyConfiguration(new ProductImagesMapping());
@@ -27,11 +26,9 @@ namespace B_Commerce.ProductService.DBContext
             base.OnModelCreating(modelBuilder);
         }
 
-        public virtual DbSet<Category> Categories { get; set;}
-    
+        public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductImage> ProductImages { get; set; }
-       
         public virtual DbSet<SpacialArea> SpacialAreas { get; set; }
         public virtual DbSet<ProductSpacialAreaTable> ProductSpacialAreas { get; set; }
     }
