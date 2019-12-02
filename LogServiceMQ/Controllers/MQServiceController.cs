@@ -23,73 +23,95 @@ namespace LogService.Controllers
     {
         private IProjectInfoService _projectInfoService;
         private IProjectOwnerService _projectOwnerService;
-        internal string _queue;
-        internal JsonResult _queueJson;
-        internal Dictionary<int, string> projectsInfo = new Dictionary<int, string>();
-
+        private ILogInfoService _logInfoService;
         public MQServiceController(
-            ILogInfoService logInfoService,
-            IProjectInfoService projectInfoService, 
-            IProjectOwnerService projectOwnerService) {
+            IProjectInfoService projectInfoService,
+            IProjectOwnerService projectOwnerService,
+            ILogInfoService logInfoService)
+        {
             _projectOwnerService = projectOwnerService;
+            _projectInfoService = projectInfoService;
+            _logInfoService = logInfoService;
         }
 
         [HttpPost]
-        [Route("InsertLog")]
+        [Route("api/[controller]/InsertLog")]
         public async Task InsertLog(InsertLogRequest request)
         {
             //todo : database e proje tablosu eklenmeli bu tabloda projeno ve code alanı olmalı
             //gelen request eğer dbde bir projeye denk gelmiyorsa hata donulmeli
-            InserRequestHelper validationHelper = new InserRequestHelper(_projectInfoService,_projectOwnerService);
+            StatusControlHelper validationHelper = new StatusControlHelper(_projectInfoService, _projectOwnerService);
 
-            InsertLogReponse responseCheckLogRequestParameters = validationHelper.CheckLogRequestParameters(request);
 
-            if (responseCheckLogRequestParameters.Code!=(int)ResponseCode.SUCCESS) {
+
+            InsertLogReponse responseCheckLogRequestParameters = validationHelper.CheckRequestParameters(request);
+            if (responseCheckLogRequestParameters.Code != (int)ResponseCode.SUCCESS)
+            {
                 // return;
                 throw new Exception(responseCheckLogRequestParameters.Message);
             }
-            
-            InsertLogReponse responseCheckDbParameters = validationHelper.CheckDbParameters(request);
 
+
+            InsertLogReponse responseCheckDbParameters = validationHelper.CheckDbParameters(request);
             if (responseCheckDbParameters.Code != (int)ResponseCode.SUCCESS)
             {
                 // return;
                 throw new Exception(responseCheckDbParameters.Message);
             }
-            try
+
+
+            PublisherHelper publisherHelper = new PublisherHelper();
+
+            InsertLogReponse responsePublish = publisherHelper.PublishRequest(request.queuName, request.LogInfoMessage);
+            if (responsePublish.Code != (int)ResponseCode.SUCCESS)
             {
-                Publisher publisher = new Publisher(request.queuName,request.LogInfoMessage);
+                throw new Exception(responsePublish.Message);
             }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+
+            await Task.CompletedTask;
         }
         [HttpGet]
-        [Route("Consume")]
-        public void Consume()
+        [Route("api/[controller]/ConsumeLog")]
+        public async Task ConsumeLog(InsertLogRequest request)
         {
+            StatusControlHelper validationHelper = new StatusControlHelper(_projectInfoService, _projectOwnerService);
+            ConsumerHelper consumerHelper = new ConsumerHelper(_logInfoService, _projectInfoService);
 
-            for (; ; )
+            InsertLogReponse responseCheckLogRequestParameters = validationHelper.CheckRequestParameters(request);
+            if (responseCheckLogRequestParameters.Code != (int)ResponseCode.SUCCESS)
             {
-
-                Consumer _consumer = new Consumer("LogInfo");
-                if (_consumer._queue != null)
-                {
-                    LogInfo logInfos = new LogInfo
-                    {
-                        LogInfoMessage = _consumer._queue,
-
-                    };
-
-                    using (LogDbContext db = new LogDbContext())
-                    {
-                        db.Add(logInfos);
-
-                        db.SaveChanges();
-                    }
-                }
+                // return;
+                throw new Exception(responseCheckLogRequestParameters.Message);
             }
+
+            //GetMEssage and sent
+            InsertLogReponse consumerCheckResponse = consumerHelper.ConsumerReques(request.ProjectCode, request.queuName, request.Email, request.IsRequestEmail);
+
+            if (consumerCheckResponse.Code != (int)ResponseCode.SUCCESS)
+            {
+                throw new Exception(consumerCheckResponse.Message);
+            }
+            //for (; ; )
+            //{
+
+            //    Consumer _consumer = new Consumer("LogInfo");
+            //    if (_consumer._queue != null)
+            //    {
+            //        LogInfo logInfos = new LogInfo
+            //        {
+            //            LogInfoMessage = _consumer._queue,
+
+            //        };
+
+            //        using (LogDbContext db = new LogDbContext())
+            //        {
+            //            db.Add(logInfos);
+
+            //            db.SaveChanges();
+            //        }
+            //    }
+            //}
+            await Task.CompletedTask;
 
         }
     }

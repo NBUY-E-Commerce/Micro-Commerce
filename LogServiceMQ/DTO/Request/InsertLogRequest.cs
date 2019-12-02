@@ -12,6 +12,6 @@ namespace LogService.DTO.Request
         public string Email { get; set; }
         public bool IsRequestEmail { get; set; }
         public string LogInfoMessage { get; set; }
-        public string queuName { get; set; }
+        public string  queuName { get; set; }
     }
 }

@@ -12,6 +12,8 @@ namespace LogService.Controllers
     {
         // GET api/values
         [HttpGet]
+       
+        [Route("[controller]/GetValue")]
         public ActionResult<IEnumerable<string>> Get()
         {
             return new string[] { "LogService", "Hoşgeldiniz.." };

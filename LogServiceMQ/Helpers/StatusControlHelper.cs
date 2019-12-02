@@ -2,29 +2,28 @@
 using LogService.DTO.Request;
 using LogService.DTO.Response;
 using LogService.Services.Abstract;
+using MQService;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using static LogService.Common.Constants;
 
 namespace LogService.Helpers
 {
-    internal class InserRequestHelper
+    internal class StatusControlHelper
     {
-      
+
         private IProjectInfoService _projectInfoService;
         private IProjectOwnerService _projectOwnerService;
-        public InserRequestHelper(
+        public StatusControlHelper(
             IProjectInfoService projectInfoService,
             IProjectOwnerService projectOwnerService)
         {
-          
+
             _projectInfoService = projectInfoService;
             _projectOwnerService = projectOwnerService;
         }
 
-        public InsertLogReponse CheckLogRequestParameters(InsertLogRequest insertLogRequest)
+        public InsertLogReponse CheckRequestParameters(InsertLogRequest insertLogRequest)
         {
             InsertLogReponse insertLogReponse = new InsertLogReponse();
             try
@@ -60,27 +59,18 @@ namespace LogService.Helpers
             return insertLogReponse;
         }
 
-        public InsertLogReponse CheckDbParameters(InsertLogRequest insertLogRequest) {
+        public InsertLogReponse CheckDbParameters(InsertLogRequest insertLogRequest)
+        {
             InsertLogReponse insertLogReponse = new InsertLogReponse();
             try
             {
 
-            var projectInfo_result = _projectInfoService.Get(t=>t.ProjectCode==insertLogRequest.ProjectCode).FirstOrDefault();
+                var projectInfo_result = _projectInfoService.Get(t => t.ProjectCode == insertLogRequest.ProjectCode).FirstOrDefault();
 
-            var projectOwner_result = _projectOwnerService.Get(t=>t.ProjectID==projectInfo_result.ID).FirstOrDefault();
+                var projectOwner_result = _projectOwnerService.Get(t => t.ProjectID == projectInfo_result.ID).FirstOrDefault();
 
-            if (projectOwner_result==null) {
-                
-                ProjectOwner projectOwner = new ProjectOwner
+                if (projectOwner_result == null)
                 {
-                    ProjectID= projectInfo_result.ID,
-                    Email = insertLogRequest.Email,
-                    IsRequestEmail = insertLogRequest.IsRequestEmail,
-                };
-                    _projectOwnerService.Add(projectOwner);
-            }
-
-                if (projectOwner_result.Email!= insertLogRequest.Email) {
 
                     ProjectOwner projectOwner = new ProjectOwner
                     {
@@ -90,7 +80,19 @@ namespace LogService.Helpers
                     };
                     _projectOwnerService.Add(projectOwner);
                 }
-               
+
+                if (projectOwner_result.Email != insertLogRequest.Email)
+                {
+
+                    ProjectOwner projectOwner = new ProjectOwner
+                    {
+                        ProjectID = projectInfo_result.ID,
+                        Email = insertLogRequest.Email,
+                        IsRequestEmail = insertLogRequest.IsRequestEmail,
+                    };
+                    _projectOwnerService.Add(projectOwner);
+                }
+
 
             }
             catch (Exception)
@@ -103,6 +105,6 @@ namespace LogService.Helpers
             insertLogReponse.SetStatus(ResponseCode.SUCCESS);
             return insertLogReponse;
         }
-
+       
     }
 }
