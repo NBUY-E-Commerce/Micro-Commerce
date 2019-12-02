@@ -13,9 +13,12 @@ namespace B_Commerce.SMVC.Controllers
         // GET: Product
         public ActionResult ProductSlider()
         {
-            ProductModelResponse products = WebApiOperation.SendPost<int, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_INDEX_URI, 0);
-
-            return PartialView("_PartialProductSlider", products.productModels);
+            //  ProductModelResponse products = WebApiOperation.SendPost<int, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_INDEX_URI, 0);
+            // düzeldiğinde modele products.productModels eklenicek
+            List<ProductModel> products = new List<ProductModel>();
+            products.Add(new ProductModel { Description="Uzunşeyler",Price=21.2m,IsInSlider=true,IsInGift=true });
+            products.Add(new ProductModel { Description="Ucuz bişeyler",Price=1.2m,IsInSlider=true,IsInSale=true });// decimale virgüllü atama için 'm' gerekli.
+            return PartialView("_PartialProductSlider", products);
         }
     }
 }

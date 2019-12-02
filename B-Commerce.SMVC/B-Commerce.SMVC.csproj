@@ -2291,7 +2291,7 @@
     <Content Include="Views\Login\PasswordVerify.cshtml" />
     <Content Include="Views\Login\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_PartialTopBarMenu.cshtml" />
-    <Content Include="Views\Shared\_PartialProductPartial.cshtml" />
+    <Content Include="Views\Shared\_PartialProductSlider.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
