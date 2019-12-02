@@ -11,8 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace B_Commerce.ProductService.Api.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class CategoryController : Controller
     {
         ICategoryService _service;
@@ -80,7 +80,7 @@ namespace B_Commerce.ProductService.Api.Controllers
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetSubCategoriesByCategoryID")]
         public IActionResult GetSubCategoriesByCategoryID(int id)
         {

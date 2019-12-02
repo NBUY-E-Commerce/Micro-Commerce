@@ -13,7 +13,7 @@ namespace B_Commerce.SMVC.Models
         public bool HasSubCategory { get; set; }
         public string Name { get; set; }
 
-        public List<CategoryModel> SubCategories { get; set; }
+        public List<CategoryModel> SubCategories { get; set; } = new List<CategoryModel>();
 
         
 
