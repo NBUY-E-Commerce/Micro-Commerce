@@ -1,22 +1,22 @@
 ﻿
 
-var categorySelect = function (data,selectchange) {
+var categorySelect = function (data, selectchange) {
 
 
     var ui, header;
     var stack = [];
     var self = this;
 
-
+  
     this.selectedid = -1;
     var createHeader = function () {
         $(header).html("");
-        var searchBar = $('<div><input type="search"/></div>');
+        var searchBar = $('');
         $(header).append(searchBar);
         if (stack.length > 1) {
 
             var navigationBar = $("<div></div>");
-            var navigationicon = $("<a><</a>");
+            var navigationicon = $('<a> <img src="/Areas/Admin/Scripts/CategorySelectBox/return-button.svg" style="height:25px;" /></a>');
 
             navigationBar.append(navigationicon);
             navigationicon.click(function () {
@@ -31,6 +31,7 @@ var categorySelect = function (data,selectchange) {
 
             $(header).append(navigationBar);
 
+
         }
         selectedid = -1;
     }
@@ -44,14 +45,16 @@ var categorySelect = function (data,selectchange) {
         self.openCategoryTree(data);
         $(ownerdomelement).html(ui);
 
+
     }
     this.openCategoryTree = function (categorydata) {
 
-        var categoryListUi = $("<div class='categorySelectContent'><ul></ul></div>");
+        var categoryListUi = $("<div class='categorySelectContent'><ul class='names' id='myList'></ul></div>");
 
 
         $(categorydata).each(function (index, item) {
-         
+
+
             var categorydomelem = $("<a></a>");
             categorydomelem.attr("data-hasSubCategory", item.HasSubCategory);
             categorydomelem.attr("data-id", item.ID);
@@ -71,9 +74,8 @@ var categorySelect = function (data,selectchange) {
                     $(this).addClass("selecteditem");
 
                     self.selectedid = id;
-
                     selectchange(id);
-                  
+
                 }
 
             });
@@ -84,9 +86,12 @@ var categorySelect = function (data,selectchange) {
 
         });
 
+
         ui.find(">div").html(categoryListUi);
         createHeader();
+
     }
 
 
 }
+
