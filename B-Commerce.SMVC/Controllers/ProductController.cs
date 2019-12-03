@@ -33,23 +33,18 @@ namespace B_Commerce.SMVC.Controllers
 
 
         }
-  
-    public ActionResult Banners(BannerModel bannerModel)
+
+        public ActionResult Banners()
         {
-            BannerModelResponse bannerResponse = WebApiOperation.SendPost<int, BannerModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_BANNER_URI, 0);
+            BannerModelResponse bannerResponse = WebApiOperation.SendPost<object, BannerModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_BANNER_URI, null);
 
             if (bannerResponse.Code != 0)
             {
                 ViewBag.error = bannerResponse.Message;
-                return View();
+                return PartialView("_PartialBanner");
             }
 
-
-
-            return View(bannerModel);
+            return null;
         }
-    
-    
-    
     }
 }

@@ -2299,7 +2299,7 @@
     <Content Include="Views\Shared\_PartialTopBarMenu.cshtml" />
     <Content Include="Views\Shared\_PartialProductSlider.cshtml" />
     <Content Include="Views\Product\ProductSlider.cshtml" />
-    <Content Include="Views\Product\Banners.cshtml" />
+    <Content Include="Views\Shared\_PartialBanner.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

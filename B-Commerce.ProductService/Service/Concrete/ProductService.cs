@@ -168,6 +168,7 @@ namespace B_Commerce.ProductService.Service.Concrete
             try
             {
                 bannerResponse.BannersImages = _repositoryBanner.Get().OrderByDescending(t => t.ID).Take(5).ToList();
+
                 if (bannerResponse != null)
                 {
                     bannerResponse.SetStatus(ResponseCode.SUCCESS);
@@ -184,7 +185,7 @@ namespace B_Commerce.ProductService.Service.Concrete
                 bannerResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return bannerResponse;
             }
-               
+
         }
     }
 }
