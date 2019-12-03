@@ -27,7 +27,6 @@ namespace B_Commerce.ProductService.Service.Concrete
         }
         public BaseResponse Add(Product product)
         {
-
             BaseResponse baseResponse = new BaseResponse();
             try
             {
@@ -43,12 +42,10 @@ namespace B_Commerce.ProductService.Service.Concrete
             }
             catch (Exception ex)
             {
-
                 baseResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return baseResponse;
             }
         }
-
         public BaseResponse Delete(Product product)
         {
             BaseResponse baseResponse = new BaseResponse();
@@ -71,6 +68,8 @@ namespace B_Commerce.ProductService.Service.Concrete
             BaseResponse baseResponse = new BaseResponse();
             try
             {
+                //var updateproduct = _repositoryProduct.Get(t => t.ID == product.ID).SingleOrDefault();
+                //updateproduct.ProductName = product.ProductName;
                 _repositoryProduct.Update(product);
                 _unitOfWork.SaveChanges();
                 baseResponse.SetStatus(ResponseCode.SUCCESS);
@@ -83,14 +82,26 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return baseResponse;
             }
         }
-        public ProductResponse GetProducts(int? index, int count)
+        public ProductModelResponse GetProducts(int? index, int count)
         {
-            ProductResponse productResponse = new ProductResponse();
+            int pageNumber = (index ?? 1);
+            ProductModelResponse productResponse = new ProductModelResponse();
             try
             {
-                int pageNumber = (index ?? 1);
-                productResponse.Products = _repositoryProduct.Get().ToList().GetRange(pageNumber, count);
-
+             var products = _repositoryProduct.Get().ToList().GetRange(pageNumber, count);
+                foreach (Product item in products)
+                {
+                    ProductModel productModel = new ProductModel
+                    {
+                        ID = item.ID,
+                        Description = item.Description,
+                        Price = item.Price,
+                        ProductImages = item.ProductImages.ToList(),
+                        ProductName = item.ProductName,
+                        SpecialAreas = item.productSpacialAreas.ToList()
+                    };
+                    productResponse.Products.Add(productModel);
+                }
                 productResponse.SetStatus(ResponseCode.SUCCESS);
                 return productResponse;
             }
@@ -102,12 +113,26 @@ namespace B_Commerce.ProductService.Service.Concrete
             }
         }
 
-        public ProductResponse GetProductsByCategoryID(int categoryID)
+        public ProductModelResponse GetProductsByCategoryID(int categoryID,int? index,int count)
         {
-            ProductResponse productResponse = new ProductResponse();
+            int pageNumber = (index ?? 1);
+            ProductModelResponse productResponse = new ProductModelResponse();
             try
             {
-                productResponse.Products = _repositoryProduct.Get(t => t.CategoryID == categoryID).ToList();
+                var products = _repositoryProduct.Get(t => t.CategoryID == categoryID).ToList().GetRange(pageNumber, count);
+                foreach (Product item in products)
+                {
+                    ProductModel productModel = new ProductModel
+                    {
+                        ID = item.ID,
+                        Description = item.Description,
+                        Price = item.Price,
+                        ProductImages = item.ProductImages.ToList(),
+                        ProductName = item.ProductName,
+                        SpecialAreas = item.productSpacialAreas.ToList()
+                    };
+                    productResponse.Products.Add(productModel);
+                }
                 productResponse.SetStatus(ResponseCode.SUCCESS);
                 return productResponse;
             }

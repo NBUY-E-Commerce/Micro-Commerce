@@ -19,4 +19,8 @@
     <ProjectReference Include="..\B-Commerce.Common\B-Commerce.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

@@ -9,10 +9,8 @@ namespace B_Commerce.ProductService.Response
     public class CategoryModel
     {
         public int ID { get; set; }
-
         public bool HasSubCategory { get; set; }
         public string Name { get; set; }
-
         public List<CategoryModel> SubCategories { get; set; }
 
         //cat1-subcat1,subcat2

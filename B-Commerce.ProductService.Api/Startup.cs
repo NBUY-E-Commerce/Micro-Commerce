@@ -31,12 +31,12 @@ namespace B_Commerce.ProductService.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddDbContext<Microsoft.EntityFrameworkCore.DbContext, DataContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, B_Commerce.ProductService.Service.Concrete.ProductService>();
+            services.AddScoped<ISpecialAreaService, B_Commerce.ProductService.Service.Concrete.SpecialAreaService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

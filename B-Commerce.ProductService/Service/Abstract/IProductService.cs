@@ -12,8 +12,8 @@ namespace B_Commerce.ProductService.Service.Abstract
         BaseResponse Update(Product product);
         BaseResponse Delete(Product product);
 
-        ProductResponse GetProducts(int? page,int range);
+        ProductModelResponse GetProducts(int? page,int range);
         ProductResponse GetSpecialProducts(int spacialID, int? page, int range);
-        ProductResponse GetProductsByCategoryID(int categoryID);
+        ProductModelResponse GetProductsByCategoryID(int categoryID, int? index, int count);
     }
 }

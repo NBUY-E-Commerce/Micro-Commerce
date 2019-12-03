@@ -104,9 +104,9 @@ namespace B_Commerce.ProductService.Api.Controllers
 
         [HttpPost]
         [Route("GetProductsByCategoryID")]
-        public IActionResult GetProductsByCategoryID(int categoryID)
+        public IActionResult GetProductsByCategoryID(int categoryID, int? index, int count)
         {
-            BaseResponse response = _service.GetProductsByCategoryID(categoryID);
+            BaseResponse response = _service.GetProductsByCategoryID(categoryID,index,count);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
     }
