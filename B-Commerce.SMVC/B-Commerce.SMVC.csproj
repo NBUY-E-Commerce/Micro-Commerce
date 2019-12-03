@@ -252,6 +252,7 @@
   <ItemGroup>
     <Content Include="Areas\Admin\Scripts\CategorySelectBox\CategorySelect.css" />
     <Content Include="Areas\Admin\Scripts\CategorySelectBox\CategorySelect.js" />
+    <Content Include="Areas\Admin\Scripts\CategorySelectBox\return-button.svg" />
     <Content Include="Areas\Admin\Template\bootstrap\.gitignore" />
     <Content Include="Areas\Admin\Template\bootstrap\404.html" />
     <Content Include="Areas\Admin\Template\bootstrap\blank.html" />
