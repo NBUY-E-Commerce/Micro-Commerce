@@ -133,6 +133,7 @@ namespace B_Commerce.ProductService.Service.Concrete
                     };
                     productResponse.Products.Add(productModel);
                 }
+                //
                 productResponse.SetStatus(ResponseCode.SUCCESS);
                 return productResponse;
             }
