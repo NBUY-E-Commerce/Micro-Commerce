@@ -9,6 +9,7 @@ namespace B_Commerce.ProductService.Common
     {
 
         public const string IMAGE_SERVER_ADRESS = "http://localhost:90/";
+        public const string IMAGE_LOCAL_ADRESS = @".\wwwroot";
         public enum ResponseCode
         {
             SUCCESS,
@@ -19,7 +20,6 @@ namespace B_Commerce.ProductService.Common
             INVALID_RESPONSE_CODE,
             FAILED_ON_DB_PROCESS,
             FAILED_ON_DB_OR_FILTER_PROCESS
-            
         }
         public static Dictionary<ResponseCode, string> ResponseCache = new Dictionary<ResponseCode, string> {
             {ResponseCode.SUCCESS,"işlem başarılı" },

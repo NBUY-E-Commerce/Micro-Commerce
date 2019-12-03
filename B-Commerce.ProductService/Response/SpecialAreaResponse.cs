@@ -5,8 +5,8 @@ using System.Text;
 
 namespace B_Commerce.ProductService.Response
 {
-    public class ProductResponse:BaseResponse
+    public class SpecialAreaResponse : BaseResponse
     {
-        public List<Product> Products { get; set; } = new List<Product>();
+        public List<SpacialArea> SpecialAreas { get; set; }
     }
 }
