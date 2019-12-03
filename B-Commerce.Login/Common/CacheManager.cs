@@ -12,6 +12,7 @@ namespace B_Commerce.Login.Common
     public class CacheManager
     {
 
+
         private IRepository<Token> _tokenRepo { get; set; }
         public CacheManager(IRepository<Token> tokenRepo)
         {
