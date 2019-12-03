@@ -20,6 +20,21 @@ namespace B_Commerce.SMVC.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult CategorySearchAjax(string param)
+        {
+            CategoryModelResponse categoryChangeResponse = WebApiOperation.SendPost<int, CategoryModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_INDEX_URI, 0);
+            //List<Models.Product> products = MockDb.products.Where(t => t.Name.Contains(param)).ToList();
+
+
+            List<CategoryModel> res = new List<CategoryModel>();
+
+            res = categoryChangeResponse.categories.Where(t => t.Name.Contains(param)).ToList();
+            //return PartialView("_PartialProductList", products);
+            return PartialView("_PartialProductSearch", res);
+
+        }
+
 
 
 

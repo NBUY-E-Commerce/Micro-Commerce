@@ -1,0 +1,23 @@
+﻿
+
+@model List<CategoryModel>
+
+@if (Model != null && Model.Count > 0)
+{
+    <div class="dropdown-content" id="info">
+
+        @foreach (var item in Model)
+        {
+
+
+            <a href="#about">@item.Name</a>
+
+
+        }
+
+    </div>
+}
+else
+{
+    <div>Veri bulunamadı</div>
+}

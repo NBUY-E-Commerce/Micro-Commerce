@@ -1865,6 +1865,7 @@
     <Content Include="Content\css\CategoryAdmin.css" />
     <Content Include="Content\css\custom.css" />
     <Content Include="Content\css\fbstyle.css" />
+    <Content Include="Content\css\searchdropdown.css" />
     <Content Include="Content\css\style.blue.css" />
     <Content Include="Content\css\style.default.css" />
     <Content Include="Content\css\style.green.css" />
@@ -2298,6 +2299,7 @@
     <Content Include="Views\Login\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_PartialTopBarMenu.cshtml" />
     <Content Include="Views\Shared\_PartialProductSlider.cshtml" />
+    <Content Include="Views\Shared\_PartialProductSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
