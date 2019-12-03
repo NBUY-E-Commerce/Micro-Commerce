@@ -6,6 +6,7 @@ namespace B_Commerce.Login.Common
 {
     public class Constants
     {
+
         #region NotificationSettings
         public const string NOTIFICATION_API_BASE_URI = "http://localhost:52194/";
         public const string NOTIFICATION_API_MAIL_URI = "http://localhost:52194/api/Notification/Mail";

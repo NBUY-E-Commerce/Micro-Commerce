@@ -18,9 +18,7 @@ namespace B_Commerce.SMVC.Models
         public int AvailableCount { get; set; }
         public bool isActive { get; set; } = true;
         public int CategoryID { get; set; }
-        public bool IsInSlider { get; set; }
-        public bool IsInNew { get; set; }
-        public bool IsInSale { get; set; }
-        public bool IsInGift { get; set; }
+        public List<string> ImageUrls { get; set; } = new List<string>();
+
     }
 }

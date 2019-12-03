@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace B_Commerce.ProductService.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ProductController : Controller
     {
         IProductService _service;
@@ -24,6 +24,8 @@ namespace B_Commerce.ProductService.Api.Controllers
         [Route("Add")]
         public IActionResult Add(ProductDTO product)
         {
+            BaseResponse response = new BaseResponse();
+
             Product newproduct = new Product
             {
                 ProductName = product.ProductName,
@@ -35,7 +37,20 @@ namespace B_Commerce.ProductService.Api.Controllers
                 isActive = product.isActive,
                 CategoryID = product.CategoryID
             };
-            BaseResponse response = _service.Add(newproduct);
+
+            foreach (var item in product.ImageUrls)
+            {
+                newproduct.ProductImages.Add(new ProductImage
+                {
+                    URL = item,
+                    Description = ""
+
+                });
+            }
+
+
+
+            response = _service.Add(newproduct);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(201, response);
         }
 
@@ -75,7 +90,7 @@ namespace B_Commerce.ProductService.Api.Controllers
         [Route("GetProducts")]
         public IActionResult GetProducts(int? page, int range)
         {
-            BaseResponse response = _service.GetProducts(page,range);
+            BaseResponse response = _service.GetProducts(page, range);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 
@@ -83,7 +98,7 @@ namespace B_Commerce.ProductService.Api.Controllers
         [Route("GetSpecialProducts")]
         public IActionResult GetSpecialProducts(int spacialID, int? page, int range)
         {
-            BaseResponse response = _service.GetSpecialProducts(spacialID, page,range);
+            BaseResponse response = _service.GetSpecialProducts(spacialID, page, range);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 

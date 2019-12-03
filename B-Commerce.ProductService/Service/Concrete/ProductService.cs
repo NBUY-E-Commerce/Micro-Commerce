@@ -27,12 +27,17 @@ namespace B_Commerce.ProductService.Service.Concrete
         }
         public BaseResponse Add(Product product)
         {
-           
+
             BaseResponse baseResponse = new BaseResponse();
             try
             {
                 _repositoryProduct.Add(product);
-                _unitOfWork.SaveChanges();
+                if (_unitOfWork.SaveChanges() < 1)
+                {
+                    baseResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS);
+                    return baseResponse;
+
+                }
                 baseResponse.SetStatus(ResponseCode.SUCCESS);
                 return baseResponse;
             }
@@ -101,8 +106,8 @@ namespace B_Commerce.ProductService.Service.Concrete
         {
             ProductResponse productResponse = new ProductResponse();
             try
-            {  
-                productResponse.Products = _repositoryProduct.Get(t=>t.CategoryID==categoryID).ToList();
+            {
+                productResponse.Products = _repositoryProduct.Get(t => t.CategoryID == categoryID).ToList();
                 productResponse.SetStatus(ResponseCode.SUCCESS);
                 return productResponse;
             }
@@ -154,6 +159,6 @@ namespace B_Commerce.ProductService.Service.Concrete
             }
         }
 
-     
+
     }
 }
