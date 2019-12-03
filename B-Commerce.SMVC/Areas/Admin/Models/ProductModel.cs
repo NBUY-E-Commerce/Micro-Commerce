@@ -11,7 +11,7 @@ namespace B_Commerce.SMVC.Areas.Admin.Models
     {
         public int? ID { get; set; }
 
-        [Display(ResourceType = typeof(B_Commerce.SMVC.MyResource.Resource),Name = "Product_ProductName")]
+        [Display(ResourceType = typeof(B_Commerce.SMVC.MyResource.Resource), Name = "Product_ProductName")]
         public string ProductName { get; set; }
 
         [Display(ResourceType = typeof(B_Commerce.SMVC.MyResource.Resource), Name = "Product_Description")]
@@ -22,5 +22,6 @@ namespace B_Commerce.SMVC.Areas.Admin.Models
         public int AvailableCount { get; set; }
         public bool isActive { get; set; } = true;
         public int CategoryID { get; set; }
+        public List<string> ImageUrls { get; set; }
     }
 }

@@ -24,7 +24,7 @@
 
     <!-- Custom styles for this template-->
     <link href="/Areas/Admin/Template/Bootstrap/css/sb-admin.css" rel="stylesheet">
-    @RenderSection("styles",false)
+    @RenderSection("styles", false)
 
 </head>
 
@@ -111,6 +111,12 @@
                     <span>Ürün İşlemleri</span>
                 </a>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="@Url.Action("GetProductList","Product")">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Product List</span>
+                </a>
+            </li>
         </ul>
 
         <div id="content-wrapper">
@@ -161,7 +167,7 @@
     <!-- Custom scripts for all pages-->
     <script src="/Areas/Admin/Template/Bootstrap/js/sb-admin.min.js"></script>
 
-    @RenderSection("scripts",false)
+    @RenderSection("scripts", false)
 
 </body>
 

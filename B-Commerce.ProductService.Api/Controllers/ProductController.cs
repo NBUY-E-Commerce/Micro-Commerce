@@ -90,7 +90,7 @@ namespace B_Commerce.ProductService.Api.Controllers
         [Route("GetProducts")]
         public IActionResult GetProducts(int? page, int range)
         {
-            BaseResponse response = _service.GetProducts(page, range);
+            ProductModelResponse response = _service.GetProducts(page, range);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 
