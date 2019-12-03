@@ -11,9 +11,9 @@ namespace B_Commerce.ProductService.Service.Abstract
         BaseResponse Add(Product product);
         BaseResponse Update(Product product);
         BaseResponse Delete(Product product);
-
         ProductResponse GetProducts(int? page,int range);
         ProductResponse GetSpecialProducts(int spacialID, int? page, int range);
         ProductResponse GetProductsByCategoryID(int categoryID);
+        BannerResponse GetBanners();
     }
 }

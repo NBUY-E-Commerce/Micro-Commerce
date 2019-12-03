@@ -220,6 +220,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BannerModel.cs" />
+    <Compile Include="Models\BannerModelResponse.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\CategoryModelResponse.cs" />
     <Compile Include="Models\ProductModelResponse.cs" />
@@ -2296,6 +2298,8 @@
     <Content Include="Views\Login\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_PartialTopBarMenu.cshtml" />
     <Content Include="Views\Shared\_PartialProductSlider.cshtml" />
+    <Content Include="Views\Product\ProductSlider.cshtml" />
+    <Content Include="Views\Product\Banners.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2305,7 +2309,6 @@
     <Folder Include="Template\distribution\vendor\font-awesome\less\" />
     <Folder Include="Template\distribution\vendor\font-awesome\scss\" />
     <Folder Include="Views\Category\" />
-    <Folder Include="Views\Product\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -13,7 +13,7 @@ namespace B_Commerce.ProductService.DBContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
-            optionsBuilder.UseSqlServer(@"Server=.;Database=ProductServiceDB;UID=Sa;PWD=123");
+            optionsBuilder.UseSqlServer(@"Server=LAPTOP-H6M87CA4\SQLEXPRESS;Database=ProductDatabase;Trusted_Connection=True");
 
         }
 
@@ -31,5 +31,7 @@ namespace B_Commerce.ProductService.DBContext
         public virtual DbSet<ProductImage> ProductImages { get; set; }
         public virtual DbSet<SpacialArea> SpacialAreas { get; set; }
         public virtual DbSet<ProductSpacialAreaTable> ProductSpacialAreas { get; set; }
+        public virtual DbSet<BannersImage> BannersImages { get; set; }
+
     }
 }
