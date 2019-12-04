@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using B_Commerce.SMVC.WebHelpers;
 using System.Web.Mvc;
+using B_Commerce.SMVC.WebApiReqRes.Product;
 
 namespace B_Commerce.SMVC.Controllers
 {
@@ -13,24 +14,17 @@ namespace B_Commerce.SMVC.Controllers
         // GET: Product
         public ActionResult ProductSlider()
         {
-            //  ProductModelResponse products = WebApiOperation.SendPost<int, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_INDEX_URI, 0);
-            // düzeldiğinde modele products.productModels eklenicek
-            //List<ProductModel> products = new List<ProductModel>();
-            //products.Add(new ProductModel { Description="Uzunşeyler",Price=21.2m,IsInSlider=true,IsInGift=true });
-            //products.Add(new ProductModel { Description="Ucuz bişeyler",Price=1.2m,IsInSlider=true,IsInSale=true });// decimale virgüllü atama için 'm' gerekli.
-            //return PartialView("_PartialProductSlider", products);
+            GetSpecialProductRequest request = new GetSpecialProductRequest
+            {
 
-            return null;
+                Count = 5,
+                PageNumber = 1,
+                SpacialID = 3//slider ürünler
+            };
 
-
-
-
-
-
-            //CategoryModelResponse categoryChangeResponse = WebApiOperation.SendPost<int, CategoryModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_INDEX_URI, 0);
-
-            //return Json(categoryChangeResponse, JsonRequestBehavior.AllowGet);
-
+            ProductModelResponse response = WebApiOperation.SendPost<GetSpecialProductRequest, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GET_SPECIAL_PRODUCTS, request);
+          
+            return PartialView("_PartialProductSlider", response);
 
         }
 
@@ -44,7 +38,7 @@ namespace B_Commerce.SMVC.Controllers
                 return PartialView("_PartialBanner");
             }
 
-            return null;
+            return PartialView("_PartialBanner", bannerResponse.BannersImages);
         }
     }
 }

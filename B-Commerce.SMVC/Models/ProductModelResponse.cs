@@ -8,6 +8,9 @@ namespace B_Commerce.SMVC.Models
 {
     public class ProductModelResponse: CommonResponse
     {
-        public List<ProductModel> productModels { get; set; } = new List<ProductModel>();
+        public List<ProductModel> Products { get; set; } = new List<ProductModel>();
+
+        public PagingInfo PagingInfo { get; set; } = new PagingInfo();
+
     }
 }

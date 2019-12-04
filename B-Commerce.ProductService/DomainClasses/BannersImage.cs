@@ -7,7 +7,11 @@ namespace B_Commerce.ProductService.DomainClasses
 {
     public class BannersImage :BaseEntity
     {
-        public int? ProductID { get; set; }
+
+        //1 BİR PRODUCTI İŞARET EDER
+        //2 İSE BİR CATEGORY İŞARET
+        public int BannerType { get; set; }
+        public int? RelatedID { get; set; }
         public string Image { get; set; }
         public string Description { get; set; }
     }

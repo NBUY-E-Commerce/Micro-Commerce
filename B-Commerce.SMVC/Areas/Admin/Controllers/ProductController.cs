@@ -45,7 +45,7 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
                 {
                     string imagePath = path + "/ProductImage/" + Request.Files[i].FileName;
                     Request.Files[i].SaveAs(imagePath);
-                    productModel.ImageUrls.Add("/ProductImage/" + Request.Files[i].FileName);
+                    productModel.ProductImages.Add("/ProductImage/" + Request.Files[i].FileName);
                 }
 
 

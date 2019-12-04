@@ -13,7 +13,7 @@ namespace B_Commerce.ProductService.DBContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=ProductServiceDB;UID=ee;PWD=123");
+            optionsBuilder.UseSqlServer(@"Server=.;Database=ProductServiceDB;UID=sa;PWD=123");
 
         }
 
@@ -31,5 +31,8 @@ namespace B_Commerce.ProductService.DBContext
         public virtual DbSet<ProductImage> ProductImages { get; set; }
         public virtual DbSet<SpacialArea> SpacialAreas { get; set; }
         public virtual DbSet<ProductSpacialAreaTable> ProductSpacialAreas { get; set; }
+
+        public virtual DbSet<BannersImage> BannersImages { get; set; }
+
     }
 }

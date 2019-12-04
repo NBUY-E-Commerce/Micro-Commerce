@@ -8,7 +8,9 @@ namespace B_Commerce.SMVC.Models
 {
     public class BannerModel:CommonResponse
     {
-        public int? ProductID { get; set; }
+
+        public int BannerType { get; set; }
+        public int? RelatedID { get; set; }
         public string Image { get; set; }
         public string Description { get; set; }
 

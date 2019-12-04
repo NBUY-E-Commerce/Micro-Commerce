@@ -8,6 +8,6 @@ namespace B_Commerce.SMVC.Models
 {
     public class BannerModelResponse :CommonResponse
     {
-        public List<BannerModel> banners { get; set; } = new List<BannerModel>();
+        public List<BannerModel> BannersImages { get; set; } = new List<BannerModel>();
     }
 }

@@ -9,16 +9,24 @@ namespace B_Commerce.SMVC.Models
 {
     public class ProductModel
     {
-        public int? ID { get; set; }
+        public int ID { get; set; }
         public string ProductName { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public string Size { get; set; }
-        public string Color { get; set; }
-        public int AvailableCount { get; set; }
-        public bool isActive { get; set; } = true;
-        public int CategoryID { get; set; }
-        public List<string> ImageUrls { get; set; } = new List<string>();
+        public List<string> ProductImages { get; set; } = new List<string>();
+
 
     }
+    public class PagingInfo
+    {
+        public int CurrentPage { get; set; }
+
+        public int Demand { get; set; }
+
+        public int LastPage { get; set; }
+
+
+    }
+
+
 }

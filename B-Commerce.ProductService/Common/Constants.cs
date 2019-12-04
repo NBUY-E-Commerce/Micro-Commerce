@@ -7,9 +7,10 @@ namespace B_Commerce.ProductService.Common
 {
     public static class Constants
     {
-
+        public const int BANNERCOUNT = 5;
         public const string IMAGE_SERVER_ADRESS = "http://localhost:90/";
         public const string IMAGE_LOCAL_ADRESS = @".\wwwroot";
+
         public enum ResponseCode
         {
             SUCCESS,
@@ -31,6 +32,8 @@ namespace B_Commerce.ProductService.Common
             {ResponseCode.FAILED_ON_DB_PROCESS,"DataBase işlemi sırasında bir hata oluştu" },
             {ResponseCode.FAILED_ON_DB_OR_FILTER_PROCESS,"DataBase işlemi veya filterleme işlemi sırasında bir hata oluştu" }
         };
-      
+
+
+
     }
 }

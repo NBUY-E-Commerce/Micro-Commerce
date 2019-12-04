@@ -211,6 +211,7 @@
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Models\ProductModel.cs" />
     <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\MUriHelper.cs" />
     <Compile Include="Common\SystemUser.cs" />
     <Compile Include="Common\UserAdmin.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
@@ -228,6 +229,7 @@
     <Compile Include="Models\FacebookModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="MyHtmlHelpers\MyHelper.cs" />
     <Compile Include="MyResource\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -249,6 +251,8 @@
     <Compile Include="WebApiReqRes\Autentication\Login\RegisterResponse.cs" />
     <Compile Include="WebApiReqRes\Autentication\Login\VerificationRequest.cs" />
     <Compile Include="WebApiReqRes\CommonResponse.cs" />
+    <Compile Include="WebApiReqRes\Product\GetProductRequest.cs" />
+    <Compile Include="WebApiReqRes\Product\GetSpecialProductRequest.cs" />
     <Compile Include="WebHelpers\WebApiOperation.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2300,6 +2304,7 @@
     <Content Include="Views\Shared\_PartialProductSlider.cshtml" />
     <Content Include="Views\Product\ProductSlider.cshtml" />
     <Content Include="Views\Shared\_PartialBanner.cshtml" />
+    <Content Include="Views\Category\Products.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2308,7 +2313,6 @@
     <Folder Include="Content\vendor\font-awesome\scss\" />
     <Folder Include="Template\distribution\vendor\font-awesome\less\" />
     <Folder Include="Template\distribution\vendor\font-awesome\scss\" />
-    <Folder Include="Views\Category\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
