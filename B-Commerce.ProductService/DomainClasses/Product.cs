@@ -27,12 +27,14 @@ namespace B_Commerce.ProductService.DomainClasses
         public decimal? SpecialOfferPrice { get; set; }
         public float? SpecialOfferMinimumQuantity { get; set; }
         public float? SpecialOfferMaximumQuantity { get; set; }
+        public int BrandID { get; set; }
 
 
         public int CategoryID { get; set; }
 
-      
+
         public virtual Category Category { get; set; }
+        public virtual Brand Brand { get; set; }
         public virtual ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
         public virtual ICollection<ProductSpacialAreaTable> productSpacialAreas { get; set; } = new List<ProductSpacialAreaTable>();
     }
