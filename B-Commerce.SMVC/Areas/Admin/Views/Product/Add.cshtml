@@ -8,10 +8,6 @@
 }
 @section scripts
 {
-
-
-
-
     <link href="https://cdn.jsdelivr.net/npm/froala-editor@3.0.6/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@3.0.6/js/froala_editor.pkgd.min.js"></script>
     <script src="~/Areas/Admin/Scripts/CategorySelectBox/CategorySelect.js"></script>
@@ -55,51 +51,106 @@
     </script>
 }
 
-@using (Html.BeginForm("Add", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+
+@if (Model != null)
 {
-    <div class="form-group">
-        @Html.LabelFor(t => t.ProductName, new { @class = "badge badge-pill badge-primary" })
+    using (Html.BeginForm("Update", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-group">
+            @Html.LabelFor(t => t.ProductName, new { @class = "badge badge-pill badge-primary" })
 
-        @Html.TextBoxFor(t => t.ProductName, new { @class = "form-control", id = "#productName", placeholder = "Ürün Adı" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(t => t.Price, new { @class = "badge badge-pill badge-primary" })
-        @Html.TextBoxFor(t => t.Price, new { @class = "form-control", id = "#productName", placeholder = "Fiyat" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(t => t.AvailableCount, new { @class = "badge badge-pill badge-primary" })
-        @Html.TextBoxFor(t => t.AvailableCount, new { @class = "form-control", placeholder = "Adet" })
-    </div>
-    <div class="form-group">
-        <div>
-            @Html.LabelFor(t => t.Description, new { @class = "badge badge-pill badge-primary" })
+            @Html.TextBoxFor(t => t.ProductName, new { @class = "form-control", id = "#productName", value = $"{Model.ProductName}" })
         </div>
-        <div id="editor">
-            @Html.TextAreaFor(t => t.Description, new { id = "Description", style = "display:none", name = "Description" })
+        <div class="form-group">
+            @Html.LabelFor(t => t.Price, new { @class = "badge badge-pill badge-primary" })
+            @Html.TextBoxFor(t => t.Price, new { @class = "form-control", id = "#productName", value = $"{Model.Price}" })
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.Label("LabelProductCategory", "Product Category", new { @class = "badge badge-pill badge-primary" })
-        @Html.HiddenFor(t => t.CategoryID)<br />
-        <input type="search" id="myInput" class="form-control" placeholder="Search">
-        <div id="categoryselect">
+        <div class="form-group">
+            @Html.LabelFor(t => t.AvailableCount, new { @class = "badge badge-pill badge-primary" })
+            @Html.TextBoxFor(t => t.AvailableCount, new { @class = "form-control", value = $"{Model.AvailableCount}" })
+        </div>
+        <div class="form-group">
+            <div>
+                @Html.LabelFor(t => t.Description, new { @class = "badge badge-pill badge-primary" })
+            </div>
+            <div id="editor">
+                @Html.TextAreaFor(t => t.Description, new { id = "Description", style = "display:none", name = "Description", value = $"{Model.Description}" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("LabelProductCategory", "Product Category", new { @class = "badge badge-pill badge-primary" })
+            @Html.HiddenFor(t => t.CategoryID)<br />
+            <input type="search" id="myInput" class="form-control" placeholder="Search">
+            <div id="categoryselect">
+
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+                @Html.Label("LabelProductImage", "Product Image", new { @class = "badge badge-pill badge-primary" })
+            </div>
+            <input name="productfile" type="file" multiple class="fa-file-image-o" />
+
 
 
         </div>
-    </div>
-    <div class="form-group">
-        <div>
-            @Html.Label("LabelProductImage", "Product Image", new { @class = "badge badge-pill badge-primary" })
-        </div>
-        <input name="productfile" type="file" multiple class="fa-file-image-o" />
-
-
-
-    </div>
-    <div class="form-group">
-        <input type="submit" class="btn btn-secondary" value="@Resource.General_Add" />
-    </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-secondary" value="@Resource.General_Update" />
+        </div>}
 }
+else
+{
+    using (Html.BeginForm("Add", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-group">
+            @Html.LabelFor(t => t.ProductName, new { @class = "badge badge-pill badge-primary" })
+
+            @Html.TextBoxFor(t => t.ProductName, new { @class = "form-control", id = "#productName", placeholder = "Ürün Adı" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(t => t.Price, new { @class = "badge badge-pill badge-primary" })
+            @Html.TextBoxFor(t => t.Price, new { @class = "form-control", id = "#productName", placeholder = "Fiyat" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(t => t.AvailableCount, new { @class = "badge badge-pill badge-primary" })
+            @Html.TextBoxFor(t => t.AvailableCount, new { @class = "form-control", placeholder = "Adet" })
+        </div>
+        <div class="form-group">
+            <div>
+                @Html.LabelFor(t => t.Description, new { @class = "badge badge-pill badge-primary" })
+            </div>
+            <div id="editor">
+                @Html.TextAreaFor(t => t.Description, new { id = "Description", style = "display:none", name = "Description" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("LabelProductCategory", "Product Category", new { @class = "badge badge-pill badge-primary" })
+            @Html.HiddenFor(t => t.CategoryID)<br />
+            <input type="search" id="myInput" class="form-control" placeholder="Search">
+            <div id="categoryselect">
+
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+                @Html.Label("LabelProductImage", "Product Image", new { @class = "badge badge-pill badge-primary" })
+            </div>
+            <input name="productfile" type="file" multiple class="fa-file-image-o" />
+
+
+
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-secondary" value="@Resource.General_Add" />
+        </div>
+    }
+}
+
 
