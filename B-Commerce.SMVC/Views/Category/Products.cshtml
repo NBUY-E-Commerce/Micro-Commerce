@@ -74,10 +74,10 @@
                                 <div class="product">
                                     <div class="flip-container">
                                         <div class="flipper">
-                                            <div class="front"><a href="detail.html"><img src="https://productimages.hepsiburada.net/s/1/500/9540924145714.jpg" alt="" class="img-fluid"></a></div>
-                                            <div class="back"><a href="detail.html"><img src="https://productimages.hepsiburada.net/s/1/500/9540924145714.jpg" alt="" class="img-fluid"></a></div>
+                                            <div class="front"><a href="detail.html"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a></div>
+                                            <div class="back"><a href="detail.html"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a></div>
                                         </div>
-                                    </div><a href="detail.html" class="invisible"><img src="https://productimages.hepsiburada.net/s/1/500/9540924145714.jpg" alt="" class="img-fluid"></a>
+                                    </div><a href="detail.html" class="invisible"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a>
                                     <div class="text">
                                         <h3>
                                             <a href="detail.html">
@@ -139,33 +139,7 @@
                         <div class="card-header">
                             <h3 class="h4 card-title">Brands <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
                         </div>
-                        <div class="card-body">
-                            <form>
-                                <div class="form-group">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"> Armani  (10)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"> Versace  (12)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"> Carlo Bruni  (15)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"> Jack Honey  (14)
-                                        </label>
-                                    </div>
-                                </div>
-                                <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
-                            </form>
-                        </div>
+                        @Html.Action("ProductsBrand","Category")
                     </div>
                     <div class="card sidebar-menu mb-4">
                         @Html.Action("ProductsColor","Category")

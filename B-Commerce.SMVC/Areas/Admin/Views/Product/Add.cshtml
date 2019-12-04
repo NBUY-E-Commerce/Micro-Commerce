@@ -113,9 +113,12 @@ else
         </div>
         <div class="form-group">
             @Html.LabelFor(t => t.Price, new { @class = "badge badge-pill badge-primary" })
-            @Html.TextBoxFor(t => t.Price, new { @class = "form-control", id = "#productName", placeholder = "Fiyat" })
+            @Html.TextBoxFor(t => t.Price, new { @class = "form-control", id = "#productPrice", placeholder = "Fiyat" })
         </div>
-
+        <div class="form-group">
+            @Html.LabelFor(t => t.Brand, new { @class = "badge badge-pill badge-primary" })
+            @Html.TextBoxFor(t => t.Brand, new { @class = "form-control", id = "#productBrand", placeholder = "Marka" })
+        </div>
         <div class="form-group">
             @Html.LabelFor(t => t.AvailableCount, new { @class = "badge badge-pill badge-primary" })
             @Html.TextBoxFor(t => t.AvailableCount, new { @class = "form-control", placeholder = "Adet" })

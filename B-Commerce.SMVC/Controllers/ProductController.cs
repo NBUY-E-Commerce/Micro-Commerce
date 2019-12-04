@@ -12,14 +12,28 @@ namespace B_Commerce.SMVC.Controllers
     public class ProductController : Controller
     {
         // GET: Product
-        public ActionResult ProductSlider()
+        public ActionResult ProductSlider(int? a)
         {
-            GetSpecialProductRequest request = new GetSpecialProductRequest
+            GetSpecialProductRequest request = new GetSpecialProductRequest();
+            if (a == null)
             {
+                request.Count = 1;
+                request.PageNumber = 1;
+                request.SpacialID = 3;
+                
+               
+            }
+            else
+            {
+                request.Count = (int)a+1;
+                request.PageNumber = 1;
+                request.SpacialID = 3;
+
+            }
 
                 Count = 5,
                 PageNumber = 1,
-                SpacialID = 3//slider ürünler için ID
+                SpacialID = 3//slider ürünler
             };
 
             ProductModelResponse response = WebApiOperation.SendPost<GetSpecialProductRequest, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GET_SPECIAL_PRODUCTS, request);
@@ -27,6 +41,8 @@ namespace B_Commerce.SMVC.Controllers
             return PartialView("_PartialProductSlider", response);
 
         }
+
+       
 
         public ActionResult Banners()
         {

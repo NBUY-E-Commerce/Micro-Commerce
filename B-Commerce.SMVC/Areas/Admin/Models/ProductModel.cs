@@ -22,6 +22,7 @@ namespace B_Commerce.SMVC.Areas.Admin.Models
         public int AvailableCount { get; set; }
         public bool isActive { get; set; } = true;
         public int CategoryID { get; set; }
+        public string Brand { get; set; }
         public List<string> ImageUrls { get; set; }
     }
 }
