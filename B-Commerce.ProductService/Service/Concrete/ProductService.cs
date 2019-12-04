@@ -16,14 +16,16 @@ namespace B_Commerce.ProductService.Service.Concrete
         private IRepository<Product> _repositoryProduct;
         private IRepository<ProductSpacialAreaTable> _repositorySpacialTable;
         private IRepository<SpacialArea> _repositorySpacial;
+        private IRepository<BannersImage> _repositoryBanner;
         private IUnitOfWork _unitOfWork;
 
-        public ProductService(IRepository<Product> repositoryProduct, IRepository<ProductSpacialAreaTable> repositorySpacialTable, IRepository<SpacialArea> repositorySpacial, IUnitOfWork unitOfWork)
+        public ProductService(IRepository<Product> repositoryProduct, IRepository<ProductSpacialAreaTable> repositorySpacialTable, IRepository<SpacialArea> repositorySpacial, IUnitOfWork unitOfWork, IRepository<BannersImage> repositoryBanner)
         {
             _unitOfWork = unitOfWork;
             _repositoryProduct = repositoryProduct;
             _repositorySpacial = repositorySpacial;
             _repositorySpacialTable = repositorySpacialTable;
+            _repositoryBanner = repositoryBanner;
         }
         public BaseResponse Add(Product product)
         {
@@ -224,6 +226,31 @@ namespace B_Commerce.ProductService.Service.Concrete
             }
         }
 
+        public BannerResponse GetBanners()
+        {
+            BannerResponse bannerResponse = new BannerResponse();
 
+            try
+            {
+                bannerResponse.BannersImages = _repositoryBanner.Get().OrderByDescending(t => t.ID).Take(5).ToList();
+
+                if (bannerResponse != null)
+                {
+                    bannerResponse.SetStatus(ResponseCode.SUCCESS);
+                    return bannerResponse;
+                }
+                //b// 2kdk discorda gel daha hızlı ilerleriz bende cıkıcam az sonra 
+                bannerResponse.SetStatus(ResponseCode.SYSTEM_ERROR);
+                return bannerResponse;
+            }
+            catch (Exception ex)
+            {
+
+                bannerResponse.BannersImages = null;
+                bannerResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                return bannerResponse;
+            }
+
+        }
     }
 }

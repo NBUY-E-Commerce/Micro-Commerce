@@ -21,6 +21,30 @@ namespace B_Commerce.SMVC.Controllers
             //return PartialView("_PartialProductSlider", products);
 
             return null;
+
+
+
+
+
+
+            //CategoryModelResponse categoryChangeResponse = WebApiOperation.SendPost<int, CategoryModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_INDEX_URI, 0);
+
+            //return Json(categoryChangeResponse, JsonRequestBehavior.AllowGet);
+
+
+        }
+
+        public ActionResult Banners()
+        {
+            BannerModelResponse bannerResponse = WebApiOperation.SendPost<object, BannerModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_BANNER_URI, null);
+
+            if (bannerResponse.Code != 0)
+            {
+                ViewBag.error = bannerResponse.Message;
+                return PartialView("_PartialBanner");
+            }
+
+            return null;
         }
     }
 }

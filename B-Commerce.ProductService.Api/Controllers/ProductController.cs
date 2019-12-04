@@ -98,6 +98,15 @@ namespace B_Commerce.ProductService.Api.Controllers
             ProductModelResponse response = _service.GetProducts(page, range);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
+        
+        [HttpPost]
+        [Route("GetBanners")]
+        public IActionResult GetBanners()
+        {
+           
+            BannerResponse response = _service.GetBanners();
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
+        }
 
         [HttpPost]
         [Route("GetSpecialProducts")]

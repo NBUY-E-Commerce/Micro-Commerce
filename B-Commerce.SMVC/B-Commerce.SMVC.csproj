@@ -220,6 +220,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BannerModel.cs" />
+    <Compile Include="Models\BannerModelResponse.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\CategoryModelResponse.cs" />
     <Compile Include="Models\ProductModelResponse.cs" />
@@ -252,7 +254,6 @@
   <ItemGroup>
     <Content Include="Areas\Admin\Scripts\CategorySelectBox\CategorySelect.css" />
     <Content Include="Areas\Admin\Scripts\CategorySelectBox\CategorySelect.js" />
-    <Content Include="Areas\Admin\Scripts\CategorySelectBox\return-button.svg" />
     <Content Include="Areas\Admin\Template\bootstrap\.gitignore" />
     <Content Include="Areas\Admin\Template\bootstrap\404.html" />
     <Content Include="Areas\Admin\Template\bootstrap\blank.html" />
@@ -1865,7 +1866,6 @@
     <Content Include="Content\css\CategoryAdmin.css" />
     <Content Include="Content\css\custom.css" />
     <Content Include="Content\css\fbstyle.css" />
-    <Content Include="Content\css\searchdropdown.css" />
     <Content Include="Content\css\style.blue.css" />
     <Content Include="Content\css\style.default.css" />
     <Content Include="Content\css\style.green.css" />
@@ -2136,7 +2136,6 @@
     <Content Include="Areas\Admin\Views\Product\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Account\Test.cshtml" />
-    <Content Include="Areas\Admin\Views\Product\GetProductList.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -2299,7 +2298,8 @@
     <Content Include="Views\Login\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_PartialTopBarMenu.cshtml" />
     <Content Include="Views\Shared\_PartialProductSlider.cshtml" />
-    <Content Include="Views\Shared\_PartialProductSearch.cshtml" />
+    <Content Include="Views\Product\ProductSlider.cshtml" />
+    <Content Include="Views\Shared\_PartialBanner.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2309,7 +2309,6 @@
     <Folder Include="Template\distribution\vendor\font-awesome\less\" />
     <Folder Include="Template\distribution\vendor\font-awesome\scss\" />
     <Folder Include="Views\Category\" />
-    <Folder Include="Views\Product\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
