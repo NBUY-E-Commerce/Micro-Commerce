@@ -133,11 +133,67 @@ namespace B_Commerce.ProductService.Service.Concrete
             ProductModelResponse productResponse = new ProductModelResponse();
             try
             {
-
                 var productsColor = _repositoryProduct.Get().Where(t => t.CategoryID == categoryID).GroupBy(t => t.Color).Select(p => new { Color = p.Key, Count = p.Count() }).ToList();
                 foreach (var item in productsColor)
                 {
-                    productResponse.ProductsColor.Add(item.Color, item.Count);
+                    if (item.Color != null)
+                    {
+                        productResponse.ProductsColor.Add(item.Color, item.Count);
+                    }
+                }
+
+                productResponse.SetStatus(Constants.ResponseCode.SUCCESS);
+                return productResponse;
+            }
+            catch (Exception ex)
+            {
+                productResponse.Products = null;
+                productResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                return productResponse;
+            }
+        }
+        public ProductModelResponse GetProductsBrand(int categoryID)
+        {
+            ProductModelResponse productResponse = new ProductModelResponse();
+            try
+            {
+                var productsBrand = _repositoryProduct.Get().Where(t => t.CategoryID == categoryID).GroupBy(t => t.Brand.Name).Select(p => new { Brand = p.Key, Count = p.Count() }).ToList();
+                foreach (var item in productsBrand)
+                {
+                    if (item.Brand != null)
+                    {
+                        productResponse.ProductsBrand.Add(item.Brand, item.Count);
+                    }
+                }
+
+                productResponse.SetStatus(Constants.ResponseCode.SUCCESS);
+                return productResponse;
+            }
+            catch (Exception ex)
+            {
+                productResponse.Products = null;
+                productResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                return productResponse;
+            }
+        }
+        public ProductModelResponse GetProductsBrand(int categoryID, string brand)
+        {
+            ProductModelResponse productResponse = new ProductModelResponse();
+            try
+            {
+                var productsBrand = _repositoryProduct.Get().Where(t => t.CategoryID == categoryID && t.Brand.Name == brand).ToList();
+                foreach (Product item in productsBrand)
+                {
+
+                    ProductModel productModel = new ProductModel
+                    {
+                        ID = item.ID,
+                        Description = item.Description,
+                        Price = item.Price,
+                        ProductImages = item.ProductImages.Select(t => t.URLFromAway).ToList(),
+                        ProductName = item.ProductName
+                    };
+                    productResponse.Products.Add(productModel);
                 }
 
                 productResponse.SetStatus(Constants.ResponseCode.SUCCESS);
