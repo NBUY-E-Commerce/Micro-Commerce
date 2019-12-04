@@ -31,6 +31,10 @@ namespace B_Commerce.SMVC.Controllers
 
             }
 
+                Count = 5,
+                PageNumber = 1,
+                SpacialID = 3//slider ürünler
+            };
 
             ProductModelResponse response = WebApiOperation.SendPost<GetSpecialProductRequest, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GET_SPECIAL_PRODUCTS, request);
 
@@ -51,6 +55,19 @@ namespace B_Commerce.SMVC.Controllers
             }
 
             return PartialView("_PartialBanner", bannerResponse.BannersImages);
+        }
+
+        public ActionResult MoreProducts(int CategoryID)
+        {
+            List<ProductModel> products = new List<ProductModel>();//kullanılma ihtimali olduğu için duruyor
+            ProductModelResponse response = new ProductModelResponse();// product detaile göre şekillenicek.
+            GetProductRequest request = new GetProductRequest();
+            request.CategoryID = CategoryID;
+            request.Range = 5;
+            // System.Random rnd = new System.Random(); Productın tekil çekilmesi veya product service eklenmesi gerekebilir.
+                response = WebApiOperation.SendPost<GetProductRequest, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTS, request);
+                products=response.Products;
+            return PartialView("_PartialMoreProducts", products);
         }
     }
 }
