@@ -1,1 +1,30 @@
-﻿
+﻿@model List<ProductModel>
+
+
+<div class="row same-height-row">
+    <div class="col-md-3 col-sm-6">
+        <div class="box same-height" style="height: 346.563px;">
+            <h3>You may also like these products</h3>
+        </div>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3 col-sm-6">
+            <div class="product same-height" style="height: 346.563px;">
+                <div class="flip-container">
+                    <div class="flipper">
+                        <div class="front"><a href="detail.html"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a></div>
+                        <div class="back"><a href="detail.html"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a></div>
+                    </div>
+                </div><a href="detail.html" class="invisible"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a>
+                <div class="text">
+                    <h3>@item.Description</h3>
+                    <p class="price">@item.Price</p>
+                </div>
+            </div>
+            <!-- /.product-->
+        </div>
+    }
+
+
+</div>

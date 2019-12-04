@@ -43,15 +43,15 @@ namespace B_Commerce.SMVC.Controllers
 
         public ActionResult MoreProducts(int CategoryID)
         {
-            List<ProductModel> products = new List<ProductModel>();
-            ProductModelResponse response = new ProductModelResponse();
+            List<ProductModel> products = new List<ProductModel>();//kullanılma ihtimali olduğu için duruyor
+            ProductModelResponse response = new ProductModelResponse();// product detaile göre şekillenicek.
             GetProductRequest request = new GetProductRequest();
             request.CategoryID = CategoryID;
             request.Range = 5;
             // System.Random rnd = new System.Random(); Productın tekil çekilmesi veya product service eklenmesi gerekebilir.
                 response = WebApiOperation.SendPost<GetProductRequest, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTS, request);
                 products=response.Products;
-            return PartialView("", products);
+            return PartialView("_PartialMoreProducts", products);
         }
     }
 }
