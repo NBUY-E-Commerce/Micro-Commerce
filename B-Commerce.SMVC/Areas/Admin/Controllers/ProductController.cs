@@ -62,6 +62,48 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
             ViewBag.error = MyResource.Resource.General_Success;
             return View();
         }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Update(ProductModel productModel)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View(productModel);
+            }
+
+            if (Request.Files.Count > 0)
+            {
+                //resim var
+                string path = Server.MapPath("/");
+
+                if (!Directory.Exists(path + "/ProductImage"))
+                {
+                    Directory.CreateDirectory(path + "/ProductImage");
+                }
+
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    string imagePath = path + "/ProductImage/" + Request.Files[i].FileName;
+                    Request.Files[i].SaveAs(imagePath);
+                    productModel.ProductImages.Add("/ProductImage/" + Request.Files[i].FileName);
+                }
+
+
+            }
+
+            CommonResponse categoryChangeResponse = WebApiOperation.SendPost<ProductModel, CommonResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_UPDATE, productModel);
+
+            if (categoryChangeResponse.Code != 0)
+            {
+                ViewBag.error = categoryChangeResponse.Message;
+                return View(productModel);
+
+            }
+            ViewBag.error = MyResource.Resource.General_Success;
+            return View(productModel);
+        }
         public ActionResult GetProductList()
         {
             //servis kısmının model response kısmı farklı.
