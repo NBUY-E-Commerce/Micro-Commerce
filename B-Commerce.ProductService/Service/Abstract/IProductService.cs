@@ -13,6 +13,8 @@ namespace B_Commerce.ProductService.Service.Abstract
         BaseResponse Update(Product product);
         BaseResponse Delete(Product product);
         ProductModelResponse GetProducts(GetProductRequest request);
+        ProductModelResponse GetProductsColor(int categoryID);
+        ProductModelResponse GetProductsColor(int categoryID, string color);
         ProductModelResponse GetSpecialProducts(GetSpecialProductRequest request);
 
         BannerResponse GetBanners();

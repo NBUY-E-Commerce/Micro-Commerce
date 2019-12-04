@@ -1,0 +1,21 @@
+﻿@model ProductModelResponse
+<div class="card-header">
+    <h3 class="h4 card-title">Colours <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
+</div>
+<div class="card-body">
+    <form>
+        <div class="form-group">
+            @foreach (var item in Model.ProductsColor)
+            {
+                <div class="checkbox" id="checkbox">
+                    <label>
+                        <a href="@Url.RouteUrl("CategoryProduct",new {categoryID=ViewBag.CategoryID,name=ViewBag.CategoryName,item.Key})"><span class="@item.Key"></span>@item.Key (@item.Value)</a>  
+                    </label>
+                </div>
+            }
+
+        </div>
+
+        <button class="btn btn-default btn-sm btn-primary" id="colorapply"><i class="fa fa-pencil"></i> Apply</button>
+    </form>
+</div>

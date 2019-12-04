@@ -99,6 +99,21 @@ namespace B_Commerce.ProductService.Api.Controllers
             ProductModelResponse response = _service.GetProducts(request);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
+        [HttpPost]
+        [Route("ProductsColor")]
+        public IActionResult GetProductsColor(GetProductRequest request)
+        {
+            ProductModelResponse response = _service.GetProductsColor(request.CategoryID);
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
+        }
+
+        [HttpPost]
+        [Route("GetProductsColor")]
+        public IActionResult GetProductsColor(int categoryID,string color)
+        {
+            ProductModelResponse response = _service.GetProductsColor(categoryID,color);
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
+        }
 
         [HttpPost]
         [Route("GetBanners")]

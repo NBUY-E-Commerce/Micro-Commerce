@@ -128,6 +128,61 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return productResponse;
             }
         }
+        public ProductModelResponse GetProductsColor(int categoryID)
+        {
+            ProductModelResponse productResponse = new ProductModelResponse();
+            try
+            {
+
+                var productsColor = _repositoryProduct.Get().Where(t => t.CategoryID == categoryID).GroupBy(t => t.Color).Select(p => new { Color = p.Key, Count = p.Count() }).ToList();
+                foreach (var item in productsColor)
+                {
+                    productResponse.ProductsColor.Add(item.Color, item.Count);
+                }
+
+                productResponse.SetStatus(Constants.ResponseCode.SUCCESS);
+                return productResponse;
+            }
+            catch (Exception ex)
+            {
+                productResponse.Products = null;
+                productResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                return productResponse;
+            }
+        }
+        public ProductModelResponse GetProductsColor(int categoryID, string color)
+        {
+            ProductModelResponse productResponse = new ProductModelResponse();
+            try
+            {
+
+                var products = _repositoryProduct.Get().Where(t => t.CategoryID == categoryID && t.Color == color).ToList();
+                foreach (Product item in products)
+                {
+
+                    ProductModel productModel = new ProductModel
+                    {
+                        ID = item.ID,
+                        Description = item.Description,
+                        Price = item.Price,
+                        ProductImages = item.ProductImages.Select(t => t.URLFromAway).ToList(),
+                        ProductName = item.ProductName
+                    };
+                    productResponse.Products.Add(productModel);
+                }
+
+                int allProductCount = _repositoryProduct.Get().Where(t => categoryID == 0 || t.CategoryID == categoryID).Count();
+
+                productResponse.SetStatus(Constants.ResponseCode.SUCCESS);
+                return productResponse;
+            }
+            catch (Exception ex)
+            {
+                productResponse.Products = null;
+                productResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                return productResponse;
+            }
+        }
 
         public ProductModelResponse GetSpecialProducts(GetSpecialProductRequest request)
         {
@@ -146,7 +201,7 @@ namespace B_Commerce.ProductService.Service.Concrete
                     return productResponse;
                 }
 
-                int index = (request.PageNumber-1) * request.Count;//dbde kac kayıt es gecılmeli
+                int index = (request.PageNumber - 1) * request.Count;//dbde kac kayıt es gecılmeli
                 List<ProductSpacialAreaTable> spacialAreaProducts = _repositorySpacialTable.Get(t => t.SpacialAreaID == spacialArea.ID).Include(t => t.Product).Skip(index).Take(request.Count).ToList();
 
                 if (spacialAreaProducts == null)
