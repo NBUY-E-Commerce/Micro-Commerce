@@ -54,6 +54,35 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return baseResponse;
             }
         }
+
+        public GetProductModelResponse GetProductByID(int ID)
+        {
+            GetProductModelResponse response = new GetProductModelResponse();
+            try
+            {
+                Product product = _repositoryProduct.Get(t => t.ID == ID).SingleOrDefault();
+                response.GetProductModel = new GetProductModel
+                {
+                    ID = product.ID,
+                    AvailableCount = product.AvailableCount,
+                    CategoryID = product.CategoryID,
+                    Color = product.Color,
+                    Description = product.Description,
+                    isActive = product.isActive,
+                    Price = product.Price,
+                    ProductName = product.ProductName,
+                    Size = product.Size
+                };
+                response.SetStatus(Constants.ResponseCode.SUCCESS);
+                return response;
+            }
+            catch (Exception)
+            {
+
+                response.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS);
+                return response;
+            }
+        }
         public BaseResponse Delete(Product product)
         {
             BaseResponse baseResponse = new BaseResponse();

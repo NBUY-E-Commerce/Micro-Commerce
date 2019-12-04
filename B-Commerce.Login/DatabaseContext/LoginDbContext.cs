@@ -11,21 +11,13 @@ namespace B_Commerce.Login.DatabaseContext
     public class LoginDbContext : DbContext
     {
         private string _connectionString;
-        public LoginDbContext()
-        {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-          .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-          .AddJsonFile("appsettings.json")
-          .Build();
-            _connectionString = configuration.GetConnectionString("LoginServiceDB");
-
-        }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
-            optionsBuilder.UseSqlServer(_connectionString);
+            optionsBuilder.UseSqlServer(@"Server=10.0.75.2;Database=LoginServiceDB;UID=Sa;PWD='6.rq=^DP;Jn;w%|FVEPZ'");
+
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             Assembly assembly = Assembly.GetExecutingAssembly();

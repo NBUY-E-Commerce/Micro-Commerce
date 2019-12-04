@@ -32,6 +32,7 @@ namespace B_Commerce.Common.Repository
 
         public IQueryable<T> Get(Expression<Func<T, bool>> filter = null)
         {
+            
             if (filter == null)
             {
                 return _dbSet.AsQueryable();

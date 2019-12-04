@@ -81,6 +81,14 @@ namespace B_Commerce.ProductService.Api.Controllers
         }
 
         [HttpPost]
+        [Route("GetProductByID")]
+        public IActionResult GetProductByID([FromBody]int ID)
+        {
+            GetProductModelResponse response = _service.GetProductByID(ID);
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
+        }
+
+        [HttpPost]
         [Route("Delete")]
         public IActionResult Delete(int id)
         {
