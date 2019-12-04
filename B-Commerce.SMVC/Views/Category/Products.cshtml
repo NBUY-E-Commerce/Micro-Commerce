@@ -4,6 +4,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script>
+<script>
+
+
+
+    $(document).ready(function () {
+        $("#colorapply").click(function () {
+            if ($("input[type=checkbox]").prop(
+                ":checked")) {
+                alert("Check box in Checked");
+            } else {
+                alert("Check box is Unchecked");
+            }
+        });
+    });
+
+
+</script>
 <div id="all">
     <div id="content">
         <div class="container">
@@ -84,7 +103,7 @@
                         <!-- /.products-->
                     </div>
                     <div class="pages">
-                       <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+                        <nav aria-label="Page navigation example" class="d-flex justify-content-center">
                             <ul class="pagination">
                                 <li class="page-item"><a href="#" aria-label="Previous" class="page-link"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
                                 <li class="page-item active"><a href="#" class="page-link">1</a></li>
@@ -103,7 +122,7 @@
                     *** MENUS AND FILTERS ***
                     _________________________________________________________
                     -->
-                
+
                     <div class="card sidebar-menu mb-4">
                         <div class="card-header">
                             <h3 class="h4 card-title">Brands <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
@@ -137,41 +156,7 @@
                         </div>
                     </div>
                     <div class="card sidebar-menu mb-4">
-                        <div class="card-header">
-                            <h3 class="h4 card-title">Colours <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
-                        </div>
-                        <div class="card-body">
-                            <form>
-                                <div class="form-group">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"><span class="colour white"></span> White (14)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"><span class="colour blue"></span> Blue (10)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"><span class="colour green"></span>  Green (20)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"><span class="colour yellow"></span>  Yellow (13)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"><span class="colour red"></span>  Red (10)
-                                        </label>
-                                    </div>
-                                </div>
-                                <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
-                            </form>
-                        </div>
+                        @Html.Action("ProductsColor","Category")
                     </div>
                     <!-- *** MENUS AND FILTERS END ***-->
                     <div class="banner"><a href="#"><img src="img/banner.jpg" alt="sales 2014" class="img-fluid"></a></div>

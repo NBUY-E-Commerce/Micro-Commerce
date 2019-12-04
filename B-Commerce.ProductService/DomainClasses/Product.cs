@@ -30,6 +30,8 @@ namespace B_Commerce.ProductService.DomainClasses
 
 
         public int CategoryID { get; set; }
+
+      
         public virtual Category Category { get; set; }
         public virtual ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
         public virtual ICollection<ProductSpacialAreaTable> productSpacialAreas { get; set; } = new List<ProductSpacialAreaTable>();

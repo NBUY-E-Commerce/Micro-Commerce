@@ -26,12 +26,15 @@ namespace B_Commerce.SMVC.Common
         public const int LOGIN_RESPONSE_SUCCESS = 0;
 
         //ProductApi
-        public const string PRODUCT_API_BASE_URI = "http://localhost:51223/";
+        public const string PRODUCT_API_BASE_URI = "http://localhost:55188/";
         public const string PRODUCT_API_INDEX_URI = "/api/Category/GetSubCategoriesByCategoryID";
 
 
         public const string PRODUCT_API_ADD = "/api/Product/Add";
         public const string PRODUCT_API_GETPRODUCTS = "/api/Product/GetProducts";
+        public const string PRODUCT_API_PRODUCTSCOLOR = "/api/Product/ProductsColor";
+        public const string PRODUCT_API_GETPRODUCTSCOLOR = "/api/Product/GetProductsColor";
+
         public const string PRODUCT_API_BANNER_URI = "/api/Product/GetBanners";
         public const string PRODUCT_API_GET_SPECIAL_PRODUCTS = "/api/Product/GetSpecialProducts";
 
