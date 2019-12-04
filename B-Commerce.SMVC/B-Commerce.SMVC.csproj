@@ -2305,6 +2305,7 @@
     <Content Include="Views\Product\ProductSlider.cshtml" />
     <Content Include="Views\Shared\_PartialBanner.cshtml" />
     <Content Include="Views\Category\Products.cshtml" />
+    <Content Include="Views\Shared\_PartialMoreProducts.cshtml" />
     <Content Include="Views\Shared\_PartialProductsColor.cshtml" />
   </ItemGroup>
   <ItemGroup>
