@@ -210,6 +210,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Models\ProductModel.cs" />
+    <Compile Include="Areas\Admin\Models\SpecialAreaModel.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\MUriHelper.cs" />
     <Compile Include="Common\SystemUser.cs" />
@@ -2140,6 +2141,7 @@
     <Content Include="Areas\Admin\Views\Product\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Account\Test.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\SpecialArea.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

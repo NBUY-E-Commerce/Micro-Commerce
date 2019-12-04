@@ -1,4 +1,5 @@
-﻿using B_Commerce.SMVC.Common;
+﻿
+using B_Commerce.SMVC.Common;
 using B_Commerce.SMVC.Models;
 using B_Commerce.SMVC.WebApiReqRes;
 using B_Commerce.SMVC.WebHelpers;
@@ -115,6 +116,19 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
             ViewBag.Error = productModelResponse.Message;
             return View();
         }
+
+
+        public ActionResult SpecialArea()
+   {
+            B_Commerce.SMVC.Areas.Admin.Models.SpecialAreaModel SpecialArea = new Models.SpecialAreaModel();
+            return View(SpecialArea);
+        }
+        [HttpPost]
+        public ActionResult AddSpecialArea(B_Commerce.SMVC.Areas.Admin.Models.SpecialAreaModel specialAreaModel)
+        {
+            return View();
+        }
+
 
     }
 }
