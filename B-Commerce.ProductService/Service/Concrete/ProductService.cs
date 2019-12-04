@@ -85,6 +85,8 @@ namespace B_Commerce.ProductService.Service.Concrete
         }
         public ProductModelResponse GetProducts(int? page, int count)
         {
+            List<int> SpecialAreas = new List<int>();
+            List<string> productimages = new List<string>();
             int _page = page == null ? 0 : (int)page;
             int index = _page * count;
             List<Product> Productsafterpaging;
@@ -102,14 +104,22 @@ namespace B_Commerce.ProductService.Service.Concrete
                 }
                 foreach (Product item in Productsafterpaging)
                 {
+                    foreach (ProductImage value in item.ProductImages.ToList())
+                    {
+                        productimages.Add(value.URLFromAway);
+                    }
+                    foreach (ProductSpacialAreaTable value in item.productSpacialAreas.ToList())
+                    {
+                        SpecialAreas.Add(value.SpacialAreaID);
+                    }
                     ProductModel productModel = new ProductModel
                     {
                         ID = item.ID,
                         Description = item.Description,
                         Price = item.Price,
-                        ProductImages = item.ProductImages.ToList(),
+                        ProductImages = productimages,
                         ProductName = item.ProductName,
-                        SpecialAreas = item.productSpacialAreas.ToList()
+                        SpecialAreas = SpecialAreas
                     };
                     productResponse.Products.Add(productModel);
                 }
@@ -127,6 +137,8 @@ namespace B_Commerce.ProductService.Service.Concrete
         {
             int _page = page == null ? 0 : (int)page;
             int index = _page * count;
+            List<int> SpecialAreas = new List<int>();
+            List<string> productimages = new List<string>();
             List<Product> Productsafterpaging;
             ProductModelResponse productResponse = new ProductModelResponse();
             try
@@ -142,14 +154,22 @@ namespace B_Commerce.ProductService.Service.Concrete
                 }
                 foreach (Product item in Productsafterpaging)
                 {
+                    foreach (ProductImage value in item.ProductImages.ToList())
+                    {
+                        productimages.Add(value.URLFromAway);
+                    }
+                    foreach (ProductSpacialAreaTable value in item.productSpacialAreas.ToList())
+                    {
+                        SpecialAreas.Add(value.SpacialAreaID);
+                    }
                     ProductModel productModel = new ProductModel
                     {
                         ID = item.ID,
                         Description = item.Description,
                         Price = item.Price,
-                        ProductImages = item.ProductImages.ToList(),
+                        ProductImages = productimages,
                         ProductName = item.ProductName,
-                        SpecialAreas = item.productSpacialAreas.ToList()
+                        SpecialAreas = SpecialAreas
                     };
                     productResponse.Products.Add(productModel);
                 }
