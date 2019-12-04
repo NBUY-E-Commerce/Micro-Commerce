@@ -62,6 +62,17 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
             ViewBag.error = MyResource.Resource.General_Success;
             return View();
         }
+        public ActionResult GetProductList()
+        {
+            //servis kısmının model response kısmı farklı.
+            ProductModelResponse productModelResponse = WebApiOperation.SendPost<object, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTS, new { Page = 0, Range = 20 });
+            if (productModelResponse.Code == Constants.LOGIN_RESPONSE_SUCCESS)
+            {
+                return View(productModelResponse);
+            }
+            ViewBag.Error = productModelResponse.Message;
+            return View();
+        }
 
     }
 }

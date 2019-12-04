@@ -1,0 +1,23 @@
+﻿.dropdown {
+    z-index:9999;
+}
+
+.dropdown-content {
+    background-color: white;
+    min-width: 450px;
+    position: absolute;
+    border: 1px solid #ddd !important;
+    z-index: 1;
+}
+
+    .dropdown-content a {
+        color: black !important;
+        padding: 12px 8px !important;
+        text-decoration: none !important;
+        display: block!important;
+    }
+
+.dropdown a:hover {
+    background-color: #ddd;
+    
+}
