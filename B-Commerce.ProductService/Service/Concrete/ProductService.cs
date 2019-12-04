@@ -27,6 +27,7 @@ namespace B_Commerce.ProductService.Service.Concrete
         }
         public BaseResponse Add(Product product)
         {
+           
             BaseResponse baseResponse = new BaseResponse();
             try
             {
@@ -82,14 +83,24 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return baseResponse;
             }
         }
-        public ProductModelResponse GetProducts(int? index, int count)
+        public ProductModelResponse GetProducts(int? page, int count)
         {
-            int pageNumber = (index ?? 1);
+            int _page = page == null ? 0 : (int)page;
+            int index = _page * count;
+            List<Product> Productsafterpaging;
             ProductModelResponse productResponse = new ProductModelResponse();
             try
             {
-             var products = _repositoryProduct.Get().ToList().GetRange(pageNumber, count);
-                foreach (Product item in products)
+                var products = _repositoryProduct.Get().ToList();
+                if (products.Count < index + count)
+                {
+                    Productsafterpaging = new List<Product>();
+                }
+                else
+                {
+                    Productsafterpaging = products.GetRange(index, count);
+                }
+                foreach (Product item in Productsafterpaging)
                 {
                     ProductModel productModel = new ProductModel
                     {
@@ -112,15 +123,24 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return productResponse;
             }
         }
-
-        public ProductModelResponse GetProductsByCategoryID(int categoryID,int? index,int count)
+        public ProductModelResponse GetProductsByCategoryID(int categoryID, int? page, int count)
         {
-            int pageNumber = (index ?? 1);
+            int _page = page == null ? 0 : (int)page;
+            int index = _page * count;
+            List<Product> Productsafterpaging;
             ProductModelResponse productResponse = new ProductModelResponse();
             try
             {
-                var products = _repositoryProduct.Get(t => t.CategoryID == categoryID).ToList().GetRange(pageNumber, count);
-                foreach (Product item in products)
+                var products = _repositoryProduct.Get(t=>t.CategoryID==categoryID).ToList();
+                if (products.Count < index + count)
+                {
+                    Productsafterpaging = new List<Product>();
+                }
+                else
+                {
+                    Productsafterpaging = products.GetRange(index, count);
+                }
+                foreach (Product item in Productsafterpaging)
                 {
                     ProductModel productModel = new ProductModel
                     {
@@ -133,6 +153,7 @@ namespace B_Commerce.ProductService.Service.Concrete
                     };
                     productResponse.Products.Add(productModel);
                 }
+
                 productResponse.SetStatus(ResponseCode.SUCCESS);
                 return productResponse;
             }
@@ -143,7 +164,6 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return productResponse;
             }
         }
-
         public ProductResponse GetSpecialProducts(int spacialID, int? index, int count)
         {
             ProductResponse productResponse = new ProductResponse();

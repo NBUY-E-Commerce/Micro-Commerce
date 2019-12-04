@@ -24,6 +24,7 @@ namespace B_Commerce.ProductService.Api.Controllers
         [Route("Add")]
         public IActionResult Add(ProductDTO product)
         {
+
             BaseResponse response = new BaseResponse();
 
             Product newproduct = new Product
@@ -38,14 +39,18 @@ namespace B_Commerce.ProductService.Api.Controllers
                 CategoryID = product.CategoryID
             };
 
-            foreach (var item in product.ImageUrls)
+            foreach (string item in product.ImageUrls)
             {
                 newproduct.ProductImages.Add(new ProductImage
                 {
                     URL = item,
                     Description = ""
-
                 });
+            }
+
+            foreach (var item in product.SpecialAreas)
+            {
+                newproduct.productSpacialAreas.Add(new ProductSpacialAreaTable { SpacialAreaID = item }); // TODO ?
             }
 
 
@@ -106,7 +111,7 @@ namespace B_Commerce.ProductService.Api.Controllers
         [Route("GetProductsByCategoryID")]
         public IActionResult GetProductsByCategoryID(int categoryID, int? index, int count)
         {
-            BaseResponse response = _service.GetProductsByCategoryID(categoryID,index,count);
+            BaseResponse response = _service.GetProductsByCategoryID(categoryID, index, count);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
     }
