@@ -10,12 +10,13 @@ using System.Threading.Tasks;
 
 namespace LogService.Services.Concrete
 {
-    public class LogInfoService:ILogInfoService
+    public class LogInfoService : ILogInfoService
     {
         private IRepository<LogInfo> _logRepository;
         private IUnitOfWork _uow;
 
-        public LogInfoService(IRepository<LogInfo> logRepository,IUnitOfWork uow) {
+        public LogInfoService(IRepository<LogInfo> logRepository, IUnitOfWork uow)
+        {
             _logRepository = logRepository;
             _uow = uow;
         }
