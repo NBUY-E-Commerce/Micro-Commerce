@@ -8,7 +8,22 @@
 </script>
 <script>
 
+    function ajax(id) { getpartialwithajax(id) };
 
+    function getpartialwithajax(id) {
+        $.ajax({
+            type: "GET",
+            url: "/Product/ProductDetail",
+            data: `ID=${id}`,
+            dataType: "html",
+            success: function (response) {
+                $('#productpoup').html(response);
+                $('#myExtraLargeModalLabel').on('shown.bs.modal', function () {
+                    $('.bd-example-modal-xl').trigger('focus')
+                });
+            }
+        });
+    }// sende
 
     $(document).ready(function () {
         $("#colorapply").click(function () {
@@ -91,7 +106,7 @@
                                             <del></del>$@item.Price
                                         </p>
                                         <p class="buttons">
-                                            <a href="detail.html" class="btn btn-outline-secondary">Detay</a>
+                                            <a href="" class="btn btn-outline-secondary productbutton" onclick="ajax(@item.ID)" data-toggle="modal" data-target=".bd-example-modal-xl">Detay</a>
 
                                             <a href="#" onclick="addToBasket(@item.ID)" class="btn btn-primary">
                                                 <i class="fa fa-shopping-cart"></i>
@@ -139,6 +154,18 @@
                     <div class="banner"><a href="#"><img src="img/banner.jpg" alt="sales 2014" class="img-fluid"></a></div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Extra large modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-xl">Extra large modal</button>
+
+<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div id="productpoup" class="modal-content">
+            ...
         </div>
     </div>
 </div>
