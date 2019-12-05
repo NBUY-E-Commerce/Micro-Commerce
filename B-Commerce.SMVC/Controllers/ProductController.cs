@@ -20,5 +20,6 @@ namespace B_Commerce.SMVC.Controllers
             products.Add(new ProductModel { Description="Ucuz bişeyler",Price=1.2m,IsInSlider=true,IsInSale=true });// decimale virgüllü atama için 'm' gerekli.
             return PartialView("_PartialProductSlider", products);
         }
+
     }
 }

@@ -29,6 +29,10 @@ namespace B_Commerce.SMVC.Controllers
         public ActionResult ForgotPassword(PasswordChangeRequest passwordChangeRequest)
         {
             PasswordChangeResponse passwordChangeResponse = WebApiOperation.SendPost<PasswordChangeRequest, PasswordChangeResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_SEND_PASSWORD_CHANGE_CODE_URI, passwordChangeRequest);
+            if (true)
+            {
+
+            }
 
             return RedirectToAction("PasswordVerify", "Login", new { Email = passwordChangeResponse.Email });
         }
