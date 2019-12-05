@@ -7,9 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using B_Commerce.ProductService.Common;
 using B_Commerce.ProductService.Request;
+using Microsoft.EntityFrameworkCore;
 
 namespace B_Commerce.ProductService.Service.Concrete
 {
@@ -42,9 +42,6 @@ namespace B_Commerce.ProductService.Service.Concrete
                     return baseResponse;
 
                 }
-
-
-
                 baseResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                 return baseResponse;
             }
@@ -52,6 +49,35 @@ namespace B_Commerce.ProductService.Service.Concrete
             {
                 baseResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return baseResponse;
+            }
+        }
+
+        public GetProductModelResponse GetProductByID(int ID)
+        {
+            GetProductModelResponse response = new GetProductModelResponse();
+            try
+            {
+                Product product = _repositoryProduct.Get(t => t.ID == ID).SingleOrDefault();
+                response.GetProductModel = new GetProductModel
+                {
+                    ID = product.ID,
+                    AvailableCount = product.AvailableCount,
+                    CategoryID = product.CategoryID,
+                    Color = product.Color,
+                    Description = product.Description,
+                    isActive = product.isActive,
+                    Price = product.Price,
+                    ProductName = product.ProductName,
+                    Size = product.Size
+                };
+                response.SetStatus(Constants.ResponseCode.SUCCESS);
+                return response;
+            }
+            catch (Exception)
+            {
+
+                response.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS);
+                return response;
             }
         }
         public BaseResponse Delete(Product product)
@@ -76,9 +102,14 @@ namespace B_Commerce.ProductService.Service.Concrete
             BaseResponse baseResponse = new BaseResponse();
             try
             {
-                //var updateproduct = _repositoryProduct.Get(t => t.ID == product.ID).SingleOrDefault();
-                //updateproduct.ProductName = product.ProductName;
-                _repositoryProduct.Update(product);
+                var updateproduct = _repositoryProduct.Get(t => t.ID == product.ID).SingleOrDefault();
+
+                updateproduct.Description = product.Description;
+                updateproduct.Price = product.Price;
+                updateproduct.ProductName = product.ProductName;
+                updateproduct.ProductImages = product.ProductImages;
+                if (product.CategoryID != 0) updateproduct.CategoryID = product.CategoryID;
+                _repositoryProduct.Update(updateproduct);
                 _unitOfWork.SaveChanges();
                 baseResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                 return baseResponse;
@@ -148,70 +179,6 @@ namespace B_Commerce.ProductService.Service.Concrete
                 }
 
                 productResponse.PagingInfo = new PagingInfo(request.Page, request.Range, allProductCount);
-                productResponse.SetStatus(Constants.ResponseCode.SUCCESS);
-                return productResponse;
-            }
-            catch (Exception ex)
-            {
-                productResponse.Products = null;
-                productResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
-                return productResponse;
-            }
-        }
-
-        public ProductModelResponse GetProductsBrand(int categoryID, string brand)
-        {
-            ProductModelResponse productResponse = new ProductModelResponse();
-            try
-            {
-                var productsBrand = _repositoryProduct.Get().Where(t => t.CategoryID == categoryID && t.Brand.Name == brand).ToList();
-                foreach (Product item in productsBrand)
-                {
-
-                    ProductModel productModel = new ProductModel
-                    {
-                        ID = item.ID,
-                        Description = item.Description,
-                        Price = item.Price,
-                        ProductImages = item.ProductImages.Select(t => t.URLFromAway).ToList(),
-                        ProductName = item.ProductName
-                    };
-                    productResponse.Products.Add(productModel);
-                }
-
-                productResponse.SetStatus(Constants.ResponseCode.SUCCESS);
-                return productResponse;
-            }
-            catch (Exception ex)
-            {
-                productResponse.Products = null;
-                productResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
-                return productResponse;
-            }
-        }
-        public ProductModelResponse GetProductsColor(int categoryID, string color)
-        {
-            ProductModelResponse productResponse = new ProductModelResponse();
-            try
-            {
-
-                var products = _repositoryProduct.Get().Where(t => t.CategoryID == categoryID && t.Color == color).ToList();
-                foreach (Product item in products)
-                {
-
-                    ProductModel productModel = new ProductModel
-                    {
-                        ID = item.ID,
-                        Description = item.Description,
-                        Price = item.Price,
-                        ProductImages = item.ProductImages.Select(t => t.URLFromAway).ToList(),
-                        ProductName = item.ProductName
-                    };
-                    productResponse.Products.Add(productModel);
-                }
-
-                int allProductCount = _repositoryProduct.Get().Where(t => categoryID == 0 || t.CategoryID == categoryID).Count();
-
                 productResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                 return productResponse;
             }

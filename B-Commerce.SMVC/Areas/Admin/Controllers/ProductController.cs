@@ -65,14 +65,14 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpGet]
         [ValidateInput(false)]
-        public ActionResult Update(ProductModel productModel)
+        public ActionResult Update(int ID)
         {
-
+            B_Commerce.SMVC.Areas.Admin.Models.GetProductModelResponse Response = WebApiOperation.SendPost<int, B_Commerce.SMVC.Areas.Admin.Models.GetProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTBYID, ID);
             if (!ModelState.IsValid)
             {
-                return View(productModel);
+                return View("~/Areas/Admin/Views/Product/Add.cshtml", Response.GetProductModel);
             }
 
             if (Request.Files.Count > 0)
@@ -89,23 +89,41 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
                 {
                     string imagePath = path + "/ProductImage/" + Request.Files[i].FileName;
                     Request.Files[i].SaveAs(imagePath);
-                    productModel.ProductImages.Add("/ProductImage/" + Request.Files[i].FileName);
+                    Response.GetProductModel.ImageUrls.Add("/ProductImage/" + Request.Files[i].FileName);
                 }
-
-
             }
 
-            CommonResponse categoryChangeResponse = WebApiOperation.SendPost<ProductModel, CommonResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_UPDATE, productModel);
-
-            if (categoryChangeResponse.Code != 0)
+            if (Response.Code != 0)
             {
-                ViewBag.error = categoryChangeResponse.Message;
-                return View(productModel);
-
+                ViewBag.error = Response.Message;
+                return View("~/Areas/Admin/Views/Product/Add.cshtml", Response.GetProductModel);
             }
+
             ViewBag.error = MyResource.Resource.General_Success;
-            return View(productModel);
+            return View("~/Areas/Admin/Views/Product/Add.cshtml", Response.GetProductModel);
         }
+
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Update(ProductModel productmodel)
+        {
+            //productmodel.ID = Request;
+            CommonResponse Response = WebApiOperation.SendPost<ProductModel, CommonResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_UPDATE, productmodel);
+
+            B_Commerce.SMVC.Areas.Admin.Models.GetProductModelResponse product = WebApiOperation.SendPost<int, B_Commerce.SMVC.Areas.Admin.Models.GetProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTBYID, productmodel.ID);
+
+            if (Response.Code != 0)
+            {
+                ViewBag.error = Response.Message;
+                return View("~/Areas/Admin/Views/Product/Add.cshtml", product.GetProductModel);
+            }
+
+            ViewBag.error = MyResource.Resource.General_Success;
+            return View("~/Areas/Admin/Views/Product/Add.cshtml", product.GetProductModel);
+        }
+
+
         public ActionResult GetProductList()
         {
 

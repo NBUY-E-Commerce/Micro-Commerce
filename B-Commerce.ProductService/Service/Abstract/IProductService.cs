@@ -14,6 +14,7 @@ namespace B_Commerce.ProductService.Service.Abstract
         BaseResponse Delete(Product product);
         ProductModelResponse GetProducts(GetProductRequest request);
         ProductModelResponse GetSpecialProducts(GetSpecialProductRequest request);
+        GetProductModelResponse GetProductByID(int ID);
         BannerResponse GetBanners();
     }
 }

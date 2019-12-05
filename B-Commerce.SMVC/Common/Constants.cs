@@ -31,6 +31,7 @@ namespace B_Commerce.SMVC.Common
 
 
         public const string PRODUCT_API_ADD = "/api/Product/Add";
+        public const string PRODUCT_API_GETPRODUCTBYID = "/api/Product/GetProductByID";
         public const string PRODUCT_API_UPDATE = "/api/Product/Update";
         public const string PRODUCT_API_GETPRODUCTS = "/api/Product/GetProducts";
         public const string PRODUCT_API_PRODUCTS_COLOR = "/api/Product/ProductsColor";
