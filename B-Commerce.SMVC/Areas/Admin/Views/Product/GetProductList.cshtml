@@ -1,59 +1,96 @@
-﻿@model B_Commerce.SMVC.Models.ProductModelResponse
+﻿
+@{
+    ViewBag.Title = "GetProductList";
+    //Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    //Jquery 3.4.1 versiyonundan çalışmadığı için layout yok.
+}
+
+<link href="https://kendo.cdn.telerik.com/2019.3.1023/styles/kendo.common.min.css" rel="stylesheet" />
+<link href="https://kendo.cdn.telerik.com/2019.3.1023/styles/kendo.default.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+<script src="https://kendo.cdn.telerik.com/2019.3.1023/js/kendo.all.min.js">
+
+</script>
+
 @{
     ViewBag.Title = "GetProductList";
 }
-
+<div id="ordersGrid"></div>
 <h2>GetProductList</h2>
+<div id="getProductList">
+    <div id="grid"></div>
+</div>
+<style type="text/css">
+    .product-photo {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-size: 100px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
+    }
+</style>
+<script>
+    $(function () {
+        $("#grid").kendoGrid({
+            dataSource: {
+                type: "odata-v4",
+                transport: {
+                    read: {
+                        type: 'POST',
+                        contentType: "application/json",
+                        dataType: "json",
+                        url: '@Url.Action("GetProductListJson","Product")'
+                    },
+                },
+                pageSize: 20
+            },
+            title:"Get ProductsList",
+            height: 550,
+            groupable: true,
+            sortable: true,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            columns: [{
+                field: "ID",
+                title: "ProductID",
+                width: 100,
 
-<table class="table table-dark">
-    <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">ProductName</th>
-            <th scope="col">Description</th>
-            <th scope="col">Price</th>
-            <th scope="col">Size</th>
-            <th scope="col">Color</th>
-            <th scope="col">AvailableCount</th>
-            <th scope="col">isActive</th>
-            <th scope="col">CategoryID</th>
+            }, {
+                field: "ProductName",
+                title: "Product Name",
+                width: 200
+            }, {
+                field: "Description",
+                title: "Description",
+                width: 200
+            }, {
+                field: "Price",
+                title: "Price",
+                width: 150
+            }, {
+                field: "Brand",
+                title: "Brand",
+                width: 150
+                },
+                {
+                template: "<div class='product-photo'"+"style='background-image:url(#:data.ProductImages#);'></div>",
+                field: "ProductImages",
+                type:"string",
+                title: "Product Images",
+                width: 150
+            }]
+        });
+        $(".k-grouping-header").css({ "display": "none" });
+    });
+</script>
 
-        </tr>
-    </thead>
-    <tbody>
 
-        @foreach (var item in Model.productModels)
-        {
-            <tr>
-                <td>
-                    @item.ID
-                </td>
-                <td>
-                    @item.ProductName
-                </td>
-                <td>
-                    @item.Description
-                </td>
-                <td>
-                    @item.Price
-                </td>
-                <td>
-                    @item.Size
-                </td>
-                <td>
-                    @item.Color
-                </td>
-                <td>
-                    @item.AvailableCount
-                </td>
-                <td>
-                    @item.isActive
-                </td>
-                <td>
-                    @item.CategoryID
-                </td>
-            </tr>
-        }
 
-    </tbody>
-</table>

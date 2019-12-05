@@ -11,6 +11,7 @@ namespace B_Commerce.ProductService.Response
         public string ProductName { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
+        public int Brand { get; set; }
         public List<string> ProductImages { get; set; } = new List<string>();
    
     }

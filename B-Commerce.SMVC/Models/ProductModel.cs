@@ -13,7 +13,7 @@ namespace B_Commerce.SMVC.Models
         public string ProductName { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public string Brand { get; set; }
+        public int Brand { get; set; }
         public List<string> ProductImages { get; set; } = new List<string>();
 
 

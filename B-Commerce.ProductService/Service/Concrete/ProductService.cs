@@ -145,7 +145,9 @@ namespace B_Commerce.ProductService.Service.Concrete
                         Description = item.Description,
                         Price = item.Price,
                         ProductImages = item.ProductImages.Select(t => t.URLFromAway).ToList(),
-                        ProductName = item.ProductName
+                        ProductName = item.ProductName,
+                        Brand=item.BrandID
+                        
                     };
                     productResponse.Products.Add(productModel);
                 }
@@ -226,8 +228,8 @@ namespace B_Commerce.ProductService.Service.Concrete
                         Description = item.Product.Description,
                         Price = item.Product.Price,
                         ProductImages = item.Product.ProductImages.Select(t => t.URLFromAway).ToList(),
-                        ProductName = item.Product.ProductName
-
+                        ProductName = item.Product.ProductName,
+                        Brand=item.Product.BrandID
                     });
                 }
                 productResponse.Products = productList;

@@ -126,6 +126,11 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
 
         public ActionResult GetProductList()
         {
+            return View();
+        }
+        [HttpPost]
+        public JsonResult GetProductListJson()
+        {
 
             GetProductRequest request = new GetProductRequest
             {
@@ -141,15 +146,15 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
             ProductModelResponse productModelResponse = WebApiOperation.SendPost<GetProductRequest, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTS, request);
             if (productModelResponse.Code == Constants.LOGIN_RESPONSE_SUCCESS)
             {
-                return View(productModelResponse);
+                return Json(productModelResponse.Products);
             }
             ViewBag.Error = productModelResponse.Message;
-            return View();
+            return Json("");
         }
 
 
         public ActionResult SpecialArea()
-   {
+        {
             B_Commerce.SMVC.Areas.Admin.Models.SpecialAreaModel SpecialArea = new Models.SpecialAreaModel();
             return View(SpecialArea);
         }
