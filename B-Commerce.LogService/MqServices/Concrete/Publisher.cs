@@ -21,9 +21,6 @@ namespace B_Commerce.LogService.MqServices.Concrete
         {
             MQConstants.MQ_QUEUE_NAME = request.queuName;
             BaseResponse baseResponse = new BaseResponse();
-            PublisherRequest publisherRequest = new PublisherRequest { 
-                //find project id
-            };
             try
             {
                 using (var connection = _rabbitMQService.GetRabbitMQConnection())

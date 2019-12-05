@@ -9,5 +9,6 @@ namespace B_Commerce.LogService.MqServices.Abstract
     public interface IConsumer
     {
         ConsumerResponse Consume();
+     
     }
 }

@@ -35,13 +35,15 @@ namespace B_Commerce.LogServiceApi.Controllers
             _dbHelper = dbHelper;
             _mailHelper = mailHelper;
 
-            aTimer = new System.Timers.Timer(MQConstants.MQ_CONSUMER_TIMER_ELAPSE);
-            // Hook up the Elapsed event for the timer. 
-            aTimer.Elapsed += OnTimedEvent;
-            aTimer.AutoReset = true;
-            aTimer.Enabled = true;
+           // aTimer = new System.Timers.Timer(MQConstants.MQ_CONSUMER_TIMER_ELAPSE);
+           // // Hook up the Elapsed event for the timer. 
+           //aTimer.Elapsed += OnTimedEvent;
+           // aTimer.AutoReset = true;
+           // aTimer.Enabled = true;
 
         }
+
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -49,6 +51,7 @@ namespace B_Commerce.LogServiceApi.Controllers
 
         [HttpPost]
         [Route("Publish")]
+   
         public ActionResult Publish(InserLogRequest request)
         {
             BaseResponse baseResponse=null;
@@ -70,6 +73,19 @@ namespace B_Commerce.LogServiceApi.Controllers
                 return BadRequest(baseResponse);
             }
             return Ok(baseResponse);
+        }
+
+        [HttpPost]
+        [Route("Consume")]
+        public ActionResult ConsumerConsume() {
+           
+            ConsumerResponse response = _consumer.Consume();
+            if (response.Code != (int)ResponseCode.SUCCESS
+                || response.publisherRequests.Count < 1) return BadRequest();
+
+            _dbHelper.Add(response.publisherRequests);
+            _mailHelper.SendMail(response.publisherRequests);
+            return Ok();
         }
 
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
