@@ -173,7 +173,6 @@ namespace B_Commerce.ProductService.Service.Concrete
                             BrandID=item.ID,
                             BrandName = item.Brand,
                             ProductCount = item.Count
-
                         });
                     }
                 }
