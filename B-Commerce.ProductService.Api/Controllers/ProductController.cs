@@ -127,5 +127,13 @@ namespace B_Commerce.ProductService.Api.Controllers
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 
+        [HttpPost]
+        [Route("GetMyBasket")]
+        public IActionResult GetMyBasket(string token)
+        {
+            BasketModelResponse basketModelResponse = _service.GetMyBasket(token);
+            return basketModelResponse.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, basketModelResponse) : StatusCode(200, basketModelResponse);
+        }
+
     }
 }

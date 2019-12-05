@@ -4,7 +4,7 @@ using B_Commerce.SMVC.FilterHelper.Helpers.Abstract;
 using System;
 using System.Web;
 using System.Web.Mvc;
-using B_Commerce.Common.Security;
+
 
 namespace B_Commerce.SMVC.FilterHelper.Helpers.Concrete
 {
@@ -43,14 +43,14 @@ namespace B_Commerce.SMVC.FilterHelper.Helpers.Concrete
 
           
         }
-        private Token CreateToken(double expireDay = 1)
-        {
-            string token = RandomGenerator.Generate(45);
-            return new Token
-            {
-                TokenText = token,
-                EndDate = DateTime.Now.AddDays(expireDay),
-            };
-        }
+        //private Token CreateToken(double expireDay = 1)
+        //{
+        //    //string token = RandomGenerator.Generate(45);
+        //    //return new Token
+        //    //{
+        //    //    TokenText = token,
+        //    //    EndDate = DateTime.Now.AddDays(expireDay),
+        //    //};
+        //}
     }
 }

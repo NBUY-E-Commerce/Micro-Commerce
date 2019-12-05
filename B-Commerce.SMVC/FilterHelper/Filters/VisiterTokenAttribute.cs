@@ -28,8 +28,8 @@ namespace B_Commerce.SMVC.FilterHelper.Filters
                 {
                     //create visiter suer
                     //filterConectext
-                    string token = _userHelper.CreateToken();
-                    _userHelper.AddVisiterCookie(filterContext, token);
+                    //string token = _userHelper.CreateToken();
+                    //_userHelper.AddVisiterCookie(filterContext, token);
                 }
             }
             else {

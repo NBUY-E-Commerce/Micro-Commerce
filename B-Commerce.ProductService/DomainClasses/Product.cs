@@ -35,6 +35,9 @@ namespace B_Commerce.ProductService.DomainClasses
 
         public virtual Category Category { get; set; }
         public virtual Brand Brand { get; set; }
+
+        public int BasketID { get; set; }
+        public virtual Basket Basket { get; set; }
         public virtual ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
         public virtual ICollection<ProductSpacialAreaTable> productSpacialAreas { get; set; } = new List<ProductSpacialAreaTable>();
     }

@@ -10,6 +10,8 @@ using System.Linq;
 using B_Commerce.ProductService.Common;
 using B_Commerce.ProductService.Request;
 using Microsoft.EntityFrameworkCore;
+using static B_Commerce.ProductService.Common.Constants;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace B_Commerce.ProductService.Service.Concrete
 {
@@ -19,15 +21,18 @@ namespace B_Commerce.ProductService.Service.Concrete
         private IRepository<ProductSpacialAreaTable> _repositorySpacialTable;
         private IRepository<SpacialArea> _repositorySpacial;
         private IRepository<BannersImage> _repositoryBanner;
+        private IRepository<Basket> _basketRepository;
         private IUnitOfWork _unitOfWork;
 
-        public ProductService(IRepository<Product> repositoryProduct, IRepository<ProductSpacialAreaTable> repositorySpacialTable, IRepository<SpacialArea> repositorySpacial, IUnitOfWork unitOfWork, IRepository<BannersImage> repositoryBanner)
+        public ProductService(IRepository<Product> repositoryProduct, IRepository<ProductSpacialAreaTable> repositorySpacialTable, IRepository<SpacialArea> repositorySpacial, IUnitOfWork unitOfWork, IRepository<BannersImage> repositoryBanner,
+            IRepository<Basket> basketRepository)
         {
             _unitOfWork = unitOfWork;
             _repositoryProduct = repositoryProduct;
             _repositorySpacial = repositorySpacial;
             _repositorySpacialTable = repositorySpacialTable;
             _repositoryBanner = repositoryBanner;
+            _basketRepository = basketRepository;
         }
         public BaseResponse Add(Product product)
         {
@@ -192,7 +197,6 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return productResponse;
             }
         }
-
         public ProductModelResponse GetSpecialProducts(GetSpecialProductRequest request)
         {
 
@@ -247,7 +251,6 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return productResponse;
             }
         }
-
         public BannerResponse GetBanners()
         {
             BannerResponse bannerResponse = new BannerResponse();
@@ -273,6 +276,26 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return bannerResponse;
             }
 
+        }
+
+        public BasketModelResponse GetMyBasket(string token)
+        {
+            BasketModelResponse basketModelResponse = new BasketModelResponse();
+            try
+            {
+                int basketID = _basketRepository.Get(t=>t.Token==token).Select(t=>t.ID).FirstOrDefault();
+                List<Product> products = _repositoryProduct.Get(t=>t.BasketID==basketID).ToList();
+                basketModelResponse.SetStatus(ResponseCode.SUCCESS);
+                basketModelResponse.Products = products;
+                return basketModelResponse;
+            }
+            catch (Exception ex)
+            {
+
+                basketModelResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS,ex.Message);
+                basketModelResponse.Products = null;
+                return basketModelResponse;
+            }
         }
     }
 }
