@@ -220,6 +220,11 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="FilterHelper\Common\VT_Constants.cs" />
+    <Compile Include="FilterHelper\Filters\VisiterTokenAttribute.cs" />
+    <Compile Include="FilterHelper\Helpers\Abstract\IUserHelper.cs" />
+    <Compile Include="FilterHelper\Helpers\Concrete\UserHelper.cs" />
+    <Compile Include="FilterHelper\Token.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2340,6 +2345,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\B-Commerce.Common\B-Commerce.Common.csproj">
+      <Project>{515d836f-cd0f-4784-8213-88e69e6ad0b5}</Project>
+      <Name>B-Commerce.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

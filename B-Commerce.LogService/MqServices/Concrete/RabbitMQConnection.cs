@@ -15,7 +15,7 @@ namespace B_Commerce.LogService.MqServices.Concrete
             {
                 HostName = MQConstants.MQ_HOSTNAME_NAME
             };
-            connectionFactory.AutomaticRecoveryEnabled = MQConstants.MQ_AUTOMATIC_RECOVERY_ENABLED;
+            //connectionFactory.AutomaticRecoveryEnabled = MQConstants.MQ_AUTOMATIC_RECOVERY_ENABLED;
             return connectionFactory.CreateConnection();
         }
     }
