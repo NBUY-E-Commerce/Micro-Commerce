@@ -24,24 +24,14 @@ namespace B_Commerce.Login.DatabaseContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
-            optionsBuilder.UseSqlServer("Server=.;Database=LoginDatabaseDb;Trusted_Connection=True");
+            optionsBuilder.UseSqlServer(@"Server=LAPTOP-H6M87CA4\SQLEXPRESS;Database=LoginDatabaseDb;Trusted_Connection=True");
+
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
-            modelBuilder.Entity<User>().HasData(new User
-            {
-                ID = 0,
-                insertDateTime = DateTime.Now,
-                Username = "Visitor",
-                Password = "bcommerce",
-                Name = "Visitor",
-                Surname = "Bcommerce",
-                Email = "asd123gqwerqga14sdAS4asf5@asdasfa!@$ASFyase3hiy.com",
-                IsVerified = true
-            }
-);
+          
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<Token> Tokens { get; set; }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace B_Commerce.Login.Migrations
 {
     [DbContext(typeof(LoginDbContext))]
-    [Migration("20191128203800_v1")]
-    partial class v1
+    [Migration("20191205182555_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -96,10 +96,24 @@ namespace B_Commerce.Login.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("UserID")
-                        .IsUnique();
+                    b.HasIndex("UserID");
 
                     b.ToTable("PasswordChanges");
+                });
+
+            modelBuilder.Entity("B_Commerce.Login.DomainClass.Role", b =>
+                {
+                    b.Property<int>("RoleID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("RoleName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RoleID");
+
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("B_Commerce.Login.DomainClass.SocialInfo", b =>
@@ -260,6 +274,21 @@ namespace B_Commerce.Login.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("B_Commerce.Login.DomainClass.UserRole", b =>
+                {
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleID")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserID", "RoleID");
+
+                    b.HasIndex("RoleID");
+
+                    b.ToTable("UserRoles");
+                });
+
             modelBuilder.Entity("B_Commerce.Login.DomainClass.AccountVerification", b =>
                 {
                     b.HasOne("B_Commerce.Login.DomainClass.User", "User")
@@ -272,8 +301,8 @@ namespace B_Commerce.Login.Migrations
             modelBuilder.Entity("B_Commerce.Login.DomainClass.PasswordChange", b =>
                 {
                     b.HasOne("B_Commerce.Login.DomainClass.User", "User")
-                        .WithOne("PasswordChange")
-                        .HasForeignKey("B_Commerce.Login.DomainClass.PasswordChange", "UserID")
+                        .WithMany("PasswordChanges")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -297,6 +326,21 @@ namespace B_Commerce.Login.Migrations
                 {
                     b.HasOne("B_Commerce.Login.DomainClass.User", "User")
                         .WithMany("Tokens")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("B_Commerce.Login.DomainClass.UserRole", b =>
+                {
+                    b.HasOne("B_Commerce.Login.DomainClass.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("B_Commerce.Login.DomainClass.User", "User")
+                        .WithMany("UserRoles")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

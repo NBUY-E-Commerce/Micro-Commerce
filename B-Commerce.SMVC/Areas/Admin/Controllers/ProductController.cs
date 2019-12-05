@@ -1,4 +1,4 @@
-﻿
+﻿using B_Commerce.SMVC.Areas.Admin.Models;
 using B_Commerce.SMVC.Common;
 using B_Commerce.SMVC.Models;
 using B_Commerce.SMVC.WebApiReqRes;
@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ProductModel = B_Commerce.SMVC.Models.ProductModel;
 
 namespace B_Commerce.SMVC.Areas.Admin.Controllers
 {
@@ -154,9 +155,36 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
             return View(SpecialArea);
         }
         [HttpPost]
-        public ActionResult AddSpecialArea(B_Commerce.SMVC.Areas.Admin.Models.SpecialAreaModel specialAreaModel)
+        public ActionResult SpecialArea(B_Commerce.SMVC.Areas.Admin.Models.SpecialAreaModel specialAreaModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            SpecialAreaResponse specialAreaResponse =WebApiOperation.SendPost<B_Commerce.SMVC.Areas.Admin.Models.SpecialAreaModel, SpecialAreaResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_SPECIAL_AREA,specialAreaModel);
+
+            if (specialAreaResponse.Code != 0)
+            {
+                ViewBag.error = specialAreaResponse.Message;
+                return View();
+
+            }
+            ViewBag.error = MyResource.Resource.General_Success;
             return View();
+
+        }
+
+        public ActionResult GetSpecialAreas()
+        {
+            SpecialAreaResponse specialAreaResponse = WebApiOperation.SendPost<object, SpecialAreaResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETSPECIAL_AREA, null);
+
+            if (specialAreaResponse.Code != 0)
+            {
+                ViewBag.error = specialAreaResponse.Message;
+                return PartialView("_PartialSpacialArea");
+            }
+
+            return PartialView("_PartialSpacialArea", specialAreaResponse.SpecialAreas);
         }
 
 

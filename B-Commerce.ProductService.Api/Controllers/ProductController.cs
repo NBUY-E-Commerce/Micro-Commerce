@@ -17,6 +17,8 @@ namespace B_Commerce.ProductService.Api.Controllers
     public class ProductController : Controller
     {
         IProductService _service;
+        ISpecialAreaService _specialAreaService;
+
         public ProductController(IProductService service)
         {
             _service = service;
@@ -124,6 +126,14 @@ namespace B_Commerce.ProductService.Api.Controllers
         public IActionResult GetSpecialProducts(GetSpecialProductRequest request)
         {
             BaseResponse response = _service.GetSpecialProducts(request);
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
+        }
+
+        [HttpPost]
+        [Route("GetSpecialAreas")]
+        public IActionResult GetSpecialAreas()
+        {
+            SpecialAreaResponse response = _specialAreaService.GetSpecialAreas();
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 

@@ -20,12 +20,13 @@ namespace B_Commerce.ProductService.Service.Concrete
             _unitOfWork = unitOfWork;
             _repositorySpacial = repositorySpacial;
         }
-        public BaseResponse Add(SpacialArea specialarea)
+
+        public SpecialAreaResponse Add(SpacialArea spacialArea)
         {
-            BaseResponse response = new BaseResponse();
+            SpecialAreaResponse response = new SpecialAreaResponse();
             try
             {
-                _repositorySpacial.Add(specialarea);
+                _repositorySpacial.Add(spacialArea);
                 _unitOfWork.SaveChanges();
                 response.SetStatus(Common.Constants.ResponseCode.SUCCESS);
                 return response;
@@ -36,9 +37,10 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return response;
             }
         }
-        public BaseResponse Delete(int ID)
+
+        public SpecialAreaResponse Delete(int ID)
         {
-            BaseResponse response = new BaseResponse();
+            SpecialAreaResponse response = new SpecialAreaResponse();
             try
             {
                 SpacialArea spacialarea = new SpacialArea { ID = ID };
@@ -70,12 +72,12 @@ namespace B_Commerce.ProductService.Service.Concrete
             }
         }
 
-        public BaseResponse Update(SpacialArea specialarea)
+        public SpecialAreaResponse Update(SpacialArea specialArea)
         {
-            BaseResponse response = new BaseResponse();
+            SpecialAreaResponse response = new SpecialAreaResponse();
             try
             {
-                _repositorySpacial.Update(specialarea);
+                _repositorySpacial.Update(specialArea);
                 _unitOfWork.SaveChanges();
                 response.SetStatus(Common.Constants.ResponseCode.SUCCESS);
                 return response;
@@ -85,7 +87,6 @@ namespace B_Commerce.ProductService.Service.Concrete
                 response.SetStatus(Common.Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return response;
             }
-
         }
     }
 }

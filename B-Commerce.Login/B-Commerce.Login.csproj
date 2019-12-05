@@ -4,14 +4,6 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <RootNamespace>B_Commerce.Login</RootNamespace>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Migrations\20191128184316_n11.cs" />
-    <Compile Remove="Migrations\20191128184316_n11.Designer.cs" />
-    <Compile Remove="Migrations\20191128204952_role.cs" />
-    <Compile Remove="Migrations\20191128204952_role.Designer.cs" />
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="Facebook" Version="7.0.6" />

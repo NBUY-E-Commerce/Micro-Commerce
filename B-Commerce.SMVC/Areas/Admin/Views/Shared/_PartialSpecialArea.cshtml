@@ -1,0 +1,24 @@
+﻿@model List<B_Commerce.SMVC.Areas.Admin.Models.SpecialAreaModel>
+@foreach (var item in Model)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Güncelle</th>
+                <th scope="col">Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td><a href="#">Güncelle</a></td>
+                <td><a href="#">Sil</a></td>
+
+            </tr>
+        </tbody>
+    </table>
+
+}
