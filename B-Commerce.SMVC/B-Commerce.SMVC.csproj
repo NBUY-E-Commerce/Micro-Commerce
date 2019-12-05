@@ -2314,6 +2314,7 @@
     <Content Include="Views\Shared\_PartialMoreProducts.cshtml" />
     <Content Include="Views\Shared\_PartialProductsColor.cshtml" />
     <Content Include="Views\Shared\_PartialProductsBrand.cshtml" />
+    <Content Include="Views\Shared\_PartialProductDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

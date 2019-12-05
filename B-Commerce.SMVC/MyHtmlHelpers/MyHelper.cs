@@ -44,7 +44,7 @@ namespace System.Web.Mvc.Html
             const int limit = 7; // toplam n sayfa elemanı 
             const int magicNumber = 4;
 
-            string item = " <div class='pages'><nav aria-label = 'Page navigation example' class='d-flex justify-content-center'><ul class='pagination'> <li class='page - item'><a href='#' aria-label='Previous' class='page-link'><span aria-hidden='true'>«</span><span class='sr-only'>Previous</span></a></li>";
+            string item = $"<div class='pages'><nav aria-label = 'Page navigation example' class='d-flex justify-content-center'><ul class='pagination'> <li class='page - item'><a href='{baselink + "page = "+(currentPageIndex - 1) }' aria-label='Previous' class='page-link'><span aria-hidden='true'>«</span><span class='sr-only'>Previous</span></a></li>";
 
 
             int pageCount = totalItems / pageSize;
@@ -117,15 +117,15 @@ namespace System.Web.Mvc.Html
                 }
                 else // genel
                 {
-                    item += "<li class='page-item'><a href = '#' class='page-link'>1</a></li>";
+                    item += $"<li class='page-item'><a href = '{baselink + "page=" + 1}' class='page-link'>1</a></li>";
                     item += "<li class='page-item'><a class='page-link'>....</a></li>";
 
-                    item += $"<li class='page-item'><a href = '#' class='page-link'>{currentPageIndex - 1}</a></li>";
-                    item += $"<li class='page-item active'><a href = '#' class='page-link'>{currentPageIndex}</a></li>";
-                    item += $"<li class='page-item'><a href = '#' class='page-link'>{currentPageIndex + 1}</a></li>";
+                    item += $"<li class='page-item'><a href = '{baselink + "page=" +(currentPageIndex-1) }' class='page-link'>{currentPageIndex - 1}</a></li>";
+                    item += $"<li class='page-item active'><a href = '{baselink + "page=" + currentPageIndex }' class='page-link'>{currentPageIndex}</a></li>";
+                    item += $"<li class='page-item'><a href = '{baselink + "page=" + (currentPageIndex + 1) }' class='page-link'>{currentPageIndex + 1}</a></li>";
 
                     item += "<li class='page-item'><a class='page-link'>....</a></li>";
-                    item += $"<li class='page-item'><a href = '#' class='page-link'>{pageCount}</a></li>";
+                    item += $"<li class='page-item'><a href = '{baselink + "page=" + pageCount }' class='page-link'>{pageCount}</a></li>";
                 }
 
 
@@ -134,7 +134,7 @@ namespace System.Web.Mvc.Html
 
 
 
-            item += " <li class='page-item'><a href = '#' aria-label='Next' class='page-link'><span aria-hidden='true'>»</span><span class='sr-only'>Next</span></a></li></ul></nav></div>";
+            item += $"<li class='page-item'><a href = '{baselink + "page = "+(currentPageIndex + 1) }' aria-label='Next' class='page-link'><span aria-hidden='true'>»</span><span class='sr-only'>Next</span></a></li></ul></nav></div>";
 
             return new MvcHtmlString(item);
         }

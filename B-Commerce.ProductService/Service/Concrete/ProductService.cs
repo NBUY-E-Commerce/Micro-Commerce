@@ -70,6 +70,10 @@ namespace B_Commerce.ProductService.Service.Concrete
                     ProductName = product.ProductName,
                     Size = product.Size
                 };
+                foreach (ProductImage item in product.ProductImages)
+                {
+                    response.GetProductModel.ImageUrls.Add(item.URL);
+                }
                 response.SetStatus(Constants.ResponseCode.SUCCESS);
                 return response;
             }
@@ -175,7 +179,6 @@ namespace B_Commerce.ProductService.Service.Concrete
                             BrandID=item.ID,
                             BrandName = item.Brand,
                             ProductCount = item.Count
-
                         });
                     }
                 }
