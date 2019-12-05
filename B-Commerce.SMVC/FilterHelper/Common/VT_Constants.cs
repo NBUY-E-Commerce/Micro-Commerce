@@ -12,5 +12,6 @@ namespace B_Commerce.SMVC.FilterHelper.Common
         public static string VT_CURRENT_USER = "user";
         public static int VT_EXPIRE_DATE = 1;
         public static int VT_MAKE_EXPIRE_DATE = -1;
+
     }
 }

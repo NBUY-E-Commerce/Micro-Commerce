@@ -24,7 +24,7 @@ namespace B_Commerce.Login.DatabaseContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
-            optionsBuilder.UseSqlServer("Server=.;Database=LoginDatabaseDb;Trusted_Connection=True");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-A3R28NH\SQLEXPRESS;Database=LoginDatabaseDb;User Id=sa;Password=123456");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,7 +32,7 @@ namespace B_Commerce.Login.DatabaseContext
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
             modelBuilder.Entity<User>().HasData(new User
             {
-                ID = 0,
+                ID = 123,
                 insertDateTime = DateTime.Now,
                 Username = "Visitor",
                 Password = "bcommerce",

@@ -4,7 +4,11 @@ using B_Commerce.SMVC.FilterHelper.Helpers.Abstract;
 using System;
 using System.Web;
 using System.Web.Mvc;
-using B_Commerce.Common.Security;
+
+using B_Commerce.SMVC.FilterHelper.Model;
+using B_Commerce.SMVC.WebHelpers;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace B_Commerce.SMVC.FilterHelper.Helpers.Concrete
 {
@@ -18,10 +22,7 @@ namespace B_Commerce.SMVC.FilterHelper.Helpers.Concrete
             filterContext.HttpContext.Request.Cookies.Set(httpCookie);
         }
 
-        public string CreateToken()
-        {
-            throw new NotImplementedException();
-        }
+     
 
         public HttpCookie GetVisiterCookie(ActionExecutingContext filterContext, string CookieName)
         {
@@ -43,14 +44,39 @@ namespace B_Commerce.SMVC.FilterHelper.Helpers.Concrete
 
           
         }
-        private Token CreateToken(double expireDay = 1)
-        {
-            string token = RandomGenerator.Generate(45);
-            return new Token
+
+        public VisitorTokenRequest GetVisiterToken(int ExpireTime) {
+
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(Constants.LOGIN_API_BASE_URI);
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+
+            VisitorTokenRequest response = new VisitorTokenRequest();
+            
+            Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync(Constants.LOGIN_API_CREATE_VISITOR_TOKEN_URI, ExpireTime);
+            if (httpResponse.Result.IsSuccessStatusCode)
             {
-                TokenText = token,
-                EndDate = DateTime.Now.AddDays(expireDay),
-            };
+                return httpResponse.Result.Content.ReadAsAsync<VisitorTokenRequest>().Result;
+            }
+
+            try
+            {
+                response = httpResponse.Result.Content.ReadAsAsync<VisitorTokenRequest>().Result;
+            }
+            catch (Exception ex)
+            {
+
+
+                return new VisitorTokenRequest
+                {
+                    Token = "-1",
+                    Username = null,
+                };
+            }
+            return null;
         }
+
+
     }
+
 }

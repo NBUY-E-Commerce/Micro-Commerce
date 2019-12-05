@@ -15,7 +15,7 @@ namespace B_Commerce.SMVC.Common
 
 
         //LoginAPI
-        public const string LOGIN_API_BASE_URI = "http://localhost:50854/";//LoginApideki SSL Aktifleştirildi
+        public const string LOGIN_API_BASE_URI = "http://localhost:21773/";//LoginApideki SSL Aktifleştirildi
         public const string LOGIN_API_LOGIN_URI = "/api/Login/Login";
         public const string LOGIN_API_REGISTER_URI = "/api/Login/UserRegistry";
         public const string LOGIN_API_CHECK_VERIFICATION_URI = "/api/Login/CheckVerificationCode";
@@ -23,6 +23,8 @@ namespace B_Commerce.SMVC.Common
         public const string LOGIN_API_SEND_PASSWORD_CHANGE_CODE_URI = "/api/Login/SendPasswordChangeCode";
         public const string LOGIN_API_CHECK_PASSWORD_CHANGE_CODE_URI = "/api/Login/CheckPasswordChangeCode";
         public const string LOGIN_API_CHANGE_PASSWORD_URI = "/api/Login/ChangePassword";
+
+        public const string LOGIN_API_CREATE_VISITOR_TOKEN_URI = "/api/Login/CreateVisitorToken";
         public const int LOGIN_RESPONSE_SUCCESS = 0;
 
         //ProductApi

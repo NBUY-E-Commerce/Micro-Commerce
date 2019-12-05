@@ -1,5 +1,6 @@
 ﻿using B_Commerce.SMVC.Common;
 using B_Commerce.SMVC.FilterHelper.Common;
+using B_Commerce.SMVC.FilterHelper.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace B_Commerce.SMVC.FilterHelper.Helpers.Abstract
         void AddVisiterCookie(ActionExecutingContext filterContext,string token);
         HttpCookie GetVisiterCookie(ActionExecutingContext filterContext, string tokenName);
         void KillVisiterCookie(ActionExecutingContext filterContext, string CookieName);
+        VisitorTokenRequest GetVisiterToken(int ExpireTime);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using B_Commerce.SMVC.Common;
 using B_Commerce.SMVC.FilterHelper.Common;
 using B_Commerce.SMVC.FilterHelper.Helpers.Abstract;
+using B_Commerce.SMVC.FilterHelper.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +29,8 @@ namespace B_Commerce.SMVC.FilterHelper.Filters
                 {
                     //create visiter suer
                     //filterConectext
-                    string token = _userHelper.CreateToken();
-                    _userHelper.AddVisiterCookie(filterContext, token);
+                    VisitorTokenRequest token = _userHelper.GetVisiterToken(1);
+                    _userHelper.AddVisiterCookie(filterContext, token.Token);
                 }
             }
             else {

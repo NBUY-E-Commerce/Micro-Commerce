@@ -107,6 +107,7 @@ namespace B_Commerce.LoginApi.Controllers
             return _loginService.SendAccountVerificationCode(Email);
         }
 
+        [HttpPost]
         [Route("CreateVisitorToken")]
         public IActionResult CreateVisitorToken(int ExpireTime = 7)
         {

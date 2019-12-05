@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -224,6 +225,7 @@
     <Compile Include="FilterHelper\Filters\VisiterTokenAttribute.cs" />
     <Compile Include="FilterHelper\Helpers\Abstract\IUserHelper.cs" />
     <Compile Include="FilterHelper\Helpers\Concrete\UserHelper.cs" />
+    <Compile Include="FilterHelper\Model\VisitorTokenRequest.cs" />
     <Compile Include="FilterHelper\Token.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2345,12 +2347,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\B-Commerce.Common\B-Commerce.Common.csproj">
-      <Project>{515d836f-cd0f-4784-8213-88e69e6ad0b5}</Project>
-      <Name>B-Commerce.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
