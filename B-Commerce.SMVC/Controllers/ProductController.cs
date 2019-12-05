@@ -60,6 +60,15 @@ namespace B_Commerce.SMVC.Controllers
             products = response.Products;
             return PartialView("_PartialMoreProducts", products);
         }
+        public ActionResult ProductDetail(int ID)
+        {
+            B_Commerce.SMVC.Areas.Admin.Models.GetProductModelResponse Response = WebApiOperation.SendPost<int, B_Commerce.SMVC.Areas.Admin.Models.GetProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTBYID, ID);
+            if (Response.GetProductModel==null)
+            {
+                return PartialView("Error", "ErrorModel"); // ??
+            }
 
+            return PartialView("_PartialProductDetail", Response.GetProductModel);
+        }
     }
 }
