@@ -32,7 +32,7 @@ namespace B_Commerce.Login.DatabaseContext
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
             modelBuilder.Entity<User>().HasData(new User
             {
-                ID = 0,
+                ID = 401,
                 insertDateTime = DateTime.Now,
                 Username = "Visitor",
                 Password = "bcommerce",
