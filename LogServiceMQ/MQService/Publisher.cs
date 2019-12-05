@@ -19,8 +19,20 @@ namespace MQService
             {
                 using (var chanel = connection.CreateModel())
                 {
-                    chanel.QueueDeclare(queueName, false, false, false, null);
-                    chanel.BasicPublish("", queueName, null, Encoding.UTF8.GetBytes(message));
+                    
+                    chanel.QueueDeclare(queue: queueName,
+                                 durable: true,
+                                 exclusive: false,
+                                 autoDelete: false,
+                                 arguments: null);
+
+                    var properties = chanel.CreateBasicProperties();
+                    properties.Persistent = true;
+                    var body = Encoding.UTF8.GetBytes(message);
+                    chanel.BasicPublish(exchange: "",
+                                 routingKey: queueName,
+                                 basicProperties: properties,
+                                 body: body);
                 }
             }
         }

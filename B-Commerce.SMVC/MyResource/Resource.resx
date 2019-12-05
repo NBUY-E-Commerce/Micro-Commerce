@@ -120,6 +120,12 @@
   <data name="General_Add" xml:space="preserve">
     <value>Ekle</value>
   </data>
+  <data name="General_Success" xml:space="preserve">
+    <value>Başarılı</value>
+  </data>
+  <data name="General_Update" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="Product_Description" xml:space="preserve">
     <value>Ürün Açıklama</value>
   </data>

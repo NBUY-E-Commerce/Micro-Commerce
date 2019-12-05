@@ -1,4 +1,5 @@
-﻿using System;
+﻿using B_Commerce.Common.DomainClasses;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,11 +8,20 @@ using System.Threading.Tasks;
 
 namespace LogService.DomainClasses
 {
-    internal class LogInfo
+    public class LogInfo:BaseEntity
     {
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity), Key()]
-        public int LogID { get; set; }
-
+        /*
+        public virtual int ID { get; set; }
+        public bool isDeleted { get; set; } = false;
+        public DateTime insertDateTime { get; set; } = DateTime.Now;
+        public DateTime? deleteDateTime { get; set; } 
+        public int? insertUserId { get; set; }
+        public int? deleteUserId { get; set; }
+         */
         public string LogInfoMessage { get; set; }
+
+        public int ProjectID { get; set; }
+        public virtual ProjectInfo ProjectInfo { get; set; } 
+
     }
 }

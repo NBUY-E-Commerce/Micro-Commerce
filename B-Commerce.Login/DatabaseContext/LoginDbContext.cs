@@ -13,18 +13,18 @@ namespace B_Commerce.Login.DatabaseContext
         private string _connectionString;
         public LoginDbContext()
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-          .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-          .AddJsonFile("appsettings.json")
-          .Build();
-            _connectionString = configuration.GetConnectionString("LoginServiceDB");
+          //  IConfigurationRoot configuration = new ConfigurationBuilder()
+          //.SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+          //.AddJsonFile("appsettings.json")
+          //.Build();
+          //  _connectionString = configuration.GetConnectionString("LoginServiceDB");
 
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
-            optionsBuilder.UseSqlServer(_connectionString);
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=LoginDatabaseDb;Trusted_Connection=True");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

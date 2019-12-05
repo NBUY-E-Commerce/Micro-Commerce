@@ -12,11 +12,15 @@ namespace B_Commerce.ProductService.Mapping
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.ToTable("Products");
-            builder.HasKey(p=>p.ID);
+            builder.HasKey(p => p.ID);
 
-            builder.HasOne(p=>p.Category)
-                .WithMany(p=>p.Products)
-                .HasForeignKey(p=>p.CategoryID);
+            builder.HasOne(p => p.Category)
+                .WithMany(p => p.Products)
+                .HasForeignKey(p => p.CategoryID);
+
+            builder.HasOne(p => p.Brand)
+                .WithMany(p => p.Products)
+                .HasForeignKey(p => p.BrandID);
 
             builder.Property(t => t.ID)
                .HasColumnName("ProductID")
@@ -49,7 +53,7 @@ namespace B_Commerce.ProductService.Mapping
            .IsRequired(true)
            .HasDefaultValue(false);
 
-           
+
         }
     }
 }

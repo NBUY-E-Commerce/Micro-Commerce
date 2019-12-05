@@ -120,6 +120,12 @@
   <data name="General_Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="General_Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="General_Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
   <data name="Product_Description" xml:space="preserve">
     <value>Description</value>
   </data>

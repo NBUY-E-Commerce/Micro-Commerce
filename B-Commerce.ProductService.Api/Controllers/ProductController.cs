@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using B_Commerce.ProductService.Api.DTO;
 using B_Commerce.ProductService.Common;
 using B_Commerce.ProductService.DomainClasses;
+using B_Commerce.ProductService.Request;
 using B_Commerce.ProductService.Response;
 using B_Commerce.ProductService.Service.Abstract;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace B_Commerce.ProductService.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ProductController : Controller
     {
         IProductService _service;
@@ -24,6 +25,9 @@ namespace B_Commerce.ProductService.Api.Controllers
         [Route("Add")]
         public IActionResult Add(ProductDTO product)
         {
+
+            BaseResponse response = new BaseResponse();
+
             Product newproduct = new Product
             {
                 ProductName = product.ProductName,
@@ -35,7 +39,24 @@ namespace B_Commerce.ProductService.Api.Controllers
                 isActive = product.isActive,
                 CategoryID = product.CategoryID
             };
-            BaseResponse response = _service.Add(newproduct);
+
+            foreach (string item in product.ImageUrls)
+            {
+                newproduct.ProductImages.Add(new ProductImage
+                {
+                    URL = item,
+                    Description = ""
+                });
+            }
+
+            foreach (var item in product.SpecialAreas)
+            {
+                newproduct.productSpacialAreas.Add(new ProductSpacialAreaTable { SpacialAreaID = item }); // TODO ?
+            }
+
+
+
+            response = _service.Add(newproduct);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(201, response);
         }
 
@@ -73,26 +94,56 @@ namespace B_Commerce.ProductService.Api.Controllers
 
         [HttpPost]
         [Route("GetProducts")]
-        public IActionResult GetProducts(int? page, int range)
+        public IActionResult GetProducts(GetProductRequest request)
         {
-            BaseResponse response = _service.GetProducts(page,range);
+            ProductModelResponse response = _service.GetProducts(request);
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
+        }
+        [HttpPost]
+        [Route("ProductsColor")]
+        public IActionResult ProductsColor(GetProductRequest request)
+        {
+            ProductModelResponse response = _service.GetProductsColor(request.CategoryID);
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
+        }
+        [HttpPost]
+        [Route("ProductsBrand")]//Sayısını çekmek için
+        public IActionResult ProductsBrand(GetProductRequest request)
+        {
+            ProductModelResponse response = _service.GetProductsBrand(request.CategoryID);
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
+        }
+        [HttpPost]
+        [Route("GetProductsBrand")]//Markaları filtreleyip getirmek için
+        public IActionResult ProductsBrand(int categoryID,string brand)
+        {
+            ProductModelResponse response = _service.GetProductsBrand(categoryID,brand);
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
+        }
+        [HttpPost]
+        [Route("GetProductsColor")]
+        public IActionResult GetProductsColor(int categoryID,string color)
+        {
+            ProductModelResponse response = _service.GetProductsColor(categoryID,color);
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
+        }
+
+        [HttpPost]
+        [Route("GetBanners")]
+        public IActionResult GetBanners()
+        {
+
+            BannerResponse response = _service.GetBanners();
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 
         [HttpPost]
         [Route("GetSpecialProducts")]
-        public IActionResult GetSpecialProducts(int spacialID, int? page, int range)
+        public IActionResult GetSpecialProducts(GetSpecialProductRequest request)
         {
-            BaseResponse response = _service.GetSpecialProducts(spacialID, page,range);
+            BaseResponse response = _service.GetSpecialProducts(request);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 
-        [HttpPost]
-        [Route("GetProductsByCategoryID")]
-        public IActionResult GetProductsByCategoryID(int categoryID)
-        {
-            BaseResponse response = _service.GetProductsByCategoryID(categoryID);
-            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
-        }
     }
 }

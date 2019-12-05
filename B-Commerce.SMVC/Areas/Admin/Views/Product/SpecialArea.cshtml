@@ -1,0 +1,69 @@
+﻿@model B_Commerce.SMVC.Areas.Admin.Models.SpecialAreaModel
+@using B_Commerce.SMVC.MyResource;
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts
+{
+    <link href="https://cdn.jsdelivr.net/npm/froala-editor@3.0.6/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@3.0.6/js/froala_editor.pkgd.min.js"></script>
+    <script src="~/Areas/Admin/Scripts/CategorySelectBox/CategorySelect.js"></script>
+    <link href="~/Areas/Admin/Scripts/CategorySelectBox/CategorySelect.css" rel="stylesheet" />
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myList li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <script>
+        var editor = new FroalaEditor('#Description');
+        var catselectHelper;
+
+
+
+    </script>
+}
+
+
+@using (Html.BeginForm("AddSpecialArea", "Product", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(t => t.Name, new { @class = "badge badge-pill badge-primary" })
+
+        @Html.TextBoxFor(t => t.Name, new { @class = "form-control", id = "SpecialAreaName", value = $"{Model.Name}" })
+    </div>
+
+
+    @*<div class="form-group">
+        <div>
+            @Html.LabelFor(t => t.Description, new { @class = "badge badge-pill badge-primary" })
+        </div>
+        <div id="editor">
+            @Html.Raw(Model.Description)
+        </div>
+    </div>*@
+    <div class="form-group">
+        <div>
+            @Html.LabelFor(t => t.Description, new { @class = "badge badge-pill badge-primary" })
+        </div>
+        <div id="editor">
+            @Html.TextAreaFor(t=>t.Description,new { id = "Description", style = "display:none", name = "Description", value = $"{Model.Description}" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-secondary" value="@Resource.General_Update" />
+    </div>
+
+
+
+}
+}

@@ -7,7 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using static B_Commerce.ProductService.Common.Constants;
+using Microsoft.EntityFrameworkCore;
+using B_Commerce.ProductService.Common;
+using B_Commerce.ProductService.Request;
 
 namespace B_Commerce.ProductService.Service.Concrete
 {
@@ -16,34 +18,42 @@ namespace B_Commerce.ProductService.Service.Concrete
         private IRepository<Product> _repositoryProduct;
         private IRepository<ProductSpacialAreaTable> _repositorySpacialTable;
         private IRepository<SpacialArea> _repositorySpacial;
+        private IRepository<BannersImage> _repositoryBanner;
         private IUnitOfWork _unitOfWork;
 
-        public ProductService(IRepository<Product> repositoryProduct, IRepository<ProductSpacialAreaTable> repositorySpacialTable, IRepository<SpacialArea> repositorySpacial, IUnitOfWork unitOfWork)
+        public ProductService(IRepository<Product> repositoryProduct, IRepository<ProductSpacialAreaTable> repositorySpacialTable, IRepository<SpacialArea> repositorySpacial, IUnitOfWork unitOfWork, IRepository<BannersImage> repositoryBanner)
         {
             _unitOfWork = unitOfWork;
             _repositoryProduct = repositoryProduct;
             _repositorySpacial = repositorySpacial;
             _repositorySpacialTable = repositorySpacialTable;
+            _repositoryBanner = repositoryBanner;
         }
         public BaseResponse Add(Product product)
         {
-           
+
             BaseResponse baseResponse = new BaseResponse();
             try
             {
                 _repositoryProduct.Add(product);
-                _unitOfWork.SaveChanges();
-                baseResponse.SetStatus(ResponseCode.SUCCESS);
+                if (_unitOfWork.SaveChanges() < 1)
+                {
+                    baseResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS);
+                    return baseResponse;
+
+                }
+
+
+
+                baseResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                 return baseResponse;
             }
             catch (Exception ex)
             {
-
-                baseResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                baseResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return baseResponse;
             }
         }
-
         public BaseResponse Delete(Product product)
         {
             BaseResponse baseResponse = new BaseResponse();
@@ -51,13 +61,13 @@ namespace B_Commerce.ProductService.Service.Concrete
             {
                 _repositoryProduct.Delete(product);
                 _unitOfWork.SaveChanges();
-                baseResponse.SetStatus(ResponseCode.SUCCESS);
+                baseResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                 return baseResponse;
             }
             catch (Exception ex)
             {
 
-                baseResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                baseResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return baseResponse;
             }
         }
@@ -66,94 +76,250 @@ namespace B_Commerce.ProductService.Service.Concrete
             BaseResponse baseResponse = new BaseResponse();
             try
             {
+                //var updateproduct = _repositoryProduct.Get(t => t.ID == product.ID).SingleOrDefault();
+                //updateproduct.ProductName = product.ProductName;
                 _repositoryProduct.Update(product);
                 _unitOfWork.SaveChanges();
-                baseResponse.SetStatus(ResponseCode.SUCCESS);
+                baseResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                 return baseResponse;
             }
             catch (Exception ex)
             {
 
-                baseResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                baseResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return baseResponse;
             }
         }
-        public ProductResponse GetProducts(int? index, int count)
+        public ProductModelResponse GetProducts(GetProductRequest request)
         {
-            ProductResponse productResponse = new ProductResponse();
+            ProductModelResponse productResponse = new ProductModelResponse();
+            //page 2 count 10 için 
+            //index=20 yani 20 den basla 10 tane getir.
             try
             {
-                int pageNumber = (index ?? 1);
-                productResponse.Products = _repositoryProduct.Get().ToList().GetRange(pageNumber, count);
+                //ilk  20 elemanı gec sonrasındakı 10 taneyı al 
+                //**eğer 10 tane yoksa 6 tane varsa 6 tanesi alınır.Hata vermez!!!!
+                int index = (request.Page - 1) * request.Range;//dbde kac kayıt es gecılmeli
+                var products = _repositoryProduct.Get().Where(t => request.CategoryID == 0 || t.CategoryID == request.CategoryID).Skip(index).Take(request.Range).ToList();
 
-                productResponse.SetStatus(ResponseCode.SUCCESS);
+                foreach (Product item in products)
+                {
+
+                    ProductModel productModel = new ProductModel
+                    {
+                        ID = item.ID,
+                        Description = item.Description,
+                        Price = item.Price,
+                        ProductImages = item.ProductImages.Select(t => t.URLFromAway).ToList(),
+                        ProductName = item.ProductName
+                    };
+                    productResponse.Products.Add(productModel);
+                }
+
+                int allProductCount = _repositoryProduct.Get().Where(t => request.CategoryID == 0 || t.CategoryID == request.CategoryID).Count();
+                productResponse.PagingInfo = new PagingInfo(request.Page, request.Range, allProductCount);
+                productResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                 return productResponse;
             }
             catch (Exception ex)
             {
                 productResponse.Products = null;
-                productResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                productResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return productResponse;
             }
         }
-
-        public ProductResponse GetProductsByCategoryID(int categoryID)
+        public ProductModelResponse GetProductsColor(int categoryID)
         {
-            ProductResponse productResponse = new ProductResponse();
+            ProductModelResponse productResponse = new ProductModelResponse();
             try
-            {  
-                productResponse.Products = _repositoryProduct.Get(t=>t.CategoryID==categoryID).ToList();
-                productResponse.SetStatus(ResponseCode.SUCCESS);
+            {
+                var productsColor = _repositoryProduct.Get().Where(t => t.CategoryID == categoryID).GroupBy(t => t.Color).Select(p => new { Color = p.Key, Count = p.Count() }).ToList();
+                foreach (var item in productsColor)
+                {
+                    if (item.Color != null)
+                    {
+                        productResponse.ProductsColor.Add(item.Color, item.Count);
+                    }
+                }
+
+                productResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                 return productResponse;
             }
             catch (Exception ex)
             {
                 productResponse.Products = null;
-                productResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                productResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                return productResponse;
+            }
+        }
+        public ProductModelResponse GetProductsBrand(int categoryID)
+        {
+            ProductModelResponse productResponse = new ProductModelResponse();
+            try
+            {
+                var productsBrand = _repositoryProduct.Get().Where(t => t.CategoryID == categoryID).GroupBy(t => t.Brand.Name).Select(p => new { Brand = p.Key, Count = p.Count() }).ToList();
+                foreach (var item in productsBrand)
+                {
+                    if (item.Brand != null)
+                    {
+                        productResponse.ProductsBrand.Add(item.Brand, item.Count);
+                    }
+                }
+
+                productResponse.SetStatus(Constants.ResponseCode.SUCCESS);
+                return productResponse;
+            }
+            catch (Exception ex)
+            {
+                productResponse.Products = null;
+                productResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                return productResponse;
+            }
+        }
+        public ProductModelResponse GetProductsBrand(int categoryID, string brand)
+        {
+            ProductModelResponse productResponse = new ProductModelResponse();
+            try
+            {
+                var productsBrand = _repositoryProduct.Get().Where(t => t.CategoryID == categoryID && t.Brand.Name == brand).ToList();
+                foreach (Product item in productsBrand)
+                {
+
+                    ProductModel productModel = new ProductModel
+                    {
+                        ID = item.ID,
+                        Description = item.Description,
+                        Price = item.Price,
+                        ProductImages = item.ProductImages.Select(t => t.URLFromAway).ToList(),
+                        ProductName = item.ProductName
+                    };
+                    productResponse.Products.Add(productModel);
+                }
+
+                productResponse.SetStatus(Constants.ResponseCode.SUCCESS);
+                return productResponse;
+            }
+            catch (Exception ex)
+            {
+                productResponse.Products = null;
+                productResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                return productResponse;
+            }
+        }
+        public ProductModelResponse GetProductsColor(int categoryID, string color)
+        {
+            ProductModelResponse productResponse = new ProductModelResponse();
+            try
+            {
+
+                var products = _repositoryProduct.Get().Where(t => t.CategoryID == categoryID && t.Color == color).ToList();
+                foreach (Product item in products)
+                {
+
+                    ProductModel productModel = new ProductModel
+                    {
+                        ID = item.ID,
+                        Description = item.Description,
+                        Price = item.Price,
+                        ProductImages = item.ProductImages.Select(t => t.URLFromAway).ToList(),
+                        ProductName = item.ProductName
+                    };
+                    productResponse.Products.Add(productModel);
+                }
+
+                int allProductCount = _repositoryProduct.Get().Where(t => categoryID == 0 || t.CategoryID == categoryID).Count();
+
+                productResponse.SetStatus(Constants.ResponseCode.SUCCESS);
+                return productResponse;
+            }
+            catch (Exception ex)
+            {
+                productResponse.Products = null;
+                productResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return productResponse;
             }
         }
 
-        public ProductResponse GetSpecialProducts(int spacialID, int? index, int count)
+        public ProductModelResponse GetSpecialProducts(GetSpecialProductRequest request)
         {
-            ProductResponse productResponse = new ProductResponse();
+
+            //1 spacialid indirimdeki ürünler sliderına karsılık gelsın --->
+            ProductModelResponse productResponse = new ProductModelResponse();
             try
             {
-                int pageNumber = (index ?? 1);
-                SpacialArea spacialArea = _repositorySpacial.Get(t => t.ID == spacialID).FirstOrDefault();
+
+                SpacialArea spacialArea = _repositorySpacial.Get(t => t.ID == request.SpacialID).FirstOrDefault();
 
                 if (spacialArea == null)
                 {
                     productResponse.Products = null;
-                    productResponse.SetStatus(ResponseCode.NOT_FOUND_ENTITY);
+                    productResponse.SetStatus(Constants.ResponseCode.NOT_FOUND_ENTITY);
                     return productResponse;
                 }
 
-                List<ProductSpacialAreaTable> spacialAreaProducts = _repositorySpacialTable.Get(t => t.SpacialAreaID == spacialArea.ID).ToList().GetRange(pageNumber, count);
+                int index = (request.PageNumber - 1) * request.Count;//dbde kac kayıt es gecılmeli
+                List<ProductSpacialAreaTable> spacialAreaProducts = _repositorySpacialTable.Get(t => t.SpacialAreaID == spacialArea.ID).Include(t => t.Product).Skip(index).Take(request.Count).ToList();
 
                 if (spacialAreaProducts == null)
                 {
                     productResponse.Products = null;
-                    productResponse.SetStatus(ResponseCode.NOT_FOUND_ENTITY);
+                    productResponse.SetStatus(Constants.ResponseCode.NOT_FOUND_ENTITY);
                     return productResponse;
                 }
-                List<Product> productList = new List<Product>();
+
+                List<ProductModel> productList = new List<ProductModel>();
                 foreach (ProductSpacialAreaTable item in spacialAreaProducts)
                 {
-                    productList.Add(item.Product);
+                    productList.Add(new ProductModel
+                    {
+                        ID = item.Product.ID,
+                        Description = item.Product.Description,
+                        Price = item.Product.Price,
+                        ProductImages = item.Product.ProductImages.Select(t => t.URLFromAway).ToList(),
+                        ProductName = item.Product.ProductName
+
+                    });
                 }
                 productResponse.Products = productList;
-                productResponse.SetStatus(ResponseCode.SUCCESS);
+
+                int allcount = _repositorySpacialTable.Get(t => t.SpacialAreaID == spacialArea.ID).Count();
+                productResponse.PagingInfo = new PagingInfo(request.PageNumber, request.Count, allcount);
+                productResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                 return productResponse;
             }
             catch (Exception ex)
             {
                 productResponse.Products = null;
-                productResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                productResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return productResponse;
             }
         }
 
-     
+        public BannerResponse GetBanners()
+        {
+            BannerResponse bannerResponse = new BannerResponse();
+
+            try
+            {
+                bannerResponse.BannersImages = _repositoryBanner.Get().OrderByDescending(t => t.ID).Take(Constants.BANNERCOUNT).ToList();
+
+                if (bannerResponse != null)
+                {
+                    bannerResponse.SetStatus(Constants.ResponseCode.SUCCESS);
+                    return bannerResponse;
+                }
+                //b// 2kdk discorda gel daha hızlı ilerleriz bende cıkıcam az sonra 
+                bannerResponse.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
+                return bannerResponse;
+            }
+            catch (Exception ex)
+            {
+
+                bannerResponse.BannersImages = null;
+                bannerResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                return bannerResponse;
+            }
+
+        }
     }
 }

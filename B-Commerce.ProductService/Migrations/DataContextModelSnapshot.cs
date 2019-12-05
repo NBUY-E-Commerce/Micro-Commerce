@@ -19,6 +19,75 @@ namespace B_Commerce.ProductService.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.BannersImage", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BannerType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RelatedID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleteDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("deleteUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("insertDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("insertUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("BannersImages");
+                });
+
+            modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.Brand", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("deleteDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("deleteUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("insertDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("insertUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Brands");
+                });
+
             modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.Category", b =>
                 {
                     b.Property<int>("ID")
@@ -84,6 +153,9 @@ namespace B_Commerce.ProductService.Migrations
                     b.Property<int>("AvailableCount")
                         .HasColumnType("int");
 
+                    b.Property<int>("BrandID")
+                        .HasColumnType("int");
+
                     b.Property<int>("CategoryID")
                         .HasColumnType("int");
 
@@ -145,6 +217,8 @@ namespace B_Commerce.ProductService.Migrations
                         .HasDefaultValue(false);
 
                     b.HasKey("ID");
+
+                    b.HasIndex("BrandID");
 
                     b.HasIndex("CategoryID");
 
@@ -280,6 +354,12 @@ namespace B_Commerce.ProductService.Migrations
 
             modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.Product", b =>
                 {
+                    b.HasOne("B_Commerce.ProductService.DomainClasses.Brand", "Brand")
+                        .WithMany("Products")
+                        .HasForeignKey("BrandID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("B_Commerce.ProductService.DomainClasses.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryID")

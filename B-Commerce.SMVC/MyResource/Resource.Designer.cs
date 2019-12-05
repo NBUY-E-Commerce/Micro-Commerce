@@ -70,6 +70,24 @@ namespace B_Commerce.SMVC.MyResource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Başarılı.
+        /// </summary>
+        public static string General_Success {
+            get {
+                return ResourceManager.GetString("General_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string General_Update {
+            get {
+                return ResourceManager.GetString("General_Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ürün Açıklama.
         /// </summary>
         public static string Product_Description {

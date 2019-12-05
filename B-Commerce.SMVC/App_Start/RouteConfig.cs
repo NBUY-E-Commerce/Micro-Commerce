@@ -12,6 +12,12 @@ namespace B_Commerce.SMVC
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.MapRoute(
+             name: "CategoryProduct",
+             url: "CategoryProduct/{categoryID}/{name}",
+             defaults: new { controller = "Category", action = "Products" },
+              new[] { "B_Commerce.SMVC.Controllers" }
+         );
 
             //area eklendiği içim bu roueting rullarına namespace eklemek zorundayız
             routes.MapRoute(

@@ -1,4 +1,5 @@
 ﻿using B_Commerce.ProductService.DomainClasses;
+using B_Commerce.ProductService.Request;
 using B_Commerce.ProductService.Response;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,13 @@ namespace B_Commerce.ProductService.Service.Abstract
         BaseResponse Add(Product product);
         BaseResponse Update(Product product);
         BaseResponse Delete(Product product);
+        ProductModelResponse GetProducts(GetProductRequest request);
+        ProductModelResponse GetProductsColor(int categoryID);
+        ProductModelResponse GetProductsColor(int categoryID, string color);
+        ProductModelResponse GetSpecialProducts(GetSpecialProductRequest request);
 
-        ProductResponse GetProducts(int? page,int range);
-        ProductResponse GetSpecialProducts(int spacialID, int? page, int range);
-        ProductResponse GetProductsByCategoryID(int categoryID);
+        ProductModelResponse GetProductsBrand(int categoryID);
+        ProductModelResponse GetProductsBrand(int categoryID, string brand);
+        BannerResponse GetBanners();
     }
 }

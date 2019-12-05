@@ -15,7 +15,8 @@
             <li class="nav-item dropdown menu-large">
                 @if (category.HasSubCategory == true)
                 {
-                    <a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">@category.Name<b class="caret"></b></a>
+                    <a href=" @Url.RouteUrl("CategoryProduct",new { categoryID = category.ID, name = Url.Encode(category.Name) })" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">@category.Name<b class="caret"></b></a>
+                  
                     <ul class="dropdown-menu megamenu">
                         <li>
                             <div class="row">
@@ -25,7 +26,9 @@
                                     {
                                         <ul class="list-unstyled mb-3">
                                             <li class="nav-item">
-                                                <a href="category.html" class="nav-link">@subCategories.Name</a>
+                                               
+
+                                                <a href=" @Url.RouteUrl("CategoryProduct",new { categoryID = subCategories.ID, name= B_Commerce.SMVC.Common.MUriHelper.GenerateSlug(subCategories.Name) })" class="nav-link">@subCategories.Name</a>
                                             </li>
                                         </ul>
                                     }

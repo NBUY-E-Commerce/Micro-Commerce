@@ -65,5 +65,13 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
 
             //return View("~/Areas/Admin/Views/Account/Login.cshtml", loginModel);
         }
+
+
+
+        public ActionResult Test()
+        {
+
+            return View();
+        }
     }
 }

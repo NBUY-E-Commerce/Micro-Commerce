@@ -12,26 +12,40 @@
             {
                 <ul class="menu list-inline mb-0">
                     <li class="list-inline-item">
-                        <span>Hoşgeldin, @SystemUser.CurrentUser.Name </span>
-                        
-                        @Html.ActionLink("Çıkış Yap","Logout","Login")
-                        @if (SystemUser.CurrentUser.IsValid == false)
-                        {
 
-                            @Html.ActionLink("Aktif Et", "VerifyAccount", "Login", new
-                             {
-                                 email = SystemUser.CurrentUser.Email
-                             }, null);
+                        <div class="dropdown">
+                            <button class="btn-primary dropbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="dropspn"> @SystemUser.CurrentUser.Name.Substring(0, 1).ToUpper()</span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <div class="dropdown-item">
+                                    @Html.ActionLink("Çıkış Yap", "Logout", "Login", new { @style = "color:black;" })
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                @if (SystemUser.CurrentUser.IsValid == false)
+                                {
 
+                                    <div class="dropdown-item">
+                                        @Html.ActionLink("Aktif Et", "VerifyAccount", "Login", new
+                                   {
 
+                                       email = SystemUser.CurrentUser.Email,
+                                   }, new { @style = "color:Black !important;" })
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                }
 
+                                <a class="dropdown-item" style="color:black">en-US</a>
+                                <a class="dropdown-item" style="color:black">tr-TR</a>
+                            </div>
+                        </div>
 
-                        }
 
 
                     </li>
 
                 </ul>
+
 
             }
             else

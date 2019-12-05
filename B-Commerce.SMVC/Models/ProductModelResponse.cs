@@ -6,8 +6,12 @@ using System.Web;
 
 namespace B_Commerce.SMVC.Models
 {
-    public class ProductModelResponse: CommonResponse
+    public class ProductModelResponse : CommonResponse
     {
-        public List<ProductModel> productModels { get; set; } = new List<ProductModel>();
+        public List<ProductModel> Products { get; set; } = new List<ProductModel>();
+        public Dictionary<string, int> ProductsColor { get; set; } = new Dictionary<string, int>();
+        public Dictionary<string, int> ProductsBrand { get; set; } = new Dictionary<string, int>();
+        public PagingInfo PagingInfo { get; set; } = new PagingInfo();
+
     }
 }

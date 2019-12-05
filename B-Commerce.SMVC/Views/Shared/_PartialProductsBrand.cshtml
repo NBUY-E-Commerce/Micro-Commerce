@@ -1,0 +1,16 @@
+﻿@model ProductModelResponse
+<div class="card-body">
+    <form>
+        <div class="form-group">
+            @foreach (var item in Model.ProductsBrand)
+            {
+                <div class="checkbox">
+                    <label>
+                        <a href="@Url.RouteUrl("CategoryProduct",new {categoryID=ViewBag.CategoryID,name=ViewBag.CategoryName,item.Key})">@item.Key (@item.Value)</a>
+                    </label>
+                </div>
+            }
+        </div>
+        <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
+    </form>
+</div>

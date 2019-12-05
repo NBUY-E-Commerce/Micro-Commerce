@@ -29,7 +29,7 @@ namespace B_Commerce.ProductService.DomainClasses
         {
             get
             {
-                return URL.Contains("http") ? URL : $"{Constants.IMAGE_SERVER_ADRESS}{URL}";
+                return URL;
             }
         }
 

@@ -49,15 +49,20 @@
                     <button type="button" data-toggle="collapse" data-target="#navigation" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
                     <button type="button" data-toggle="collapse" data-target="#search" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></button><a href="basket.html" class="btn btn-outline-secondary navbar-toggler"><i class="fa fa-shopping-cart"></i></a>
                 </div>
-                @Html.Action("Index", "Category")
-               
+                @Html.Action("MainCategoryPartial", "Category")
+
             </div>
         </nav>
         <div id="search" class="collapse">
             <div class="container">
                 <form role="search" class="ml-auto">
                     <div class="input-group">
-                        <input type="text" placeholder="Search" class="form-control">
+                        <input type="text" id="searchBox" placeholder="Search" class="form-control">
+                        <div class="dropdown" style="text-align:left; position:absolute;margin-top:35px;" id="resultarea">
+
+
+
+                        </div>
                         <div class="input-group-append">
                             <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         </div>
@@ -170,6 +175,59 @@
     <script src="~/Content/vendor/owl.carousel2.thumbs/owl.carousel2.thumbs.js"></script>
     <script src="~/Scripts/js/front.js"></script>
     @RenderSection("scripts", false)
+    <link href="~/Content/css/searchdropdown.css" rel="stylesheet" />
+
+    <script>
+
+        $(document).click(function (e) {
+
+            // check that your clicked
+            // element has no id=info
+
+            if (e.target.id != 'info') {
+                $("#info").hide();
+            }
+        });
+
+    </script>
+
+
+
+    <script>
+        $(function () {
+
+            $("#searchBox").keyup(function () {
+                var searchtext = $("#searchBox").val();
+                console.log(searchtext);
+                $("#resultarea").html("Yükleniyor.....");
+                $.ajax({
+                    url: "/Category/CategorySearchAjax",
+                    data: { param: searchtext },
+                    method: "POST",
+                    success: function (d) {
+
+                        $("#resultarea").html(d);
+
+                    }, error: function () {
+
+                        alert("hata olustu");
+                    }, complete: function () {
+
+
+                    }
+                })
+            })
+        })
+
+    </script>
+
+
+
+
+
+
+
+
 
 </body>
 </html>

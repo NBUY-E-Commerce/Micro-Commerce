@@ -59,6 +59,7 @@ namespace B_Commerce.ProductService.Service.Concrete
         }
         public BaseResponse Update(Category category)
         {
+         
             BaseResponse baseResponse = new BaseResponse();
             try
             {

@@ -1,0 +1,93 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test</title>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+
+    <link href="~/Areas/Admin/Scripts/CategorySelectBox/CategorySelect.css" rel="stylesheet" />
+    <script src="~/Areas/Admin/Scripts/CategorySelectBox/CategorySelect.js"></script>
+    <script>
+        $(function () {
+
+
+            var data = {
+                categories: [
+                    {
+                        id: 3,
+                        hasSubCategory: true,
+                        name: "Elektronik",
+                        subCategories: [
+                            {
+                                id: 12,
+                                hasSubCategory: true,
+                                name: "Telefon & Aksesuarları\tNULL",
+                                subCategories: [
+                                    {
+                                        id: 23,
+                                        hasSubCategory: false,
+                                        name: "Parfüm & Deodorant 1"
+                                    },
+                                    {
+                                        id: 24,
+                                        hasSubCategory: false,
+                                        name: "Saç Bakım & Şekillendirme 2"
+                                    }
+                                ]
+                            },
+                            {
+                                id: 13,
+                                hasSubCategory: false,
+                                name: "Bilgisayar",
+                                subCategories: null
+                            },
+                            {
+                                id: 14,
+                                hasSubCategory: false,
+                                name: "Televizyon & Ses Sistemleri",
+                                subCategories: null
+                            }
+                        ]
+                    },
+                    {
+                        id: 4,
+                        hasSubCategory: true,
+                        name: "Kozmetik",
+                        subCategories: [
+                            {
+                                id: 23,
+                                hasSubCategory: false,
+                                name: "Parfüm & Deodorant"
+                            },
+                            {
+                                id: 24,
+                                hasSubCategory: false,
+                                name: "Saç Bakım & Şekillendirme"
+                            }
+                        ]
+                    }
+
+                ],
+                code: 0,
+                message: "işlem başarılı"
+            }
+
+            var catselectHelper = new categorySelect(data.categories);
+            catselectHelper.createUI($("#catselect"));
+
+        })
+
+    </script>
+
+</head>
+<body>
+    <div id="catselect">
+    </div>
+</body>
+</html>
