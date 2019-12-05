@@ -12,7 +12,7 @@ namespace B_Commerce.NotificationService.DbContext.SQLServer
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=LoginDatabaseDb;Trusted_Connection=True");
+            optionsBuilder.UseSqlServer("Server=.;Database=LoginDatabaseDb;Trusted_Connection=True");
         }
     }
 }

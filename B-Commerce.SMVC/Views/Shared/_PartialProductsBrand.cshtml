@@ -1,12 +1,12 @@
-﻿@model ProductModelResponse
+﻿@model List<BrandFilterModel>
 <div class="card-body">
     <form>
         <div class="form-group">
-            @foreach (var item in Model.ProductsBrand)
+            @foreach (BrandFilterModel item in Model)
             {
                 <div class="checkbox">
                     <label>
-                        <a href="@Url.RouteUrl("CategoryProduct",new {categoryID=ViewBag.CategoryID,name=ViewBag.CategoryName,item.Key})">@item.Key (@item.Value)</a>
+                        <a href="@B_Commerce.SMVC.Common.MUriHelper.AddQueryStringItemToUrl("brand",item.BrandID.ToString())">@item.BrandName (@item.ProductCount)</a>
                     </label>
                 </div>
             }

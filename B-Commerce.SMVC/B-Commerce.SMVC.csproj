@@ -224,6 +224,7 @@
     </Compile>
     <Compile Include="Models\BannerModel.cs" />
     <Compile Include="Models\BannerModelResponse.cs" />
+    <Compile Include="Models\BrandFilterModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\CategoryModelResponse.cs" />
     <Compile Include="Models\ProductModelResponse.cs" />
@@ -1963,6 +1964,7 @@
     <Content Include="img\slider3.jpg" />
     <Content Include="img\slider4.jpg" />
     <Content Include="img\template-mac.png" />
+    <Content Include="Scripts\Basket.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\vendor\font-awesome\fonts\fontawesome-webfont.eot" />

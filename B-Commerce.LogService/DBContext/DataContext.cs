@@ -9,7 +9,7 @@ namespace B_Commerce.LogService.DBContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-A3R28NH\SQLEXPRESS;Database=LogDatabase;User Id=sa;Password=123456");
+            optionsBuilder.UseSqlServer(@"Server=.;Database=LogDatabase;User Id=sa;Password=123");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

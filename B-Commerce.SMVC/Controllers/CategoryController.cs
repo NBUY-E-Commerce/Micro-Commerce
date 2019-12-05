@@ -16,83 +16,33 @@ namespace B_Commerce.SMVC.Controllers
 
         public ActionResult Products(int categoryID, string name)
         {
-            int page = 1, range = 5;
-            if (Request.QueryString["page"] != null)
-            {
-                page = Convert.ToInt32(Request.QueryString["page"]);
-            }
+            int page = 1, range = 10;
 
-            if (Request.QueryString["range"] != null)
-            {
 
-                range = Convert.ToInt32(Request.QueryString["range"]);
-            }
+            if (Request.QueryString["page"] != null) page = Convert.ToInt32(Request.QueryString["page"]);
+            if (Request.QueryString["range"] != null) range = Convert.ToInt32(Request.QueryString["range"]);
+            string color = Request.QueryString["color"] == null ? string.Empty : Request.QueryString["color"];
+            int brandid = Request.QueryString["brand"] == null ? 0 : Convert.ToInt32(Request.QueryString["brand"]);
 
             GetProductRequest request = new GetProductRequest
             {
                 CategoryID = categoryID,
                 Page = page,
-                Range = range
+                Range = range,
+                BrandID = brandid,
+                Color = color
 
             };
             ViewBag.name = name;
             ProductModelResponse categoryChangeResponse = WebApiOperation.SendPost<GetProductRequest, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTS, request);
 
+            ViewBag.range = range;
+
+            if (categoryChangeResponse.Code != 0) return RedirectToAction("General", "Error");
+
             return View(categoryChangeResponse);
         }
-        public ActionResult GetProductsColor()
-        {
-            string Color = "";
-            int categoryId = 0;
-            categoryId = Convert.ToInt32(Request.Url.Segments[2].Substring(0, Request.Url.Segments[2].Length - 1));
-            if (Request.QueryString["Key"] != null)
-            {
-                Color = Request.QueryString["Key"];
-            }
 
-            ProductModelResponse productModelResponse = WebApiOperation.SendPost<object, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTS_COLOR, new { categoryID = categoryId, color = Color });
-
-            return View(productModelResponse);
-        }
-        public ActionResult ProductsColor()
-        {
-            int categoryId = 0;
-            categoryId = Convert.ToInt32(Request.Url.Segments[2].Substring(0, Request.Url.Segments[2].Length - 1));
-            string categoryName = Request.Url.Segments[3].Substring(0, Request.Url.Segments[3].Length);
-
-            ProductModelResponse productModelResponse = WebApiOperation.SendPost<GetProductRequest, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_PRODUCTS_COLOR, new GetProductRequest { CategoryID = categoryId });
-
-            ViewBag.CategoryId = categoryId;
-            ViewBag.CategoryName = categoryName;
-
-            return PartialView("_PartialProductsColor", productModelResponse);
-        }
-        public ActionResult ProductsBrand()
-        {
-            int categoryId = 0;
-            categoryId = Convert.ToInt32(Request.Url.Segments[2].Substring(0, Request.Url.Segments[2].Length - 1));
-            string categoryName = Request.Url.Segments[3].Substring(0, Request.Url.Segments[3].Length);
-
-            ProductModelResponse productModelResponse = WebApiOperation.SendPost<GetProductRequest, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTS_BRAND, new GetProductRequest { CategoryID = categoryId });
-
-            ViewBag.CategoryId = categoryId;
-            ViewBag.CategoryName = categoryName;
-
-            return PartialView("_PartialProductsBrand", productModelResponse);
-        }
-        public ActionResult GetProductsBrand(int categoryID, string Brand)
-        {
-            int categoryId = 0;
-            categoryId = Convert.ToInt32(Request.Url.Segments[2].Substring(0, Request.Url.Segments[2].Length - 1));
-            string categoryName = Request.Url.Segments[3].Substring(0, Request.Url.Segments[3].Length);
-
-            ProductModelResponse productModelResponse = WebApiOperation.SendPost<object, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTS_BRAND, new { CategoryID = categoryId, brand = Brand });
-
-            ViewBag.CategoryId = categoryId;
-            ViewBag.CategoryName = categoryName;
-
-            return View(productModelResponse);
-        }
 
         // GET: Category
         public ActionResult MainCategoryPartial()

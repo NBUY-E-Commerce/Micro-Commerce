@@ -1,118 +1,123 @@
 ﻿@model ProductModelResponse
 <!-- /.container-->
-<div class="container">
-    <!-- /.product-slider-->
-    <div class="product-slider owl-carousel owl-theme owl-loaded owl-drag">
-        <div class="owl-stage-outer">
-            <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1776px;">
-                @foreach (var item in Model.Products)
-                {
-                    <!-- /.product-->
-                    <div class="owl-item" style="width: 222px;">
-                        <div class="item">
-                            <div class="product">
-                                <div class="flip-container">
-                                    <div class="flipper">
-                                        <div class="front">
-                                            <a href="@Url.Action("Detail","Product",new { productid=item.ID })">
-                                                <img src="@item.ProductImages[0]" alt="" class="img-fluid">
-                                            </a>
 
-                                        </div> <!-- resim yolu modele eklenip  -->
-                                        <div class="back">
-                                            <a href="@Url.Action("Detail","Product",new { productid=item.ID })">
-                                                <img src="@item.ProductImages[0]" alt="" class="img-fluid">
-                                            </a>
-                                        </div><!-- burada kullanılacak.  -->
+@if (Model != null && Model.Products != null)
+{
+
+    <div class="container">
+        <!-- /.product-slider-->
+        <div class="product-slider owl-carousel owl-theme owl-loaded owl-drag">
+            <div class="owl-stage-outer">
+                <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1776px;">
+                    @foreach (var item in Model.Products)
+                    {
+                        <!-- /.product-->
+                        <div class="owl-item" style="width: 222px;">
+                            <div class="item">
+                                <div class="product">
+                                    <div class="flip-container">
+                                        <div class="flipper">
+                                            <div class="front">
+                                                <a href="@Url.Action("Detail", "Product", new { productid = item.ID })">
+                                                    <img src="@item.ProductImages[0]" alt="" class="img-fluid">
+                                                </a>
+
+                                            </div> <!-- resim yolu modele eklenip  -->
+                                            <div class="back">
+                                                <a href="@Url.Action("Detail", "Product", new { productid = item.ID })">
+                                                    <img src="@item.ProductImages[0]" alt="" class="img-fluid">
+                                                </a>
+                                            </div><!-- burada kullanılacak.  -->
+                                        </div>
+                                    </div><a href="@Url.Action("Detail", "Product", new { productid = item.ID })" class="invisible"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a>
+                                    <div class="text">
+                                        <h3><a href="detail.html">@Html.Raw(item.Description)</a></h3>
+                                        <p class="price">
+                                            <del></del>@item.Price
+                                        </p>
                                     </div>
-                                </div><a href="@Url.Action("Detail","Product",new { productid=item.ID })" class="invisible"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a>
-                                <div class="text">
-                                    <h3><a href="detail.html">@Html.Raw(item.Description)</a></h3>
-                                    <p class="price">
-                                        <del></del>@item.Price
-                                    </p>
+
+                                    @*@if (item.IsInSale)
+                                        {
+                                            <div class="ribbon sale">
+                                                <div class="theribbon">SALE</div>
+                                                <div class="ribbon-background"></div>
+                                            </div>
+                                        }
+                                        @if (item.IsInNew)
+                                        {
+                                            <div class="ribbon new">
+                                                <div class="theribbon">NEW</div>
+                                                <div class="ribbon-background"></div>
+                                            </div>
+                                        }
+                                        @if (item.IsInGift)
+                                        {
+                                            <div class="ribbon gift">
+                                                <div class="theribbon">GIFT</div>
+                                                <div class="ribbon-background"></div>
+                                            </div>
+                                        }*@
                                 </div>
-
-                                @*@if (item.IsInSale)
-                        {
-                            <div class="ribbon sale">
-                                <div class="theribbon">SALE</div>
-                                <div class="ribbon-background"></div>
+                                <!-- /.product-->
                             </div>
-                        }
-                        @if (item.IsInNew)
-                        {
-                            <div class="ribbon new">
-                                <div class="theribbon">NEW</div>
-                                <div class="ribbon-background"></div>
-                            </div>
-                        }
-                        @if (item.IsInGift)
-                        {
-                            <div class="ribbon gift">
-                                <div class="theribbon">GIFT</div>
-                                <div class="ribbon-background"></div>
-                            </div>
-                        }*@
-                            </div>
-                            <!-- /.product-->
                         </div>
-                    </div>
 
 
 
-                }
-                <input type="hidden" id="sayac" value="@Model.Products.Count">
+                    }
+                    <input type="hidden" id="sayac" value="@Model.Products.Count">
 
 
-                @if (Model.PagingInfo.CurrentPage < Model.PagingInfo.LastPage)
-                {
+                    @if (Model.PagingInfo.CurrentPage < Model.PagingInfo.LastPage)
+                    {
 
-                    <div class="owl-item" style="width: 222px;">
-                        <div class="item">
-                            <div class="product">
+                        <div class="owl-item" style="width: 222px;">
+                            <div class="item">
+                                <div class="product">
 
-                                <div class="text" id="GetMore">
-                                    Daha fazla
+                                    <div class="text" id="GetMore">
+                                        Daha fazla
+                                    </div>
+
                                 </div>
-
+                                <!-- /.product-->
                             </div>
-                            <!-- /.product-->
                         </div>
-                    </div>
 
 
 
-                }
+                    }
+
+                </div>
+
+
 
             </div>
-
-
-
         </div>
+        <!-- /.product-slider-->
     </div>
-    <!-- /.product-slider-->
-</div>
-<!-- /.container-->
+    <!-- /.container-->
 
-<script>
+    <script>
 
-    $(function () {
-        $("#GetMore").click(function () {
-            var lastelem = $("#sayac").val()           
-            $.ajax({
-                url: "/Product/ProductSlider",
-                data: { a: lastelem },
-                method: "POST",
-                success: function (d) {
-                    $("#sayac").val(lastelem + 1);
-                    $("#productsliderdiv").html(d);
-                }, error: function () {
-                    alert("hata olustu");
-                }, complete: function () {
-                }
+        $(function () {
+            $("#GetMore").click(function () {
+                var lastelem = $("#sayac").val()
+                $.ajax({
+                    url: "/Product/ProductSlider",
+                    data: { a: lastelem },
+                    method: "POST",
+                    success: function (d) {
+                        $("#sayac").val(lastelem + 1);
+                        $("#productsliderdiv").html(d);
+                    }, error: function () {
+                        alert("hata olustu");
+                    }, complete: function () {
+                    }
+                })
             })
         })
-    })
-</script>
+    </script>
 
+}

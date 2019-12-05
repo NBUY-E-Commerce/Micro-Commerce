@@ -99,35 +99,9 @@ namespace B_Commerce.ProductService.Api.Controllers
             ProductModelResponse response = _service.GetProducts(request);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
-        [HttpPost]
-        [Route("ProductsColor")]
-        public IActionResult ProductsColor(GetProductRequest request)
-        {
-            ProductModelResponse response = _service.GetProductsColor(request.CategoryID);
-            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
-        }
-        [HttpPost]
-        [Route("ProductsBrand")]//Sayısını çekmek için
-        public IActionResult ProductsBrand(GetProductRequest request)
-        {
-            ProductModelResponse response = _service.GetProductsBrand(request.CategoryID);
-            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
-        }
-        [HttpPost]
-        [Route("GetProductsBrand")]//Markaları filtreleyip getirmek için
-        public IActionResult ProductsBrand(int categoryID,string brand)
-        {
-            ProductModelResponse response = _service.GetProductsBrand(categoryID,brand);
-            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
-        }
-        [HttpPost]
-        [Route("GetProductsColor")]
-        public IActionResult GetProductsColor(int categoryID,string color)
-        {
-            ProductModelResponse response = _service.GetProductsColor(categoryID,color);
-            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
-        }
-
+      
+      
+    
         [HttpPost]
         [Route("GetBanners")]
         public IActionResult GetBanners()

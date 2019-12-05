@@ -1,15 +1,17 @@
-﻿@model ProductModelResponse
+﻿@model Dictionary<string, int>
 <div class="card-header">
     <h3 class="h4 card-title">Colours <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
 </div>
 <div class="card-body">
     <form>
         <div class="form-group">
-            @foreach (var item in Model.ProductsColor)
+            @foreach (KeyValuePair<string,int> item in Model)
             {
                 <div class="checkbox" id="checkbox">
                     <label>
-                        <a href="@Url.RouteUrl("CategoryProduct",new {categoryID=ViewBag.CategoryID,name=ViewBag.CategoryName,item.Key})">@item.Key (@item.Value)</a>
+                        <a href="@B_Commerce.SMVC.Common.MUriHelper.AddQueryStringItemToUrl("color",item.Key)">@item.Key (@item.Value)</a>
+
+
                     </label>
                 </div>
             }

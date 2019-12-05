@@ -100,7 +100,10 @@ namespace B_Commerce.ProductService.Service.Concrete
                 //ilk  20 elemanı gec sonrasındakı 10 taneyı al 
                 //**eğer 10 tane yoksa 6 tane varsa 6 tanesi alınır.Hata vermez!!!!
                 int index = (request.Page - 1) * request.Range;//dbde kac kayıt es gecılmeli
-                var products = _repositoryProduct.Get().Where(t => request.CategoryID == 0 || t.CategoryID == request.CategoryID).Skip(index).Take(request.Range).ToList();
+
+
+
+                var products = _repositoryProduct.Get().Where(t => request.CategoryID == 0 || t.CategoryID == request.CategoryID).Where(t => request.BrandID == 0 || t.BrandID == request.BrandID).Where(t => string.IsNullOrEmpty(request.Color) || t.Color == request.Color).Skip(index).Take(request.Range).ToList();
 
                 foreach (Product item in products)
                 {
@@ -116,7 +119,34 @@ namespace B_Commerce.ProductService.Service.Concrete
                     productResponse.Products.Add(productModel);
                 }
 
-                int allProductCount = _repositoryProduct.Get().Where(t => request.CategoryID == 0 || t.CategoryID == request.CategoryID).Count();
+                int allProductCount = _repositoryProduct.Get().Where(t => request.CategoryID == 0 || t.CategoryID == request.CategoryID).Where(t => request.BrandID == 0 || t.BrandID == request.BrandID).Where(t => string.IsNullOrEmpty(request.Color) || t.Color == request.Color).Skip(index).Take(request.Range).Count();
+
+
+                var productsColor = _repositoryProduct.Get().Where(t => request.CategoryID == 0 || t.CategoryID == request.CategoryID).Where(t => request.BrandID == 0 || t.BrandID == request.BrandID).Where(t => string.IsNullOrEmpty(request.Color) || t.Color == request.Color).GroupBy(t => t.Color).Select(p => new { Color = p.Key, Count = p.Count() }).ToList();
+                foreach (var item in productsColor)
+                {
+                    if (item.Color != null)
+                    {
+                        productResponse.ProductsColor.Add(item.Color, item.Count);
+                    }
+                }
+
+
+                var productsBrand = _repositoryProduct.Get().Where(t => request.CategoryID == 0 || t.CategoryID == request.CategoryID).Where(t => request.BrandID == 0 || t.BrandID == request.BrandID).Where(t => string.IsNullOrEmpty(request.Color) || t.Color == request.Color).GroupBy(t => new { t.Brand.ID, t.Brand.Name }).Select(p => new { ID = p.Key.ID, Brand = p.Key.Name, Count = p.Count() }).ToList();
+                foreach (var item in productsBrand)
+                {
+                    if (item.Brand != null)
+                    {
+                        productResponse.ProductsBrand.Add( new BrandFilterModel
+                        {
+                            BrandID=item.ID,
+                            BrandName = item.Brand,
+                            ProductCount = item.Count
+
+                        });
+                    }
+                }
+
                 productResponse.PagingInfo = new PagingInfo(request.Page, request.Range, allProductCount);
                 productResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                 return productResponse;
@@ -128,54 +158,7 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return productResponse;
             }
         }
-        public ProductModelResponse GetProductsColor(int categoryID)
-        {
-            ProductModelResponse productResponse = new ProductModelResponse();
-            try
-            {
-                var productsColor = _repositoryProduct.Get().Where(t => t.CategoryID == categoryID).GroupBy(t => t.Color).Select(p => new { Color = p.Key, Count = p.Count() }).ToList();
-                foreach (var item in productsColor)
-                {
-                    if (item.Color != null)
-                    {
-                        productResponse.ProductsColor.Add(item.Color, item.Count);
-                    }
-                }
 
-                productResponse.SetStatus(Constants.ResponseCode.SUCCESS);
-                return productResponse;
-            }
-            catch (Exception ex)
-            {
-                productResponse.Products = null;
-                productResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
-                return productResponse;
-            }
-        }
-        public ProductModelResponse GetProductsBrand(int categoryID)
-        {
-            ProductModelResponse productResponse = new ProductModelResponse();
-            try
-            {
-                var productsBrand = _repositoryProduct.Get().Where(t => t.CategoryID == categoryID).GroupBy(t => t.Brand.Name).Select(p => new { Brand = p.Key, Count = p.Count() }).ToList();
-                foreach (var item in productsBrand)
-                {
-                    if (item.Brand != null)
-                    {
-                        productResponse.ProductsBrand.Add(item.Brand, item.Count);
-                    }
-                }
-
-                productResponse.SetStatus(Constants.ResponseCode.SUCCESS);
-                return productResponse;
-            }
-            catch (Exception ex)
-            {
-                productResponse.Products = null;
-                productResponse.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
-                return productResponse;
-            }
-        }
         public ProductModelResponse GetProductsBrand(int categoryID, string brand)
         {
             ProductModelResponse productResponse = new ProductModelResponse();

@@ -2,6 +2,7 @@
 using B_Commerce.SMVC.Common;
 using B_Commerce.SMVC.Models;
 using B_Commerce.SMVC.WebApiReqRes;
+using B_Commerce.SMVC.WebApiReqRes.Product;
 using B_Commerce.SMVC.WebHelpers;
 using System;
 using System.Collections.Generic;
@@ -107,8 +108,19 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
         }
         public ActionResult GetProductList()
         {
+
+            GetProductRequest request = new GetProductRequest
+            {
+                CategoryID = 0,
+                Page = 1,
+                Range = 20,
+                BrandID = 0,
+                Color = ""
+
+            };
+
             //servis kısmının model response kısmı farklı.
-            ProductModelResponse productModelResponse = WebApiOperation.SendPost<object, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTS, new { Page = 0, Range = 20 });
+            ProductModelResponse productModelResponse = WebApiOperation.SendPost<GetProductRequest, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTS, request);
             if (productModelResponse.Code == Constants.LOGIN_RESPONSE_SUCCESS)
             {
                 return View(productModelResponse);

@@ -10,7 +10,7 @@ namespace B_Commerce.SMVC.Models
     {
         public List<ProductModel> Products { get; set; } = new List<ProductModel>();
         public Dictionary<string, int> ProductsColor { get; set; } = new Dictionary<string, int>();
-        public Dictionary<string, int> ProductsBrand { get; set; } = new Dictionary<string, int>();
+        public List<BrandFilterModel> ProductsBrand { get; set; } = new List<BrandFilterModel>();
         public PagingInfo PagingInfo { get; set; } = new PagingInfo();
 
     }

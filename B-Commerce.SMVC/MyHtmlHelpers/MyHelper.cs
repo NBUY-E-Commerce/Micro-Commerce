@@ -1,4 +1,5 @@
-﻿using System;
+﻿using B_Commerce.SMVC.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -37,6 +38,9 @@ namespace System.Web.Mvc.Html
 
         public static MvcHtmlString GetPager(this HtmlHelper htmlHelper, int currentPageIndex, int totalItems, int pageSize)
         {
+            //localhost:34243
+
+            string baselink = MUriHelper.AddQueryStringItemToUrl("page", null);
             const int limit = 7; // toplam n sayfa elemanı 
             const int magicNumber = 4;
 
@@ -49,18 +53,27 @@ namespace System.Web.Mvc.Html
             {
                 pageCount++;
             }
+            //localhost:43332?bdanid=2
+
+
+
 
             if (pageCount <= limit) //toplam sayfa sayısı 7ve küçükse
             {
+
+
+
                 for (int i = 1; i <= pageCount; i++)
                 {
+
+
                     if (i == currentPageIndex)
                     {
-                        item += $"<li class='page-item active'><a href = '#' class='page-link'>{i}</a></li>";
+                        item += $"<li class='page-item active'><a href = '{baselink + "page=" + i}' class='page-link'>{i}</a></li>";
                     }
                     else
                     {
-                        item += $"<li class='page-item'><a href = '#' class='page-link'>{i}</a></li>";
+                        item += $"<li class='page-item'><a href = '{baselink + "page=" + i}' class='page-link'>{i}</a></li>";
                     }
                 }
             }
@@ -74,31 +87,31 @@ namespace System.Web.Mvc.Html
                     {
                         if (i == currentPageIndex)
                         {
-                            item += $"<li class='page-item active'><a href = '#' class='page-link'>{i}</a></li>";
+                            item += $"<li class='page-item active'><a href ='{baselink + "page=" + i}' class='page-link'>{i}</a></li>";
                         }
                         else
                         {
-                            item += $"<li class='page-item'><a href = '#' class='page-link'>{i}</a></li>";
+                            item += $"<li class='page-item'><a href ='{baselink + "page=" + i}' class='page-link'>{i}</a></li>";
                         }
                     }
                     item += "<li class='page-item'><a class='page-link'>....</a></li>";
 
-                    item += $"<li class='page-item'><a href = '#' class='page-link'>{pageCount}</a></li>";
+                    item += $"<li class='page-item'><a href = '{baselink + "page=" + pageCount}' class='page-link'>{pageCount}</a></li>";
                 }
 
                 else if (pageCount - currentPageIndex < magicNumber + 1) // son 4den biri aktif ise
                 {
-                    item += "<li class='page-item'><a href = '#' class='page-link'>1</a></li>";
+                    item += $"<li class='page-item'><a href='{baselink}page=1' class='page-link'>1</a></li>";
                     item += "<li class='page-item'><a class='page-link'>....</a></li>";
                     for (int i = pageCount - magicNumber; i <= pageCount; i++)
                     {
                         if (i == currentPageIndex)
                         {
-                            item += "<li class='page-item active'><a href = '#' class='page-link'>" + i + "</a></li>";
+                            item += $"<li class='page-item active'><a href='{baselink + "page=" + i}' class='page-link'>{i}</a></li>";
                         }
                         else
                         {
-                            item += "<li class='page-item'><a href = '#' class='page-link'>" + i + "</a></li>";
+                            item += $"<li class='page-item'><a href ='{baselink + "page=" + i}' class='page-link'>{i}</a></li>";
                         }
                     }
                 }
@@ -107,7 +120,7 @@ namespace System.Web.Mvc.Html
                     item += "<li class='page-item'><a href = '#' class='page-link'>1</a></li>";
                     item += "<li class='page-item'><a class='page-link'>....</a></li>";
 
-                    item += $"<li class='page-item'><a href = '#' class='page-link'>{currentPageIndex-1}</a></li>";
+                    item += $"<li class='page-item'><a href = '#' class='page-link'>{currentPageIndex - 1}</a></li>";
                     item += $"<li class='page-item active'><a href = '#' class='page-link'>{currentPageIndex}</a></li>";
                     item += $"<li class='page-item'><a href = '#' class='page-link'>{currentPageIndex + 1}</a></li>";
 

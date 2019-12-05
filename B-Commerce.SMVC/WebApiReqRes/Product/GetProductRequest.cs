@@ -12,5 +12,9 @@ namespace B_Commerce.SMVC.WebApiReqRes.Product
         public int Page { get; set; }
 
         public int Range { get; set; }
+
+        public int BrandID { get; set; }
+
+        public string Color { get; set; }
     }
 }

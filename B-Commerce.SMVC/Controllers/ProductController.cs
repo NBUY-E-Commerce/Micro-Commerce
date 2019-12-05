@@ -36,9 +36,6 @@ namespace B_Commerce.SMVC.Controllers
             return PartialView("_PartialProductSlider", response);
 
         }
-
-
-
         public ActionResult Banners()
         {
             BannerModelResponse bannerResponse = WebApiOperation.SendPost<object, BannerModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_BANNER_URI, null);
@@ -51,7 +48,6 @@ namespace B_Commerce.SMVC.Controllers
 
             return PartialView("_PartialBanner", bannerResponse.BannersImages);
         }
-
         public ActionResult MoreProducts(int CategoryID)
         {
             List<ProductModel> products = new List<ProductModel>();//kullanılma ihtimali olduğu için duruyor
