@@ -36,7 +36,9 @@ namespace B_Commerce.Login.Common
             EMAIL_IN_USE,
             EXPIRED_CODE,
             ISNOTVERIFIED,
-            INVALIDREQUEST
+            INVALIDREQUEST,
+            VISITOR_CANT_FIND
+
         }
 
         public static Dictionary<int, string> ResponseCodes = new Dictionary<int, string>
@@ -50,7 +52,8 @@ namespace B_Commerce.Login.Common
           {6,"Bu E-posta kullanılmaktadır.Lütfen başka bir E-posta ile deneyin." },
           {7,"Süresi dolmuş bir kod girdiniz. Lütfen E-postanıza yeni bir kod gönderin." },
           {8,"Kullanıcı email aktivasyonu yapılmamıs" },
-          {9,"Lütfen parametrelerinizi kontrol ediniz." }
+          {9,"Lütfen parametrelerinizi kontrol ediniz." },
+          {10,"Visitor kullanıcısı databasede bulunamadı." }
         };
 
     }

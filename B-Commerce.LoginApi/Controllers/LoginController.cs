@@ -90,7 +90,7 @@ namespace B_Commerce.LoginApi.Controllers
         [Route("ChangePassword")]
         public PasswordChangeResponse ChangePassword(ChangePasswordRequest changePasswordRequest)
         {
-            return _loginService.ChangePassword(changePasswordRequest.Email,changePasswordRequest.PassChangeCode, changePasswordRequest.Password);
+            return _loginService.ChangePassword(changePasswordRequest.Email, changePasswordRequest.PassChangeCode, changePasswordRequest.Password);
         }
 
         [HttpPost]
@@ -105,6 +105,13 @@ namespace B_Commerce.LoginApi.Controllers
         public VerificationResponse SendAccountVerificationCode(string Email)
         {
             return _loginService.SendAccountVerificationCode(Email);
+        }
+
+        [Route("CreateVisitorToken")]
+        public IActionResult CreateVisitorToken(int ExpireTime = 7)
+        {
+            VisitorTokenResponse response = _loginService.CreateVisitorToken();
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(201, response);
         }
     }
 }

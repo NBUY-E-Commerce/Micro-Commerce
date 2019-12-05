@@ -13,7 +13,6 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
 
-        [AuterizationFilter("Admin")]
         public ActionResult Index()
         {
             return View();

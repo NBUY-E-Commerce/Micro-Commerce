@@ -584,5 +584,36 @@ namespace B_Commerce.Login.Service.Concrete
 
         }
 
+        public VisitorTokenResponse CreateVisitorToken(int ExpireTime = 7)
+        {
+            Token token = CreateToken(ExpireTime);
+            VisitorTokenResponse visitorToken = new VisitorTokenResponse
+            {
+                Token = token.TokenText,
+                Username = "Visitor",
+                ExpireDate = token.EndDate
+            };
+            //email seed dataya bu sekilde kaydedilmistir.
+            User visitor = _userRepository.Get(t => t.Email == "asd123gqwerqga14sdAS4asf5@asdasfa!@$ASFyase3hiy.com").FirstOrDefault();
+            if (visitor==null)
+            {
+                visitorToken.SetStatus(Constants.ResponseCode.VISITOR_CANT_FIND);
+                return visitorToken;
+            }
+            try
+            {
+                visitor.Tokens.Add(token);
+                _unitOfWork.SaveChanges();
+                visitorToken.SetStatus(Constants.ResponseCode.SUCCESS);
+                return visitorToken;
+
+            }
+            catch (Exception)
+            {
+                visitorToken.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
+                return visitorToken;
+            }
+
+        }
     }
 }

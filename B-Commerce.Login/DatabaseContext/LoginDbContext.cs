@@ -13,11 +13,11 @@ namespace B_Commerce.Login.DatabaseContext
         private string _connectionString;
         public LoginDbContext()
         {
-          //  IConfigurationRoot configuration = new ConfigurationBuilder()
-          //.SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-          //.AddJsonFile("appsettings.json")
-          //.Build();
-          //  _connectionString = configuration.GetConnectionString("LoginServiceDB");
+            //  IConfigurationRoot configuration = new ConfigurationBuilder()
+            //.SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            //.AddJsonFile("appsettings.json")
+            //.Build();
+            //  _connectionString = configuration.GetConnectionString("LoginServiceDB");
 
         }
 
@@ -30,6 +30,18 @@ namespace B_Commerce.Login.DatabaseContext
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
+            modelBuilder.Entity<User>().HasData(new User
+            {
+                ID = 0,
+                insertDateTime = DateTime.Now,
+                Username = "Visitor",
+                Password = "bcommerce",
+                Name = "Visitor",
+                Surname = "Bcommerce",
+                Email = "asd123gqwerqga14sdAS4asf5@asdasfa!@$ASFyase3hiy.com",
+                IsVerified = true
+            }
+);
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<Token> Tokens { get; set; }
