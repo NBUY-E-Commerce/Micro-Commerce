@@ -67,9 +67,7 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
         [HttpGet]
         [ValidateInput(false)]
         public ActionResult Update(int ID)
-        
         {
-
             B_Commerce.SMVC.Areas.Admin.Models.GetProductModelResponse Response = WebApiOperation.SendPost<int, B_Commerce.SMVC.Areas.Admin.Models.GetProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTBYID, ID);
             if (!ModelState.IsValid)
             {
@@ -92,8 +90,6 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
                     Request.Files[i].SaveAs(imagePath);
                     Response.GetProductModel.ImageUrls.Add("/ProductImage/" + Request.Files[i].FileName);
                 }
-
-
             }
 
             if (Response.Code != 0)
@@ -105,6 +101,28 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
             ViewBag.error = MyResource.Resource.General_Success;
             return View("~/Areas/Admin/Views/Product/Add.cshtml", Response.GetProductModel);
         }
+
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Update(ProductModel productmodel)
+        {
+            //productmodel.ID = Request;
+            CommonResponse Response = WebApiOperation.SendPost<ProductModel, CommonResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_UPDATE, productmodel);
+
+            B_Commerce.SMVC.Areas.Admin.Models.GetProductModelResponse product = WebApiOperation.SendPost<int, B_Commerce.SMVC.Areas.Admin.Models.GetProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTBYID, productmodel.ID);
+
+            if (Response.Code != 0)
+            {
+                ViewBag.error = Response.Message;
+                return View("~/Areas/Admin/Views/Product/Add.cshtml", product.GetProductModel);
+            }
+
+            ViewBag.error = MyResource.Resource.General_Success;
+            return View("~/Areas/Admin/Views/Product/Add.cshtml", product.GetProductModel);
+        }
+
+
         public ActionResult GetProductList()
         {
             //servis kısmının model response kısmı farklı.
@@ -116,6 +134,7 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
             ViewBag.Error = productModelResponse.Message;
             return View();
         }
-
     }
+
+
 }

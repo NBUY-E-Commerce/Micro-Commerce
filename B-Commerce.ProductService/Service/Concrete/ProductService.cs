@@ -105,9 +105,14 @@ namespace B_Commerce.ProductService.Service.Concrete
             BaseResponse baseResponse = new BaseResponse();
             try
             {
-                //var updateproduct = _repositoryProduct.Get(t => t.ID == product.ID).SingleOrDefault();
-                //updateproduct.ProductName = product.ProductName;
-                _repositoryProduct.Update(product);
+                var updateproduct = _repositoryProduct.Get(t => t.ID == product.ID).SingleOrDefault();
+
+                updateproduct.Description = product.Description;
+                updateproduct.Price = product.Price;
+                updateproduct.ProductName = product.ProductName;
+                updateproduct.ProductImages = product.ProductImages;
+                if (product.CategoryID != 0) updateproduct.CategoryID = product.CategoryID;
+                _repositoryProduct.Update(updateproduct);
                 _unitOfWork.SaveChanges();
                 baseResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                 return baseResponse;
