@@ -259,6 +259,9 @@
     <Compile Include="WebApiReqRes\CommonResponse.cs" />
     <Compile Include="WebApiReqRes\Product\GetProductRequest.cs" />
     <Compile Include="WebApiReqRes\Product\GetSpecialProductRequest.cs" />
+    <Compile Include="WebApiReqRes\ShoppingCart\AddShoppingCartRequest.cs" />
+    <Compile Include="WebApiReqRes\ShoppingCart\ShoppingCartModel.cs" />
+    <Compile Include="WebApiReqRes\ShoppingCart\ShoppingCartResponse.cs" />
     <Compile Include="WebHelpers\WebApiOperation.cs" />
   </ItemGroup>
   <ItemGroup>

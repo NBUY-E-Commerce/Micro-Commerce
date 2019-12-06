@@ -15,11 +15,11 @@ namespace B_Commerce.ProductService.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    public class ShoppingCartProductController : ControllerBase
+    public class ShoppingCartController : ControllerBase
     {
-        IShoppingCartProductService _service;
+        IShoppingCartService _service;
 
-        public ShoppingCartProductController(IShoppingCartProductService service)
+        public ShoppingCartController(IShoppingCartService service)
         {
             _service = service;
         }
@@ -28,26 +28,20 @@ namespace B_Commerce.ProductService.Api.Controllers
         [Route("Add")]
         public IActionResult Add(ShoppingCartProductDTO shoppingCartProduct)
         {
-
-            BaseResponse response = new BaseResponse();
-
-            ShoppingCartProduct newshoppingCartProduct = new ShoppingCartProduct
-            {
-                ShoppingCartID = shoppingCartProduct.ShoppingCartID,
-                ProductID = shoppingCartProduct.ProductID,
-                ProductCount = shoppingCartProduct.ProductCount,
-                Product = shoppingCartProduct.Product,
-                ShoppingCart = shoppingCartProduct.ShoppingCart
-            };
-            response = _service.Add(newshoppingCartProduct);
+            //todo : login servise  checktoken ı cagır
+            //eğer ilgili token gecersizse login api hata doner bizde sepete ekleme işlemini iptal ederiz.,
+            //checktoken başarılı dondugu varsayıp devam ediyoruz. (****eklenecek)
+            //checktoken userın idsini donsun
+            ShoppingCartResponse response = new ShoppingCartResponse();
+            response = _service.Add(shoppingCartProduct.Token,1, shoppingCartProduct.ProductID,shoppingCartProduct.ProductCount);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(201, response);
         }
 
         [HttpPost]
         [Route("GetShoppingCartofUser")]
-        public IActionResult GetShoppingCartofUser([FromBody]int ID)
+        public IActionResult GetShoppingCartofUser(string token)
         {
-            ShoppingCartProductResponse response = _service.GetShoppingCartofUser(ID);
+            ShoppingCartResponse response = _service.GetShoppingCartofUser(token);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 

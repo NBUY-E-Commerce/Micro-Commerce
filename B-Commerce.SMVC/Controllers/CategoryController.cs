@@ -1,6 +1,7 @@
 ﻿using B_Commerce.SMVC.Common;
 using B_Commerce.SMVC.Models;
 using B_Commerce.SMVC.WebApiReqRes.Product;
+using B_Commerce.SMVC.WebApiReqRes.ShoppingCart;
 using B_Commerce.SMVC.WebHelpers;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,14 @@ namespace B_Commerce.SMVC.Controllers
         public ActionResult MainCategoryPartial()
         {
             CategoryModelResponse categoryChangeResponse = WebApiOperation.SendPost<int, CategoryModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_INDEX_URI, 0);
+            ViewBag.basketcount = 0;
+            if (Session["sepet2"] != null)
+            {
+                ShoppingCartModel card = (ShoppingCartModel)Session["sepet"];
+                ViewBag.basketcount = card.cardProduct.Count;
+
+            }
+
 
             return PartialView("_PartialTopBarMenu", categoryChangeResponse);
 

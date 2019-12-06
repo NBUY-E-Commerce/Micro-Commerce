@@ -9,7 +9,7 @@ namespace B_Commerce.SMVC
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
-            filters.Add(new VisitorControlHandler());
+          //  filters.Add(new VisitorControlHandler());
         }
     }
 }

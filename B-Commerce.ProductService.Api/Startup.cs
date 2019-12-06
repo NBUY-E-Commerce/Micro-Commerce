@@ -37,7 +37,10 @@ namespace B_Commerce.ProductService.Api
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, B_Commerce.ProductService.Service.Concrete.ProductService>();
             services.AddScoped<ISpecialAreaService, B_Commerce.ProductService.Service.Concrete.SpecialAreaService>();
+            services.AddScoped<IShoppingCartService, B_Commerce.ProductService.Service.Concrete.ShoppingCartService>();
 
+
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

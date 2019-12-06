@@ -10,7 +10,7 @@ namespace B_Commerce.SMVC.Models
     {
         public List<CategoryModel> categories { get; set; } = new List<CategoryModel>();
 
-
+   
 
     }
 }

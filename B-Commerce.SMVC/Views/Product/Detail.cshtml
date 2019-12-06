@@ -3,6 +3,8 @@
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div id="content">
+
 
     <div class="container">
         <div class="row">
@@ -20,7 +22,7 @@
             <div class="col-lg-12 order-1 order-lg-2">
 
                 @Html.Action("ProductDetail", "Product", new { ID = Model.ID })
-                
+
                 <div class="row same-height-row">
                     @Html.Action("SameBrandProduct", "Product", new { brandID = Model.BrandID })
                 </div>
@@ -31,3 +33,4 @@
             <!-- /.col-md-9-->
         </div>
     </div>
+</div>

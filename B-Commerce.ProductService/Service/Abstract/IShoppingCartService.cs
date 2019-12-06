@@ -6,10 +6,10 @@ using System.Text;
 
 namespace B_Commerce.ProductService.Service.Abstract
 {
-   public interface IShoppingCartProductService
+    public interface IShoppingCartService
     {
-        BaseResponse Add(ShoppingCartProduct shoppingCartProduct);
-        ShoppingCartProductResponse GetShoppingCartofUser(int ID);
+        ShoppingCartResponse Add(string token, int userid, int productid, int count);
+        ShoppingCartResponse GetShoppingCartofUser(string token);
 
     }
 }
