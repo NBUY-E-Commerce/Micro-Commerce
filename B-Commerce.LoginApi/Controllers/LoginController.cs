@@ -108,7 +108,8 @@ namespace B_Commerce.LoginApi.Controllers
         }
 
         [Route("CreateVisitorToken")]
-        public IActionResult CreateVisitorToken(int ExpireTime = 7)
+        [HttpPost]
+        public IActionResult CreateVisitorToken([FromBody]int ExpireTime = 7)
         {
             VisitorTokenResponse response = _loginService.CreateVisitorToken();
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(201, response);

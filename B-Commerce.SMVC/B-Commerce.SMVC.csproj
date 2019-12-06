@@ -220,6 +220,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -232,6 +233,7 @@
     <Compile Include="Models\FacebookModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="MyHandler\VisitorControlHandler.cs" />
     <Compile Include="MyHtmlHelpers\MyHelper.cs" />
     <Compile Include="MyResource\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -253,6 +255,7 @@
     <Compile Include="WebApiReqRes\Autentication\Login\PasswordChangeRequest.cs" />
     <Compile Include="WebApiReqRes\Autentication\Login\RegisterResponse.cs" />
     <Compile Include="WebApiReqRes\Autentication\Login\VerificationRequest.cs" />
+    <Compile Include="WebApiReqRes\Autentication\Login\VisitorTokenResponse.cs" />
     <Compile Include="WebApiReqRes\CommonResponse.cs" />
     <Compile Include="WebApiReqRes\Product\GetProductRequest.cs" />
     <Compile Include="WebApiReqRes\Product\GetSpecialProductRequest.cs" />
@@ -2323,6 +2326,7 @@
     <Folder Include="Content\vendor\font-awesome\scss\" />
     <Folder Include="Template\distribution\vendor\font-awesome\less\" />
     <Folder Include="Template\distribution\vendor\font-awesome\scss\" />
+    <Folder Include="Views\ShoppingCart\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
