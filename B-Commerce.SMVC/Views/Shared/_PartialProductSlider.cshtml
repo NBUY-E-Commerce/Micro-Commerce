@@ -18,20 +18,20 @@
                                     <div class="flip-container">
                                         <div class="flipper">
                                             <div class="front">
-                                                <a href="@Url.Action("Detail", "Product", new { productid = item.ID })">
+                                                <a href="@Url.Action("Detail", "Product", new { id = item.ID })">
                                                     <img src="@item.ProductImages[0]" alt="" class="img-fluid">
                                                 </a>
 
                                             </div> <!-- resim yolu modele eklenip  -->
                                             <div class="back">
-                                                <a href="@Url.Action("Detail", "Product", new { productid = item.ID })">
+                                                <a href="@Url.Action("Detail", "Product", new { id = item.ID })">
                                                     <img src="@item.ProductImages[0]" alt="" class="img-fluid">
                                                 </a>
                                             </div><!-- burada kullanılacak.  -->
                                         </div>
-                                    </div><a href="@Url.Action("Detail", "Product", new { productid = item.ID })" class="invisible"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a>
+                                    </div><a href="@Url.Action("Detail", "Product", new { id = item.ID })" class="invisible"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a>
                                     <div class="text">
-                                        <h3><a href="detail.html">@Html.Raw(item.Description)</a></h3>
+                                        <h3><a href="@Url.Action("Detail", "Product", new { id = item.ID })">@Html.Raw(item.Description)</a></h3>
                                         <p class="price">
                                             <del></del>@item.Price
                                         </p>

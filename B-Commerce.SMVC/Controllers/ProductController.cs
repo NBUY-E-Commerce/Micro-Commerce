@@ -50,25 +50,47 @@ namespace B_Commerce.SMVC.Controllers
         }
         public ActionResult MoreProducts(int CategoryID)
         {
-            List<ProductModel> products = new List<ProductModel>();//kullanılma ihtimali olduğu için duruyor
-            ProductModelResponse response = new ProductModelResponse();// product detaile göre şekillenicek.
-            GetProductRequest request = new GetProductRequest();
-            request.CategoryID = CategoryID;
-            request.Range = 5;
-            // System.Random rnd = new System.Random(); Productın tekil çekilmesi veya product service eklenmesi gerekebilir.
-            response = WebApiOperation.SendPost<GetProductRequest, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTS, request);
-            products = response.Products;
-            return PartialView("_PartialMoreProducts", products);
+            GetProductRequest request = new GetProductRequest
+            {
+                CategoryID = CategoryID,
+                Range = 3
+            };
+            ProductModelResponse response = WebApiOperation.SendPost<GetProductRequest, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETRANDOMPRODUCTS, request);
+            if (response.Code != 0)
+            {
+                ViewBag.error = response.Message;
+                return PartialView("_PartialMoreProducts");
+            }
+            return PartialView("_PartialMoreProducts", response.Products);
         }
         public ActionResult ProductDetail(int ID)
         {
             B_Commerce.SMVC.Areas.Admin.Models.GetProductModelResponse Response = WebApiOperation.SendPost<int, B_Commerce.SMVC.Areas.Admin.Models.GetProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTBYID, ID);
-            if (Response.GetProductModel==null)
+            if (Response.GetProductModel == null)
             {
                 return PartialView("Error", "ErrorModel"); // ??
             }
 
             return PartialView("_PartialProductDetail", Response.GetProductModel);
+        }
+
+        public ActionResult Detail(int ID)
+        {
+            Areas.Admin.Models.GetProductModelResponse Response = WebApiOperation.SendPost<int, Areas.Admin.Models.GetProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTBYID, ID);
+            if (Response.GetProductModel == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View(Response.GetProductModel);
+        }
+
+        public ActionResult SameBrandProduct(int brandID)
+        {
+
+            ProductModelResponse response = WebApiOperation.SendPost<int, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GET_SAME_BRAND_PRODUCTS, brandID);
+
+            return PartialView("_PartialSameBrandProduct", response.Products);
+
         }
     }
 }
