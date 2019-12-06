@@ -53,7 +53,7 @@ namespace B_Commerce.SMVC.Controllers
             GetProductRequest request = new GetProductRequest
             {
                 CategoryID = CategoryID,
-                Range = 5
+                Range = 3
             };
             ProductModelResponse response = WebApiOperation.SendPost<GetProductRequest, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETRANDOMPRODUCTS, request);
             if (response.Code != 0)
