@@ -41,6 +41,7 @@ namespace B_Commerce.SMVC.Common
 
         public const string PRODUCT_API_BANNER_URI = "/api/Product/GetBanners";
         public const string PRODUCT_API_GET_SPECIAL_PRODUCTS = "/api/Product/GetSpecialProducts";
+        public const string PRODUCT_API_GET_SAME_BRAND_PRODUCTS = "/api/Product/GetSameBrandProducts";
 
         
 
