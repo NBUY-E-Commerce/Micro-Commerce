@@ -25,7 +25,7 @@
                     @Html.Action("SameBrandProduct", "Product", new { brandID = Model.BrandID })
                 </div>
                 <div class="row same-height-row">
-                    @Html.Action("ProductSlider", "Product", new { ID = Model.ID })
+                    @Html.Action("MoreProducts", "Product", new { CategoryID = Model.CategoryID })
                 </div>
             </div>
             <!-- /.col-md-9-->
