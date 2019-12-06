@@ -151,8 +151,8 @@ namespace B_Commerce.ProductService.Service.Concrete
                         Price = item.Price,
                         ProductImages = item.ProductImages.Select(t => t.URLFromAway).ToList(),
                         ProductName = item.ProductName,
-                        Brand=item.BrandID
-                        
+                        Brand = item.BrandID
+
                     };
                     productResponse.Products.Add(productModel);
                 }
@@ -175,9 +175,9 @@ namespace B_Commerce.ProductService.Service.Concrete
                 {
                     if (item.Brand != null)
                     {
-                        productResponse.ProductsBrand.Add( new BrandFilterModel
+                        productResponse.ProductsBrand.Add(new BrandFilterModel
                         {
-                            BrandID=item.ID,
+                            BrandID = item.ID,
                             BrandName = item.Brand,
                             ProductCount = item.Count
                         });
@@ -233,7 +233,7 @@ namespace B_Commerce.ProductService.Service.Concrete
                         Price = item.Product.Price,
                         ProductImages = item.Product.ProductImages.Select(t => t.URLFromAway).ToList(),
                         ProductName = item.Product.ProductName,
-                        Brand=item.Product.BrandID
+                        Brand = item.Product.BrandID
                     });
                 }
                 productResponse.Products = productList;
@@ -276,6 +276,52 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return bannerResponse;
             }
 
+        }
+        public ProductModelResponse GetRandomProducts(GetProductRequest request)
+        {
+
+            ProductModelResponse response = new ProductModelResponse();
+            try
+            {
+                int count = _repositoryProduct.Get(t => t.CategoryID == request.CategoryID).Count();
+                List<int> randoms = new List<int>();
+                for (int i = 0; i < request.Range; i++)
+                {
+                    randoms.Add(RandomGenerator(count, randoms));
+                }
+                for (int i = 0; i < request.Range; i++)
+                {
+                    Product product =_repositoryProduct.Get(t => t.CategoryID == request.CategoryID).OrderBy(t => t.ID).Skip(randoms[i]).Take(1).SingleOrDefault();
+                    response.Products.Add(new ProductModel
+                    {
+                        ID = product.ID,
+                        Description = product.Description,
+                        Price = product.Price,
+                        ProductImages = product.ProductImages.Select(t => t.URLFromAway).ToList(),
+                        ProductName = product.ProductName,
+                        Brand = product.BrandID
+                    });
+                }
+
+                response.SetStatus(Constants.ResponseCode.SUCCESS);
+                return response;
+            }
+            catch (Exception)
+            {
+
+                response.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS);
+                return response;
+            }
+
+        }
+        private int RandomGenerator(int max, List<int> list)
+        {
+            Random random = new Random();
+            int temp;
+            temp = random.Next(0, max);
+            if (list.Contains(temp))
+                RandomGenerator(max, list);
+            return temp;
         }
         public ProductResponse GetSameBrandProducts(int BrandID)
         {
