@@ -20,7 +20,7 @@
           $(function () {
         $("#grid").kendoGrid({
             dataSource: {
-                type: "odata-v4",
+                type: "json",
                 transport: {
                     read: {
                         type: 'POST',
@@ -35,6 +35,7 @@
             height: 550,
             groupable: true,
             sortable: true,
+            filterable:true,
             pageable: {
                 refresh: true,
                 pageSizes: true,
