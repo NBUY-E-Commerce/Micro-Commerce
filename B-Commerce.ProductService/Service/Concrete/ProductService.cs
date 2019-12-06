@@ -71,6 +71,10 @@ namespace B_Commerce.ProductService.Service.Concrete
                     Size = product.Size,
                     BrandID = product.BrandID
                 };
+                foreach (ProductImage item in product.ProductImages)
+                {
+                    response.GetProductModel.ImageUrls.Add(item.URL);
+                }
                 response.SetStatus(Constants.ResponseCode.SUCCESS);
                 return response;
             }
@@ -146,7 +150,9 @@ namespace B_Commerce.ProductService.Service.Concrete
                         Description = item.Description,
                         Price = item.Price,
                         ProductImages = item.ProductImages.Select(t => t.URLFromAway).ToList(),
-                        ProductName = item.ProductName
+                        ProductName = item.ProductName,
+                        Brand=item.BrandID
+                        
                     };
                     productResponse.Products.Add(productModel);
                 }
@@ -226,8 +232,8 @@ namespace B_Commerce.ProductService.Service.Concrete
                         Description = item.Product.Description,
                         Price = item.Product.Price,
                         ProductImages = item.Product.ProductImages.Select(t => t.URLFromAway).ToList(),
-                        ProductName = item.Product.ProductName
-
+                        ProductName = item.Product.ProductName,
+                        Brand=item.Product.BrandID
                     });
                 }
                 productResponse.Products = productList;

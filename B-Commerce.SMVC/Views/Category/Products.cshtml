@@ -8,6 +8,19 @@
 </script>
 <script>
 
+    function listView() {
+        $('.flip-container').hide();
+        $(".productcard").removeClass("col-lg-4").addClass("col-lg-12");
+        $('.listcontainer').css("display", "flex");
+        $('.listcontainer').css("justify-content", "space-between");
+    }
+
+    function gridView() {
+        $('.flip-container').show();
+        $(".productcard").removeClass("col-lg-12").addClass("col-lg-4");
+         $('.listcontainer').css("display", "block");
+    }
+
     function ajax(id) { getpartialwithajax(id) };
 
     function getpartialwithajax(id) {
@@ -18,12 +31,12 @@
             dataType: "html",
             success: function (response) {
                 $('#productpoup').html(response);
-                $('#exampleModal').on('shown.bs.modal', function () {
-                    $('#exampleModal').trigger('focus')
+                $('#myExtraLargeModalLabel').on('shown.bs.modal', function () {
+                    $('.bd-example-modal-xl').trigger('focus')
                 });
             }
         });
-    }// sende
+    }
 
     $(document).ready(function () {
         $("#colorapply").click(function () {
@@ -61,7 +74,13 @@
                             <div class="col-md-12 col-lg-4 products-showing">
                                 Showing
                                 <strong>@Model.PagingInfo.CurrentPage</strong> of <strong>@Model.PagingInfo.LastPage</strong> pages
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button type="button" onclick="gridView()" class="btn btn-secondary"><i class="fa fa-th-large"></i> Grid </button>
+                                    <button type="button" onclick="listView()" class="btn btn-secondary"><i class="fa fa-bars"></i> List </button>
+                                </div>
                             </div>
+
+
                             <div class="col-md-12 col-lg-7 products-number-sort">
                                 <form class="form-inline d-block d-lg-flex justify-content-between flex-column flex-md-row">
                                     <div class="products-number">
@@ -88,15 +107,16 @@
 
                         @foreach (var item in Model.Products)
                         {
-                            <div class="col-lg-4 col-md-6">
+                            <div class="col-lg-4 col-md-6 productcard">
                                 <div class="product">
                                     <div class="flip-container">
                                         <div class="flipper">
                                             <div class="front"><a href="detail.html"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a></div>
                                             <div class="back"><a href="detail.html"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a></div>
                                         </div>
-                                    </div><a href="detail.html" class="invisible"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a>
-                                    <div class="text">
+                                        <a href="detail.html" class="invisible"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a>
+                                    </div>
+                                    <div class="text listcontainer">
                                         <h3>
                                             <a href="detail.html">
                                                 @item.ProductName
@@ -106,7 +126,7 @@
                                             <del></del>$@item.Price
                                         </p>
                                         <p class="buttons">
-                                            <a href="" class="btn btn-outline-secondary productbutton" onclick="ajax(@item.ID)" data-toggle="modal" data-target="#exampleModal">Detay</a>
+                                            <a href="" class="btn btn-outline-secondary productbutton" onclick="ajax(@item.ID)" data-toggle="modal" data-target=".bd-example-modal-xl">Detay</a>
 
                                             <a href="#" onclick="addToBasket(@item.ID)" class="btn btn-primary">
                                                 <i class="fa fa-shopping-cart"></i>
@@ -128,6 +148,7 @@
 
 
                     @Html.GetPager(Model.PagingInfo.CurrentPage, (Model.PagingInfo.Demand * Model.PagingInfo.LastPage), Model.PagingInfo.Demand)
+
 
 
 
@@ -159,27 +180,10 @@
 </div>
 
 
-<!-- Button trigger modal -->
-@*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        Launch demo modal
-    </button>*@
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div id="productpoup" class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div id="productpoup" class="modal-content">
+            ...
         </div>
     </div>
 </div>

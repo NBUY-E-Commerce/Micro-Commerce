@@ -65,7 +65,8 @@ namespace B_Commerce.LoginApi
             app.UseSwagger();
             app.UseSwaggerUI(t =>
             {
-                t.SwaggerEndpoint("/swagger/v1/swagger.json", "MyAPI V1");
+                t.SwaggerEndpoint("/swagger/v1/swagger.json", "Login Service V1");
+                
             });
 
 
