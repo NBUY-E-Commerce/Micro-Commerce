@@ -14,7 +14,7 @@ namespace B_Commerce.SMVC.FilterHelper.Helpers.Concrete
 {
     public class UserHelper : IUserHelper
     {
-      
+       
         public void AddVisiterCookie(ActionExecutingContext filterContext, string token)
         {
             HttpCookie httpCookie = new HttpCookie(VT_Constants.VT_COOKIE, token);
@@ -47,6 +47,9 @@ namespace B_Commerce.SMVC.FilterHelper.Helpers.Concrete
 
         public VisitorTokenRequest GetVisiterToken(int ExpireTime) {
 
+            VisitorTokenRequest visitorTokenRequest = new VisitorTokenRequest();
+           
+
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(Constants.LOGIN_API_BASE_URI);
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
@@ -54,6 +57,7 @@ namespace B_Commerce.SMVC.FilterHelper.Helpers.Concrete
             VisitorTokenRequest response = new VisitorTokenRequest();
             
             Task<HttpResponseMessage> httpResponse = httpClient.PostAsJsonAsync(Constants.LOGIN_API_CREATE_VISITOR_TOKEN_URI, ExpireTime);
+
             if (httpResponse.Result.IsSuccessStatusCode)
             {
                 return httpResponse.Result.Content.ReadAsAsync<VisitorTokenRequest>().Result;

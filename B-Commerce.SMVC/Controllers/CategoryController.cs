@@ -1,4 +1,5 @@
 ﻿using B_Commerce.SMVC.Common;
+using B_Commerce.SMVC.FilterHelper.Filters;
 using B_Commerce.SMVC.Models;
 using B_Commerce.SMVC.WebApiReqRes.Product;
 using B_Commerce.SMVC.WebHelpers;
@@ -10,7 +11,7 @@ using System.Web.Mvc;
 
 namespace B_Commerce.SMVC.Controllers
 {
-
+    [VisiterToken]
     public class CategoryController : Controller
     {
 

@@ -6,9 +6,11 @@ using System.Web;
 using B_Commerce.SMVC.WebHelpers;
 using System.Web.Mvc;
 using B_Commerce.SMVC.WebApiReqRes.Product;
+using B_Commerce.SMVC.FilterHelper.Filters;
 
 namespace B_Commerce.SMVC.Controllers
 {
+    [VisiterToken]
     public class ProductController : Controller
     {
         // GET: Product

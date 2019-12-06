@@ -15,7 +15,7 @@ namespace B_Commerce.SMVC.Common
 
 
         //LoginAPI
-        public const string LOGIN_API_BASE_URI = "http://localhost:21773/";//LoginApideki SSL Aktifleştirildi
+        public const string LOGIN_API_BASE_URI = "http://localhost:41796/";//LoginApideki SSL Aktifleştirildi
         public const string LOGIN_API_LOGIN_URI = "/api/Login/Login";
         public const string LOGIN_API_REGISTER_URI = "/api/Login/UserRegistry";
         public const string LOGIN_API_CHECK_VERIFICATION_URI = "/api/Login/CheckVerificationCode";

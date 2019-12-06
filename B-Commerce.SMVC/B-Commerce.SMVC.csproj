@@ -226,7 +226,6 @@
     <Compile Include="FilterHelper\Helpers\Abstract\IUserHelper.cs" />
     <Compile Include="FilterHelper\Helpers\Concrete\UserHelper.cs" />
     <Compile Include="FilterHelper\Model\VisitorTokenRequest.cs" />
-    <Compile Include="FilterHelper\Token.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

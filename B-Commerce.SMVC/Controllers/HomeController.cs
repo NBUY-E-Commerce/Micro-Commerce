@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace B_Commerce.SMVC.Controllers
 {
-    
+    [VisiterToken]
     public class HomeController : Controller
     {
         
