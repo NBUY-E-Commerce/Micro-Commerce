@@ -15,6 +15,7 @@ namespace B_Commerce.ProductService.Response
         public int AvailableCount { get; set; }
         public bool isActive { get; set; } = true;
         public int CategoryID { get; set; }
+        public int BrandID { get; set; }
         public List<string> ImageUrls { get; set; } = new List<string>();
     }
 

@@ -127,5 +127,12 @@ namespace B_Commerce.ProductService.Api.Controllers
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 
+        [HttpPost]
+        [Route("GetSameBrandProducts")]
+        public IActionResult GetSameBrandProducts([FromBody]int brandID)
+        {
+            ProductResponse response = _service.GetSameBrandProducts(brandID);
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
+        }
     }
 }

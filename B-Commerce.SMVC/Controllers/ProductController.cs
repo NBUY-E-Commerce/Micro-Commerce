@@ -63,12 +63,31 @@ namespace B_Commerce.SMVC.Controllers
         public ActionResult ProductDetail(int ID)
         {
             B_Commerce.SMVC.Areas.Admin.Models.GetProductModelResponse Response = WebApiOperation.SendPost<int, B_Commerce.SMVC.Areas.Admin.Models.GetProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTBYID, ID);
-            if (Response.GetProductModel==null)
+            if (Response.GetProductModel == null)
             {
                 return PartialView("Error", "ErrorModel"); // ??
             }
 
             return PartialView("_PartialProductDetail", Response.GetProductModel);
+        }
+
+        public ActionResult Detail(int ID)
+        {
+            Areas.Admin.Models.GetProductModelResponse Response = WebApiOperation.SendPost<int, Areas.Admin.Models.GetProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTBYID, ID);
+            if (Response.GetProductModel == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View(Response.GetProductModel);
+        }
+
+        public ActionResult SameBrandProduct(int brandID)
+        {
+
+            ProductModelResponse response = WebApiOperation.SendPost<int, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GET_SAME_BRAND_PRODUCTS, brandID);
+
+            return PartialView("_PartialSameBrandProduct", response.Products);
+
         }
     }
 }

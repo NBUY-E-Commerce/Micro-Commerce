@@ -68,7 +68,8 @@ namespace B_Commerce.ProductService.Service.Concrete
                     isActive = product.isActive,
                     Price = product.Price,
                     ProductName = product.ProductName,
-                    Size = product.Size
+                    Size = product.Size,
+                    BrandID = product.BrandID
                 };
                 response.SetStatus(Constants.ResponseCode.SUCCESS);
                 return response;
@@ -269,6 +270,24 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return bannerResponse;
             }
 
+        }
+        public ProductResponse GetSameBrandProducts(int BrandID)
+        {
+            ProductResponse response = new ProductResponse();
+            try
+            {
+                response.Products = _repositoryProduct.Get(t => t.BrandID == BrandID).ToList();
+
+                response.SetStatus(Constants.ResponseCode.SUCCESS);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Products = null;
+                response.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                return response;
+            }
+            
         }
     }
 }
