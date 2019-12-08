@@ -1,0 +1,27 @@
+﻿@model List<B_Commerce.SMVC.Areas.Admin.Models.SpecialAreaModel>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Güncelle</th>
+            <th scope="col">Sil</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+
+        <tbody>
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td><a href="/Admin/Product/SpecialAreaUpdate?ID=@item.ID">Güncelle</a></td>
+                <td><a href="/Admin/Product/DeleteSpecialAreaByID?ID=@item.ID">Sil</a></td>
+
+            </tr>
+        </tbody>
+    }
+</table>
+
+
+

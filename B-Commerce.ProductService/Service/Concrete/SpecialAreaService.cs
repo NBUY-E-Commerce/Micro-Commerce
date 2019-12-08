@@ -20,12 +20,13 @@ namespace B_Commerce.ProductService.Service.Concrete
             _unitOfWork = unitOfWork;
             _repositorySpacial = repositorySpacial;
         }
-        public BaseResponse Add(SpacialArea specialarea)
+
+        public SpecialAreaResponse Add(SpacialArea specialArea)
         {
-            BaseResponse response = new BaseResponse();
+            SpecialAreaResponse response = new SpecialAreaResponse();
             try
             {
-                _repositorySpacial.Add(specialarea);
+                _repositorySpacial.Add(specialArea);
                 _unitOfWork.SaveChanges();
                 response.SetStatus(Common.Constants.ResponseCode.SUCCESS);
                 return response;
@@ -36,6 +37,7 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return response;
             }
         }
+
         public BaseResponse Delete(int ID)
         {
             BaseResponse response = new BaseResponse();
@@ -59,7 +61,15 @@ namespace B_Commerce.ProductService.Service.Concrete
             SpecialAreaResponse response = new SpecialAreaResponse();
             try
             {
-                response.SpecialAreas = _repositorySpacial.Get().ToList();
+                foreach (var item in _repositorySpacial.Get().ToList())
+                {
+                    response.SpecialAreas.Add(new SpecialAreaModel
+                    { 
+                        ID=item.ID,
+                        Name=item.Name,
+                        Description=item.Description
+                    });
+                }
                 response.SetStatus(Common.Constants.ResponseCode.SUCCESS);
                 return response;
             }
@@ -70,12 +80,12 @@ namespace B_Commerce.ProductService.Service.Concrete
             }
         }
 
-        public BaseResponse Update(SpacialArea specialarea)
+        public SpecialAreaResponse Update(SpacialArea specialArea)
         {
-            BaseResponse response = new BaseResponse();
+            SpecialAreaResponse response = new SpecialAreaResponse();
             try
             {
-                _repositorySpacial.Update(specialarea);
+                _repositorySpacial.Update(specialArea);
                 _unitOfWork.SaveChanges();
                 response.SetStatus(Common.Constants.ResponseCode.SUCCESS);
                 return response;
@@ -85,7 +95,24 @@ namespace B_Commerce.ProductService.Service.Concrete
                 response.SetStatus(Common.Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return response;
             }
-
         }
+
+        public SpecialAreaResponse GetSpecialAreaByID(int ID)
+        {
+            SpecialAreaResponse response = new SpecialAreaResponse();
+            try
+            {
+                SpacialArea spacialarea = _repositorySpacial.Get(t => t.ID == ID).FirstOrDefault();
+                response.SpecialAreas.Add(new SpecialAreaModel { Name = spacialarea.Name, Description = spacialarea.Description, ID = spacialarea.ID });
+                response.SetStatus(Common.Constants.ResponseCode.SUCCESS);
+                return response;
+            }
+            catch (Exception exception)
+            {
+                response.SetStatus(Common.Constants.ResponseCode.FAILED_ON_DB_PROCESS, exception.Message);
+                return response;
+            }
+        }
+
     }
 }
