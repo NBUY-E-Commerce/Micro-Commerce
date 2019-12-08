@@ -15,7 +15,7 @@ namespace B_Commerce.SMVC.Common
 
 
         //LoginAPI
-        public const string LOGIN_API_BASE_URI = "http://localhost:57095/";//LoginApideki SSL Aktifleştirildi
+        public const string LOGIN_API_BASE_URI = "http://localhost:56640/";//LoginApideki SSL Aktifleştirildi
         public const string LOGIN_API_LOGIN_URI = "/api/Login/Login";
         public const string LOGIN_API_REGISTER_URI = "/api/Login/UserRegistry";
         public const string LOGIN_API_CHECK_VERIFICATION_URI = "/api/Login/CheckVerificationCode";
@@ -31,7 +31,14 @@ namespace B_Commerce.SMVC.Common
         //ProductApi
         public const string PRODUCT_API_BASE_URI = "http://localhost:57096/";
         public const string PRODUCT_API_INDEX_URI = "/api/Category/GetSubCategoriesByCategoryID";
-
+        public const string PRODUCT_API_SPECIAL_AREA = "/api/SpecialArea/Add";
+        public const string PRODUCT_API_PRODUCT_SPECIAL_AREA_ADD = "/api/SpecialArea/ProductSpecialAreaAdd";
+        
+        public const string PRODUCT_API_GETSPECIAL_AREA = "/api/SpecialArea/GetSpecialAreas";
+        public const string PRODUCT_API_GET_PRODUCT_SPECIAL_AREA = "/api/SpecialArea/GetProductSpecialAreas";
+        public const string PRODUCT_API_UPDATESPECIAL_AREA = "/api/SpecialArea/Update";
+        public const string PRODUCT_API_GETSPECIAL_AREA_BYID = "/api/SpecialArea/GetSpecialAreaByID";
+        public const string PRODUCT_API_DELETE_SPECIAL_AREA = "/api/SpecialArea/Delete";
 
         public const string PRODUCT_API_ADD = "/api/Product/Add";
         public const string PRODUCT_API_GETPRODUCTBYID = "/api/Product/GetProductByID";

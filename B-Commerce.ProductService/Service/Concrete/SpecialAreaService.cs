@@ -13,19 +13,22 @@ namespace B_Commerce.ProductService.Service.Concrete
     public class SpecialAreaService : ISpecialAreaService
     {
         private IRepository<SpacialArea> _repositorySpacial;
+        private IRepository<ProductSpacialAreaTable> _repositoryProductSpecialArea;
         private IUnitOfWork _unitOfWork;
 
-        public SpecialAreaService(IRepository<SpacialArea> repositoryProduct, IRepository<SpacialArea> repositorySpacial, IUnitOfWork unitOfWork)
+        public SpecialAreaService(IRepository<SpacialArea> repositoryProduct, IRepository<SpacialArea> repositorySpacial, IUnitOfWork unitOfWork, IRepository<ProductSpacialAreaTable> repositoryProductSpecialArea)
         {
             _unitOfWork = unitOfWork;
             _repositorySpacial = repositorySpacial;
+            _repositoryProductSpecialArea = repositoryProductSpecialArea;
         }
-        public BaseResponse Add(SpacialArea specialarea)
+
+        public SpecialAreaResponse Add(SpacialArea specialArea)
         {
-            BaseResponse response = new BaseResponse();
+            SpecialAreaResponse response = new SpecialAreaResponse();
             try
             {
-                _repositorySpacial.Add(specialarea);
+                _repositorySpacial.Add(specialArea);
                 _unitOfWork.SaveChanges();
                 response.SetStatus(Common.Constants.ResponseCode.SUCCESS);
                 return response;
@@ -36,6 +39,23 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return response;
             }
         }
+        public ProductSpecialAreaResponse Add(ProductSpacialAreaTable productSpacialAreaTable)
+        {
+            ProductSpecialAreaResponse response = new ProductSpecialAreaResponse();
+            try
+            {
+                _repositoryProductSpecialArea.Add(productSpacialAreaTable);
+                _unitOfWork.SaveChanges();
+                response.SetStatus(Common.Constants.ResponseCode.SUCCESS);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.SetStatus(Common.Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                return response;
+            }
+        }
+
         public BaseResponse Delete(int ID)
         {
             BaseResponse response = new BaseResponse();
@@ -59,7 +79,39 @@ namespace B_Commerce.ProductService.Service.Concrete
             SpecialAreaResponse response = new SpecialAreaResponse();
             try
             {
-                response.SpecialAreas = _repositorySpacial.Get().ToList();
+                foreach (var item in _repositorySpacial.Get().ToList())
+                {
+                    response.SpecialAreas.Add(new SpecialAreaModel
+                    {
+                        ID = item.ID,
+                        Name = item.Name,
+                        Description = item.Description
+                    });
+                }
+                response.SetStatus(Common.Constants.ResponseCode.SUCCESS);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.SetStatus(Common.Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                return response;
+            }
+        }
+        public ProductSpecialAreaResponse GetProductSpecialAreas()
+        {
+            ProductSpecialAreaResponse response = new ProductSpecialAreaResponse();
+            try
+            {
+                foreach (var item in _repositoryProductSpecialArea.Get().ToList())
+                {
+                    response.ProductSpecialAreaModels.Add(new ProductSpecialAreaModels
+                    {
+                        ProductID = item.ProductID,
+                        SpecialAreaID = item.SpacialAreaID,
+                        ProductName = item.Product.ProductName,
+                        SpecialAreaName = item.SpacialArea.Name
+                    });
+                }
                 response.SetStatus(Common.Constants.ResponseCode.SUCCESS);
                 return response;
             }
@@ -70,12 +122,12 @@ namespace B_Commerce.ProductService.Service.Concrete
             }
         }
 
-        public BaseResponse Update(SpacialArea specialarea)
+        public SpecialAreaResponse Update(SpacialArea specialArea)
         {
-            BaseResponse response = new BaseResponse();
+            SpecialAreaResponse response = new SpecialAreaResponse();
             try
             {
-                _repositorySpacial.Update(specialarea);
+                _repositorySpacial.Update(specialArea);
                 _unitOfWork.SaveChanges();
                 response.SetStatus(Common.Constants.ResponseCode.SUCCESS);
                 return response;
@@ -85,7 +137,39 @@ namespace B_Commerce.ProductService.Service.Concrete
                 response.SetStatus(Common.Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return response;
             }
+        }
 
+        public SpecialAreaResponse GetSpecialAreaByID(int ID)
+        {
+            SpecialAreaResponse response = new SpecialAreaResponse();
+            try
+            {
+                SpacialArea spacialarea = _repositorySpacial.Get(t => t.ID == ID).FirstOrDefault();
+                response.SpecialAreas.Add(new SpecialAreaModel { Name = spacialarea.Name, Description = spacialarea.Description, ID = spacialarea.ID });
+                response.SetStatus(Common.Constants.ResponseCode.SUCCESS);
+                return response;
+            }
+            catch (Exception exception)
+            {
+                response.SetStatus(Common.Constants.ResponseCode.FAILED_ON_DB_PROCESS, exception.Message);
+                return response;
+            }
+        }
+
+        public BaseResponse AddProductToSpecialByID(int ID)
+        {
+            BaseResponse response = new BaseResponse();
+            try
+            {
+                SpacialArea spacial = _repositorySpacial.Get(t => t.ID == ID).FirstOrDefault();
+                spacial.productSpacialAreas.Add(new ProductSpacialAreaTable { ID = spacial.ID });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            throw new NotImplementedException();
         }
     }
 }

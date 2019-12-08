@@ -210,8 +210,11 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Models\GetProductModelResponse.cs" />
+    <Compile Include="Areas\Admin\Models\ProductSpecialAreaModel.cs" />
+    <Compile Include="Areas\Admin\Models\GetProductSpecialAreaResponse.cs" />
     <Compile Include="Areas\Admin\Models\ProductModel.cs" />
     <Compile Include="Areas\Admin\Models\SpecialAreaModel.cs" />
+    <Compile Include="Areas\Admin\Models\SpecialAreaResponse.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\MUriHelper.cs" />
     <Compile Include="Common\SystemUser.cs" />
@@ -2153,6 +2156,9 @@
     <Content Include="Areas\Admin\Views\Account\Test.cshtml" />
     <Content Include="Areas\Admin\Views\Product\SpecialArea.cshtml" />
     <Content Include="Areas\Admin\Views\Product\GetProductList.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_PartialSpacialArea.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\SpecialAreaProduct.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

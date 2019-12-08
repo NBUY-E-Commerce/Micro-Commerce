@@ -8,9 +8,13 @@ namespace B_Commerce.ProductService.Service.Abstract
 {
     public interface ISpecialAreaService
     {
-        BaseResponse Add(SpacialArea SpacialArea);
+        SpecialAreaResponse Add(SpacialArea SpacialArea);
         BaseResponse Delete(int ID);
-        BaseResponse Update(SpacialArea SpacialArea);
+        SpecialAreaResponse Update(SpacialArea SpacialArea);
         SpecialAreaResponse GetSpecialAreas();
+        ProductSpecialAreaResponse GetProductSpecialAreas();
+        ProductSpecialAreaResponse Add(ProductSpacialAreaTable productSpacialAreaTable);
+        SpecialAreaResponse GetSpecialAreaByID(int ID);
+        BaseResponse AddProductToSpecialByID(int ID);
     }
 }

@@ -1,0 +1,44 @@
+﻿@model B_Commerce.SMVC.Areas.Admin.Models.SpecialAreaResponse
+@{
+    ViewBag.Title = "SpecialAreaProduct";
+}
+
+@using (Html.BeginForm("ProductSpeacialAreaAdd", "Product", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.DropDownListFor(t => t.SpecialAreas, new SelectList(Model.SpecialAreas, "ID", "Name"), new { id = "SpecialAreaID", name = "SpecialAreaID" })
+    </div>
+    <div class="form-group">
+        @Html.DropDownListFor(t => t.productModels, new SelectList(Model.productModels, "ID", "ProductName"), new { id = "ProductID", name = "ProductID"})
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary">Add</button>
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">SpecialAreaID</th>
+            <th scope="col">SpecialAreaName</th>
+            <th scope="col">ProductID</th>
+            <th scope="col">ProductName</th>
+            <th scope="col">Sil</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.productSpecialAreaModels)
+        {
+            <tr>
+                <td>@item.SpecialAreaID</td>
+                <td>@item.SpecialAreaName</td>
+                <td>@item.ProductID</td>
+                <td>@item.ProductName</td>
+                <td><a href="#">Sil</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
