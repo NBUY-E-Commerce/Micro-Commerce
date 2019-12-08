@@ -114,5 +114,13 @@ namespace B_Commerce.LoginApi.Controllers
             VisitorTokenResponse response = _loginService.CreateVisitorToken();
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(201, response);
         }
+
+        [Route("CheckToken")]
+        [HttpPost]
+        public IActionResult CheckToken([FromBody]string token)
+        {
+            BaseResponse response = _loginService.CheckToken(token);
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(201, response);
+        }
     }
 }

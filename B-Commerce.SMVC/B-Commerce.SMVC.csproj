@@ -246,6 +246,7 @@
       <DependentUpon>Resource.en.resx</DependentUpon>
     </Compile>
     <Compile Include="WebApiReqRes\Autentication\Login\ChangePasswordRequest.cs" />
+    <Compile Include="WebApiReqRes\Autentication\Login\CheckTokenResponse.cs" />
     <Compile Include="WebApiReqRes\Autentication\Login\PasswordChangeResponse.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />

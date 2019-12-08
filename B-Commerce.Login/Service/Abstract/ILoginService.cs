@@ -21,6 +21,6 @@ namespace B_Commerce.Login.Service.Abstract
         VerificationResponse SendAccountVerificationCode(string Email);
         VisitorTokenResponse CreateVisitorToken(int ExpireTime = 7);
 
-
+        CheckTokenResponse CheckToken(string token);
     }
 }

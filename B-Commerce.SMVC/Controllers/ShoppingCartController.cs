@@ -1,4 +1,6 @@
 ﻿using B_Commerce.SMVC.Common;
+using B_Commerce.SMVC.WebApiReqRes;
+using B_Commerce.SMVC.WebApiReqRes.Autentication.Login;
 using B_Commerce.SMVC.WebApiReqRes.ShoppingCart;
 using B_Commerce.SMVC.WebHelpers;
 using System;
@@ -23,6 +25,16 @@ namespace B_Commerce.SMVC.Controllers
             {
                 currentToken = Request.Cookies["visitortoken"].Value;
             }
+
+            CheckTokenResponse responseToken = WebApiOperation.SendPost<string, CheckTokenResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_CHECKTOKEN_URI, currentToken);
+
+            if (responseToken.Code!=0)//token süresi geçmiş
+            {
+
+                //token verification error!!
+                throw new Exception();
+            }
+
             var request = new AddShoppingCartRequest
             {
                 Token = currentToken,

@@ -24,15 +24,19 @@ namespace B_Commerce.SMVC.MyHandler
             if (SystemUser.CurrentUser != null)
             {
                 //demekki login olmus bir kullanıcı var contexte
-
-
+                HttpCookie cok = filterContext.HttpContext.Request.Cookies["visitortoken"];
+                if (cok!=null )// visitor dan gelmiş login olmuş
+                {
+                    //ilk defa geldiginde visitortoken i boşalt,
+                    //
+                }
             }
             else
             {
                 //login olmamaıs bir kullanıcı
 
                 HttpCookie cok = filterContext.HttpContext.Request.Cookies["visitortoken"];
-                if (cok == null)
+                if (cok == null || cok.Expires<DateTime.Now)
                 {
                     VisitorTokenResponse visitorResponse = WebApiOperation.SendPost<int, VisitorTokenResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_CreateVisitorToken_URI, 7);
 

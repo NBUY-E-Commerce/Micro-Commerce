@@ -46,6 +46,12 @@ namespace B_Commerce.Login.Service.Concrete
             }
             checkTokenResponse.Username = user.Username;
             checkTokenResponse.ExpireDate = user.Tokens.FirstOrDefault(t => t.TokenText == token).EndDate;
+            if (checkTokenResponse.ExpireDate<DateTime.Now)
+            {
+                checkTokenResponse.SetStatus(Constants.ResponseCode.EXPIRED_CODE);
+                return checkTokenResponse;
+            }
+
             if (user.IsVerified != true)
             {
                 checkTokenResponse.SetStatus(Constants.ResponseCode.ISNOTVERIFIED);
