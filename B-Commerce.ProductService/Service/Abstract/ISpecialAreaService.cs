@@ -12,6 +12,9 @@ namespace B_Commerce.ProductService.Service.Abstract
         BaseResponse Delete(int ID);
         SpecialAreaResponse Update(SpacialArea SpacialArea);
         SpecialAreaResponse GetSpecialAreas();
+        ProductSpecialAreaResponse GetProductSpecialAreas();
+        ProductSpecialAreaResponse Add(ProductSpacialAreaTable productSpacialAreaTable);
         SpecialAreaResponse GetSpecialAreaByID(int ID);
+        BaseResponse AddProductToSpecialByID(int ID);
     }
 }

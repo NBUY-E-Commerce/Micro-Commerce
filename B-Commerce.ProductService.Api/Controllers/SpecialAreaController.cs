@@ -33,6 +33,19 @@ namespace B_Commerce.ProductService.Api.Controllers
             SpecialAreaResponse response = _specialAreaService.Add(special);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(201, response);
         }
+        [HttpPost]
+        [Route("ProductSpecialAreaAdd")]
+        public IActionResult Add(ProductSpecialAreaModels productSpecialAreaModels)
+        {
+            ProductSpacialAreaTable productSpacialAreaTable = new ProductSpacialAreaTable
+            {
+                ProductID = productSpecialAreaModels.ProductID,
+                SpacialAreaID = productSpecialAreaModels.SpecialAreaID,
+            };
+
+            ProductSpecialAreaResponse response = _specialAreaService.Add(productSpacialAreaTable);
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(201, response);
+        }
 
         [HttpPost]
         [Route("Delete")]
@@ -63,7 +76,13 @@ namespace B_Commerce.ProductService.Api.Controllers
             SpecialAreaResponse response = _specialAreaService.GetSpecialAreas();
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
-
+        [HttpPost]
+        [Route("GetProductSpecialAreas")]
+        public IActionResult GetProductSpecialAreas()
+        {
+            ProductSpecialAreaResponse response = _specialAreaService.GetProductSpecialAreas();
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
+        }
         [HttpPost]
         [Route("GetSpecialAreaByID")]
         public IActionResult GetSpecialAreaByID([FromBody]int ID)

@@ -1,5 +1,4 @@
-﻿
-using B_Commerce.SMVC.Areas.Admin.Models;
+﻿using B_Commerce.SMVC.Areas.Admin.Models;
 using B_Commerce.SMVC.Common;
 using B_Commerce.SMVC.Models;
 using B_Commerce.SMVC.WebApiReqRes;
@@ -60,6 +59,26 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
             if (categoryChangeResponse.Code != 0)
             {
                 ViewBag.error = categoryChangeResponse.Message;
+                return View();
+
+            }
+            ViewBag.error = MyResource.Resource.General_Success;
+            return View();
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult ProductSpeacialAreaAdd(ProductSpecialAreaModel productSpecialAreaModel)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            GetProductSpecialAreaResponse getProductSpecialAreaResponse = WebApiOperation.SendPost<B_Commerce.SMVC.Areas.Admin.Models.ProductSpecialAreaModel, GetProductSpecialAreaResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_PRODUCT_SPECIAL_AREA_ADD, productSpecialAreaModel);
+
+            if (getProductSpecialAreaResponse.Code != 0)
+            {
+                ViewBag.error = getProductSpecialAreaResponse.Message;
                 return View();
 
             }
@@ -215,7 +234,7 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
         {
             B_Commerce.SMVC.Areas.Admin.Models.SpecialAreaResponse Response = WebApiOperation.SendPost<SpecialAreaModel, B_Commerce.SMVC.Areas.Admin.Models.SpecialAreaResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_UPDATESPECIAL_AREA, specialAreaModel);
 
-            B_Commerce.SMVC.Areas.Admin.Models.SpecialAreaResponse special = WebApiOperation.SendPost<int, B_Commerce.SMVC.Areas.Admin.Models.SpecialAreaResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETSPECIAL_AREA_BYID,specialAreaModel.ID);
+            B_Commerce.SMVC.Areas.Admin.Models.SpecialAreaResponse special = WebApiOperation.SendPost<int, B_Commerce.SMVC.Areas.Admin.Models.SpecialAreaResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETSPECIAL_AREA_BYID, specialAreaModel.ID);
 
             if (Response.Code != 0)
             {
@@ -226,12 +245,49 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
             ViewBag.error = MyResource.Resource.General_Success;
             return View("~/Areas/Admin/Views/Product/SpecialArea.cshtml", special.SpecialAreas[0]);
         }
-      
+
         public ActionResult DeleteSpecialAreaByID(int ID)
         {
-           CommonResponse Response = WebApiOperation.SendPost<int, CommonResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_DELETE_SPECIAL_AREA, ID);
+            CommonResponse Response = WebApiOperation.SendPost<int, CommonResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_DELETE_SPECIAL_AREA, ID);
 
             return View("~/Areas/Admin/Views/Product/SpecialArea.cshtml");
+        }
+
+        public ActionResult SpecialAreaProduct()
+        {
+            SpecialAreaResponse specialAreaResponse = WebApiOperation.SendPost<object, SpecialAreaResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETSPECIAL_AREA, null);
+            GetProductRequest request = new GetProductRequest
+            {
+                CategoryID = 0,
+                Page = 1,
+                Range = 20,
+                BrandID = 0,
+                Color = ""
+            };
+
+
+            ProductModelResponse productModelResponse = WebApiOperation.SendPost<GetProductRequest, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTS, request);
+
+            GetProductSpecialAreaResponse getProductSpecialAreaResponse = WebApiOperation.SendPost<string, GetProductSpecialAreaResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GET_PRODUCT_SPECIAL_AREA, "");
+
+
+            if (productModelResponse.Code == Constants.LOGIN_RESPONSE_SUCCESS)
+            {
+                specialAreaResponse.productModels.AddRange(productModelResponse.Products);
+            }
+            if (getProductSpecialAreaResponse.Code == Constants.LOGIN_RESPONSE_SUCCESS)
+            {
+                specialAreaResponse.productSpecialAreaModels.AddRange(getProductSpecialAreaResponse.ProductSpecialAreaModels);
+            }
+
+
+            if (specialAreaResponse.Code != 0)
+            {
+                ViewBag.error = specialAreaResponse.Message;
+                return View();
+            }
+
+            return View(specialAreaResponse);
         }
 
     }
