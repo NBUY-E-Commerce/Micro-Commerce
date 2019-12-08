@@ -25,18 +25,18 @@ namespace B_Commerce.ProductService.Api.Controllers
         [Route("Add")]
         public IActionResult Add(SpecialAreaDTO spacialArea)
         {
-            SpacialArea sa = new SpacialArea
+            SpacialArea special = new SpacialArea
             {
                 Name = spacialArea.Name,
                 Description = spacialArea.Description
             };
-            BaseResponse response = _specialAreaService.Add(sa);
+            SpecialAreaResponse response = _specialAreaService.Add(special);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(201, response);
         }
 
         [HttpPost]
         [Route("Delete")]
-        public IActionResult Delete(int ID)
+        public IActionResult Delete([FromBody]int ID)
         {
             BaseResponse response = _specialAreaService.Delete(ID);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
@@ -48,11 +48,11 @@ namespace B_Commerce.ProductService.Api.Controllers
         {
             SpacialArea sa = new SpacialArea
             {
-                ID= (int)SpacialArea.ID,
+                ID = (int)SpacialArea.ID,
                 Name = SpacialArea.Name,
                 Description = SpacialArea.Description
             };
-            BaseResponse response = _specialAreaService.Update(sa);
+            SpecialAreaResponse response = _specialAreaService.Update(sa);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 
@@ -63,5 +63,14 @@ namespace B_Commerce.ProductService.Api.Controllers
             SpecialAreaResponse response = _specialAreaService.GetSpecialAreas();
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
+
+        [HttpPost]
+        [Route("GetSpecialAreaByID")]
+        public IActionResult GetSpecialAreaByID([FromBody]int ID)
+        {
+            SpecialAreaResponse response = _specialAreaService.GetSpecialAreaByID(ID);
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
+        }
+
     }
 }
