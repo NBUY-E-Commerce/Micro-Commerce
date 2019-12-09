@@ -1,4 +1,9 @@
 ﻿using B_Commerce.SMVC.Areas.Admin.ActionFilters;
+using B_Commerce.SMVC.Areas.Admin.Models;
+using B_Commerce.SMVC.Common;
+using B_Commerce.SMVC.Models;
+using B_Commerce.SMVC.WebApiReqRes;
+using B_Commerce.SMVC.WebApiReqRes.Product;
 using B_Commerce.SMVC.WebHelpers;
 using System;
 using System.Collections.Generic;
@@ -15,22 +20,61 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            AdminCategoryIndexModel adminCategoryIndexModel = new AdminCategoryIndexModel();
+            CategoryModelResponse categoryChangeResponse = WebApiOperation.SendPost<int, CategoryModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_INDEX_URI, 0);
+            adminCategoryIndexModel.CategoryModelResponse = categoryChangeResponse;
+            return View(adminCategoryIndexModel);
         }
-        // GET: Admin/Category
-        [AuterizationFilter("Admin")]
-        public ActionResult Get()
+
+        [HttpPost]
+        public ActionResult Add(CategoryAddRequest request)
         {
-            return View();
+            request.isActive = true;
+            AdminCategoryIndexModel adminCategoryIndexModel = new AdminCategoryIndexModel();
+            if (!ModelState.IsValid)
+            {
+                adminCategoryIndexModel.CategoryAddRequest = request;
+                return RedirectToAction("Index","Category", adminCategoryIndexModel);
+            }
+            CommonResponse addResponse = WebApiOperation.SendPost<CategoryAddRequest, CommonResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_ADD_CATEGORY, request);
+
+            TempData["ResponseCode"] = addResponse.Code;
+            TempData["ResponseMessage"] = addResponse.Message;
+            //mesajlar sayfaya donulecek
+            return RedirectToAction("Index", "Category", adminCategoryIndexModel);
         }
 
-        [AuterizationFilter("Admin", "User")]
-        public ActionResult Add()
+
+        [HttpPost]
+        public ActionResult Update(CategoryUpdateRequest request)
         {
-            return View();
+            //doldur
+            CommonResponse updateResponse = WebApiOperation.SendPost<CategoryUpdateRequest, CommonResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_UPDATE, request);
+            TempData["ResponseCode"] = updateResponse.Code;
+            TempData["ResponseMessage"] = updateResponse.Message;
+            return RedirectToAction("Index", "Category");
+        }
+
+        public PartialViewResult AddFormPartial()
+        {
+            CategoryShortInfoResponse response1 = WebApiOperation.SendPost<int, CategoryShortInfoResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GET_CATEGORY_SHORT_INFO, 1);
+            ViewData["shortInfoCategories"] = response1.CategoryShortInfos;
+
+            return PartialView("_PartialAddCategory");
+        }
+
+        public PartialViewResult UpdateFormPartial(int id)
+        {
+            CategoryShortInfoResponse response1 = WebApiOperation.SendPost<int, CategoryShortInfoResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GET_CATEGORY_SHORT_INFO, 1);
+            ViewData["shortInfoCategories"] = response1.CategoryShortInfos;
+
+            CategoryDetailModelResponse response = WebApiOperation.SendPost<int, CategoryDetailModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETBYID_CATEGORY, id);
+            return PartialView("_PartialUpdateCategory", response.Category);
         }
 
 
-      
+
+
+
     }
 }

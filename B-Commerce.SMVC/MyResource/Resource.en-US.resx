@@ -118,18 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="General_Add" xml:space="preserve">
-    <value>Add</value>
+    <value>Ekle EN</value>
   </data>
   <data name="General_Success" xml:space="preserve">
-    <value>Success</value>
+    <value>Başarılı EN</value>
   </data>
   <data name="General_Update" xml:space="preserve">
-    <value>Update</value>
+    <value>Güncelle EN</value>
+  </data>
+  <data name="MainPage_Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="MainPage_Register" xml:space="preserve">
+    <value>Register</value>
   </data>
   <data name="Product_Description" xml:space="preserve">
-    <value>Description</value>
+    <value>Ürün Açıklama EN</value>
   </data>
   <data name="Product_ProductName" xml:space="preserve">
-    <value>Product NameFromresx</value>
+    <value>Ürün Adı EN</value>
   </data>
 </root>

@@ -78,6 +78,7 @@ namespace B_Commerce.ProductService.Service.Concrete
                             }
                         }
                     };
+
                     _repostiyoryShoppingCart.Add(shoppingCart);
                 }
 
@@ -89,6 +90,14 @@ namespace B_Commerce.ProductService.Service.Concrete
                 }
 
 
+                //**ef core crud işleminden sonra lazyloading aktif olarak bağlı olan productı getirmediği için kendimiz aldık
+                foreach (var item in shoppingCart.ShoppingCartProducts)
+                {
+                    if (item.Product == null)
+                    {
+                        item.Product = _repostiyoryProduct.Get(t => t.ID == item.ProductID).FirstOrDefault();
+                    }
+                }
 
                 decimal total = shoppingCart.ShoppingCartProducts.Sum(t => t.ProductCount * t.Product.Price);
 
@@ -108,7 +117,8 @@ namespace B_Commerce.ProductService.Service.Concrete
                             MainImage = item.Product.ProductImages.FirstOrDefault().URL,
                             Price = item.Product.Price,
                             ProductName = item.Product.ProductName,
-                            ProductID = item.ProductID
+                            ProductID = item.ProductID,
+                            ProductCount=item.ProductCount
                         }
 
                     );
@@ -152,7 +162,8 @@ namespace B_Commerce.ProductService.Service.Concrete
                                 MainImage = item.Product.ProductImages.FirstOrDefault().URL,
                                 Price = item.Product.Price,
                                 ProductName = item.Product.ProductName,
-                                ProductID = item.ProductID
+                                ProductID = item.ProductID,
+                                ProductCount=item.ProductCount
                             }
 
                         );

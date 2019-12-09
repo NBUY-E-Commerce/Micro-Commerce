@@ -1,5 +1,6 @@
 ﻿using B_Commerce.SMVC.Common;
 using B_Commerce.SMVC.WebApiReqRes.Autentication.Login;
+using B_Commerce.SMVC.WebApiReqRes.ShoppingCart;
 using B_Commerce.SMVC.WebHelpers;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace B_Commerce.SMVC.MyHandler
             {
                 //demekki login olmus bir kullanıcı var contexte
                 HttpCookie cok = filterContext.HttpContext.Request.Cookies["visitortoken"];
-                if (cok!=null )// visitor dan gelmiş login olmuş
+                if (cok != null)// visitor dan gelmiş login olmuş
                 {
                     //ilk defa geldiginde visitortoken i boşalt,
                     //
@@ -36,7 +37,7 @@ namespace B_Commerce.SMVC.MyHandler
                 //login olmamaıs bir kullanıcı
 
                 HttpCookie cok = filterContext.HttpContext.Request.Cookies["visitortoken"];
-                if (cok == null || cok.Expires<DateTime.Now)
+                if (cok == null)//|| cok.Expires<DateTime.Now  expiredate neden hatalı Mustafa...
                 {
                     VisitorTokenResponse visitorResponse = WebApiOperation.SendPost<int, VisitorTokenResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_CreateVisitorToken_URI, 7);
 
@@ -53,12 +54,28 @@ namespace B_Commerce.SMVC.MyHandler
 
 
                 }
+                else
+                {
+                    //adamın visitor cookiesi var 
+                    if (filterContext.HttpContext.Session["sepet"] == null)
+                    {
+                        //bu durumda remden sesionlar silinmiş
+                        ShoppingCartResponse response = WebApiOperation.SendPost<string, ShoppingCartResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_SHOPPINGCARD_OFUSER, cok.Value);
+
+                        if (response.Code == 0)
+                        {
+                            filterContext.HttpContext.Session["sepet"] = response;
+                        }
+
+                    }
+
+                }
             }
         }
 
         public void OnActionExecuted(ActionExecutedContext filterContext)
         {
-          
+
         }
     }
 

@@ -28,6 +28,8 @@ namespace B_Commerce.SMVC.WebApiReqRes.ShoppingCart
         public decimal CartDiscount { get; set; }
 
 
+        public int ProductCount { get; set; }
+
 
 
     }

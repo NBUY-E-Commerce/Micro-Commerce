@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace B_Commerce.ProductService.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20191206110419_shoppingcart")]
-    partial class shoppingcart
+    [Migration("20191209071629_scart322")]
+    partial class scart322
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -320,9 +320,6 @@ namespace B_Commerce.ProductService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ShoppingCartID")
-                        .HasColumnType("int");
 
                     b.Property<string>("Token")
                         .HasColumnType("nvarchar(max)");

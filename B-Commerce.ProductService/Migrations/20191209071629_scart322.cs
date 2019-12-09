@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace B_Commerce.ProductService.Migrations
 {
-    public partial class CartAdded : Migration
+    public partial class scart322 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,6 @@ namespace B_Commerce.ProductService.Migrations
                     deleteDateTime = table.Column<DateTime>(nullable: true),
                     insertUserId = table.Column<int>(nullable: true),
                     deleteUserId = table.Column<int>(nullable: true),
-                    ShoppingCartID = table.Column<int>(nullable: false),
                     UserID = table.Column<int>(nullable: false),
                     Token = table.Column<string>(nullable: true)
                 },
@@ -33,6 +32,11 @@ namespace B_Commerce.ProductService.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    isDeleted = table.Column<bool>(nullable: false),
+                    insertDateTime = table.Column<DateTime>(nullable: false),
+                    deleteDateTime = table.Column<DateTime>(nullable: true),
+                    insertUserId = table.Column<int>(nullable: true),
+                    deleteUserId = table.Column<int>(nullable: true),
                     ShoppingCartID = table.Column<int>(nullable: false),
                     ProductID = table.Column<int>(nullable: false),
                     ProductCount = table.Column<int>(nullable: false)

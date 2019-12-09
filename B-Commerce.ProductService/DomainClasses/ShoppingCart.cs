@@ -7,7 +7,7 @@ namespace B_Commerce.ProductService.DomainClasses
 {
    public class ShoppingCart : BaseEntity
     {
-        public int ShoppingCartID { get; set; }
+      
         public int UserID { get; set; }
         public string Token { get; set; }
 

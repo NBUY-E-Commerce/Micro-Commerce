@@ -11,8 +11,8 @@ namespace B_Commerce.ProductService.Common
         public const string IMAGE_SERVER_ADRESS = "http://localhost:90/";
         public const string IMAGE_LOCAL_ADRESS = @".\wwwroot";
 
-        public const string LOGIN_API_BASE_URI = "http://localhost:57095";
-        public const string LOGIN_API_CHECKTOKEN_URI = "http://localhost:62796/api/Login/CheckToken";
+        public const string LOGIN_API_BASE_URI = "http://localhost:63562";
+        public const string LOGIN_API_CHECKTOKEN_URI = "http://localhost:63562/api/Login/CheckToken";
         public enum ResponseCode
         {
             SUCCESS,

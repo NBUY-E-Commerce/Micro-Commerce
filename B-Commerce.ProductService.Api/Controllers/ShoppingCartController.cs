@@ -39,7 +39,7 @@ namespace B_Commerce.ProductService.Api.Controllers
 
         [HttpPost]
         [Route("GetShoppingCartofUser")]
-        public IActionResult GetShoppingCartofUser(string token)
+        public IActionResult GetShoppingCartofUser([FromBody]string token)
         {
             ShoppingCartResponse response = _service.GetShoppingCartofUser(token);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);

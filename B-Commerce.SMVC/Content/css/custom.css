@@ -17,3 +17,12 @@ dropbtn:hover {
     background-color: white;
     color: #4fbfa8;
 }
+
+.basketbutton:hover {
+    cursor: pointer;
+}
+.pageheader {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}

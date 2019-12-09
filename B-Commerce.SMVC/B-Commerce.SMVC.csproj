@@ -17,7 +17,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort>44314</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -212,6 +212,8 @@
     <Compile Include="Areas\Admin\Models\GetProductModelResponse.cs" />
     <Compile Include="Areas\Admin\Models\ProductSpecialAreaModel.cs" />
     <Compile Include="Areas\Admin\Models\GetProductSpecialAreaResponse.cs" />
+    <Compile Include="Areas\Admin\Models\AdminCategoryIndexModel.cs" />
+    <Compile Include="Areas\Admin\Models\CategoryShortInfo.cs" />
     <Compile Include="Areas\Admin\Models\ProductModel.cs" />
     <Compile Include="Areas\Admin\Models\SpecialAreaModel.cs" />
     <Compile Include="Areas\Admin\Models\SpecialAreaResponse.cs" />
@@ -229,9 +231,13 @@
     </Compile>
     <Compile Include="Models\BannerModel.cs" />
     <Compile Include="Models\BannerModelResponse.cs" />
+    <Compile Include="Models\CategoryDetailModel.cs" />
+    <Compile Include="Models\CategoryDetailModelResponse.cs" />
     <Compile Include="Models\BrandFilterModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\CategoryModelResponse.cs" />
+    <Compile Include="Models\CategoryShortInfoResponse.cs" />
+    <Compile Include="Models\CultureModel.cs" />
     <Compile Include="Models\ProductModelResponse.cs" />
     <Compile Include="Models\FacebookModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -243,11 +249,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
-    <Compile Include="MyResource\Resource.en.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.en.resx</DependentUpon>
     </Compile>
     <Compile Include="WebApiReqRes\Autentication\Login\ChangePasswordRequest.cs" />
     <Compile Include="WebApiReqRes\Autentication\Login\CheckTokenResponse.cs" />
@@ -262,8 +263,10 @@
     <Compile Include="WebApiReqRes\Autentication\Login\VerificationRequest.cs" />
     <Compile Include="WebApiReqRes\Autentication\Login\VisitorTokenResponse.cs" />
     <Compile Include="WebApiReqRes\CommonResponse.cs" />
+    <Compile Include="WebApiReqRes\Product\CategoryUpdateRequest.cs" />
     <Compile Include="WebApiReqRes\Product\GetProductRequest.cs" />
     <Compile Include="WebApiReqRes\Product\GetSpecialProductRequest.cs" />
+    <Compile Include="WebApiReqRes\Product\CategoryAddRequest.cs" />
     <Compile Include="WebApiReqRes\ShoppingCart\AddShoppingCartRequest.cs" />
     <Compile Include="WebApiReqRes\ShoppingCart\ShoppingCartModel.cs" />
     <Compile Include="WebApiReqRes\ShoppingCart\ShoppingCartResponse.cs" />
@@ -2149,12 +2152,12 @@
     <Content Include="Areas\Admin\Template\bootstrap\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Areas\Admin\Template\bootstrap\vendor\jquery\jquery.min.map" />
     <Content Include="Areas\Admin\Template\bootstrap\vendor\jquery\jquery.slim.min.map" />
-    <Content Include="Areas\Admin\Views\Category\Get.cshtml" />
     <Content Include="Areas\Admin\Views\Account\Login.cshtml" />
-    <Content Include="Areas\Admin\Views\Category\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Account\Test.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_PartialUpdateCategory.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_PartialAddCategory.cshtml" />
     <Content Include="Areas\Admin\Views\Product\SpecialArea.cshtml" />
     <Content Include="Areas\Admin\Views\Product\GetProductList.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
@@ -2332,6 +2335,8 @@
     <Content Include="Views\Product\Detail.cshtml" />
     <Content Include="Views\Shared\_PartialSameBrandProduct.cshtml" />
     <Content Include="Views\Shared\_PartialProductSearch.cshtml" />
+    <Content Include="Views\ShoppingCart\Details.cshtml" />
+    <Content Include="Views\Shared\_PartialSiteLanguageBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2340,7 +2345,6 @@
     <Folder Include="Content\vendor\font-awesome\scss\" />
     <Folder Include="Template\distribution\vendor\font-awesome\less\" />
     <Folder Include="Template\distribution\vendor\font-awesome\scss\" />
-    <Folder Include="Views\ShoppingCart\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -2352,14 +2356,12 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MyResource\Resource.en.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.en.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="MyResource\Resource.en-US.resx" />
     <EmbeddedResource Include="MyResource\Resource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="MyResource\Resource.tr-TR.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

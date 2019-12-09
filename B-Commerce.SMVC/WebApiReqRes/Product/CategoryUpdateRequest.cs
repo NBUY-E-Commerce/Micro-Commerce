@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace B_Commerce.ProductService.Api.DTO
+namespace B_Commerce.SMVC.WebApiReqRes.Product
 {
-    public class CategoryDTO
+    public class CategoryUpdateRequest
     {
         public int ID { get; set; }
         public string CategoryName { get; set; }
