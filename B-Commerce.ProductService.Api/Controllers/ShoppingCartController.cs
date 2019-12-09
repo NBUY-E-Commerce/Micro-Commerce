@@ -33,7 +33,7 @@ namespace B_Commerce.ProductService.Api.Controllers
             //checktoken başarılı dondugu varsayıp devam ediyoruz. (****eklenecek)
             //checktoken userın idsini donsun
             ShoppingCartResponse response = new ShoppingCartResponse();
-            response = _service.Add(shoppingCartProduct.Token,1, shoppingCartProduct.ProductID,shoppingCartProduct.ProductCount);
+            response = _service.Add(shoppingCartProduct.Token, 1, shoppingCartProduct.ProductID, shoppingCartProduct.ProductCount);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(201, response);
         }
 
@@ -45,6 +45,15 @@ namespace B_Commerce.ProductService.Api.Controllers
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 
-       
+
+        [HttpPost]
+        [Route("UpdateProductCountOfShoppingCart")]
+        public IActionResult UpdateProductCountOfShoppingCart(UpdateProductCountDTO parameters)
+        {
+            ShoppingCartResponse response = _service.UpdateProductCountOfShoppingCart(parameters.Token, parameters.ProductID, parameters.NewCount);
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
+        }
+
+
     }
 }
