@@ -32,25 +32,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                         @foreach (var item in Model.shoppingCartModel.cardProduct)
                                         {
-                                            <tr>
+                                            <tr data-productid="@item.ProductID">
                                                 <td><a href="#"><img src="@item.MainImage" alt="@item.ProductName"></a></td>
                                                 <td><a href="#">@item.ProductName</a></td>
                                                 <td>
-                                                    <input type="number" value="@item.ProductCount" class="form-control">
+                                                    <input name="basketproduct" data-productid="@item.ProductID" type="number" value="@item.ProductCount" class="form-control">
                                                 </td>
                                                 <td>@item.Price</td>
                                                 <td>@(item.ProductCount * item.Price)</td>
                                                 <td>
-                                                    <a href="#"><i class="fa fa-trash-o"></i></a>
-
+                                                    <a href="#" onclick="UpdateBasket(@item.ProductID,0, this)"><i class="fa fa-trash-o"></i></a>
                                                 </td>
                                             </tr>
                                         }
-
-
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -64,14 +60,13 @@
                             <div class="box-footer d-flex justify-content-between flex-column flex-lg-row">
                                 <div class="left"><a href="category.html" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i> Continue shopping</a></div>
                                 <div class="right">
-                                    <button class="btn btn-outline-secondary"><i class="fa fa-refresh"></i> Update cart</button>
+                                    <button type="button" onclick="UpdateAllProductCountsOfBasket()" class="btn btn-outline-secondary"><i class="fa fa-refresh"></i>Update cart</button>
                                     <button type="submit" class="btn btn-primary">Proceed to checkout <i class="fa fa-chevron-right"></i></button>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <!-- /.box-->
-
                 </div>
                 <!-- /.col-lg-9-->
                 <div class="col-lg-3">
@@ -96,11 +91,9 @@
                             </table>
                         </div>
                     </div>
-
                 </div>
                 <!-- /.col-md-3-->
             </div>
         </div>
     </div>
 </div>
-

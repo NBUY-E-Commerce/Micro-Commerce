@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort>44314</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -242,6 +243,7 @@
     <Compile Include="Models\FacebookModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\UpdateProductCountRequest.cs" />
     <Compile Include="MyHandler\VisitorControlHandler.cs" />
     <Compile Include="MyHtmlHelpers\MyHelper.cs" />
     <Compile Include="MyResource\Resource.Designer.cs">

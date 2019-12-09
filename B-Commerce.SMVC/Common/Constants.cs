@@ -65,6 +65,7 @@ namespace B_Commerce.SMVC.Common
         public const string PRODUCT_API_GET_SPECIAL_PRODUCTS = "/api/Product/GetSpecialProducts";
         public const string PRODUCT_API_GET_SAME_BRAND_PRODUCTS = "/api/Product/GetSameBrandProducts";
         public const string PRODUCT_API_SHOPPINGCARD_ADD = "/api/ShoppingCart/Add";
+        public const string PRODUCT_API_SHOPPINGCARD_UPDATE = "/api/ShoppingCart/UpdateProductCountOfShoppingCart";
         public const string PRODUCT_API_SHOPPINGCARD_OFUSER = "/api/ShoppingCart/GetShoppingCartofUser";
 
 
