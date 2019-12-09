@@ -23,14 +23,13 @@
 
                 @Html.Action("ProductDetail", "Product", new { ID = Model.ID })
 
-                <div class="row same-height-row">
-                    @Html.Action("SameBrandProduct", "Product", new { brandID = Model.BrandID })
-                </div>
-                <div class="row same-height-row">
-                    @Html.Action("MoreProducts", "Product", new { CategoryID = Model.CategoryID })
-                </div>
+
+                @Html.Action("SameBrandProduct", "Product", new { brandID = Model.BrandID })
+
+
+                @Html.Action("MoreProducts", "Product", new { CategoryID = Model.CategoryID })
+
             </div>
-            <!-- /.col-md-9-->
         </div>
     </div>
 </div>

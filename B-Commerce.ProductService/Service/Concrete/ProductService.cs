@@ -323,12 +323,25 @@ namespace B_Commerce.ProductService.Service.Concrete
                 RandomGenerator(max, list);
             return temp;
         }
-        public ProductResponse GetSameBrandProducts(int BrandID)
+        public SameBrandProductsResponse GetSameBrandProducts(int BrandID)
         {
-            ProductResponse response = new ProductResponse();
+            SameBrandProductsResponse response = new SameBrandProductsResponse();
             try
             {
-                response.Products = _repositoryProduct.Get(t => t.BrandID == BrandID).ToList();
+                List<Product> products = _repositoryProduct.Get(t => t.BrandID == BrandID).ToList();
+
+                foreach (var product in products)
+                {
+                    response.Products.Add(new ProductModel
+                    {
+                        ID = product.ID,
+                        Description = product.Description,
+                        Price = product.Price,
+                        ProductImages = product.ProductImages.Select(t => t.URLFromAway).ToList(),
+                        ProductName = product.ProductName,
+                        Brand = product.BrandID
+                    });
+                }
 
                 response.SetStatus(Constants.ResponseCode.SUCCESS);
                 return response;
