@@ -104,8 +104,32 @@ namespace B_Commerce.ProductService.Api.Controllers
         public IActionResult GetCategoryShortInfo()
         {
             CategoryShortInfoResponse response = new CategoryShortInfoResponse();
-            response.CategoryShortInfos = _service.GetCategoriesWithShortInfo();
+            try
+            {
+                response.CategoryShortInfos = _service.GetCategoriesWithShortInfo();
+                response.SetStatus(Constants.ResponseCode.SUCCESS);
+            }
+            catch (Exception ex)
+            {
+                response.SetStatus(Constants.ResponseCode.SYSTEM_ERROR,ex.Message);
+            }
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
+        }
 
+        [HttpPost]
+        [Route("GetCategoryBranch")]
+        public IActionResult GetCategoryBranch([FromBody]int ID)
+        {
+            CategoryShortInfoResponse response = new CategoryShortInfoResponse();
+            try
+            {
+                response.CategoryShortInfos = _service.GetCategoryBranch(ID);
+                response.SetStatus(Constants.ResponseCode.SUCCESS);
+            }
+            catch (Exception ex)
+            {
+                response.SetStatus(Constants.ResponseCode.SYSTEM_ERROR, ex.Message);
+            }
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
     }

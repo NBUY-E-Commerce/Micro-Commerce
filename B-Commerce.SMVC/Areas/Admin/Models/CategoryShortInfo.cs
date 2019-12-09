@@ -9,5 +9,6 @@ namespace B_Commerce.SMVC.Areas.Admin.Models
     {
         public int ID { get; set; }
         public string CategoryName { get; set; }
+        public int? MasterCategoryID { get; set; }
     }
 }

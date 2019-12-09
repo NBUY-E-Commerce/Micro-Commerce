@@ -2339,6 +2339,7 @@
     <Content Include="Views\Shared\_PartialProductSearch.cshtml" />
     <Content Include="Views\ShoppingCart\Details.cshtml" />
     <Content Include="Views\Shared\_PartialSiteLanguageBar.cshtml" />
+    <Content Include="Views\Shared\_PartialCategoryBreadCrumb.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

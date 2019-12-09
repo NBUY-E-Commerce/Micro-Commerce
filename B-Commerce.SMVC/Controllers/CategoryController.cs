@@ -79,6 +79,15 @@ namespace B_Commerce.SMVC.Controllers
 
         }
 
+        public ActionResult GetCategoryBranch(int ID, string productName = null)
+        {
+            CategoryShortInfoResponse response = WebApiOperation.SendPost<int, CategoryShortInfoResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GET_CATEGORY_BRANCH, ID);
+            ViewBag.ProductName = productName;
+            return PartialView("_PartialCategoryBreadCrumb", response.CategoryShortInfos);
+
+        }
+
+        
 
 
 

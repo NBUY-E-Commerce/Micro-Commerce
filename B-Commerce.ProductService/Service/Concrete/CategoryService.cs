@@ -125,7 +125,7 @@ namespace B_Commerce.ProductService.Service.Concrete
 
         public List<CategoryShortInfo> GetCategoriesWithShortInfo()
         {
-            List<Category> categories = _repository.Get().ToList();
+            List<Category> categories = _repository.Get().OrderBy(t => t.CategoryName).ToList();
 
             List<CategoryShortInfo> categoryShortInfos = new List<CategoryShortInfo>();
 
@@ -136,11 +136,41 @@ namespace B_Commerce.ProductService.Service.Concrete
                     categoryShortInfos.Add(new CategoryShortInfo
                     {
                         ID = item.ID,
-                        CategoryName = item.CategoryName
+                        CategoryName = item.CategoryName,
+                        MasterCategoryID = item.MasterCategoryID
                     });
                 }
             }
             return categoryShortInfos;
+        }
+
+        public List<CategoryShortInfo> GetCategoryBranch(int ID)
+        {
+            List<CategoryShortInfo> shortInfos = new List<CategoryShortInfo>();
+            getShortInfo(ID, ref shortInfos);
+            
+            void getShortInfo(int? ID, ref List<CategoryShortInfo> categories)
+            {
+                var a = _repository.Get(t => t.ID == ID).Select(t => new { t.ID, t.CategoryName, t.MasterCategoryID }).FirstOrDefault();
+                CategoryShortInfo cat = null;
+                if (a != null)
+                {
+                    cat = new CategoryShortInfo
+                    {
+                        ID = a.ID,
+                        CategoryName = a.CategoryName,
+                        MasterCategoryID = a.MasterCategoryID
+                    };
+                    categories.Add(cat);
+                }
+                
+                if (cat.MasterCategoryID != null)
+                {
+                    getShortInfo(cat.MasterCategoryID,ref categories);
+                }
+            }
+            shortInfos.Reverse();
+            return shortInfos;
         }
     }
 }
