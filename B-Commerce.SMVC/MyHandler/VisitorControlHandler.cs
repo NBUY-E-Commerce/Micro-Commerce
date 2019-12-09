@@ -37,25 +37,25 @@ namespace B_Commerce.SMVC.MyHandler
                 //login olmamaıs bir kullanıcı
 
                 HttpCookie cok = filterContext.HttpContext.Request.Cookies["visitortoken"];
-                if (cok == null)//|| cok.Expires<DateTime.Now  expiredate neden hatalı Mustafa...
+                if (cok == null || Convert.ToDateTime(cok["date"])<DateTime.Now)
                 {
                     VisitorTokenResponse visitorResponse = WebApiOperation.SendPost<int, VisitorTokenResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_CreateVisitorToken_URI, 7);
 
                     if (visitorResponse.Code == 0)
                     {
-
+                       
                         HttpCookie cookie = new HttpCookie("visitortoken");
-                        cookie.Value = visitorResponse.Token;
+                        cookie.Values.Set("token", visitorResponse.Token);
+                        cookie.Values.Set("date", visitorResponse.ExpireDate.ToString());
                         cookie.Expires = visitorResponse.ExpireDate;
                         filterContext.HttpContext.Response.Cookies.Add(cookie);
-
-
                     }
 
 
                 }
                 else
                 {
+
                     //adamın visitor cookiesi var 
                     if (filterContext.HttpContext.Session["sepet"] == null)
                     {
