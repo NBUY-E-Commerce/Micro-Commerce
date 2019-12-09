@@ -319,9 +319,6 @@ namespace B_Commerce.ProductService.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ShoppingCartID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Token")
                         .HasColumnType("nvarchar(max)");
 

@@ -1,14 +1,28 @@
 ﻿
 var basketManager = function () {
 
-    this.addToBasket = function (producid, count) {
+    this.addToBasket = function (producid, count, owner) {
+        $(owner).prepend('<div class="spinner-border loader" role="status" style="width: 15px;height: 15px;">< span class="sr-only"> Loading...</span></div>');
+
         $.ajax({
             url: "/ShoppingCart/AddToCart",
             data: { productid: producid, count: count },
             method: "POST",
-            success: function () {
+            success: function (d) {
 
+                console.log(d);
 
+                if (d.Code != 0) {
+                    location.href = "/Error/General";
+                } else {
+                    //işlem basarılı
+                    $("#currentbasketcount").text(d.shoppingCartModel.cardProduct.length);
+
+                }
+
+            }, complete: function () {
+
+                $(owner).find(".loader").remove();
 
             }
 
@@ -27,10 +41,10 @@ var basketManager = function () {
 
 
 
-function addToBasket(productid) {
+function addToBasket(owner,productid) {
 
     var _basketManager = new basketManager();
-    _basketManager.addToBasket(productid, 1);
+    _basketManager.addToBasket(productid, 1,owner);
 
 }
 

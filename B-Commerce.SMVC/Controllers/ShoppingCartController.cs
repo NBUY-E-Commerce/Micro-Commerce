@@ -14,7 +14,7 @@ namespace B_Commerce.SMVC.Controllers
     public class ShoppingCartController : Controller
     {
         // GET: ShoppingCart
-        public ActionResult AddToCart(int productid, int count)
+        public JsonResult AddToCart(int productid, int count)
         {
             string currentToken = "";
             if (SystemUser.CurrentUser != null)
@@ -28,7 +28,7 @@ namespace B_Commerce.SMVC.Controllers
 
             CheckTokenResponse responseToken = WebApiOperation.SendPost<string, CheckTokenResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_CHECKTOKEN_URI, currentToken);
 
-            if (responseToken.Code!=0)//token süresi geçmiş
+            if (responseToken.Code != 0)//token süresi geçmiş
             {
 
                 //token verification error!!
@@ -47,11 +47,10 @@ namespace B_Commerce.SMVC.Controllers
             //webapiye gidip addtocart(currenttoken,productid,count) çağırıcam
             ShoppingCartResponse response = WebApiOperation.SendPost<AddShoppingCartRequest, ShoppingCartResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_SHOPPINGCARD_ADD, request);
 
-            Session["sepet2"] = "maerhaba dunya";
+            if (response.Code == 0)
+                Session["sepet"] = response;
 
-
-
-            return View();
+            return Json(response);
         }
     }
 }

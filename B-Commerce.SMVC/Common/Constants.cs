@@ -15,7 +15,7 @@ namespace B_Commerce.SMVC.Common
 
 
         //LoginAPI
-        public const string LOGIN_API_BASE_URI = "http://localhost:56640/";//LoginApideki SSL Aktifleştirildi
+        public const string LOGIN_API_BASE_URI = "http://localhost:63562/";//LoginApideki SSL Aktifleştirildi
         public const string LOGIN_API_LOGIN_URI = "/api/Login/Login";
         public const string LOGIN_API_REGISTER_URI = "/api/Login/UserRegistry";
         public const string LOGIN_API_CHECK_VERIFICATION_URI = "/api/Login/CheckVerificationCode";
@@ -29,7 +29,7 @@ namespace B_Commerce.SMVC.Common
         public const int LOGIN_RESPONSE_SUCCESS = 0;
 
         //ProductApi
-        public const string PRODUCT_API_BASE_URI = "http://localhost:57096/";
+        public const string PRODUCT_API_BASE_URI = "http://localhost:63558/";
         public const string PRODUCT_API_INDEX_URI = "/api/Category/GetSubCategoriesByCategoryID";
         public const string PRODUCT_API_SPECIAL_AREA = "/api/SpecialArea/Add";
         public const string PRODUCT_API_PRODUCT_SPECIAL_AREA_ADD = "/api/SpecialArea/ProductSpecialAreaAdd";

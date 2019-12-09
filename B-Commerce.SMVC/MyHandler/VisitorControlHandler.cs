@@ -25,7 +25,7 @@ namespace B_Commerce.SMVC.MyHandler
             {
                 //demekki login olmus bir kullanıcı var contexte
                 HttpCookie cok = filterContext.HttpContext.Request.Cookies["visitortoken"];
-                if (cok!=null )// visitor dan gelmiş login olmuş
+                if (cok != null)// visitor dan gelmiş login olmuş
                 {
                     //ilk defa geldiginde visitortoken i boşalt,
                     //
@@ -36,7 +36,7 @@ namespace B_Commerce.SMVC.MyHandler
                 //login olmamaıs bir kullanıcı
 
                 HttpCookie cok = filterContext.HttpContext.Request.Cookies["visitortoken"];
-                if (cok == null || cok.Expires<DateTime.Now)
+                if (cok == null)//|| cok.Expires<DateTime.Now  expiredate neden hatalı Mustafa...
                 {
                     VisitorTokenResponse visitorResponse = WebApiOperation.SendPost<int, VisitorTokenResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_CreateVisitorToken_URI, 7);
 
@@ -58,7 +58,7 @@ namespace B_Commerce.SMVC.MyHandler
 
         public void OnActionExecuted(ActionExecutedContext filterContext)
         {
-          
+
         }
     }
 

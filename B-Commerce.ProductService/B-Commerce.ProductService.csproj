@@ -12,6 +12,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20191209070233_baskett.cs" />
+    <Compile Remove="Migrations\20191209070233_baskett.Designer.cs" />
+    <Compile Remove="Migrations\20191209071050_scart.cs" />
+    <Compile Remove="Migrations\20191209071050_scart.Designer.cs" />
+    <Compile Remove="Migrations\20191209071448_scart23.cs" />
+    <Compile Remove="Migrations\20191209071448_scart23.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
