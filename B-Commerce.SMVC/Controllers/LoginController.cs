@@ -142,6 +142,14 @@ namespace B_Commerce.SMVC.Controllers
                     Email = loginResponse.Email,
                 };
 
+                ///User ı cookie  e eklemek lazım mı???
+                
+
+                //HttpCookie cookie = new HttpCookie("usertoken");
+                //cookie.Value = SystemUser.CurrentUser.Token;
+                //cookie.Expires = SystemUser.CurrentUser.ExpireDate;
+                //HttpContext.Response.Cookies.Add(cookie);
+
                 if (!loginResponse.IsVerify)
                 {
                     return RedirectToAction("VerifyAccount", "Login", new

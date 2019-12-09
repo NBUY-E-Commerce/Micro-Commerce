@@ -4,15 +4,16 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+
 namespace B_Commerce.ProductService.DBContext
 {
     public class DataContext : DbContext
     {
-       
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
-            optionsBuilder.UseSqlServer(@"Server=LAPTOP-H6M87CA4\SQLEXPRESS;Database=ProductServiceDB;Trusted_Connection=True");
+            optionsBuilder.UseSqlServer(@"Server=SAMSUNGPC\SQLEXPRESS;Database=ProductServiceDB;Trusted_Connection=True");
 
         }
 
