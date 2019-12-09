@@ -54,6 +54,13 @@ namespace B_Commerce.ProductService.Api.Controllers
             BaseResponse response = _specialAreaService.Delete(ID);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
+        [HttpPost]
+        [Route("DeleteProductSpecialAreaByID")]
+        public IActionResult DeleteProductSpecialAreaByID(ProductSpecialAreaModels productSpecialAreaModel)
+        {
+            BaseResponse response = _specialAreaService.DeleteProductSpecialArea(productSpecialAreaModel.ProductID, productSpecialAreaModel.SpecialAreaID);
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
+        }
 
         [HttpPost]
         [Route("Update")]

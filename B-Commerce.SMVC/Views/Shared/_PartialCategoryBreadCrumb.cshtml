@@ -1,0 +1,16 @@
+﻿@model List<B_Commerce.SMVC.Areas.Admin.Models.CategoryShortInfo>
+
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Home</a></li>
+            @foreach (var item in Model)
+            {
+                <li class="breadcrumb-item"><a href="@Url.Action("Products","Category",new { categoryID = item.ID, name = item.CategoryName })">@item.CategoryName</a></li>
+            }
+            @if (ViewBag.ProductName != null)
+            {
+        <li aria-current="page" class="breadcrumb-item active">@ViewBag.ProductName</li>
+            }
+        </ol>
+    </nav>

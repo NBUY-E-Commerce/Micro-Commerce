@@ -67,30 +67,39 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult ProductSpeacialAreaAdd(ProductSpecialAreaModel productSpecialAreaModel)
+        public ActionResult ProductSpeacialAreaAdd()
         {
+            string[] SID = HttpContext.Request.Form.GetValues(0);
+            string[] PID = HttpContext.Request.Form.GetValues(1);
+            ProductSpecialAreaModel productSpecialAreaModel = new ProductSpecialAreaModel
+            {
+                SpecialAreaID = int.Parse(SID[0]),
+                ProductID = int.Parse(PID[0])
+            };
 
             if (!ModelState.IsValid)
             {
                 return View();
             }
+
+
             GetProductSpecialAreaResponse getProductSpecialAreaResponse = WebApiOperation.SendPost<B_Commerce.SMVC.Areas.Admin.Models.ProductSpecialAreaModel, GetProductSpecialAreaResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_PRODUCT_SPECIAL_AREA_ADD, productSpecialAreaModel);
 
-            if (getProductSpecialAreaResponse.Code != 0)
+            if (getProductSpecialAreaResponse.Code == 0)
             {
-                ViewBag.error = getProductSpecialAreaResponse.Message;
-                return View();
+                ViewBag.error = MyResource.Resource.General_Success;
+                return RedirectToAction("SpecialAreaProduct", "Product");
 
             }
-            ViewBag.error = MyResource.Resource.General_Success;
-            return View();
+            ViewBag.error = getProductSpecialAreaResponse.Message;
+            return RedirectToAction("Error", "Home");
         }
 
         [HttpGet]
         [ValidateInput(false)]
-        public ActionResult Update(int ID)
+        public ActionResult Update(int ProductID)
         {
-            B_Commerce.SMVC.Areas.Admin.Models.GetProductModelResponse Response = WebApiOperation.SendPost<int, B_Commerce.SMVC.Areas.Admin.Models.GetProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTBYID, ID);
+            B_Commerce.SMVC.Areas.Admin.Models.GetProductModelResponse Response = WebApiOperation.SendPost<int, B_Commerce.SMVC.Areas.Admin.Models.GetProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETPRODUCTBYID, ProductID);
             if (!ModelState.IsValid)
             {
                 return View("~/Areas/Admin/Views/Product/Add.cshtml", Response.GetProductModel);
@@ -252,7 +261,12 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
 
             return View("~/Areas/Admin/Views/Product/SpecialArea.cshtml");
         }
+        public ActionResult DeleteProductSpecialAreaByID(int ProductID, int SpecialAreaID)
+        {
+            CommonResponse Response = WebApiOperation.SendPost<object, CommonResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_PRODUCT_SPECIAL_AREA_DELETE, new { ProductId = ProductID, SpecialAreaId = SpecialAreaID });
 
+            return RedirectToAction("SpecialAreaProduct", "Product");
+        }
         public ActionResult SpecialAreaProduct()
         {
             SpecialAreaResponse specialAreaResponse = WebApiOperation.SendPost<object, SpecialAreaResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETSPECIAL_AREA, null);

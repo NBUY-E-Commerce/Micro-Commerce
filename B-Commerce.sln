@@ -43,9 +43,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LogServiceMQ", "LogServiceM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "B-Commerce.ProductService.Api", "B-Commerce.ProductService.Api\B-Commerce.ProductService.Api.csproj", "{853D41AF-2D43-4D0E-B37F-52C30F8AAE22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B-Commerce.LogService", "B-Commerce.LogService\B-Commerce.LogService.csproj", "{633AF122-A41E-4BDC-97C0-16C4B780C040}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "B-Commerce.LogService", "B-Commerce.LogService\B-Commerce.LogService.csproj", "{633AF122-A41E-4BDC-97C0-16C4B780C040}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B-Commerce.LogServiceApi", "B-Commerce.LogServiceApi\B-Commerce.LogServiceApi.csproj", "{018C691D-073A-4C15-A186-92F90E2B6850}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "B-Commerce.LogServiceApi", "B-Commerce.LogServiceApi\B-Commerce.LogServiceApi.csproj", "{018C691D-073A-4C15-A186-92F90E2B6850}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

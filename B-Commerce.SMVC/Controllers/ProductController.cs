@@ -87,10 +87,53 @@ namespace B_Commerce.SMVC.Controllers
         public ActionResult SameBrandProduct(int brandID)
         {
 
-            ProductModelResponse response = WebApiOperation.SendPost<int, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GET_SAME_BRAND_PRODUCTS, brandID);
+            SameBrandProductsResponse response = WebApiOperation.SendPost<int, SameBrandProductsResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GET_SAME_BRAND_PRODUCTS, brandID);
+            List<ProductModel> productModels = new List<ProductModel>();
+            if (response.Products.Count > 3)
+            {
+                System.Random rnd = new System.Random();
+                List<int> randomIndexes = new List<int>();
+                for (int i = 0; i < 3; i++)
+                {
+                    int a = rnd.Next(response.Products.Count);
+                    if (randomIndexes.Contains(a))
+                    {
+                        i--;
+                    }
+                    else
+                    {
+                        randomIndexes.Add(a);
+                    }
+                }
 
-            return PartialView("_PartialSameBrandProduct", response.Products);
+                foreach (var i in randomIndexes)
+                {
+                    productModels.Add(response.Products[i]);
+                }
+            }
+            else
+            {
+                productModels = response.Products;
+            }
+
+            return PartialView("_PartialSameBrandProduct", productModels);
 
         }
+
+        [HttpPost]
+        public ActionResult ProductSearchAjax(string searchText)
+        {
+            ProductModelResponse productResult = WebApiOperation.SendPost<string, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_SEARCH_FOR_PRODUCTS, searchText);
+            //List<Models.Product> products = MockDb.products.Where(t => t.Name.Contains(param)).ToList();
+
+
+           
+
+            
+            //return PartialView("_PartialProductList", products);
+            return PartialView("_PartialProductSearch", productResult.Products);
+
+        }
+
     }
 }

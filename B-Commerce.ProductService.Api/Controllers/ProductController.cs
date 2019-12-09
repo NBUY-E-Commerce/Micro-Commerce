@@ -139,8 +139,18 @@ namespace B_Commerce.ProductService.Api.Controllers
         [Route("GetSameBrandProducts")]
         public IActionResult GetSameBrandProducts([FromBody]int brandID)
         {
-            ProductResponse response = _service.GetSameBrandProducts(brandID);
+            SameBrandProductsResponse response = _service.GetSameBrandProducts(brandID);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
+
+        [HttpPost]
+        [Route("SearchforProducts")]
+        public IActionResult SearchforProducts([FromBody]string searchText)
+        {
+            ProductModelResponse response = _service.SearchforProducts(searchText);
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
+        }
+
+
     }
 }

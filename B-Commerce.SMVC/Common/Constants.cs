@@ -42,6 +42,8 @@ namespace B_Commerce.SMVC.Common
         public const string PRODUCT_API_INDEX_URI = "/api/Category/GetSubCategoriesByCategoryID";
         public const string PRODUCT_API_SPECIAL_AREA = "/api/SpecialArea/Add";
         public const string PRODUCT_API_PRODUCT_SPECIAL_AREA_ADD = "/api/SpecialArea/ProductSpecialAreaAdd";
+        public const string PRODUCT_API_PRODUCT_SPECIAL_AREA_DELETE = "/api/SpecialArea/DeleteProductSpecialAreaByID";
+
 
         public const string PRODUCT_API_GETSPECIAL_AREA = "/api/SpecialArea/GetSpecialAreas";
         public const string PRODUCT_API_GET_PRODUCT_SPECIAL_AREA = "/api/SpecialArea/GetProductSpecialAreas";
@@ -52,6 +54,7 @@ namespace B_Commerce.SMVC.Common
         public const string PRODUCT_API_ADD_CATEGORY = "/api/Category/Add";
         public const string PRODUCT_API_GETBYID_CATEGORY = "/api/Category/GetByID";
         public const string PRODUCT_API_GET_CATEGORY_SHORT_INFO = "/api/Category/GetCategoryShortInfo";
+        public const string PRODUCT_API_GET_CATEGORY_BRANCH = "/api/Category/GetCategoryBranch";
         public const string PRODUCT_API_ADD = "/api/Product/Add";
         public const string PRODUCT_API_GETPRODUCTBYID = "/api/Product/GetProductByID";
         public const string PRODUCT_API_UPDATE = "/api/Product/Update";
@@ -60,11 +63,13 @@ namespace B_Commerce.SMVC.Common
         public const string PRODUCT_API_PRODUCTS_COLOR = "/api/Product/ProductsColor";
         public const string PRODUCT_API_GETPRODUCTS_COLOR = "/api/Product/GetProductsColor";
         public const string PRODUCT_API_GETPRODUCTS_BRAND = "/api/Product/ProductsBrand";
+        public const string PRODUCT_API_SEARCH_FOR_PRODUCTS = "/api/Product/SearchforProducts";
 
         public const string PRODUCT_API_BANNER_URI = "/api/Product/GetBanners";
         public const string PRODUCT_API_GET_SPECIAL_PRODUCTS = "/api/Product/GetSpecialProducts";
         public const string PRODUCT_API_GET_SAME_BRAND_PRODUCTS = "/api/Product/GetSameBrandProducts";
         public const string PRODUCT_API_SHOPPINGCARD_ADD = "/api/ShoppingCart/Add";
+        public const string PRODUCT_API_SHOPPINGCARD_UPDATE = "/api/ShoppingCart/UpdateProductCountOfShoppingCart";
         public const string PRODUCT_API_SHOPPINGCARD_OFUSER = "/api/ShoppingCart/GetShoppingCartofUser";
 
 

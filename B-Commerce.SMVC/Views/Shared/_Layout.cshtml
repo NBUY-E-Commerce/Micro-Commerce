@@ -44,7 +44,7 @@
         </div>
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a href="index.html" class="navbar-brand home"><img src="/img/logo.png" alt="Obaju logo" class="d-none d-md-inline-block"><img src="/img/logo-small.png" alt="Obaju logo" class="d-inline-block d-md-none"><span class="sr-only">Obaju - go to homepage</span></a>
+                <a href="/Home/Index" class="navbar-brand home"><img src="/img/logo.png" alt="Obaju logo" class="d-none d-md-inline-block"><img src="/img/logo-small.png" alt="Obaju logo" class="d-inline-block d-md-none"><span class="sr-only">Obaju - go to homepage</span></a>
                 <div class="navbar-buttons">
                     <button type="button" data-toggle="collapse" data-target="#navigation" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
                     <button type="button" data-toggle="collapse" data-target="#search" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></button><a href="basket.html" class="btn btn-outline-secondary navbar-toggler"><i class="fa fa-shopping-cart"></i></a>
@@ -100,25 +100,25 @@
                 <!-- /.col-lg-3-->
                 <div class="col-lg-3 col-md-6">
                     <h4 class="mb-3">Top categories</h4>
-                    <h5>Men</h5>
+                    <h5>Elektronik</h5>
                     <ul class="list-unstyled">
-                        <li><a href="category.html">T-shirts</a></li>
-                        <li><a href="category.html">Shirts</a></li>
-                        <li><a href="category.html">Accessories</a></li>
+                        <li><a href="/CategoryProduct/13/bilgisayar">Bilgisayar</a></li>
                     </ul>
-                    <h5>Ladies</h5>
+                    <h5>Kozmetik</h5>
                     <ul class="list-unstyled">
-                        <li><a href="category.html">T-shirts</a></li>
-                        <li><a href="category.html">Skirts</a></li>
-                        <li><a href="category.html">Pants</a></li>
-                        <li><a href="category.html">Accessories</a></li>
+                        <li><a href="/CategoryProduct/23/parfum-deodorant">Parfüm-Deodorant</a></li>
+                        <li><a href="/CategoryProduct/24/sac-bakim-sekillendirme">Saç Bakım & Şekillendirme</a></li>
+                    </ul>
+                    <h5>Ev ve Yaşam</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/CategoryProduct/19/ev-tekstili">Ev Tekstili</a></li>
+                        <li><a href="/CategoryProduct/20/mutfak-gerecleri">Mutfak Gereçleri</a></li>
                     </ul>
                 </div>
                 <!-- /.col-lg-3-->
                 <div class="col-lg-3 col-md-6">
-                    Caferağa, Mühürdar Cd. No:76, 34710 Kadıköy/İstanbul
-                    <h4 class="mb-3">Where to find us</h4>
-                    <p><strong>Obaju Ltd.</strong><br>Caferağa<br>Mühürdar Cd. No:76<br>No:76, 34710<br>Kadıköy/İstanbul<br></p><a href="#">Go to contact page</a>
+                    <h4>Adress</h4>
+                    <p><strong>Bilge Adam</strong><br>Caferağa<br>Mühürdar Cd. No:76<br>No:76, 34710<br>Kadıköy/İstanbul<br></p>
                     <hr class="d-block d-md-none">
                 </div>
                 <!-- /.col-lg-3-->
@@ -216,17 +216,17 @@
             $("#searchBox").keyup(function () {
                 var searchtext = $("#searchBox").val();
                 console.log(searchtext);
-                $("#resultarea").html("Yükleniyor.....");
+                $("#resultarea").html("<div class='spinner-border text-warning' role='status'><span class='sr-only'>Loading...</span></div>")
                 $.ajax({
-                    url: "/Category/CategorySearchAjax",
-                    data: { param: searchtext },
+                    url: "/Product/ProductSearchAjax",
+                    data: { searchText: searchtext },
                     method: "POST",
                     success: function (d) {
 
                         $("#resultarea").html(d);
 
                     }, error: function () {
-
+                        $("#resultarea").html("");
                         alert("hata olustu");
                     }, complete: function () {
 

@@ -14,5 +14,6 @@ namespace B_Commerce.ProductService.Service.Abstract
         CategoryModelResponse GetSubCategoriesByCategoryID(int? id);
         CategoryResponse GetByID(int id);
         List<CategoryShortInfo> GetCategoriesWithShortInfo();
+        public List<CategoryShortInfo> GetCategoryBranch(int ID);
     }
 }

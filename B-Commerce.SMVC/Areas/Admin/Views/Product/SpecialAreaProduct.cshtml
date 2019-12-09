@@ -6,10 +6,20 @@
 @using (Html.BeginForm("ProductSpeacialAreaAdd", "Product", FormMethod.Post))
 {
     <div class="form-group">
-        @Html.DropDownListFor(t => t.SpecialAreas, new SelectList(Model.SpecialAreas, "ID", "Name"), new { id = "SpecialAreaID", name = "SpecialAreaID" })
+        <select name="SpeacialAreaID">
+            @foreach (var item in Model.SpecialAreas)
+            {
+                <option value="@item.ID">@item.Name</option>
+            }
+        </select>
     </div>
     <div class="form-group">
-        @Html.DropDownListFor(t => t.productModels, new SelectList(Model.productModels, "ID", "ProductName"), new { id = "ProductID", name = "ProductID"})
+        <select name="ProductID">
+            @foreach (var item in Model.productModels)
+            {
+                <option value="@item.ID">@item.ProductName</option>
+            }
+        </select>
     </div>
     <div>
         <button type="submit" class="btn btn-primary">Add</button>
@@ -34,7 +44,7 @@
                 <td>@item.SpecialAreaName</td>
                 <td>@item.ProductID</td>
                 <td>@item.ProductName</td>
-                <td><a href="#">Sil</a></td>
+                <td>@Html.ActionLink("Sil", "DeleteProductSpecialAreaByID", "Product",new { ProductID = item.ProductID, SpecialAreaID = item.SpecialAreaID },new {@class="btn btn-warning" })</td>
             </tr>
         }
     </tbody>

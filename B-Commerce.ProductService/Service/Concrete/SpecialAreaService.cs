@@ -73,6 +73,25 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return response;
             }
         }
+        public BaseResponse DeleteProductSpecialArea(int ProductID, int SpecialAreaID)
+        {
+            BaseResponse response = new BaseResponse();
+            try
+            {
+                ProductSpacialAreaTable productSpacialAreaTable = _repositoryProductSpecialArea.Get(t => t.ProductID == ProductID && t.SpacialAreaID == SpecialAreaID).FirstOrDefault();
+
+                _repositoryProductSpecialArea.Delete(productSpacialAreaTable);
+                _unitOfWork.SaveChanges();
+
+                response.SetStatus(Common.Constants.ResponseCode.SUCCESS);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.SetStatus(Common.Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                return response;
+            }
+        }
 
         public SpecialAreaResponse GetSpecialAreas()
         {

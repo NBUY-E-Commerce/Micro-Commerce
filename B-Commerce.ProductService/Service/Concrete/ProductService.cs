@@ -291,7 +291,7 @@ namespace B_Commerce.ProductService.Service.Concrete
                 }
                 for (int i = 0; i < request.Range; i++)
                 {
-                    Product product =_repositoryProduct.Get(t => t.CategoryID == request.CategoryID).OrderBy(t => t.ID).Skip(randoms[i]).Take(1).SingleOrDefault();
+                    Product product = _repositoryProduct.Get(t => t.CategoryID == request.CategoryID).OrderBy(t => t.ID).Skip(randoms[i]).Take(1).SingleOrDefault();
                     response.Products.Add(new ProductModel
                     {
                         ID = product.ID,
@@ -323,12 +323,25 @@ namespace B_Commerce.ProductService.Service.Concrete
                 RandomGenerator(max, list);
             return temp;
         }
-        public ProductResponse GetSameBrandProducts(int BrandID)
+        public SameBrandProductsResponse GetSameBrandProducts(int BrandID)
         {
-            ProductResponse response = new ProductResponse();
+            SameBrandProductsResponse response = new SameBrandProductsResponse();
             try
             {
-                response.Products = _repositoryProduct.Get(t => t.BrandID == BrandID).ToList();
+                List<Product> products = _repositoryProduct.Get(t => t.BrandID == BrandID).ToList();
+
+                foreach (var product in products)
+                {
+                    response.Products.Add(new ProductModel
+                    {
+                        ID = product.ID,
+                        Description = product.Description,
+                        Price = product.Price,
+                        ProductImages = product.ProductImages.Select(t => t.URLFromAway).ToList(),
+                        ProductName = product.ProductName,
+                        Brand = product.BrandID
+                    });
+                }
 
                 response.SetStatus(Constants.ResponseCode.SUCCESS);
                 return response;
@@ -339,7 +352,53 @@ namespace B_Commerce.ProductService.Service.Concrete
                 response.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return response;
             }
-            
+
         }
+        public ProductModelResponse SearchforProducts(string searchText)
+        {
+
+            ProductModelResponse response = new ProductModelResponse();
+            try
+            {
+                if (searchText.Length > 3)
+                {
+
+                    var products = _repositoryProduct.Get(t => t.ProductName.Contains(searchText)).ToList();
+
+                    foreach (Product item in products)
+                    {
+
+                        ProductModel productModel = new ProductModel
+                        {
+                            ID = item.ID,
+                            Description = item.Description,
+                            Price = item.Price,
+                            ProductImages = item.ProductImages.Select(t => t.URLFromAway).ToList(),
+                            ProductName = item.ProductName,
+                            Brand = item.BrandID
+
+                        };
+                        response.Products.Add(productModel);
+                    }
+                    response.SetStatus(Constants.ResponseCode.SUCCESS);
+                    return response;
+                }
+                else
+                {
+                    return response;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                response.Products = null;
+                response.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                return response;
+            }
+
+
+        }
+
+
     }
 }
