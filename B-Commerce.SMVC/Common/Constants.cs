@@ -24,7 +24,7 @@ namespace B_Commerce.SMVC.Common
 
 
         //LoginAPI
-        public const string LOGIN_API_BASE_URI = "http://localhost:49562/";//LoginApideki SSL Aktifleştirildi
+        public const string LOGIN_API_BASE_URI = "http://localhost:58247/";//LoginApideki SSL Aktifleştirildi
         public const string LOGIN_API_LOGIN_URI = "/api/Login/Login";
         public const string LOGIN_API_REGISTER_URI = "/api/Login/UserRegistry";
         public const string LOGIN_API_CHECK_VERIFICATION_URI = "/api/Login/CheckVerificationCode";
@@ -38,10 +38,12 @@ namespace B_Commerce.SMVC.Common
         public const int LOGIN_RESPONSE_SUCCESS = 0;
 
         //ProductApi
-        public const string PRODUCT_API_BASE_URI = "http://localhost:49559/";
+        public const string PRODUCT_API_BASE_URI = "http://localhost:58252/";
         public const string PRODUCT_API_INDEX_URI = "/api/Category/GetSubCategoriesByCategoryID";
         public const string PRODUCT_API_SPECIAL_AREA = "/api/SpecialArea/Add";
         public const string PRODUCT_API_PRODUCT_SPECIAL_AREA_ADD = "/api/SpecialArea/ProductSpecialAreaAdd";
+        public const string PRODUCT_API_PRODUCT_SPECIAL_AREA_DELETE = "/api/SpecialArea/DeleteProductSpecialAreaByID";
+
 
         public const string PRODUCT_API_GETSPECIAL_AREA = "/api/SpecialArea/GetSpecialAreas";
         public const string PRODUCT_API_GET_PRODUCT_SPECIAL_AREA = "/api/SpecialArea/GetProductSpecialAreas";
@@ -61,7 +63,6 @@ namespace B_Commerce.SMVC.Common
         public const string PRODUCT_API_PRODUCTS_COLOR = "/api/Product/ProductsColor";
         public const string PRODUCT_API_GETPRODUCTS_COLOR = "/api/Product/GetProductsColor";
         public const string PRODUCT_API_GETPRODUCTS_BRAND = "/api/Product/ProductsBrand";
-        public const string PRODUCT_API_SEARCH_FOR_PRODUCTS = "/api/Product/SearchforProducts";
 
         public const string PRODUCT_API_BANNER_URI = "/api/Product/GetBanners";
         public const string PRODUCT_API_GET_SPECIAL_PRODUCTS = "/api/Product/GetSpecialProducts";

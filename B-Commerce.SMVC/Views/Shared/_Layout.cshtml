@@ -216,7 +216,7 @@
             $("#searchBox").keyup(function () {
                 var searchtext = $("#searchBox").val();
                 console.log(searchtext);
-                $("#resultarea").html("Yükleniyor.....");
+                $("#resultarea").html("<div class='spinner-border text-warning' role='status'><span class='sr-only'>Loading...</span></div>")
                 $.ajax({
                     url: "/Product/ProductSearchAjax",
                     data: { searchText: searchtext },
