@@ -38,7 +38,7 @@ namespace B_Commerce.SMVC.Common
         public const int LOGIN_RESPONSE_SUCCESS = 0;
 
         //ProductApi
-        public const string PRODUCT_API_BASE_URI = "http://localhost:63558/";
+        public const string PRODUCT_API_BASE_URI = "http://localhost:50984/";
         public const string PRODUCT_API_INDEX_URI = "/api/Category/GetSubCategoriesByCategoryID";
         public const string PRODUCT_API_SPECIAL_AREA = "/api/SpecialArea/Add";
         public const string PRODUCT_API_PRODUCT_SPECIAL_AREA_ADD = "/api/SpecialArea/ProductSpecialAreaAdd";

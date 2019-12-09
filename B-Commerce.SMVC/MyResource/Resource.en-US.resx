@@ -117,14 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="E1" xml:space="preserve">
+    <value>Electronic</value>
+  </data>
+  <data name="E2" xml:space="preserve">
+    <value>Home</value>
+  </data>
   <data name="General_Add" xml:space="preserve">
-    <value>Ekle EN</value>
+    <value>Add</value>
   </data>
   <data name="General_Success" xml:space="preserve">
-    <value>Başarılı EN</value>
+    <value>Success</value>
   </data>
   <data name="General_Update" xml:space="preserve">
-    <value>Güncelle EN</value>
+    <value>Update</value>
+  </data>
+  <data name="K1" xml:space="preserve">
+    <value>Cosmetic</value>
+  </data>
+  <data name="M1" xml:space="preserve">
+    <value>Gem &amp; Clock</value>
   </data>
   <data name="MainPage_Login" xml:space="preserve">
     <value>Login</value>
@@ -132,10 +144,16 @@
   <data name="MainPage_Register" xml:space="preserve">
     <value>Register</value>
   </data>
+  <data name="O1" xml:space="preserve">
+    <value>Office İtems</value>
+  </data>
   <data name="Product_Description" xml:space="preserve">
-    <value>Ürün Açıklama EN</value>
+    <value>Product Description</value>
   </data>
   <data name="Product_ProductName" xml:space="preserve">
-    <value>Ürün Adı EN</value>
+    <value>Product Name</value>
+  </data>
+  <data name="S1" xml:space="preserve">
+    <value>Sports &amp; Outdoor</value>
   </data>
 </root>
