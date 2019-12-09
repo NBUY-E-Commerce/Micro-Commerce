@@ -51,7 +51,7 @@ namespace B_Commerce.ProductService.Api.Controllers
 
         [HttpPost]
         [Route("Update")]
-        public IActionResult Update(Category category)
+        public IActionResult Update(CategoryDTO category)
         {
             Category updatecategory = new Category
             {
@@ -66,10 +66,46 @@ namespace B_Commerce.ProductService.Api.Controllers
         }
 
         [HttpPost]
+        [Route("GetByID")]
+        public IActionResult GetByID([FromBody]int id)
+        {
+            CategoryResponse categoryResponse = _service.GetByID(id);
+
+            CategoryDTO categoryDTO = new CategoryDTO { 
+            ID = categoryResponse.Category.ID,
+            CategoryName = categoryResponse.Category.CategoryName,
+            Description = categoryResponse.Category.Description,
+            isActive = categoryResponse.Category.isActive,
+            MasterCategoryID = categoryResponse.Category.MasterCategoryID
+            };
+
+            CategoryDTOResponse response = new CategoryDTOResponse
+            {
+                Code = categoryResponse.Code,
+                ExceptionMessage = categoryResponse.ExceptionMessage,
+                Message = categoryResponse.Message
+            };
+
+            response.Category = categoryDTO;
+
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(201, response);
+        }
+
+        [HttpPost]
         [Route("GetSubCategoriesByCategoryID")]
-        public IActionResult GetSubCategoriesByCategoryID(int id)
+        public IActionResult GetSubCategoriesByCategoryID([FromBody]int id)
         {
             CategoryModelResponse response = _service.GetSubCategoriesByCategoryID(id);
+            return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
+        }
+
+        [HttpPost]
+        [Route("GetCategoryShortInfo")]
+        public IActionResult GetCategoryShortInfo()
+        {
+            CategoryShortInfoResponse response = new CategoryShortInfoResponse();
+            response.CategoryShortInfos = _service.GetCategoriesWithShortInfo();
+
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
     }

@@ -12,5 +12,7 @@ namespace B_Commerce.ProductService.Service.Abstract
         BaseResponse Delete(Category category);
         BaseResponse Update(Category category);
         CategoryModelResponse GetSubCategoriesByCategoryID(int? id);
+        CategoryResponse GetByID(int id);
+        List<CategoryShortInfo> GetCategoriesWithShortInfo();
     }
 }

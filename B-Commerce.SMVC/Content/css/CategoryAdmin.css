@@ -42,6 +42,7 @@ ul,
 
 .nested {
     display: none;
+    border-left: 1px solid gray;
 }
 
 .card-header .btn-edit:hover,
@@ -82,4 +83,8 @@ i.fas {
 
 .btn-group-sm {
     display: inline-block;
+}
+
+#subcategories li {
+    line-height: 36px;
 }

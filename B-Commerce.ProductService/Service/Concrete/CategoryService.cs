@@ -59,7 +59,7 @@ namespace B_Commerce.ProductService.Service.Concrete
         }
         public BaseResponse Update(Category category)
         {
-         
+
             BaseResponse baseResponse = new BaseResponse();
             try
             {
@@ -82,7 +82,7 @@ namespace B_Commerce.ProductService.Service.Concrete
             CategoryModelResponse categoryResponse = new CategoryModelResponse();
             try
             {
-                List<Category> categories = _repository.Get(t =>t.MasterCategoryID == id).ToList();
+                List<Category> categories = _repository.Get(t => t.MasterCategoryID == id).ToList();
 
 
                 categoryResponse.Categories = CategoryModel.GetCategoryModelFromData(categories);
@@ -91,10 +91,56 @@ namespace B_Commerce.ProductService.Service.Concrete
             }
             catch (Exception ex)
             {
-              
+
                 categoryResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return categoryResponse;
             }
+        }
+
+        public CategoryResponse GetByID(int id)
+        {
+
+            CategoryResponse categoryResponse = new CategoryResponse();
+            try
+            {
+                Category category = _repository.Get(t => t.ID == id).FirstOrDefault();
+
+                if (category == null)
+                {
+                    categoryResponse.SetStatus(ResponseCode.NOT_FOUND_ENTITY);
+                    return categoryResponse;
+                }
+
+                categoryResponse.Category = category;
+                categoryResponse.SetStatus(ResponseCode.SUCCESS);
+                return categoryResponse;
+            }
+            catch (Exception ex)
+            {
+
+                categoryResponse.SetStatus(ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                return categoryResponse;
+            }
+        }
+
+        public List<CategoryShortInfo> GetCategoriesWithShortInfo()
+        {
+            List<Category> categories = _repository.Get().ToList();
+
+            List<CategoryShortInfo> categoryShortInfos = new List<CategoryShortInfo>();
+
+            if (categories.Count > 0)
+            {
+                foreach (Category item in categories)
+                {
+                    categoryShortInfos.Add(new CategoryShortInfo
+                    {
+                        ID = item.ID,
+                        CategoryName = item.CategoryName
+                    });
+                }
+            }
+            return categoryShortInfos;
         }
     }
 }

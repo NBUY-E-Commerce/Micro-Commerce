@@ -212,6 +212,8 @@
     <Compile Include="Areas\Admin\Models\GetProductModelResponse.cs" />
     <Compile Include="Areas\Admin\Models\ProductSpecialAreaModel.cs" />
     <Compile Include="Areas\Admin\Models\GetProductSpecialAreaResponse.cs" />
+    <Compile Include="Areas\Admin\Models\AdminCategoryIndexModel.cs" />
+    <Compile Include="Areas\Admin\Models\CategoryShortInfo.cs" />
     <Compile Include="Areas\Admin\Models\ProductModel.cs" />
     <Compile Include="Areas\Admin\Models\SpecialAreaModel.cs" />
     <Compile Include="Areas\Admin\Models\SpecialAreaResponse.cs" />
@@ -229,9 +231,12 @@
     </Compile>
     <Compile Include="Models\BannerModel.cs" />
     <Compile Include="Models\BannerModelResponse.cs" />
+    <Compile Include="Models\CategoryDetailModel.cs" />
+    <Compile Include="Models\CategoryDetailModelResponse.cs" />
     <Compile Include="Models\BrandFilterModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\CategoryModelResponse.cs" />
+    <Compile Include="Models\CategoryShortInfoResponse.cs" />
     <Compile Include="Models\ProductModelResponse.cs" />
     <Compile Include="Models\FacebookModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -260,8 +265,10 @@
     <Compile Include="WebApiReqRes\Autentication\Login\VerificationRequest.cs" />
     <Compile Include="WebApiReqRes\Autentication\Login\VisitorTokenResponse.cs" />
     <Compile Include="WebApiReqRes\CommonResponse.cs" />
+    <Compile Include="WebApiReqRes\Product\CategoryUpdateRequest.cs" />
     <Compile Include="WebApiReqRes\Product\GetProductRequest.cs" />
     <Compile Include="WebApiReqRes\Product\GetSpecialProductRequest.cs" />
+    <Compile Include="WebApiReqRes\Product\CategoryAddRequest.cs" />
     <Compile Include="WebApiReqRes\ShoppingCart\AddShoppingCartRequest.cs" />
     <Compile Include="WebApiReqRes\ShoppingCart\ShoppingCartModel.cs" />
     <Compile Include="WebApiReqRes\ShoppingCart\ShoppingCartResponse.cs" />
@@ -2147,12 +2154,12 @@
     <Content Include="Areas\Admin\Template\bootstrap\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Areas\Admin\Template\bootstrap\vendor\jquery\jquery.min.map" />
     <Content Include="Areas\Admin\Template\bootstrap\vendor\jquery\jquery.slim.min.map" />
-    <Content Include="Areas\Admin\Views\Category\Get.cshtml" />
     <Content Include="Areas\Admin\Views\Account\Login.cshtml" />
-    <Content Include="Areas\Admin\Views\Category\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Account\Test.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_PartialUpdateCategory.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_PartialAddCategory.cshtml" />
     <Content Include="Areas\Admin\Views\Product\SpecialArea.cshtml" />
     <Content Include="Areas\Admin\Views\Product\GetProductList.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />

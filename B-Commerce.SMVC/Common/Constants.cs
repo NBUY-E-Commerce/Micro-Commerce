@@ -40,6 +40,9 @@ namespace B_Commerce.SMVC.Common
         public const string PRODUCT_API_GETSPECIAL_AREA_BYID = "/api/SpecialArea/GetSpecialAreaByID";
         public const string PRODUCT_API_DELETE_SPECIAL_AREA = "/api/SpecialArea/Delete";
 
+        public const string PRODUCT_API_ADD_CATEGORY = "/api/Category/Add";
+        public const string PRODUCT_API_GETBYID_CATEGORY = "/api/Category/GetByID";
+        public const string PRODUCT_API_GET_CATEGORY_SHORT_INFO = "/api/Category/GetCategoryShortInfo";
         public const string PRODUCT_API_ADD = "/api/Product/Add";
         public const string PRODUCT_API_GETPRODUCTBYID = "/api/Product/GetProductByID";
         public const string PRODUCT_API_UPDATE = "/api/Product/Update";

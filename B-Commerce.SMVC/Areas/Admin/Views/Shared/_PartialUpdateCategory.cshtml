@@ -1,0 +1,36 @@
+﻿@model CategoryDetailModel
+
+
+@using (Html.BeginForm("Update", "Category", FormMethod.Post, new { id = "editForm" }))
+{
+    @Html.HiddenFor(t => t.ID)
+    <div class="form-group">
+        @Html.TextBoxFor(t => t.CategoryName, new { @class = "form-control", placeholder = "Category Name" })
+    </div>
+    <div class="form-group">
+        @Html.TextAreaFor(t => t.Description, new { @class = "form-control", rows = "5", placeholder = "Description" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(t => t.MasterCategoryID, "Master Category", new { })
+        @Html.HiddenFor(t => t.MasterCategoryID, new { id = "hiddenMasterCatU" })
+
+        <select class="custom-select" id="selectMasterCatU">
+            <option selected>Select Master Category</option>
+            @foreach (var item in (List<B_Commerce.SMVC.Areas.Admin.Models.CategoryShortInfo>)ViewData["shortInfoCategories"])
+            {
+                <option value="@item.ID">@item.CategoryName</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <div class="form-check">
+            @Html.CheckBoxFor(t => t.isActive, new { id = "is-active" })
+            @Html.LabelFor(t => t.isActive, "Is Active?", new { @for = "is-active" })
+        </div>
+    </div>
+    <div class="form-group float-right">
+        <button class="btn btn-outline-primary" type="submit">Save changes</button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+    </div>
+
+}

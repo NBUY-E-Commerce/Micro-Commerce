@@ -1,0 +1,27 @@
+﻿@model B_Commerce.SMVC.WebApiReqRes.Product.CategoryAddRequest
+
+@using (Html.BeginForm("Add", "Category", FormMethod.Post))
+{
+
+    <div class="form-group">
+        @Html.TextBoxFor(t => t.CategoryName, new { @class = "form-control", placeholder = "Category Name" })
+    </div>
+    <div class="form-group">
+        @Html.TextAreaFor(t => t.Description, new { @class = "form-control", rows = "5", placeholder = "Description" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(t => t.MasterCategoryID, "Master Category", new { })
+        @Html.HiddenFor(t => t.MasterCategoryID, new { id = "hiddenMasterCatA" })
+
+
+        <select class="custom-select" id="selectMasterCatA" aria-labelledby="dropdownMenuOffset">
+            <option selected>Select Master Category</option>
+            @foreach (var item in (List<B_Commerce.SMVC.Areas.Admin.Models.CategoryShortInfo>)ViewData["shortInfoCategories"])
+            {
+                <option value="@item.ID">@item.CategoryName</option>
+            }
+        </select>
+    </div>
+    <button class="btn btn-outline-secondary btn-add-c" type="submit">Add</button>
+
+}
