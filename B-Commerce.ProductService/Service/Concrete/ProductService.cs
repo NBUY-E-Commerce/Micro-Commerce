@@ -291,7 +291,7 @@ namespace B_Commerce.ProductService.Service.Concrete
                 }
                 for (int i = 0; i < request.Range; i++)
                 {
-                    Product product =_repositoryProduct.Get(t => t.CategoryID == request.CategoryID).OrderBy(t => t.ID).Skip(randoms[i]).Take(1).SingleOrDefault();
+                    Product product = _repositoryProduct.Get(t => t.CategoryID == request.CategoryID).OrderBy(t => t.ID).Skip(randoms[i]).Take(1).SingleOrDefault();
                     response.Products.Add(new ProductModel
                     {
                         ID = product.ID,
@@ -339,34 +339,42 @@ namespace B_Commerce.ProductService.Service.Concrete
                 response.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
                 return response;
             }
-            
+
         }
-        public ProductModelResponse SearchforProducts(string searchText) {
+        public ProductModelResponse SearchforProducts(string searchText)
+        {
 
             ProductModelResponse response = new ProductModelResponse();
             try
             {
-                var products = _repositoryProduct.Get(t => t.ProductName.Contains(searchText)).ToList();
-
-                foreach (Product item in products)
+                if (searchText.Length > 3)
                 {
 
-                    ProductModel productModel = new ProductModel
-                    {
-                        ID = item.ID,
-                        Description = item.Description,
-                        Price = item.Price,
-                        ProductImages = item.ProductImages.Select(t => t.URLFromAway).ToList(),
-                        ProductName = item.ProductName,
-                        Brand = item.BrandID
+                    var products = _repositoryProduct.Get(t => t.ProductName.Contains(searchText)).ToList();
 
-                    };
-                    response.Products.Add(productModel);
+                    foreach (Product item in products)
+                    {
+
+                        ProductModel productModel = new ProductModel
+                        {
+                            ID = item.ID,
+                            Description = item.Description,
+                            Price = item.Price,
+                            ProductImages = item.ProductImages.Select(t => t.URLFromAway).ToList(),
+                            ProductName = item.ProductName,
+                            Brand = item.BrandID
+
+                        };
+                        response.Products.Add(productModel);
+                    }
+                    response.SetStatus(Constants.ResponseCode.SUCCESS);
+                    return response;
+                }
+                else
+                {
+                    return response;
                 }
 
-
-                response.SetStatus(Constants.ResponseCode.SUCCESS);
-                return response;
             }
             catch (Exception ex)
             {
@@ -375,7 +383,7 @@ namespace B_Commerce.ProductService.Service.Concrete
                 return response;
             }
 
-          
+
         }
 
 
