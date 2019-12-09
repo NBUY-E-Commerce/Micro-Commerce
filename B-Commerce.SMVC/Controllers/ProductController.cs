@@ -92,5 +92,21 @@ namespace B_Commerce.SMVC.Controllers
             return PartialView("_PartialSameBrandProduct", response.Products);
 
         }
+
+        [HttpPost]
+        public ActionResult ProductSearchAjax(string searchText)
+        {
+            ProductModelResponse productResult = WebApiOperation.SendPost<string, ProductModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_SEARCH_FOR_PRODUCTS, searchText);
+            //List<Models.Product> products = MockDb.products.Where(t => t.Name.Contains(param)).ToList();
+
+
+           
+
+            
+            //return PartialView("_PartialProductList", products);
+            return PartialView("_PartialProductSearch", productResult.Products);
+
+        }
+
     }
 }

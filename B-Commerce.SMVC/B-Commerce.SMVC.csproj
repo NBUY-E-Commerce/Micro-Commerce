@@ -242,6 +242,7 @@
     <Compile Include="Models\FacebookModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\ProductSearchResponse.cs" />
     <Compile Include="MyHandler\VisitorControlHandler.cs" />
     <Compile Include="MyHtmlHelpers\MyHelper.cs" />
     <Compile Include="MyResource\Resource.Designer.cs">
@@ -2333,6 +2334,7 @@
     <Content Include="Views\Shared\_PartialProductDetail.cshtml" />
     <Content Include="Views\Product\Detail.cshtml" />
     <Content Include="Views\Shared\_PartialSameBrandProduct.cshtml" />
+    <Content Include="Views\Shared\_PartialProductSearch.cshtml" />
     <Content Include="Views\ShoppingCart\Details.cshtml" />
     <Content Include="Views\Shared\_PartialSiteLanguageBar.cshtml" />
   </ItemGroup>

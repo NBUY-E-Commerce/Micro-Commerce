@@ -218,15 +218,15 @@
                 console.log(searchtext);
                 $("#resultarea").html("Yükleniyor.....");
                 $.ajax({
-                    url: "/Category/CategorySearchAjax",
-                    data: { param: searchtext },
+                    url: "/Product/ProductSearchAjax",
+                    data: { searchText: searchtext },
                     method: "POST",
                     success: function (d) {
 
                         $("#resultarea").html(d);
 
                     }, error: function () {
-
+                        $("#resultarea").html("");
                         alert("hata olustu");
                     }, complete: function () {
 
