@@ -1,6 +1,5 @@
 ﻿@model List<ProductModel>
 
-
 <div class="row same-height-row">
     <div class="col-md-3 col-sm-6">
         <div class="box same-height" style="height: 346.563px;">
@@ -13,12 +12,12 @@
             <div class="product same-height" style="height: 346.563px;">
                 <div class="flip-container">
                     <div class="flipper">
-                        <div class="front"><a href="detail.html"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a></div>
-                        <div class="back"><a href="detail.html"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a></div>
+                        <div class="front"><a href="@Url.Action("Detail","Product",new {ID = item.ID })"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a></div>
+                        <div class="back"><a href="@Url.Action("Detail","Product",new {ID = item.ID })"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a></div>
                     </div>
-                </div><a href="detail.html" class="invisible"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a>
+                </div><a href="@Url.Action("Detail","Product",new {ID = item.ID })" class="invisible"><img src="@item.ProductImages[0]" alt="" class="img-fluid"></a>
                 <div class="text">
-                    <h3>@item.Description</h3>
+                    <h3>@item.ProductName</h3>
                     <p class="price">@item.Price</p>
                 </div>
             </div>

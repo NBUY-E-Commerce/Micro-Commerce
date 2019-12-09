@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort>44314</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -266,6 +267,7 @@
     <Compile Include="WebApiReqRes\Product\GetProductRequest.cs" />
     <Compile Include="WebApiReqRes\Product\GetSpecialProductRequest.cs" />
     <Compile Include="WebApiReqRes\Product\CategoryAddRequest.cs" />
+    <Compile Include="WebApiReqRes\Product\SameBrandProductsResponse.cs" />
     <Compile Include="WebApiReqRes\ShoppingCart\AddShoppingCartRequest.cs" />
     <Compile Include="WebApiReqRes\ShoppingCart\ShoppingCartModel.cs" />
     <Compile Include="WebApiReqRes\ShoppingCart\ShoppingCartResponse.cs" />
