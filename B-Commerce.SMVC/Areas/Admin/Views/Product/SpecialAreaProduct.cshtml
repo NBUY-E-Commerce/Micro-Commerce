@@ -6,10 +6,10 @@
 @using (Html.BeginForm("ProductSpeacialAreaAdd", "Product", FormMethod.Post))
 {
     <div class="form-group">
-        @Html.DropDownListFor(t => t.SpecialAreas, new SelectList(Model.SpecialAreas, "ID", "Name"), new { id = "SpecialAreaID", name = "SpecialAreaID" })
+        @Html.DropDownListFor(t => t.SpecialAreas, new SelectList(Model.SpecialAreas, Model.productModels), new { id = "SpecialAreaID", name = "SpecialAreaID" })
     </div>
     <div class="form-group">
-        @Html.DropDownListFor(t => t.productModels, new SelectList(Model.productModels, "ID", "ProductName"), new { id = "ProductID", name = "ProductID"})
+        @Html.DropDownListFor(t => t.productModels, new SelectList(Model.productModels, Model.productModels), new { id = "ProductID", name = "ProductID" })
     </div>
     <div>
         <button type="submit" class="btn btn-primary">Add</button>
