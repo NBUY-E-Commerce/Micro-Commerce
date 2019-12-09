@@ -88,6 +88,24 @@ namespace B_Commerce.SMVC.MyResource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Giriş Yap.
+        /// </summary>
+        public static string MainPage_Login {
+            get {
+                return ResourceManager.GetString("MainPage_Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kayıt Ol.
+        /// </summary>
+        public static string MainPage_Register {
+            get {
+                return ResourceManager.GetString("MainPage_Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ürün Açıklama.
         /// </summary>
         public static string Product_Description {

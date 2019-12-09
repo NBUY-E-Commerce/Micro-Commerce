@@ -50,12 +50,14 @@ namespace B_Commerce.SMVC.Controllers
         {
             CategoryModelResponse categoryChangeResponse = WebApiOperation.SendPost<int, CategoryModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_INDEX_URI, 0);
             ViewBag.basketcount = 0;
-            if (Session["sepet2"] != null)
+            if (Session["sepet"] != null)
             {
-                ShoppingCartModel card = (ShoppingCartModel)Session["sepet"];
-                ViewBag.basketcount = card.cardProduct.Count;
+                ShoppingCartResponse card = (ShoppingCartResponse)Session["sepet"];
+                ViewBag.basketcount = card.shoppingCartModel.cardProduct.Count;
 
             }
+           
+
 
 
             return PartialView("_PartialTopBarMenu", categoryChangeResponse);

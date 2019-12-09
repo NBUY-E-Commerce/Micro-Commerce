@@ -1,5 +1,6 @@
 ﻿using B_Commerce.SMVC.Common;
 using B_Commerce.SMVC.WebApiReqRes.Autentication.Login;
+using B_Commerce.SMVC.WebApiReqRes.ShoppingCart;
 using B_Commerce.SMVC.WebHelpers;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,22 @@ namespace B_Commerce.SMVC.MyHandler
 
                     }
 
+
+                }
+                else
+                {
+                    //adamın visitor cookiesi var 
+                    if (filterContext.HttpContext.Session["sepet"] == null)
+                    {
+                        //bu durumda remden sesionlar silinmiş
+                        ShoppingCartResponse response = WebApiOperation.SendPost<string, ShoppingCartResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_SHOPPINGCARD_OFUSER, cok.Value);
+
+                        if (response.Code == 0)
+                        {
+                            filterContext.HttpContext.Session["sepet"] = response;
+                        }
+
+                    }
 
                 }
             }

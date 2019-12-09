@@ -1,0 +1,18 @@
+﻿@model  CultureModel
+<div class="dropdown" style="display: inline-block;">
+
+    <a href="/Login/Register" aria-expanded="false" data-toggle="dropdown">@Model.CurrentLanguageName</a>
+
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-4px, 16px, 0px);">
+
+        <div class="dropdown-divider"></div>
+
+        @foreach (var item in Model.Others)
+        {
+
+            <a class="dropdown-item" href="@Url.Action("ChangeLanguage","Home",new {lang=item.Key })" style="color:black">@item.Value</a>
+        }
+
+   
+    </div>
+</div>

@@ -27,6 +27,8 @@ namespace B_Commerce.ProductService.Response
 
         public decimal CartDiscount { get; set; }
 
+        public int ProductCount { get; set; }
+
 
 
 

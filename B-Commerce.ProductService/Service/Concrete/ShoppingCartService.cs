@@ -117,7 +117,8 @@ namespace B_Commerce.ProductService.Service.Concrete
                             MainImage = item.Product.ProductImages.FirstOrDefault().URL,
                             Price = item.Product.Price,
                             ProductName = item.Product.ProductName,
-                            ProductID = item.ProductID
+                            ProductID = item.ProductID,
+                            ProductCount=item.ProductCount
                         }
 
                     );
@@ -161,7 +162,8 @@ namespace B_Commerce.ProductService.Service.Concrete
                                 MainImage = item.Product.ProductImages.FirstOrDefault().URL,
                                 Price = item.Product.Price,
                                 ProductName = item.Product.ProductName,
-                                ProductID = item.ProductID
+                                ProductID = item.ProductID,
+                                ProductCount=item.ProductCount
                             }
 
                         );

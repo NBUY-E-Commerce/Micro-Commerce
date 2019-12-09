@@ -52,5 +52,14 @@ namespace B_Commerce.SMVC.Controllers
 
             return Json(response);
         }
+
+        public ActionResult Details()
+        {
+
+            var model = (ShoppingCartResponse)Session["sepet"];
+
+            return View(model);
+
+        }
     }
 }

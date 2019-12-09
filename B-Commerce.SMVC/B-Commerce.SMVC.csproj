@@ -237,6 +237,7 @@
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\CategoryModelResponse.cs" />
     <Compile Include="Models\CategoryShortInfoResponse.cs" />
+    <Compile Include="Models\CultureModel.cs" />
     <Compile Include="Models\ProductModelResponse.cs" />
     <Compile Include="Models\FacebookModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -247,11 +248,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
-    <Compile Include="MyResource\Resource.en.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.en.resx</DependentUpon>
     </Compile>
     <Compile Include="WebApiReqRes\Autentication\Login\ChangePasswordRequest.cs" />
     <Compile Include="WebApiReqRes\Autentication\Login\CheckTokenResponse.cs" />
@@ -2337,6 +2333,8 @@
     <Content Include="Views\Shared\_PartialProductDetail.cshtml" />
     <Content Include="Views\Product\Detail.cshtml" />
     <Content Include="Views\Shared\_PartialSameBrandProduct.cshtml" />
+    <Content Include="Views\ShoppingCart\Details.cshtml" />
+    <Content Include="Views\Shared\_PartialSiteLanguageBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2345,7 +2343,6 @@
     <Folder Include="Content\vendor\font-awesome\scss\" />
     <Folder Include="Template\distribution\vendor\font-awesome\less\" />
     <Folder Include="Template\distribution\vendor\font-awesome\scss\" />
-    <Folder Include="Views\ShoppingCart\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -2357,14 +2354,12 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MyResource\Resource.en.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.en.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="MyResource\Resource.en-US.resx" />
     <EmbeddedResource Include="MyResource\Resource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="MyResource\Resource.tr-TR.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

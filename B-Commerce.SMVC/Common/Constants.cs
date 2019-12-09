@@ -7,6 +7,15 @@ namespace B_Commerce.SMVC.Common
 {
     public class Constants
     {
+
+        public static Dictionary<string, string> AllLanguagesInsite = new Dictionary<string, string>
+        {
+            {"tr-TR","Turkçe"},
+            { "en-US","English" }
+        };
+
+
+
         //Facebook
         public const string FACEBOOK_APPID = "3462488800442988";
         public const string FACEBOOK_APPSECRET = "2f5eb5daf3ea0fea4c09e729b1b379d7";
@@ -33,7 +42,7 @@ namespace B_Commerce.SMVC.Common
         public const string PRODUCT_API_INDEX_URI = "/api/Category/GetSubCategoriesByCategoryID";
         public const string PRODUCT_API_SPECIAL_AREA = "/api/SpecialArea/Add";
         public const string PRODUCT_API_PRODUCT_SPECIAL_AREA_ADD = "/api/SpecialArea/ProductSpecialAreaAdd";
-        
+
         public const string PRODUCT_API_GETSPECIAL_AREA = "/api/SpecialArea/GetSpecialAreas";
         public const string PRODUCT_API_GET_PRODUCT_SPECIAL_AREA = "/api/SpecialArea/GetProductSpecialAreas";
         public const string PRODUCT_API_UPDATESPECIAL_AREA = "/api/SpecialArea/Update";
@@ -56,6 +65,9 @@ namespace B_Commerce.SMVC.Common
         public const string PRODUCT_API_GET_SPECIAL_PRODUCTS = "/api/Product/GetSpecialProducts";
         public const string PRODUCT_API_GET_SAME_BRAND_PRODUCTS = "/api/Product/GetSameBrandProducts";
         public const string PRODUCT_API_SHOPPINGCARD_ADD = "/api/ShoppingCart/Add";
+        public const string PRODUCT_API_SHOPPINGCARD_OFUSER = "/api/ShoppingCart/GetShoppingCartofUser";
+
+
 
 
 
