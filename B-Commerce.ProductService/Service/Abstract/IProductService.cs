@@ -18,5 +18,7 @@ namespace B_Commerce.ProductService.Service.Abstract
         BannerResponse GetBanners();
         SameBrandProductsResponse GetSameBrandProducts(int BrandID);
         ProductModelResponse GetRandomProducts(GetProductRequest request);
+
+        ProductModelResponse SearchforProducts(string searchText);
     }
 }

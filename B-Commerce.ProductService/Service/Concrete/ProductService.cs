@@ -354,5 +354,43 @@ namespace B_Commerce.ProductService.Service.Concrete
             }
 
         }
+        public ProductModelResponse SearchforProducts(string searchText) {
+
+            ProductModelResponse response = new ProductModelResponse();
+            try
+            {
+                var products = _repositoryProduct.Get(t => t.ProductName.Contains(searchText)).ToList();
+
+                foreach (Product item in products)
+                {
+
+                    ProductModel productModel = new ProductModel
+                    {
+                        ID = item.ID,
+                        Description = item.Description,
+                        Price = item.Price,
+                        ProductImages = item.ProductImages.Select(t => t.URLFromAway).ToList(),
+                        ProductName = item.ProductName,
+                        Brand = item.BrandID
+
+                    };
+                    response.Products.Add(productModel);
+                }
+
+
+                response.SetStatus(Constants.ResponseCode.SUCCESS);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Products = null;
+                response.SetStatus(Constants.ResponseCode.FAILED_ON_DB_PROCESS, ex.Message);
+                return response;
+            }
+
+          
+        }
+
+
     }
 }
