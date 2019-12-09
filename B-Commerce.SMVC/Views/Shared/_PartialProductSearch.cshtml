@@ -1,6 +1,6 @@
 ﻿
 
-@model List<CategoryModel>
+@model List<ProductModel>
 
 @if (Model != null && Model.Count > 0)
 {
@@ -10,7 +10,7 @@
         {
 
 
-            <a href="#about">@item.Name</a>
+            <a href="#about">@item.ProductName</a>
 
 
         }
@@ -19,5 +19,10 @@
 }
 else
 {
-    <div>Veri bulunamadı</div>
+    <div class="dropdown-content" id="info">
+
+
+        Veri bulunamadı
+    </div>
+
 }

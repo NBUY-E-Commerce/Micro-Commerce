@@ -60,6 +60,7 @@ namespace B_Commerce.SMVC.Common
         public const string PRODUCT_API_PRODUCTS_COLOR = "/api/Product/ProductsColor";
         public const string PRODUCT_API_GETPRODUCTS_COLOR = "/api/Product/GetProductsColor";
         public const string PRODUCT_API_GETPRODUCTS_BRAND = "/api/Product/ProductsBrand";
+        public const string PRODUCT_API_SEARCH_FOR_PRODUCTS = "/api/Product/SearchforProducts";
 
         public const string PRODUCT_API_BANNER_URI = "/api/Product/GetBanners";
         public const string PRODUCT_API_GET_SPECIAL_PRODUCTS = "/api/Product/GetSpecialProducts";
