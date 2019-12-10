@@ -56,36 +56,36 @@ namespace B_Commerce.SMVC.Controllers
 
         public JsonResult UpdateProductCountOfShoppingCart(List<UpdateProductCountRequest> UpdateProductCounts)
         {
-            return Json(1);
-            //string currentToken = "";
-            //if (SystemUser.CurrentUser != null)
-            //{
-            //    currentToken = SystemUser.CurrentUser.Token;
-            //}
-            //else
-            //{
-            //    currentToken = Request.Cookies["visitortoken"].Values["token"];
-            //}
 
-            //CheckTokenResponse responseToken = WebApiOperation.SendPost<string, CheckTokenResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_CHECKTOKEN_URI, currentToken);
+            string currentToken = "";
+            if (SystemUser.CurrentUser != null)
+            {
+                currentToken = SystemUser.CurrentUser.Token;
+            }
+            else
+            {
+                currentToken = Request.Cookies["visitortoken"].Values["token"];
+            }
 
-            //if (responseToken.Code != 0)
-            //{
-            //    throw new Exception();
-            //}
+            CheckTokenResponse responseToken = WebApiOperation.SendPost<string, CheckTokenResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_CHECKTOKEN_URI, currentToken);
 
-            //foreach (UpdateProductCountRequest item in UpdateProductCounts.UpdateProductCounts)
-            //{
-            //    item.Token = currentToken;
-            //}
+            if (responseToken.Code != 0)
+            {
+                throw new Exception();
+            }
 
-            ////webapiye gidip addtocart(currenttoken,productid,count) çağırıcam
-            //ShoppingCartResponse response = WebApiOperation.SendPost<UpdateProductCountListRequest, ShoppingCartResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_SHOPPINGCARD_UPDATE, request);
+            foreach (UpdateProductCountRequest item in UpdateProductCounts)
+            {
+                item.Token = currentToken;
+            }
 
-            //if (response.Code == 0)
-            //    Session["sepet"] = response;
+            //webapiye gidip addtocart(currenttoken,productid,count) çağırıcam
+            ShoppingCartResponse response = WebApiOperation.SendPost<List<UpdateProductCountRequest>, ShoppingCartResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_SHOPPINGCARD_UPDATE, UpdateProductCounts);
 
-            //return Json(response);
+            if (response.Code == 0)
+                Session["sepet"] = response;
+
+            return Json(response);
         }
     }
 }
