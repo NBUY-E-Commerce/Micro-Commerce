@@ -46,7 +46,7 @@ namespace B_Commerce.SMVC.Controllers
 
 
         // GET: Category
-        public ActionResult MainCategoryPartial()
+        public ActionResult MainCategoryPartial(/*string language*/)
         {
             CategoryModelResponse categoryChangeResponse = WebApiOperation.SendPost<int, CategoryModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_INDEX_URI, 0);
             ViewBag.basketcount = 0;
@@ -56,6 +56,7 @@ namespace B_Commerce.SMVC.Controllers
                 ViewBag.basketcount = card.shoppingCartModel.cardProduct.Count;
 
             }
+
            
 
 

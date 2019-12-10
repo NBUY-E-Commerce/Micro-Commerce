@@ -61,6 +61,24 @@ namespace B_Commerce.SMVC.MyResource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Elektronik.
+        /// </summary>
+        public static string E1 {
+            get {
+                return ResourceManager.GetString("E1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ev &amp; Yaşam.
+        /// </summary>
+        public static string E2 {
+            get {
+                return ResourceManager.GetString("E2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string General_Add {
@@ -88,6 +106,24 @@ namespace B_Commerce.SMVC.MyResource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kozmetik.
+        /// </summary>
+        public static string K1 {
+            get {
+                return ResourceManager.GetString("K1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mücevher &amp; Saat.
+        /// </summary>
+        public static string M1 {
+            get {
+                return ResourceManager.GetString("M1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Giriş Yap.
         /// </summary>
         public static string MainPage_Login {
@@ -106,6 +142,15 @@ namespace B_Commerce.SMVC.MyResource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ofis Eşyaları.
+        /// </summary>
+        public static string O1 {
+            get {
+                return ResourceManager.GetString("O1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ürün Açıklama.
         /// </summary>
         public static string Product_Description {
@@ -120,6 +165,15 @@ namespace B_Commerce.SMVC.MyResource {
         public static string Product_ProductName {
             get {
                 return ResourceManager.GetString("Product_ProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spor &amp; Outdoor.
+        /// </summary>
+        public static string S1 {
+            get {
+                return ResourceManager.GetString("S1", resourceCulture);
             }
         }
     }

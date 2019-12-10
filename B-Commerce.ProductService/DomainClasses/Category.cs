@@ -19,8 +19,10 @@ namespace B_Commerce.ProductService.DomainClasses
         public string Description { get; set; }
         public bool isActive { get; set; } = true;
         public int? MasterCategoryID { get; set; }
+        public string Key { get; set; }
         public virtual Category MasterCategory { get; set; }
-  
+
+        
 
         public virtual ICollection<Category> SubCategories{get;set;}=new List<Category>();
 

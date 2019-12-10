@@ -22,7 +22,8 @@ namespace B_Commerce.ProductService.Common
             WRONG_TYPE_ENTITY,
             INVALID_RESPONSE_CODE,
             FAILED_ON_DB_PROCESS,
-            FAILED_ON_DB_OR_FILTER_PROCESS
+            FAILED_ON_DB_OR_FILTER_PROCESS,
+            NOT_FOUND_SHOPPING_CART
         }
         public static Dictionary<ResponseCode, string> ResponseCache = new Dictionary<ResponseCode, string> {
             {ResponseCode.SUCCESS,"işlem başarılı" },
@@ -32,7 +33,8 @@ namespace B_Commerce.ProductService.Common
             {ResponseCode.WRONG_TYPE_ENTITY,"Varlık tipi hatası" },
             {ResponseCode.INVALID_RESPONSE_CODE,"Geçersiz reponse code" },
             {ResponseCode.FAILED_ON_DB_PROCESS,"DataBase işlemi sırasında bir hata oluştu" },
-            {ResponseCode.FAILED_ON_DB_OR_FILTER_PROCESS,"DataBase işlemi veya filterleme işlemi sırasında bir hata oluştu" }
+            {ResponseCode.FAILED_ON_DB_OR_FILTER_PROCESS,"DataBase işlemi veya filterleme işlemi sırasında bir hata oluştu" },
+            {ResponseCode.NOT_FOUND_SHOPPING_CART,"Bu Kişiye Ait Aktif Bir Sepet Bulunamadı" }
         };
 
 

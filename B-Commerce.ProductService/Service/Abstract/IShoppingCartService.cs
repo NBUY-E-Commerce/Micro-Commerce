@@ -10,6 +10,7 @@ namespace B_Commerce.ProductService.Service.Abstract
     {
         ShoppingCartResponse Add(string token, int userid, int productid, int count);
         ShoppingCartResponse GetShoppingCartofUser(string token);
+        ShoppingCartResponse UpdateProductCountOfShoppingCart(string token, int productid, int newcount);
 
     }
 }
