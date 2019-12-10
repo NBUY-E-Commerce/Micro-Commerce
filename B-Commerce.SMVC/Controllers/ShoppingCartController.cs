@@ -5,6 +5,7 @@ using B_Commerce.SMVC.WebApiReqRes.ShoppingCart;
 using B_Commerce.SMVC.WebHelpers;
 using System;
 using System.Web.Mvc;
+using System.Collections.Generic;
 
 namespace B_Commerce.SMVC.Controllers
 {
@@ -53,39 +54,38 @@ namespace B_Commerce.SMVC.Controllers
             return View(model);
         }
 
-        public JsonResult UpdateProductCountOfShoppingCart(int ProductID, int NewCount)
+        public JsonResult UpdateProductCountOfShoppingCart(List<UpdateProductCountRequest> UpdateProductCounts)
         {
-            string currentToken = "";
-            if (SystemUser.CurrentUser != null)
-            {
-                currentToken = SystemUser.CurrentUser.Token;
-            }
-            else
-            {
-                currentToken = Request.Cookies["visitortoken"].Values["token"];
-            }
+            return Json(1);
+            //string currentToken = "";
+            //if (SystemUser.CurrentUser != null)
+            //{
+            //    currentToken = SystemUser.CurrentUser.Token;
+            //}
+            //else
+            //{
+            //    currentToken = Request.Cookies["visitortoken"].Values["token"];
+            //}
 
-            CheckTokenResponse responseToken = WebApiOperation.SendPost<string, CheckTokenResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_CHECKTOKEN_URI, currentToken);
+            //CheckTokenResponse responseToken = WebApiOperation.SendPost<string, CheckTokenResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_CHECKTOKEN_URI, currentToken);
 
-            if (responseToken.Code != 0)
-            {
-                throw new Exception();
-            }
+            //if (responseToken.Code != 0)
+            //{
+            //    throw new Exception();
+            //}
 
-            var request = new UpdateProductCountRequest
-            {
-                Token = currentToken,
-                NewCount = NewCount,
-                ProductID = ProductID
-            };
+            //foreach (UpdateProductCountRequest item in UpdateProductCounts.UpdateProductCounts)
+            //{
+            //    item.Token = currentToken;
+            //}
 
-            //webapiye gidip addtocart(currenttoken,productid,count) çağırıcam
-            ShoppingCartResponse response = WebApiOperation.SendPost<UpdateProductCountRequest, ShoppingCartResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_SHOPPINGCARD_UPDATE, request);
+            ////webapiye gidip addtocart(currenttoken,productid,count) çağırıcam
+            //ShoppingCartResponse response = WebApiOperation.SendPost<UpdateProductCountListRequest, ShoppingCartResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_SHOPPINGCARD_UPDATE, request);
 
-            if (response.Code == 0)
-                Session["sepet"] = response;
+            //if (response.Code == 0)
+            //    Session["sepet"] = response;
 
-            return Json(response);
+            //return Json(response);
         }
     }
 }
