@@ -38,6 +38,7 @@
                     location.href = "/Error/General";
                 } else {
                     deferedObject.resolve();
+
                 }
 
             }, complete: function () {
