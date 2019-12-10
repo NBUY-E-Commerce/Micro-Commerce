@@ -26,25 +26,28 @@
     };
 
     this.UpdateProductCountOfBasket = function (producid, count, owner) {
+        var deferedObject = $.Deferred();
+
         $(owner).prepend('<div class="spinner-border loader" role="status" style="width: 15px;height: 15px;">< span class="sr-only"> Loading...</span></div>');
 
         $.ajax({
             url: "/ShoppingCart/UpdateProductCountOfShoppingCart",
             data: { ProductID: producid, NewCount: count },
             method: "POST",
-            async: false,
             success: function (d) {
-                console.log(d);
 
                 if (d.Code != 0) {
                     location.href = "/Error/General";
                 } else {
-                    location.href = "/ShoppingCart/Details";
+                    deferedObject.resolve();
                 }
+
             }, complete: function () {
                 $(owner).find(".loader").remove();
             }
         })
+
+        return deferedObject.promise();
     }
 }
 
@@ -61,15 +64,23 @@ function UpdateBasket(productid, count, owner) {
 }
 
 function UpdateAllProductCountsOfBasket() {
-    
+    var _basketManager = new basketManager();
+
     try {
-        var listofproducts = $('input[name ="basketproduct"]');
+        var listofproducts = $('input[name="basketproduct"]');
+        var allcount = listofproducts.length;
+
         $.each(listofproducts, function (indexInArray, element) {
-            UpdateBasket($(element).attr("data-productid"), $(element).val(), element);
+
+            _basketManager.UpdateProductCountOfBasket($(element).attr("data-productid"), $(element).val(), element).done(function () {
+                if (indexInArray == allcount - 1) {
+                    location.href = "/ShoppingCart/Details";
+                }
+            })
         });
     } catch (error) {
         //hata olursa işlemler
-        alert(error.message)
+        alert(error.message);
     }
 
 }
