@@ -11,6 +11,8 @@ namespace B_Commerce.ProductService.Response
         public int ID { get; set; }
         public bool HasSubCategory { get; set; }
         public string Name { get; set; }
+
+        public string Key { get; set; }
         public List<CategoryModel> SubCategories { get; set; }
 
         //cat1-subcat1,subcat2
@@ -31,7 +33,8 @@ namespace B_Commerce.ProductService.Response
                 {
                     ID = item.ID,
                     Name = item.CategoryName,
-                    HasSubCategory = item.SubCategories.Count > 0 ? true : false
+                    HasSubCategory = item.SubCategories.Count > 0 ? true : false,
+                    Key=item.Key
 
                 };
 

@@ -6,18 +6,30 @@
         @{
             int count = 0;
         }
-       
-            @foreach (var category in Model.categories)
+
+        @foreach (var category in Model.categories)
+        {
+            if (count == 4)
             {
-                if (count == 4)
-                {
-                    break;
+                break;
             }
             <li class="nav-item dropdown menu-large" style="z-index:12">
                 @if (category.HasSubCategory == true)
                 {
-                                                                                                                                                                                                                                    //ResourceManager     
-                <a href=" @Url.RouteUrl("CategoryProduct", new { categoryID = category.ID, name = Url.Encode(category.Name) })" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">@category.Name@*@{B_Commerce.SMVC.MyResource.Resource.E1 + category.Key }*@<b class="caret"></b></a>
+                    //ResourceManager
+                    <a href=" @Url.RouteUrl("CategoryProduct", new { categoryID = category.ID, name = Url.Encode(category.Name) })" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">
+                        @{ 
+                            string categoryName = category.Name;
+                            if (category.Key != null)
+                            {
+
+                                 categoryName = B_Commerce.SMVC.Common.CommonHelper.GetPropertyFromObject<string>(typeof(B_Commerce.SMVC.MyResource.Resource), category.Key);
+
+                            }
+                        }
+                        @categoryName
+                        <b class="caret"></b>
+                    </a>
 
                     <ul class="dropdown-menu megamenu">
                         <li>

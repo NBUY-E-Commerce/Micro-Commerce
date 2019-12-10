@@ -360,7 +360,7 @@ namespace B_Commerce.ProductService.Service.Concrete
             ProductModelResponse response = new ProductModelResponse();
             try
             {
-                if (searchText.Length > 3)
+                if (searchText.Length > 1)
                 {
 
                     var products = _repositoryProduct.Get(t => t.ProductName.Contains(searchText)).ToList();

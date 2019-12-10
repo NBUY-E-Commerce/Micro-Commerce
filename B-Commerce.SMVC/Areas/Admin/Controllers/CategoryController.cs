@@ -34,7 +34,7 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 adminCategoryIndexModel.CategoryAddRequest = request;
-                return RedirectToAction("Index","Category", adminCategoryIndexModel);
+                return RedirectToAction("Index", "Category", adminCategoryIndexModel);
             }
             CommonResponse addResponse = WebApiOperation.SendPost<CategoryAddRequest, CommonResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_ADD_CATEGORY, request);
 
@@ -74,8 +74,15 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
 
         public PartialViewResult UpdateFormPartial(int id)
         {
+           
             CategoryShortInfoResponse response1 = WebApiOperation.SendPost<int, CategoryShortInfoResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GET_CATEGORY_SHORT_INFO, 1);
             ViewData["shortInfoCategories"] = response1.CategoryShortInfos;
+
+            if (id == 0)
+            {
+                return PartialView("_PartialUpdateCategory", null);
+            }
+
 
             CategoryDetailModelResponse response = WebApiOperation.SendPost<int, CategoryDetailModelResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_GETBYID_CATEGORY, id);
             return PartialView("_PartialUpdateCategory", response.Category);

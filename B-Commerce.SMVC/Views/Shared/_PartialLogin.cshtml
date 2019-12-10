@@ -1,40 +1,5 @@
 ﻿@model LoginModel
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-
-<script>
-
-
-
-
-    var btn_spinner = (function () {
-        function processSubmitLoader() {
-            $('button[data-spinning-button]').click(function () {
-                var $this = $(this);
-                let formId = $this.data('spinning-button');
-                let $form = formId ? $('#' + formId) : $this.parents('form');
-                var response = grecaptcha.getResponse();
-                if ($form.length) {
-                    if ($form.valid()) {
-                        $this.html("<i class='fa fa-circle-o-notch fa-spin'></i>").attr("disabled", "")
-                        $form.submit();
-                    }
-                }
-
-            })
-        }
-        return {
-            initSpinnerButton: processSubmitLoader
-        }
-    })();
-
-    $(document).ready(function () {
-        btn_spinner.initSpinnerButton();
-    });</script>
-
-
-
 <link href="~/Content/css/fbstyle.css" rel="stylesheet" />
 <div class="box">
     <h1>Login</h1>

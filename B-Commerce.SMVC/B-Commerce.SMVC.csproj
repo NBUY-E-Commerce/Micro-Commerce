@@ -218,6 +218,7 @@
     <Compile Include="Areas\Admin\Models\ProductModel.cs" />
     <Compile Include="Areas\Admin\Models\SpecialAreaModel.cs" />
     <Compile Include="Areas\Admin\Models\SpecialAreaResponse.cs" />
+    <Compile Include="Common\CommonHelper.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\MUriHelper.cs" />
     <Compile Include="Common\SystemUser.cs" />

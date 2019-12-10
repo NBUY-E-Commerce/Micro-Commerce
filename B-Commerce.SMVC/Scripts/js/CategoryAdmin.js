@@ -72,6 +72,7 @@ $("#CategoryArea").on("click", ".btn-del", function () {
 //btn-edit click
 $("#CategoryArea").on("click", ".btn-edit", function () {
     let id = $(this).parent().attr("cat-id");
+
     $.ajax({
         type: "POST",
         url: "/CategoryBrain/GetCategoryByID",
@@ -84,10 +85,15 @@ $("#CategoryArea").on("click", ".btn-edit", function () {
             var selectedCat = response.responseJSON.Category;
 
             $("#editForm").find("[name*='ID']").val(selectedCat.ID);
-            $("#editForm").find("[name*='CategoryName']").val(selectedCat.CategoryName)
+            $("#editForm").find("[name*='CategoryName']").val(selectedCat.CategoryName);
             $("#editForm").find("[name*='Description']").val(selectedCat.Description);
             $("#editForm").find("[name*='MasterCategoryID']").val(selectedCat.MasterCategoryID);
-            $(`#selectMasterCatA option[value*=${selectedCat.MasterCategoryID}]`).attr('selected', 'selected');
+
+
+            $('#selectMasterCatU').val(selectedCat.MasterCategoryID);
+            $('#selectMasterCatU').trigger("change");
+
+ 
             $("#editForm").find("[name*='isActive']").val(selectedCat.isActive);
             $("#editForm").find("[name*='isActive']").prop('checked',selectedCat.isActive);
 

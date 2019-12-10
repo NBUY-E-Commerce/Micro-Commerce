@@ -37,29 +37,8 @@
                                         </p>
                                     </div>
 
-                                    @*@if (item.IsInSale)
-                                        {
-                                            <div class="ribbon sale">
-                                                <div class="theribbon">SALE</div>
-                                                <div class="ribbon-background"></div>
-                                            </div>
-                                        }
-                                        @if (item.IsInNew)
-                                        {
-                                            <div class="ribbon new">
-                                                <div class="theribbon">NEW</div>
-                                                <div class="ribbon-background"></div>
-                                            </div>
-                                        }
-                                        @if (item.IsInGift)
-                                        {
-                                            <div class="ribbon gift">
-                                                <div class="theribbon">GIFT</div>
-                                                <div class="ribbon-background"></div>
-                                            </div>
-                                        }*@
                                 </div>
-                                <!-- /.product-->
+
                             </div>
                         </div>
 
@@ -98,26 +77,5 @@
         <!-- /.product-slider-->
     </div>
     <!-- /.container-->
-
-    <script>
-
-        $(function () {
-            $("#GetMore").click(function () {
-                var lastelem = $("#sayac").val()
-                $.ajax({
-                    url: "/Product/ProductSlider",
-                    data: { a: lastelem },
-                    method: "POST",
-                    success: function (d) {
-                        $("#sayac").val(lastelem + 1);
-                        $("#productsliderdiv").html(d);
-                    }, error: function () {
-                        alert("hata olustu");
-                    }, complete: function () {
-                    }
-                })
-            })
-        })
-    </script>
 
 }

@@ -61,15 +61,6 @@ namespace B_Commerce.SMVC.MyResource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Elektronik.
-        /// </summary>
-        public static string E1 {
-            get {
-                return ResourceManager.GetString("E1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Ev &amp; Yaşam.
         /// </summary>
         public static string E2 {
@@ -102,15 +93,6 @@ namespace B_Commerce.SMVC.MyResource {
         public static string General_Update {
             get {
                 return ResourceManager.GetString("General_Update", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Kozmetik.
-        /// </summary>
-        public static string K1 {
-            get {
-                return ResourceManager.GetString("K1", resourceCulture);
             }
         }
         
@@ -165,6 +147,24 @@ namespace B_Commerce.SMVC.MyResource {
         public static string Product_ProductName {
             get {
                 return ResourceManager.GetString("Product_ProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Elektronik.
+        /// </summary>
+        public static string resource_category_elektironik {
+            get {
+                return ResourceManager.GetString("resource_category_elektironik", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kozmetik.
+        /// </summary>
+        public static string resource_category_kozmatik {
+            get {
+                return ResourceManager.GetString("resource_category_kozmatik", resourceCulture);
             }
         }
         

@@ -37,13 +37,13 @@ namespace B_Commerce.SMVC.MyHandler
                 //login olmamaıs bir kullanıcı
 
                 HttpCookie cok = filterContext.HttpContext.Request.Cookies["visitortoken"];
-                if (cok == null || Convert.ToDateTime(cok["date"])<DateTime.Now)
+                if (cok == null)
                 {
                     VisitorTokenResponse visitorResponse = WebApiOperation.SendPost<int, VisitorTokenResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_CreateVisitorToken_URI, 7);
 
                     if (visitorResponse.Code == 0)
                     {
-                       
+
                         HttpCookie cookie = new HttpCookie("visitortoken");
                         cookie.Values.Set("token", visitorResponse.Token);
                         cookie.Values.Set("date", visitorResponse.ExpireDate.ToString());
@@ -60,7 +60,7 @@ namespace B_Commerce.SMVC.MyHandler
                     if (filterContext.HttpContext.Session["sepet"] == null)
                     {
                         //bu durumda remden sesionlar silinmiş
-                        ShoppingCartResponse response = WebApiOperation.SendPost<string, ShoppingCartResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_SHOPPINGCARD_OFUSER, cok.Value);
+                        ShoppingCartResponse response = WebApiOperation.SendPost<string, ShoppingCartResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_SHOPPINGCARD_OFUSER, cok.Values["token"]);
 
                         if (response.Code == 0)
                         {

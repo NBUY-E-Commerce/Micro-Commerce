@@ -149,21 +149,20 @@ namespace B_Commerce.SMVC.Controllers
                         vToken = Request.Cookies["visitortoken"].Values["token"],
                         uToken = loginResponse.Token
                     };
-                    CommonResponse response = WebApiOperation.SendPost<CartEqualizerModel, CommonResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_LOGIN_URI, cartEqualizer);
+                    CommonResponse response = WebApiOperation.SendPost<CartEqualizerModel, CommonResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_CartEqualizer, cartEqualizer);
                     if (response.Code != 0)
                     {
                         ViewBag.error = response.Message;
-                        Request.Cookies["visitortoken"].Expires = DateTime.Now.AddDays(-1);
+                    }
+                    else
+                    {
+
+                        HttpCookie cok = new HttpCookie("visitortoken");
+                        cok.Expires = DateTime.Now.AddDays(-1);
+                        Response.Cookies.Add(cok);
                     }
 
                 }
-                ///User ı cookie  e eklemek lazım mı???
-
-
-                //HttpCookie cookie = new HttpCookie("usertoken");
-                //cookie.Value = SystemUser.CurrentUser.Token;
-                //cookie.Expires = SystemUser.CurrentUser.ExpireDate;
-                //HttpContext.Response.Cookies.Add(cookie);
 
                 if (!loginResponse.IsVerify)
                 {
@@ -196,6 +195,8 @@ namespace B_Commerce.SMVC.Controllers
             SystemUser.CurrentUser = null;
             TempData["reason"] = "ActivateUser";
             TempData["popupmessage"] = "Çıkış İşlemi Başarılı. Tekrar Bekleriz...";
+
+            Session.Abandon();//tüm sesionları siler bu oturuma ait
 
             return RedirectToAction("Index", "Home");
         }
@@ -250,6 +251,30 @@ namespace B_Commerce.SMVC.Controllers
                         Token = loginResponse.Token,
                         Email = loginResponse.Email
                     };
+
+                    if (Request.Cookies["visitortoken"].Values["token"] != null)
+                    {
+                        CartEqualizerModel cartEqualizer = new CartEqualizerModel
+                        {
+                            vToken = Request.Cookies["visitortoken"].Values["token"],
+                            uToken = loginResponse.Token
+                        };
+                        CommonResponse response = WebApiOperation.SendPost<CartEqualizerModel, CommonResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_CartEqualizer, cartEqualizer);
+                        if (response.Code == 0)
+                        {
+                         
+                            HttpCookie cok = new HttpCookie("visitortoken");
+                            cok.Expires = DateTime.Now.AddDays(-1);
+                            Response.Cookies.Add(cok);
+                        }else
+                        {
+
+                            ViewBag.error = response.Message;
+
+                        }
+
+                    }
+
                 }
             }
 

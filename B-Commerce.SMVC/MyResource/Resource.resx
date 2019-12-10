@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="E1" xml:space="preserve">
-    <value>Elektronik</value>
-  </data>
   <data name="E2" xml:space="preserve">
     <value>Ev &amp; Yaşam</value>
   </data>
@@ -131,9 +128,6 @@
   </data>
   <data name="General_Update" xml:space="preserve">
     <value>Güncelle</value>
-  </data>
-  <data name="K1" xml:space="preserve">
-    <value>Kozmetik</value>
   </data>
   <data name="M1" xml:space="preserve">
     <value>Mücevher &amp; Saat</value>
@@ -152,6 +146,12 @@
   </data>
   <data name="Product_ProductName" xml:space="preserve">
     <value>Ürün Adı</value>
+  </data>
+  <data name="resource_category_elektironik" xml:space="preserve">
+    <value>Elektronik</value>
+  </data>
+  <data name="resource_category_kozmatik" xml:space="preserve">
+    <value>Kozmetik</value>
   </data>
   <data name="S1" xml:space="preserve">
     <value>Spor &amp; Outdoor</value>

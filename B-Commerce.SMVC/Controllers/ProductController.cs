@@ -17,7 +17,7 @@ namespace B_Commerce.SMVC.Controllers
             GetSpecialProductRequest request = new GetSpecialProductRequest();
             if (a == null)
             {
-                request.Count = 1;
+                request.Count = 5;
                 request.PageNumber = 1;
                 request.SpacialID = 3;
 

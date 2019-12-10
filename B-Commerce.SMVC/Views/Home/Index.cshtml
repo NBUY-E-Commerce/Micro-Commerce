@@ -3,6 +3,41 @@
 @{
     ViewBag.Title = "Home Page";
 }
+@section scripts
+{
+    <script>
+
+
+        $(function () {
+            $("body").on("click", "#GetMore", function () {
+
+                var lastelem = $("#sayac").val()
+                $.ajax({
+                    url: "/Product/ProductSlider",
+                    data: { a: lastelem },
+                    method: "POST",
+                    success: function (d) {
+                        $("#sayac").val(lastelem + 1);
+                        $("#productsliderdiv").html(d);
+
+                        var owl = $('.product-slider').owlCarousel({
+                            items: 3,
+                            loop: false
+                        });
+                        owl.trigger('refresh.owl.carousel')
+
+                    }, error: function () {
+                        alert("hata olustu");
+                    }, complete: function () {
+                    }
+                })
+            })
+        })
+    </script>
+
+}
+
+
 
 @if (TempData["reason"] != null)
 {
@@ -24,6 +59,11 @@
                         }, 1000)
 
                     })
+
+
+
+
+
                 </script>
             }
             <div id="welcomepoup" class="modal" tabindex="-1" role="dialog">
@@ -175,18 +215,18 @@
         _________________________________________________________
         -->
         @*<div class="container">
-            <div class="col-md-12">
-                <div class="box slideshow">
-                    <h3>Get Inspired</h3>
-                    <p class="lead">Get the inspiration from our world class designers</p>
-                    <div id="get-inspired" class="owl-carousel owl-theme">
-                        <div class="item"><a href="#"><img src="/img/getinspired1.jpg" alt="Get inspired" class="img-fluid"></a></div>
-                        <div class="item"><a href="#"><img src="/img/getinspired2.jpg" alt="Get inspired" class="img-fluid"></a></div>
-                        <div class="item"><a href="#"><img src="/img/getinspired3.jpg" alt="Get inspired" class="img-fluid"></a></div>
+                <div class="col-md-12">
+                    <div class="box slideshow">
+                        <h3>Get Inspired</h3>
+                        <p class="lead">Get the inspiration from our world class designers</p>
+                        <div id="get-inspired" class="owl-carousel owl-theme">
+                            <div class="item"><a href="#"><img src="/img/getinspired1.jpg" alt="Get inspired" class="img-fluid"></a></div>
+                            <div class="item"><a href="#"><img src="/img/getinspired2.jpg" alt="Get inspired" class="img-fluid"></a></div>
+                            <div class="item"><a href="#"><img src="/img/getinspired3.jpg" alt="Get inspired" class="img-fluid"></a></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>*@
+            </div>*@
         <!-- *** GET INSPIRED END ***-->
         <!--
         *** BLOG HOMEPAGE ***
