@@ -52,15 +52,22 @@ $(".btn-plus").on("click", function () {
 });
 
 //update delete hover
-$("#subcategories").on("mouseenter", ".cat-li-element", function () {
+$("#CategoryArea").on("mouseenter", ".cat-li-element", function () {
     $(this).children("div.btn-group-sm").removeClass("d-none");
     $(this).children("span").addClass("text-primary");
 });
 
-$("#subcategories").on("mouseleave", ".cat-li-element", function () {
+$("#CategoryArea").on("mouseleave", ".cat-li-element", function () {
     $(this).children("div.btn-group-sm").addClass("d-none");
     $(this).children("span").removeClass("text-primary");
 });
+
+//btn-del click
+$("#CategoryArea").on("click", ".btn-del", function () {
+    let id = $(this).parent().attr("cat-id");
+    console.log(id);
+    $("#deleteForm").find("[name*='ID']").val(id);
+})
 
 //btn-edit click
 $("#CategoryArea").on("click", ".btn-edit", function () {
@@ -75,11 +82,15 @@ $("#CategoryArea").on("click", ".btn-edit", function () {
         },
         complete: function (response) {
             var selectedCat = response.responseJSON.Category;
-            $("#editForm").find('[ID]').val(selectedCat.ID);
-            $("#editForm").find('[CategoryName]').val(selectedCat.CategoryName);
-            $("#editForm").find('[Description]').val(selectedCat.Description);
-            $("#editForm").find('[MasterCategoryID]').val(selectedCat.MasterCategoryID);
-            $("#editForm").find('[isActive]').val(selectedCat.isActive);
+
+            $("#editForm").find("[name*='ID']").val(selectedCat.ID);
+            $("#editForm").find("[name*='CategoryName']").val(selectedCat.CategoryName)
+            $("#editForm").find("[name*='Description']").val(selectedCat.Description);
+            $("#editForm").find("[name*='MasterCategoryID']").val(selectedCat.MasterCategoryID);
+            $(`#selectMasterCatA option[value*=${selectedCat.MasterCategoryID}]`).attr('selected', 'selected');
+            $("#editForm").find("[name*='isActive']").val(selectedCat.isActive);
+            $("#editForm").find("[name*='isActive']").prop('checked',selectedCat.isActive);
+
         }
     });
 })
@@ -95,3 +106,11 @@ $("#selectMasterCatU").change(function () {
     $("#hiddenMasterCatU").val(seletedId);
 });
 
+//checkbox function
+$("#editForm").find("[name*='isActive']").change(function () {
+    if (this.checked) {
+        $("#editForm").find("[name*='isActive']").val(true);
+    } else {
+        $("#editForm").find("[name*='isActive']").val(false);
+    }
+});

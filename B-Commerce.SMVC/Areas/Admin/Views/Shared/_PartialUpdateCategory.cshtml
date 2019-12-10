@@ -5,9 +5,11 @@
 {
     @Html.HiddenFor(t => t.ID)
     <div class="form-group">
+        @Html.LabelFor(t => t.CategoryName, "Category Name", new { })
         @Html.TextBoxFor(t => t.CategoryName, new { @class = "form-control", placeholder = "Category Name" })
     </div>
     <div class="form-group">
+        @Html.LabelFor(t => t.Description)
         @Html.TextAreaFor(t => t.Description, new { @class = "form-control", rows = "5", placeholder = "Description" })
     </div>
     <div class="form-group">
@@ -15,7 +17,7 @@
         @Html.HiddenFor(t => t.MasterCategoryID, new { id = "hiddenMasterCatU" })
 
         <select class="custom-select" id="selectMasterCatU">
-            <option selected>Select Master Category</option>
+            <option value="">Select Master Category</option>
             @foreach (var item in (List<B_Commerce.SMVC.Areas.Admin.Models.CategoryShortInfo>)ViewData["shortInfoCategories"])
             {
                 <option value="@item.ID">@item.CategoryName</option>
@@ -24,8 +26,8 @@
     </div>
     <div class="form-group">
         <div class="form-check">
-            @Html.CheckBoxFor(t => t.isActive, new { id = "is-active" })
-            @Html.LabelFor(t => t.isActive, "Is Active?", new { @for = "is-active" })
+            @Html.CheckBoxFor(t => t.isActive, new { id = "isActive" })
+            @Html.LabelFor(t => t.isActive, "Is Active?", new { @for = "isActive" })
         </div>
     </div>
     <div class="form-group float-right">

@@ -39,11 +39,11 @@ namespace B_Commerce.ProductService.Api.Controllers
 
         [HttpPost]
         [Route("Delete")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete([FromBody]int ID)
         {
             Category newcategory = new Category
             {
-                ID=id
+                ID=ID
             };
             BaseResponse response = _service.Delete(newcategory);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);

@@ -14,7 +14,7 @@ using System.Web.Mvc;
 namespace B_Commerce.SMVC.Areas.Admin.Controllers
 {
     //altındaki tüm actionlar için bu filitre aktif olur
-    [AutenticationFilter]
+    //[AutenticationFilter]
     public class CategoryController : Controller
     {
 
@@ -49,9 +49,18 @@ namespace B_Commerce.SMVC.Areas.Admin.Controllers
         public ActionResult Update(CategoryUpdateRequest request)
         {
             //doldur
-            CommonResponse updateResponse = WebApiOperation.SendPost<CategoryUpdateRequest, CommonResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_UPDATE, request);
+            CommonResponse updateResponse = WebApiOperation.SendPost<CategoryUpdateRequest, CommonResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_UPDATE_CATEGORY, request);
             TempData["ResponseCode"] = updateResponse.Code;
             TempData["ResponseMessage"] = updateResponse.Message;
+            return RedirectToAction("Index", "Category");
+        }
+        [HttpPost]
+        public ActionResult Delete(int ID)
+        {
+            //doldur
+            CommonResponse deleteResponse = WebApiOperation.SendPost<int, CommonResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_DELETE_CATEGORY, ID);
+            TempData["ResponseCode"] = deleteResponse.Code;
+            TempData["ResponseMessage"] = deleteResponse.Message;
             return RedirectToAction("Index", "Category");
         }
 
