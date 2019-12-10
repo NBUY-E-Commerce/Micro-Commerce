@@ -232,6 +232,7 @@
     </Compile>
     <Compile Include="Models\BannerModel.cs" />
     <Compile Include="Models\BannerModelResponse.cs" />
+    <Compile Include="Models\CartEqualizerModel.cs" />
     <Compile Include="Models\CategoryDetailModel.cs" />
     <Compile Include="Models\CategoryDetailModelResponse.cs" />
     <Compile Include="Models\BrandFilterModel.cs" />

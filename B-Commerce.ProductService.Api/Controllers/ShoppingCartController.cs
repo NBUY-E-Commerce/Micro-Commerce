@@ -54,6 +54,14 @@ namespace B_Commerce.ProductService.Api.Controllers
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 
+        [HttpPost]
+        [Route("CartEqualizer")]
+        public IActionResult CartEqualizer(CartEqualizerModel cartEqualizer)
+        {
+            BaseResponse baseResponse = _service.CartEqualizer(cartEqualizer.vToken, cartEqualizer.uToken);
+                return baseResponse.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, baseResponse) : StatusCode(200, baseResponse);
+        }
+
 
     }
 }

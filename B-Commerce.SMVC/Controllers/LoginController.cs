@@ -144,9 +144,19 @@ namespace B_Commerce.SMVC.Controllers
                 };
                 if (Request.Cookies["visitortoken"].Values["token"] != null)
                 {
-                    SystemUser.CurrentUser.Token = Request.Cookies["visitortoken"].Values["token"];
-                }
+                    CartEqualizerModel cartEqualizer = new CartEqualizerModel
+                    {
+                        vToken = Request.Cookies["visitortoken"].Values["token"],
+                        uToken = loginResponse.Token
+                    };
+                    CommonResponse response = WebApiOperation.SendPost<CartEqualizerModel, CommonResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_LOGIN_URI, cartEqualizer);
+                    if (response.Code != 0)
+                    {
+                        ViewBag.error = response.Message;
+                        Request.Cookies["visitortoken"].Expires = DateTime.Now.AddDays(-1);
+                    }
 
+                }
                 ///User ı cookie  e eklemek lazım mı???
 
 

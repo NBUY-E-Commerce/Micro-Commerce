@@ -212,5 +212,28 @@ namespace B_Commerce.ProductService.Service.Concrete
             response = GetShoppingCartofUser(token);
             return response;
         }
+        public BaseResponse CartEqualizer(string vToken,string uToken)
+        {
+            BaseResponse baseResponse = new BaseResponse();
+            ShoppingCart shoppingCart = new ShoppingCart();
+            try
+            {
+                shoppingCart = _repositoryShoppingCart.Get(t => t.Token == vToken).FirstOrDefault();
+                shoppingCart.Token = uToken;
+                _repositoryShoppingCart.Update(shoppingCart);
+                baseResponse.SetStatus(Common.Constants.ResponseCode.SUCCESS);
+                int result = _unitOfWork.SaveChanges();
+                if (result < 1)
+                {
+                    baseResponse.SetStatus(Common.Constants.ResponseCode.SYSTEM_ERROR);
+                    return baseResponse;
+                }
+            }
+            catch (Exception ex)
+            {
+                baseResponse.SetStatus(Common.Constants.ResponseCode.SUCCESS, ex.Message);
+            }
+            return baseResponse;
+        }
     }
 }
