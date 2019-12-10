@@ -20,7 +20,7 @@ namespace B_Commerce.SMVC.Controllers
             }
             else
             {
-                currentToken = Request.Cookies["visitortoken"].Value;
+                currentToken = Request.Cookies["visitortoken"].Values["token"];
             }
 
             CheckTokenResponse responseToken = WebApiOperation.SendPost<string, CheckTokenResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_CHECKTOKEN_URI, currentToken);
@@ -62,7 +62,7 @@ namespace B_Commerce.SMVC.Controllers
             }
             else
             {
-                currentToken = Request.Cookies["visitortoken"].Value;
+                currentToken = Request.Cookies["visitortoken"].Values["token"];
             }
 
             CheckTokenResponse responseToken = WebApiOperation.SendPost<string, CheckTokenResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_CHECKTOKEN_URI, currentToken);

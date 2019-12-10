@@ -121,7 +121,7 @@ namespace B_Commerce.SMVC.Controllers
         [HttpPost]
         public ActionResult Login(LoginModel loginModel)
         {
-            
+
             if (!ModelState.IsValid)
             {
                 var model = new RegisterViewModel();
@@ -142,13 +142,13 @@ namespace B_Commerce.SMVC.Controllers
                     Token = loginResponse.Token,
                     Email = loginResponse.Email,
                 };
-                if (Request.Cookies["visitortoken"].Value!=null)
+                if (Request.Cookies["visitortoken"].Values["token"] != null)
                 {
-                    SystemUser.CurrentUser.Token = Request.Cookies["visitortoken"].Value;
+                    SystemUser.CurrentUser.Token = Request.Cookies["visitortoken"].Values["token"];
                 }
 
                 ///User ı cookie  e eklemek lazım mı???
-                
+
 
                 //HttpCookie cookie = new HttpCookie("usertoken");
                 //cookie.Value = SystemUser.CurrentUser.Token;
@@ -162,7 +162,7 @@ namespace B_Commerce.SMVC.Controllers
                         email = loginResponse.Email
                     });
                 }
-                var a= Request.Cookies["visitortoken"].Value;
+                var a = Request.Cookies["visitortoken"].Value;
                 return RedirectToAction("Index", "Home");
             }
 

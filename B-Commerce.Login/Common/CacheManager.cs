@@ -38,7 +38,13 @@ namespace B_Commerce.Login.Common
                     }
                 
             }
-            return Users[token];
+
+            if(Users.ContainsKey(token))
+            {
+                return Users[token];
+            }
+
+            return null;
         }
     }
 }
