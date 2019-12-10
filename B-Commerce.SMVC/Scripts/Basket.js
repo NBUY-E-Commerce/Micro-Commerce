@@ -1,6 +1,6 @@
 ﻿var basketManager = function () {
     this.addToBasket = function (producid, count, owner) {
-        $(owner).prepend('<div class="spinner-border loader" role="status" style="width: 15px;height: 15px;"><span class="sr-only"> Loading...</span></div>');
+        $(owner).prepend('<div class="spinner-border loader" role="status" style="width: 15px;height: 15px"><span class="sr-only"> Loading...</span></div>');
 
         $.ajax({
             url: "/ShoppingCart/AddToCart",
@@ -28,7 +28,7 @@
     this.UpdateProductCountOfBasket = function (producid, count, owner) {
         var deferedObject = $.Deferred();
 
-        $(owner).prepend('<div class="spinner-border loader" role="status" style="width: 15px;height: 15px;">< span class="sr-only"> Loading...</span></div>');
+        $(owner).prepend('<div class="spinner-border loader" role="status" style="width: 15px;height: 15px"><span class="sr-only"> Loading...</span></div>');
 
         $.ajax({
             url: "/ShoppingCart/UpdateProductCountOfShoppingCart",
