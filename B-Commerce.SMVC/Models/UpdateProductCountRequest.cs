@@ -11,4 +11,9 @@ namespace B_Commerce.SMVC.Models
         public int ProductID { get; set; }
         public int NewCount { get; set; }
     }
+
+    public class UpdateProductCountListRequest 
+    {
+        public List<UpdateProductCountRequest> UpdateProductCounts { get; set; }
+    }
 }

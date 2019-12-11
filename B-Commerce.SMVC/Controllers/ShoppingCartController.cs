@@ -5,6 +5,7 @@ using B_Commerce.SMVC.WebApiReqRes.ShoppingCart;
 using B_Commerce.SMVC.WebHelpers;
 using System;
 using System.Web.Mvc;
+using System.Collections.Generic;
 
 namespace B_Commerce.SMVC.Controllers
 {
@@ -53,8 +54,9 @@ namespace B_Commerce.SMVC.Controllers
             return View(model);
         }
 
-        public JsonResult UpdateProductCountOfShoppingCart(int ProductID, int NewCount)
+        public JsonResult UpdateProductCountOfShoppingCart(List<UpdateProductCountRequest> UpdateProductCounts)
         {
+
             string currentToken = "";
             if (SystemUser.CurrentUser != null)
             {
@@ -72,15 +74,13 @@ namespace B_Commerce.SMVC.Controllers
                 throw new Exception();
             }
 
-            var request = new UpdateProductCountRequest
+            foreach (UpdateProductCountRequest item in UpdateProductCounts)
             {
-                Token = currentToken,
-                NewCount = NewCount,
-                ProductID = ProductID
-            };
+                item.Token = currentToken;
+            }
 
             //webapiye gidip addtocart(currenttoken,productid,count) çağırıcam
-            ShoppingCartResponse response = WebApiOperation.SendPost<UpdateProductCountRequest, ShoppingCartResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_SHOPPINGCARD_UPDATE, request);
+            ShoppingCartResponse response = WebApiOperation.SendPost<List<UpdateProductCountRequest>, ShoppingCartResponse>(Constants.PRODUCT_API_BASE_URI, Constants.PRODUCT_API_SHOPPINGCARD_UPDATE, UpdateProductCounts);
 
             if (response.Code == 0)
                 Session["sepet"] = response;
