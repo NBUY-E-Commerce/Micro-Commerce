@@ -11,4 +11,9 @@ namespace B_Commerce.ProductService.Api.DTO
         public int ProductID { get; set; }
         public int NewCount { get; set; }
     }
+
+    public class UpdateProductCountListRequest
+    {
+        public List<UpdateProductCountDTO> UpdateProductCounts { get; set; }
+    }
 }

@@ -48,9 +48,18 @@ namespace B_Commerce.ProductService.Api.Controllers
 
         [HttpPost]
         [Route("UpdateProductCountOfShoppingCart")]
-        public IActionResult UpdateProductCountOfShoppingCart(UpdateProductCountDTO parameters)
+        public IActionResult UpdateProductCountOfShoppingCart(List<UpdateProductCountDTO> parameters)
         {
-            ShoppingCartResponse response = _service.UpdateProductCountOfShoppingCart(parameters.Token, parameters.ProductID, parameters.NewCount);
+            ShoppingCartResponse response = new ShoppingCartResponse();
+            foreach (UpdateProductCountDTO item in parameters)
+            {
+                response = _service.UpdateProductCountOfShoppingCart(item.Token, item.ProductID, item.NewCount);
+                if (response.Code != 0)
+                {
+                    return StatusCode(500, response);
+                }
+            }
+
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(200, response);
         }
 
