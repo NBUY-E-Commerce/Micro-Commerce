@@ -55,20 +55,7 @@ namespace B_Commerce.SMVC.MyHandler
                 }
                 else
                 {
-                    if (Convert.ToDateTime(cok.Values["date"]) < DateTime.Now)
-                    {
-                        VisitorTokenResponse visitorResponse = WebApiOperation.SendPost<int, VisitorTokenResponse>(Constants.LOGIN_API_BASE_URI, Constants.LOGIN_API_CreateVisitorToken_URI, 7);
 
-                        if (visitorResponse.Code == 0)
-                        {
-
-                            HttpCookie cookie = new HttpCookie("visitortoken");
-                            cookie.Values.Set("token", visitorResponse.Token);
-                            cookie.Values.Set("date", visitorResponse.ExpireDate.ToString());
-                            cookie.Expires = visitorResponse.ExpireDate;
-                            filterContext.HttpContext.Response.Cookies.Add(cookie);
-                        }
-                    }
                     //adamın visitor cookiesi var 
                     if (filterContext.HttpContext.Session["sepet"] == null)
                     {
