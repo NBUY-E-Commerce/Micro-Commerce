@@ -31,9 +31,10 @@
                         url: '@Url.Action("GetProductListJson","Product")'
                     }
                 },
-                pageSize: 20
+                pageSize: 10
             },
             height: 550,
+            width:"auto",
             groupable: true,
             sortable: true,
             filterable: true,
@@ -46,26 +47,25 @@
             columns: [{
                 field: "ID",
                 title: "ProductID",
-                width: 100,
+                width: 75,
 
 
             }, {
                 field: "ProductName",
                 title: "Product Name",
-                width: 200
+                width: 100
             }, {
                 field: "Description",
                 title: "Description",
-                width: 200
+                width: 150
             }, {
                 field: "Price",
                 title: "Price",
-                    width: 150,
-                editable:true,
+                    width: 75
             }, {
                 field: "Brand",
                 title: "Brand",
-                width: 150
+                width: 75
                 },
                 {
                     template: "<div class='product-photo'" + "style='background-image:url(#:data.ProductImages#);'></div>",
@@ -76,7 +76,8 @@
                 },
                 {
                     field: "Process",
-                    template : "<div><a class='btn btn-warning' href='Update/?ProductID=#:data.ID#'>Update</div>",
+                    template: "<div><a class='btn btn-warning' href='Update/?ProductID=#:data.ID#'>Update</div>",
+                    width:100
             }]
         });
 
