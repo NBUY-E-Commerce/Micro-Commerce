@@ -30,6 +30,7 @@
 
 
     <script src="https://www.google.com/recaptcha/api.js"></script>
+
 </head>
 <body>
     <!-- navbar-->
@@ -189,6 +190,7 @@
     <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
     <script src="~/Content/vendor/owl.carousel/owl.carousel.min.js"></script>
     <script src="~/Content/vendor/owl.carousel2.thumbs/owl.carousel2.thumbs.js"></script>
+    <script src="~/Scripts/jquery.zoom.js"></script>
     <script src="~/Scripts/js/front.js"></script>
     <script src="~/Scripts/Basket.js"></script>
     @RenderSection("scripts", false)
@@ -263,10 +265,11 @@
 
 
     </script>
-
-
-
-
+    <script>
+        $(document).ready(function () {
+            $(".img-container > img").blowup();
+        })
+    </script>
 
 
 

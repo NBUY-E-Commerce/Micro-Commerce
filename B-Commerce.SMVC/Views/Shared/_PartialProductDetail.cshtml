@@ -1,9 +1,5 @@
 ﻿@model  B_Commerce.SMVC.Areas.Admin.Models.ProductModel
-
-
-
-
-
+<link href="~/Content/css/zoomStyle.css" rel="stylesheet" />
 
 <div id="productMain" class="row">
     <div class="col-md-6">
@@ -14,11 +10,11 @@
                      style="transform: translate3d(-660px, 0px, 0px); transition: all 0.25s ease 0s; width: 2310px;">
                     @foreach (string item in Model.ImageUrls)
                     {
-                        <div class="owl-item" style="width: 330px;">
-                            <div class="item">
-                                <img src="@item" alt="" class="img-fluid" />
-                            </div>
+                    <div class="owl-item" style="width: 330px;">
+                        <div class="img-container">
+                            <img src="@item" alt="">
                         </div>
+                    </div>
                     }
                 </div>
             </div>

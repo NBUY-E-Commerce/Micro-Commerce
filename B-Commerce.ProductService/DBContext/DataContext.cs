@@ -13,8 +13,8 @@ namespace B_Commerce.ProductService.DBContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
-            optionsBuilder.UseSqlServer(@"Server=.;Database=ProductServiceDB;Trusted_Connection=True");
-           
+            optionsBuilder.UseSqlServer(@"Server=.;Database=ProductServiceDB;User Id=sa;Password=123");
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,7 +32,7 @@ namespace B_Commerce.ProductService.DBContext
         public virtual DbSet<ProductImage> ProductImages { get; set; }
         public virtual DbSet<SpacialArea> SpacialAreas { get; set; }
         public virtual DbSet<ProductSpacialAreaTable> ProductSpacialAreas { get; set; }
-
+        public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<BannersImage> BannersImages { get; set; }
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public virtual DbSet<ShoppingCartProduct> ShoppingCartProducts { get; set; }

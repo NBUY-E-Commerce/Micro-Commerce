@@ -17,8 +17,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort>44314</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -1899,6 +1898,7 @@
     <Content Include="Content\css\style.red.css" />
     <Content Include="Content\css\style.sea.css" />
     <Content Include="Content\css\style.violet.css" />
+    <Content Include="Content\css\zoomStyle.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.min.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-reboot.css" />
@@ -1966,6 +1966,7 @@
     <Content Include="img\getinspired2.jpg" />
     <Content Include="img\getinspired3.jpg" />
     <Content Include="img\grabbing.png" />
+    <Content Include="img\icon.png" />
     <Content Include="img\logo-small.png" />
     <Content Include="img\logo.png" />
     <Content Include="img\main-slider1.jpg" />
@@ -2178,6 +2179,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery.zoom.js" />
     <Content Include="Scripts\js\CategoryAdmin.js" />
     <Content Include="Scripts\js\front.js" />
     <Content Include="Scripts\js\map.js" />
@@ -2385,9 +2387,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>56503</DevelopmentServerPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44314/</IISUrl>
+          <IISUrl>http://localhost:44314/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
