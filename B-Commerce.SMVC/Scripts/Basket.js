@@ -25,8 +25,8 @@
     };
 
     this.UpdateProductCountOfBasket = function (UpdateProductCounts, owner) {
-        var deferedObject = $.Deferred();
-        $(owner).prepend('<div class="spinner-border loader" role="status" style="width: 15px;height: 15px;">< span class="sr-only"> Loading...</span></div>');
+        //var deferedObject = $.Deferred();
+        $(owner).prepend('<div class="spinner-border loader" role="status" style="width: 15px;height: 15px;"><span class="sr-only"> Loading...</span></div>');
 
         $.ajax({
             url: "/ShoppingCart/UpdateProductCountOfShoppingCart",
@@ -37,16 +37,16 @@
                 if (d.Code != 0) {
                     location.href = "/Error/General";
                 } else {
-                    deferedObject.resolve();
-
+                    location.href = "/ShoppingCart/Details"
                 }
 
-            }, complete: function () {
+            },
+            complete: function () {
                 $(owner).find(".loader").remove();
             }
         })
 
-        return deferedObject.promise();
+        //return deferedObject.promise();
     };
 }
 
@@ -67,21 +67,20 @@ function UpdateBasket(productid, count, owner) {
 
 function UpdateAllProductCountsOfBasket() {
     var _basketManager = new basketManager();
-    
+
     try {
         var listofproducts = $('input[name="basketproduct"]');
-        var allcount = listofproducts.length;
         var list = [];
         $.each(listofproducts, function (indexInArray, element) {
-            var obj = { Token:"",ProductID: $(element).attr("data-productid"), NewCount: $(element).val() };
+            var obj = { Token: "", ProductID: $(element).attr("data-productid"), NewCount: $(element).val() };
             list.push(obj);
         });
-
-        _basketManager.UpdateProductCountOfBasket(list, element).done(function () {
-            if (indexInArray == allcount - 1) {
-                location.href = "/ShoppingCart/Details";
-            }
-        })
+        _basketManager.UpdateProductCountOfBasket(list);
+        //_basketManager.UpdateProductCountOfBasket(list, element).done(function () {
+        //    if (indexInArray == allcount - 1) {
+        //        location.href = "/ShoppingCart/Details";
+        //    }
+        //})
     } catch (error) {
         //hata olursa işlemler
         alert(error.message);
