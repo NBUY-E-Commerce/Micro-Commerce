@@ -8,7 +8,7 @@
         <!-- /.product-slider-->
         <div class="product-slider owl-carousel owl-theme owl-loaded owl-drag">
             <div class="owl-stage-outer">
-                <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1776px;">
+                <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s;">
                     @foreach (var item in Model.Products)
                     {
                         <!-- /.product-->
@@ -52,11 +52,11 @@
                     {
 
                         <div class="owl-item" style="width: 222px;">
-                            <div class="item">
-                                <div class="product">
+                            <div class="item" style="display:inline-block;">
+                                <div class="product" style="margin-top:200%;">
 
-                                    <div class="text" id="GetMore">
-                                        Daha fazla
+                                    <div class="text" id="GetMore" style="display:inline;">
+                                       More
                                     </div>
 
                                 </div>
@@ -79,3 +79,10 @@
     <!-- /.container-->
 
 }
+<style>
+    .owl-item {
+    width:222px !important;
+    
+    }
+
+</style>
