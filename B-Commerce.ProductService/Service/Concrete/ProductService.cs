@@ -185,7 +185,7 @@ namespace B_Commerce.ProductService.Service.Concrete
                 }
 
                 productResponse.PagingInfo = new PagingInfo(request.Page, request.Range, allProductCount);
-                productResponse.CategoryDescription = _repositoryProduct.Get(t => t.CategoryID == request.CategoryID).FirstOrDefault().Category.Description;
+                productResponse.CategoryDescription = products.FirstOrDefault().Category.CategoryName;
                 productResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                 return productResponse;
             }
