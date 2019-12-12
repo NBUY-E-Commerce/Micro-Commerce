@@ -55,7 +55,6 @@ namespace B_Commerce.SMVC.MyHandler
                 }
                 else
                 {
-
                     //adamın visitor cookiesi var 
                     if (filterContext.HttpContext.Session["sepet"] == null)
                     {

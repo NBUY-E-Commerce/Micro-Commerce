@@ -12,7 +12,7 @@ namespace B_Commerce.NotificationService.DbContext.SQLServer
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-6JDHFRJ;Database=NotificationService;Trusted_Connection=True");
+            optionsBuilder.UseSqlServer(@"Server=213.14.169.11;Database=401NotificationDB;User Id=bak402;Password=Alaf9090");
         }
     }
 }
