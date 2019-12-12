@@ -68,7 +68,7 @@
                     <div class="box">
                       
                         <h1>@ViewBag.name</h1>
-                        <p>todo:katogory bilgileri sevisten donulmeli</p>
+                        <p>@Model.CategoryDescription</p>
                     </div>
                     <div class="box info-bar">
                         <div class="row">
@@ -129,10 +129,9 @@
                                         <p class="buttons">
                                             <a  class="btn btn-outline-secondary productbutton" onclick="ajax(@item.ID)" data-toggle="modal" data-target=".bd-example-modal-xl">Detay</a>
 
-                                            <a   onclick="addToBasket(this,@item.ID)" class="btn btn-primary basketbutton">
+                                            <a onclick="addToBasket(this,@item.ID)" class="btn btn-primary basketbutton">
                                                 <i class="fa fa-shopping-cart"></i>
-                                                Spete Ekle
-
+                                                Sepete Ekle
                                             </a>
                                         </p>
                                     </div>

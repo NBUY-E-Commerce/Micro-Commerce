@@ -13,8 +13,7 @@ namespace B_Commerce.ProductService.DBContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
-            optionsBuilder.UseSqlServer(@"Server=.;Database=ProductServiceDB;User Id=sa;Password=123");
-
+            optionsBuilder.UseSqlServer(@"Server=213.14.169.11;Database=401ProductDB;User Id=bak402;Password=Alaf9090");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

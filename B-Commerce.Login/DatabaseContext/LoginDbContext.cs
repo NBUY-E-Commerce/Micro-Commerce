@@ -24,7 +24,7 @@ namespace B_Commerce.Login.DatabaseContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
-            optionsBuilder.UseSqlServer(@"Server=.;Database=LoginDatabase;User Id=sa;Password=123");
+            optionsBuilder.UseSqlServer(@"Server=213.14.169.11;Database=401LoginDB;User Id=bak402;Password=Alaf9090");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
