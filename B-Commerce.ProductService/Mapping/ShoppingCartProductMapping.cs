@@ -15,6 +15,8 @@ namespace B_Commerce.ProductService.Mapping
             builder.HasOne(t => t.Product).WithMany(t => t.ShoppingCartProducts).HasForeignKey(t => t.ProductID);
 
             builder.HasOne(t => t.ShoppingCart).WithMany(t => t.ShoppingCartProducts).HasForeignKey(t => t.ShoppingCartID);
+
+          
         }
 
     }

@@ -12,25 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20191209070233_baskett.cs" />
-    <Compile Remove="Migrations\20191209070233_baskett.Designer.cs" />
-    <Compile Remove="Migrations\20191209071050_scart.cs" />
-    <Compile Remove="Migrations\20191209071050_scart.Designer.cs" />
-    <Compile Remove="Migrations\20191209071448_scart23.cs" />
-    <Compile Remove="Migrations\20191209071448_scart23.Designer.cs" />
-    <Compile Remove="Migrations\20191209190625_Multiple_Language_Added_Key_Column.cs" />
-    <Compile Remove="Migrations\20191209190625_Multiple_Language_Added_Key_Column.Designer.cs" />
-    <Compile Remove="Migrations\20191209192752_delete_ky.cs" />
-    <Compile Remove="Migrations\20191209192752_delete_ky.Designer.cs" />
-    <Compile Remove="Migrations\20191209192816_dlte_Key.cs" />
-    <Compile Remove="Migrations\20191209192816_dlte_Key.Designer.cs" />
-    <Compile Remove="Migrations\20191209195401_kk.cs" />
-    <Compile Remove="Migrations\20191209195401_kk.Designer.cs" />
-    <Compile Remove="Migrations\20191209200421_Initial-IgnoreChanges.cs" />
-    <Compile Remove="Migrations\20191209200421_Initial-IgnoreChanges.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />

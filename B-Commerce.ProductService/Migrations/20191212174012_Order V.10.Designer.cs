@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace B_Commerce.ProductService.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20191204074044_banner2")]
-    partial class banner2
+    [Migration("20191212174012_Order V.10")]
+    partial class OrderV10
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,75 @@ namespace B_Commerce.ProductService.Migrations
                 .HasAnnotation("ProductVersion", "3.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.BannersImage", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BannerType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RelatedID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleteDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("deleteUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("insertDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("insertUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("BannersImages");
+                });
+
+            modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.Brand", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("deleteDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("deleteUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("insertDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("insertUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Brands");
+                });
 
             modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.Category", b =>
                 {
@@ -38,6 +107,9 @@ namespace B_Commerce.ProductService.Migrations
                         .HasColumnName("CategoryDesc")
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
+
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("MasterCategoryID")
                         .HasColumnType("int");
@@ -75,6 +147,84 @@ namespace B_Commerce.ProductService.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.Order", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("CargoARrived")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CargoArriveDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CargoDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PaymentTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShoppingCartId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleteDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("deleteUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("insertDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("insertUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("PaymentTypeId")
+                        .IsUnique();
+
+                    b.HasIndex("ShoppingCartId")
+                        .IsUnique();
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.PaymentType", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("PaymentTypeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("deleteDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("deleteUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("insertDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("insertUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("PaymentTypes");
+                });
+
             modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.Product", b =>
                 {
                     b.Property<int>("ID")
@@ -84,6 +234,9 @@ namespace B_Commerce.ProductService.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AvailableCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BrandID")
                         .HasColumnType("int");
 
                     b.Property<int>("CategoryID")
@@ -147,6 +300,8 @@ namespace B_Commerce.ProductService.Migrations
                         .HasDefaultValue(false);
 
                     b.HasKey("ID");
+
+                    b.HasIndex("BrandID");
 
                     b.HasIndex("CategoryID");
 
@@ -240,6 +395,79 @@ namespace B_Commerce.ProductService.Migrations
                     b.ToTable("ProductSpacialAreas");
                 });
 
+            modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.ShoppingCart", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleteDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("deleteUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("insertDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("insertUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("ShoppingCarts");
+                });
+
+            modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.ShoppingCartProduct", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ProductCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShoppingCartID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleteDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("deleteUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("insertDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("insertUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ProductID");
+
+                    b.HasIndex("ShoppingCartID");
+
+                    b.ToTable("ShoppingCartProducts");
+                });
+
             modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.SpacialArea", b =>
                 {
                     b.Property<int>("ID")
@@ -280,8 +508,29 @@ namespace B_Commerce.ProductService.Migrations
                         .HasForeignKey("MasterCategoryID");
                 });
 
+            modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.Order", b =>
+                {
+                    b.HasOne("B_Commerce.ProductService.DomainClasses.PaymentType", "PaymentType")
+                        .WithOne("Order")
+                        .HasForeignKey("B_Commerce.ProductService.DomainClasses.Order", "PaymentTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("B_Commerce.ProductService.DomainClasses.ShoppingCart", "ShoppingCart")
+                        .WithOne("Order")
+                        .HasForeignKey("B_Commerce.ProductService.DomainClasses.Order", "ShoppingCartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.Product", b =>
                 {
+                    b.HasOne("B_Commerce.ProductService.DomainClasses.Brand", "Brand")
+                        .WithMany("Products")
+                        .HasForeignKey("BrandID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("B_Commerce.ProductService.DomainClasses.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryID")
@@ -309,6 +558,21 @@ namespace B_Commerce.ProductService.Migrations
                     b.HasOne("B_Commerce.ProductService.DomainClasses.SpacialArea", "SpacialArea")
                         .WithMany("productSpacialAreas")
                         .HasForeignKey("SpacialAreaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("B_Commerce.ProductService.DomainClasses.ShoppingCartProduct", b =>
+                {
+                    b.HasOne("B_Commerce.ProductService.DomainClasses.Product", "Product")
+                        .WithMany("ShoppingCartProducts")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("B_Commerce.ProductService.DomainClasses.ShoppingCart", "ShoppingCart")
+                        .WithMany("ShoppingCartProducts")
+                        .HasForeignKey("ShoppingCartID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
