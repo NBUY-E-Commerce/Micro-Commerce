@@ -8,8 +8,8 @@ namespace B_Commerce.Login.Common
     {
 
         #region NotificationSettings
-        public const string NOTIFICATION_API_BASE_URI = "http://localhost:64847/";
-        public const string NOTIFICATION_API_MAIL_URI = "http://localhost:64847/api/Notification/Mail";
+        public const string NOTIFICATION_API_BASE_URI = "http://localhost:64311/";
+        public const string NOTIFICATION_API_MAIL_URI = "http://localhost:64311/api/Notification/Mail";
         #endregion
         public enum UserRole
         {

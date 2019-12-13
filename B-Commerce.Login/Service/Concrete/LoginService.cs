@@ -208,18 +208,6 @@ namespace B_Commerce.Login.Service.Concrete
                 if (_unitOfWork.SaveChanges() > 0)
                 {
 
-                    LoginResponse loginResponse = Login(new LoginRequest
-                    {
-                        Email = user.Email,
-                        Password = passwordNotHash
-                    });
-
-                    if (loginResponse.Code != 0)
-                    {
-                        registerResponse.SetStatus(Constants.ResponseCode.SYSTEM_ERROR);
-                        return registerResponse;
-
-                    }
                     if (!user.IsVerified)
                     {
                         MailRequest mailRequest = new MailRequest
@@ -244,8 +232,6 @@ namespace B_Commerce.Login.Service.Concrete
 
                     registerResponse.SetStatus(Constants.ResponseCode.SUCCESS);
                     registerResponse.Username = user.Username;
-                    registerResponse.Token = loginResponse.Token;
-                    registerResponse.ExpireDate = loginResponse.ExpireDate;
                     registerResponse.Email = user.Email;
                 }
             }
