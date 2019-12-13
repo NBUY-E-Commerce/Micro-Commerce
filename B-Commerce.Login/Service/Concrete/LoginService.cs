@@ -45,6 +45,7 @@ namespace B_Commerce.Login.Service.Concrete
                 return checkTokenResponse;
             }
             checkTokenResponse.Username = user.Username;
+            checkTokenResponse.UserID = user.ID;
             checkTokenResponse.ExpireDate = user.Tokens.FirstOrDefault(t => t.TokenText == token).EndDate;
             if (checkTokenResponse.ExpireDate<DateTime.Now)
             {

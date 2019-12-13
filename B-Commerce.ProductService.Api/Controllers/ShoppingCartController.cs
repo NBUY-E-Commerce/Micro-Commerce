@@ -33,7 +33,7 @@ namespace B_Commerce.ProductService.Api.Controllers
             //checktoken başarılı dondugu varsayıp devam ediyoruz. (****eklenecek)
             //checktoken userın idsini donsun
             ShoppingCartResponse response = new ShoppingCartResponse();
-            response = _service.Add(shoppingCartProduct.Token, 1, shoppingCartProduct.ProductID, shoppingCartProduct.ProductCount);
+            response = _service.Add(shoppingCartProduct.Token, shoppingCartProduct.UserID, shoppingCartProduct.ProductID, shoppingCartProduct.ProductCount);
             return response.Code != (int)Constants.ResponseCode.SUCCESS ? StatusCode(500, response) : StatusCode(201, response);
         }
 
