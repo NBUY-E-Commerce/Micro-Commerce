@@ -10,6 +10,7 @@ namespace B_Commerce.ProductService.Api.DTO
     {
         public string Token { get; set; }
         public int ProductID { get; set; }
+        public int UserID { get; set; }
         public int ProductCount { get; set; }
     }
 }

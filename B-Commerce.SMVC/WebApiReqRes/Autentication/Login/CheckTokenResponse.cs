@@ -5,13 +5,14 @@ using System.Web;
 
 namespace B_Commerce.SMVC.WebApiReqRes.Autentication.Login
 {
-    public class CheckTokenResponse:CommonResponse
+    public class CheckTokenResponse : CommonResponse
     {
-        
-        
-            public string Username { get; set; }
 
-            public DateTime ExpireDate { get; set; }
-        
+
+        public string Username { get; set; }
+        public int UserID { get; set; }
+
+        public DateTime ExpireDate { get; set; }
+
     }
 }

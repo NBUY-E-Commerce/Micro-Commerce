@@ -3,39 +3,6 @@
 @{
     ViewBag.Title = "Home Page";
 }
-@section scripts
-{
-    <script>
-
-
-        $(function () {
-            $("body").on("click", "#GetMore", function () {
-
-                var lastelem = $("#sayac").val()
-                $.ajax({
-                    url: "/Product/ProductSlider",
-                    data: { a: lastelem },
-                    method: "POST",
-                    success: function (d) {
-                        $("#sayac").val(lastelem + 1);
-                        $("#productsliderdiv").html(d);
-
-                        var owl = $('.product-slider').owlCarousel({
-                            items: 3,
-                            loop: false
-                        });
-                        owl.trigger('refresh.owl.carousel')
-
-                    }, error: function () {
-                        alert("hata olustu");
-                    }, complete: function () {
-                    }
-                })
-            })
-        })
-    </script>
-
-}
 
 
 
@@ -48,6 +15,35 @@
 
             @section scripts
             {
+                <script>
+
+
+                    $(function () {
+                        $("body").on("click", "#GetMore", function () {
+
+                            var lastelem = $("#sayac").val()
+                            $.ajax({
+                                url: "/Product/ProductSlider",
+                                data: { a: lastelem },
+                                method: "POST",
+                                success: function (d) {
+                                    $("#sayac").val(lastelem + 1);
+                                    $("#productsliderdiv").html(d);
+
+                                    var owl = $('.product-slider').owlCarousel({
+                                        items: 3,
+                                        loop: false
+                                    });
+                                    owl.trigger('refresh.owl.carousel')
+
+                                }, error: function () {
+                                    alert("hata olustu");
+                                }, complete: function () {
+                                }
+                            })
+                        })
+                    })
+                </script>
                 <script>
                     $(function () {
                         setTimeout(function () {
@@ -99,6 +95,35 @@
         case "PasswordChanged":
             @section scripts
             {
+                <script>
+
+
+                    $(function () {
+                        $("body").on("click", "#GetMore", function () {
+
+                            var lastelem = $("#sayac").val()
+                            $.ajax({
+                                url: "/Product/ProductSlider",
+                                data: { a: lastelem },
+                                method: "POST",
+                                success: function (d) {
+                                    $("#sayac").val(lastelem + 1);
+                                    $("#productsliderdiv").html(d);
+
+                                    var owl = $('.product-slider').owlCarousel({
+                                        items: 3,
+                                        loop: false
+                                    });
+                                    owl.trigger('refresh.owl.carousel')
+
+                                }, error: function () {
+                                    alert("hata olustu");
+                                }, complete: function () {
+                                }
+                            })
+                        })
+                    })
+                </script>
                 <script>
                     $(function () {
                         setTimeout(function () {

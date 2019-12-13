@@ -1,6 +1,7 @@
 ﻿var basketManager = function () {
     this.addToBasket = function (producid, count, owner) {
         $(owner).prepend('<div class="spinner-border loader" role="status" style="width: 15px;height: 15px;"><span class="sr-only"> Loading...</span></div>');
+        $(owner).addClass("disabled");
         $.ajax({
             url: "/ShoppingCart/AddToCart",
             data: { productid: producid, count: count },
@@ -16,6 +17,7 @@
                 }
             }, complete: function () {
                 $(owner).find(".loader").remove();
+                $(owner).removeClass("disabled");
             }
         })
 
