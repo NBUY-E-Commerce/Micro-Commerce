@@ -8,8 +8,8 @@ namespace B_Commerce.ProductService.DomainClasses
     public class Order : BaseEntity
     {
         public DateTime CargoDate { get; set; } = DateTime.Now;
-        public DateTime CargoArriveDate { get; set; }
-        public bool CargoARrived { get; set; } = false;
+        public DateTime? CargoArriveDate { get; set; }
+        public bool? CargoArrived { get; set; } = false;
 
 
         public int PaymentTypeId { get; set; } = 1;
