@@ -12,5 +12,6 @@ namespace B_Commerce.ProductService.DomainClasses
         public string Token { get; set; }
 
         public virtual ICollection<ShoppingCartProduct> ShoppingCartProducts { get; set; } = new List<ShoppingCartProduct>();
+        public virtual Order Order { get; set; }
     }
 }

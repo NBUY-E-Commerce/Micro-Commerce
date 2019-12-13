@@ -14,5 +14,6 @@ namespace B_Commerce.ProductService.DomainClasses
 
         public virtual Product Product { get; set; } 
         public virtual ShoppingCart ShoppingCart { get; set; }
+       
     }
 }
