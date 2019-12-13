@@ -44,12 +44,16 @@ namespace B_Commerce.ProductService.Service.Concrete
                     ShoppingCartId = shoppingCartModel.ID
                    
                 });
+                
+                
                 shoppingCartModel.IsPayed = true;
                 shoppingCartModel.PaymentType.ID = request.PaymentTypeId;
-                _repositoryCart.Update(shoppingCartModel);
-
-                int saveResult = _unitOfWork.SaveChanges();
                 shoppingCartResponse = _shoppingCartService.GetShoppingCartofUser(request.Token);
+
+                shoppingCartModel.Token = "0";
+                //Token sıfırlanıyor ve yeni sepet için user'a yeni token verilmesi gerekir 
+                _repositoryCart.Update(shoppingCartModel);
+                int saveResult = _unitOfWork.SaveChanges();
             }
 
             catch (Exception ex)
