@@ -36,7 +36,10 @@ namespace B_Commerce.SMVC.Controllers
             {
                 Token = currentToken,
                 ProductCount = count,
-                ProductID = productid
+                ProductID = productid,
+                UserID=responseToken.UserID
+                
+
             };
 
             //webapiye gidip addtocart(currenttoken,productid,count) çağırıcam
